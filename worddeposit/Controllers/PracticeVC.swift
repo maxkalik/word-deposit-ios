@@ -6,6 +6,7 @@ class PracticeVC: UIViewController {
     // outlets
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var welcomeLbl: UILabel!
+    @IBOutlet weak var wordsLbl: UILabel!
     
     // variables
     var user = User()
@@ -15,13 +16,14 @@ class PracticeVC: UIViewController {
     var userListener: ListenerRegistration? = nil
     var wordsListener: ListenerRegistration? = nil
 
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         getCurrentUser()
     }
     
     override func viewDidLoad() {
         activityIndicator.startAnimating()
-        print("PRACTICE WORDS", words)
+        print(words)
+        
     }
     
     func getCurrentUser() {
@@ -40,17 +42,24 @@ class PracticeVC: UIViewController {
             self.welcomeLbl.text = self.user.email
         })
         
-        let wordsRef = userRef.collection("words")
+        fetchWords(from: userRef)
+    }
+    
+    func fetchWords(from: DocumentReference) {
+        let wordsRef = from.collection("words")
         wordsListener = wordsRef.addSnapshotListener({ (snapshot, error) in
             if let error = error {
                 debugPrint(error.localizedDescription)
                 return
             }
-            
-            snapshot?.documents.forEach({ (documentSnap) in
-                let word = Word.init(data: documentSnap.data())
+            self.words.removeAll()
+            guard let documents = snapshot?.documents else { return }
+            for document in documents {
+                let data = document.data()
+                let word = Word.init(data: data)
                 self.words.append(word)
-            })
+            }
+            self.wordsLbl.text = String(self.words.count)
         })
     }
 }

@@ -30,6 +30,12 @@
                                     <navigationItem title="Practice" id="zre-0x-wGt"/>
                                 </items>
                             </navigationBar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Words: 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7J5-6y-j0P">
+                                <rect key="frame" x="172.5" y="358.5" width="69" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -40,6 +46,8 @@
                             <constraint firstItem="70X-r9-hDc" firstAttribute="top" secondItem="jr7-e2-g83" secondAttribute="top" id="Ozc-wD-MOZ"/>
                             <constraint firstItem="Reo-Vw-IDU" firstAttribute="centerY" secondItem="GoY-0i-Gv2" secondAttribute="centerY" id="WaE-i0-bih"/>
                             <constraint firstItem="NEz-XD-9X9" firstAttribute="centerX" secondItem="GoY-0i-Gv2" secondAttribute="centerX" id="be8-Bd-c6g"/>
+                            <constraint firstItem="7J5-6y-j0P" firstAttribute="centerX" secondItem="GoY-0i-Gv2" secondAttribute="centerX" id="ejb-fF-8jF"/>
+                            <constraint firstItem="Reo-Vw-IDU" firstAttribute="top" secondItem="7J5-6y-j0P" secondAttribute="bottom" constant="50" id="ztg-jN-DDn"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="jr7-e2-g83"/>
                     </view>
@@ -47,6 +55,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="Reo-Vw-IDU" id="bit-8R-wRD"/>
                         <outlet property="welcomeLbl" destination="NEz-XD-9X9" id="4un-K4-a6r"/>
+                        <outlet property="wordsLbl" destination="7J5-6y-j0P" id="2tq-13-34s"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UDh-DO-3xF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
