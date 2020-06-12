@@ -10,6 +10,9 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WordVC" customModule="worddeposit" customModuleProvider="target">
             <connections>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="wordExample" destination="NHm-Yw-r65" id="muo-EQ-XMe"/>
+                <outlet property="wordImageView" destination="4TI-gD-zg0" id="XfC-4Y-HU6"/>
+                <outlet property="wordTranslation" destination="ygj-Ma-UQC" id="Seu-rq-YbN"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

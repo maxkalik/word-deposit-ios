@@ -21,7 +21,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="Reo-Vw-IDU">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="Reo-Vw-IDU">
                                 <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
                             </activityIndicatorView>
                             <navigationBar contentMode="scaleToFill" translucent="NO" largeTitles="YES" translatesAutoresizingMaskIntoConstraints="NO" id="70X-r9-hDc">
@@ -82,7 +82,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4yt-ZB-Njr">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4yt-ZB-Njr">
                                 <rect key="frame" x="0.0" y="100" width="414" height="713"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </tableView>
@@ -104,6 +104,9 @@
                         <viewLayoutGuide key="safeArea" id="yoM-Eb-iHm"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Vocabulary" image="list.dash" catalog="system" id="AMc-np-7ej"/>
+                    <connections>
+                        <outlet property="wordsTableView" destination="4yt-ZB-Njr" id="Xts-Ur-GaL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Mh-lU-0jM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -128,6 +131,9 @@
                                             <constraint firstAttribute="width" constant="164" id="ciq-zK-wxk"/>
                                         </constraints>
                                         <state key="normal" image="logo"/>
+                                        <connections>
+                                            <action selector="wordImagePickerBtnTapped:" destination="8x7-ml-O9y" eventType="touchUpInside" id="xi0-8W-hHR"/>
+                                        </connections>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Example" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Chl-jj-J0Y">
                                         <rect key="frame" x="20" y="184" width="334" height="50"/>
@@ -154,10 +160,16 @@
                                         <state key="normal" title="Add word">
                                             <color key="titleColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="onAddWordBtnPress:" destination="8x7-ml-O9y" eventType="touchUpInside" id="jOe-SD-Yh1"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bhh-6m-fMG">
                                         <rect key="frame" x="158.5" y="394" width="57" height="30"/>
                                         <state key="normal" title="Clear All"/>
+                                        <connections>
+                                            <action selector="onClearAllBtnPress:" destination="8x7-ml-O9y" eventType="touchUpInside" id="5bg-bz-J3L"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -197,6 +209,12 @@
                         <viewLayoutGuide key="safeArea" id="2au-z7-W9i"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Add Word" image="plus" catalog="system" id="Mmj-xg-myp"/>
+                    <connections>
+                        <outlet property="loader" destination="wbd-0V-7q5" id="pmy-CO-cMO"/>
+                        <outlet property="wordExampleTextField" destination="Chl-jj-J0Y" id="j5n-9G-g8T"/>
+                        <outlet property="wordImagePickerBtn" destination="YLl-Up-aaC" id="aCd-hC-Kwt"/>
+                        <outlet property="wordTranslationTextField" destination="VKL-sr-heo" id="23k-Ay-zfU"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cnt-8P-Lg8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
