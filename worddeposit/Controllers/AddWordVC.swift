@@ -89,7 +89,7 @@ class AddWordVC: UIViewController {
             return
         }
         
-        var word = word
+        var word = word // convert let to var
         
         let resizedImg = image.resized(toWidth: 400.0)
         guard let imageData = resizedImg?.jpegData(compressionQuality: 0.5) else { return }
