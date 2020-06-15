@@ -1,5 +1,6 @@
 import UIKit
-import Firebase
+import FirebaseAuth
+import FirebaseFirestore
 import FirebaseStorage
 
 class VocabularyVC: UIViewController {
@@ -92,6 +93,7 @@ class VocabularyVC: UIViewController {
     }
 }
 
+// -------- extension -------- //
 extension VocabularyVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return words.count
@@ -106,10 +108,11 @@ extension VocabularyVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let viewController = WordVC()
-        let selectedWord = words[indexPath.row]
-        viewController.word = selectedWord
-        present(viewController, animated: true, completion: nil)
+//        let viewController = WordVC()
+//        let selectedWord = words[indexPath.row]
+//        viewController.word = selectedWord
+//        present(viewController, animated: true, completion: nil)
+        print(words[indexPath.row])
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

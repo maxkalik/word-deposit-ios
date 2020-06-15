@@ -105,8 +105,7 @@
 				11284225248E7CE400A014E9 /* Views */,
 				11284224248E7CCD00A014E9 /* Controllers */,
 				11284227248E7CF900A014E9 /* Storyboards */,
-				11284210248E7C5700A014E9 /* AppDelegate.swift */,
-				11284212248E7C5700A014E9 /* SceneDelegate.swift */,
+				11FAD1342497FBB2007EBDDD /* Support Files */,
 				11284219248E7C5800A014E9 /* Assets.xcassets */,
 				1128421E248E7C5800A014E9 /* Info.plist */,
 				1158D31424917EC50087DC96 /* GoogleService-Info.plist */,
@@ -173,6 +172,15 @@
 				116BC94D2491836B00968DA6 /* Extensions.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		11FAD1342497FBB2007EBDDD /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				11284210248E7C5700A014E9 /* AppDelegate.swift */,
+				11284212248E7C5700A014E9 /* SceneDelegate.swift */,
+			);
+			path = "Support Files";
 			sourceTree = "<group>";
 		};
 		13969C7DBB50ED88A4E2A9CB /* Pods */ = {

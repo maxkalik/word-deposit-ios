@@ -1,5 +1,5 @@
 import UIKit
-import Firebase
+import FirebaseAuth
 import FirebaseFirestore
 
 class RegistrationVC: UIViewController {
