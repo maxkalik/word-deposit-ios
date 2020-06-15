@@ -21,7 +21,8 @@ class WordVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        setupWord()
+//        setupWord()
+//        print(word ?? "NO WORD")
         
     }
     

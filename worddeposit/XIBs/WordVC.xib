@@ -75,6 +75,7 @@
                             </connections>
                         </button>
                     </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="0JM-hA-8CN" secondAttribute="trailing" constant="20" id="FbJ-3c-u6C"/>
                         <constraint firstAttribute="trailing" secondItem="vDX-ri-Ec0" secondAttribute="trailing" constant="20" id="MLE-z2-Uql"/>
@@ -101,7 +102,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="g46-2r-kgE" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="EjH-iW-iIi"/>
                 <constraint firstItem="8qR-2a-bqX" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="N39-k4-fBZ"/>
