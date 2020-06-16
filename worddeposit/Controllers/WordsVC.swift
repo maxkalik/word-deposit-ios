@@ -15,6 +15,12 @@ class WordsVC: UIViewController, WordCollectionViewCellDelegate {
         setupWordsCollectionView()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let indexPath = IndexPath(item: wordIndexPath, section: 0)
+        self.wordsCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+    }
+    
     func showAlert(title: String, message: String) {
         print("Alert from delegation", title, message)
     }
@@ -22,6 +28,7 @@ class WordsVC: UIViewController, WordCollectionViewCellDelegate {
     private func setupWordsCollectionView() {
         wordsCollectionView.delegate = self
         wordsCollectionView.dataSource = self
+    
         let nib = UINib(nibName: Identifiers.WordCollectionViewCell, bundle: nil)
         wordsCollectionView.register(nib, forCellWithReuseIdentifier: Identifiers.WordCollectionViewCell)
         
@@ -40,6 +47,7 @@ extension WordsVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColle
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = wordsCollectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.WordCollectionViewCell, for: indexPath) as? WordCollectionViewCell {
+            // indexpath item should == with tableview item
             cell.configureCell(word: words[indexPath.item], delegate: self)
             return cell
         }

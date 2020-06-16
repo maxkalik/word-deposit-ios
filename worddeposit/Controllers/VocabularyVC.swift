@@ -140,7 +140,7 @@ extension VocabularyVC: UITableViewDelegate, UITableViewDataSource {
                     debugPrint(error.localizedDescription)
                     return
                 }
-                print(selectedWord)
+
                 self.storage.reference().child("/\(user.uid)/\(selectedWord.id).jpg").delete { (error) in
                     if let error = error {
                         self.simpleAlert(title: "Error", msg: error.localizedDescription)
