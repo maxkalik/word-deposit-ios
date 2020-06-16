@@ -25,8 +25,6 @@
 		11284241248E846000A014E9 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284240248E846000A014E9 /* Word.swift */; };
 		1158D30E24917B9B0087DC96 /* WordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1158D30C24917B9B0087DC96 /* WordTableViewCell.swift */; };
 		1158D30F24917B9B0087DC96 /* WordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1158D30D24917B9B0087DC96 /* WordTableViewCell.xib */; };
-		1158D31224917BE90087DC96 /* WordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1158D31024917BE90087DC96 /* WordVC.swift */; };
-		1158D31324917BE90087DC96 /* WordVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1158D31124917BE90087DC96 /* WordVC.xib */; };
 		1158D31524917EC50087DC96 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1158D31424917EC50087DC96 /* GoogleService-Info.plist */; };
 		116BC94C249182BD00968DA6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC94B249182BD00968DA6 /* Constants.swift */; };
 		116BC94E2491836B00968DA6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC94D2491836B00968DA6 /* Extensions.swift */; };
@@ -58,8 +56,6 @@
 		11284240248E846000A014E9 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		1158D30C24917B9B0087DC96 /* WordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordTableViewCell.swift; sourceTree = "<group>"; };
 		1158D30D24917B9B0087DC96 /* WordTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordTableViewCell.xib; sourceTree = "<group>"; };
-		1158D31024917BE90087DC96 /* WordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordVC.swift; sourceTree = "<group>"; };
-		1158D31124917BE90087DC96 /* WordVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordVC.xib; sourceTree = "<group>"; };
 		1158D31424917EC50087DC96 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		116BC94B249182BD00968DA6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		116BC94D2491836B00968DA6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -124,7 +120,6 @@
 		11284224248E7CCD00A014E9 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				1158D31024917BE90087DC96 /* WordVC.swift */,
 				1181BBF12498060F00DB682E /* WordsVC.swift */,
 				1158D30C24917B9B0087DC96 /* WordTableViewCell.swift */,
 				1171E70424981CDD00805D35 /* WordCollectionViewCell.swift */,
@@ -169,9 +164,8 @@
 		1158D30B2491720C0087DC96 /* XIBs */ = {
 			isa = PBXGroup;
 			children = (
-				1158D30D24917B9B0087DC96 /* WordTableViewCell.xib */,
-				1158D31124917BE90087DC96 /* WordVC.xib */,
 				1181BBF22498060F00DB682E /* WordsVC.xib */,
+				1158D30D24917B9B0087DC96 /* WordTableViewCell.xib */,
 				1171E70524981CDD00805D35 /* WordCollectionViewCell.xib */,
 			);
 			path = XIBs;
@@ -275,7 +269,6 @@
 				1128421D248E7C5800A014E9 /* LaunchScreen.storyboard in Resources */,
 				1128421A248E7C5800A014E9 /* Assets.xcassets in Resources */,
 				1171E70724981CDD00805D35 /* WordCollectionViewCell.xib in Resources */,
-				1158D31324917BE90087DC96 /* WordVC.xib in Resources */,
 				11284218248E7C5700A014E9 /* Main.storyboard in Resources */,
 				1181BBF42498060F00DB682E /* WordsVC.xib in Resources */,
 				11284229248E7D5100A014E9 /* Home.storyboard in Resources */,
@@ -340,7 +333,6 @@
 				1128422B248E836300A014E9 /* PracticeVC.swift in Sources */,
 				116BC94C249182BD00968DA6 /* Constants.swift in Sources */,
 				1128423F248E845900A014E9 /* User.swift in Sources */,
-				1158D31224917BE90087DC96 /* WordVC.swift in Sources */,
 				11284235248E83C800A014E9 /* ProfileVC.swift in Sources */,
 				11284237248E83D400A014E9 /* LoginVC.swift in Sources */,
 				11284211248E7C5700A014E9 /* AppDelegate.swift in Sources */,

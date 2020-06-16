@@ -1,15 +1,7 @@
-//
-//  WordsVC.swift
-//  worddeposit
-//
-//  Created by Maksim Kalik on 6/15/20.
-//  Copyright © 2020 Maksim Kalik. All rights reserved.
-//
-
 import UIKit
 
-class WordsVC: UIViewController {
-
+class WordsVC: UIViewController, WordCollectionViewCellDelegate {
+    
     // Outlets
 //    @IBOutlet weak var wordsScrollView: UIScrollView!
     @IBOutlet weak var wordsCollectionView: UICollectionView!
@@ -20,41 +12,28 @@ class WordsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        wordsScrollView.delegate = self
-        
-//        let word01 = setupWordCards(word: words[0])
-//        let word02 = setupWordCards(word: words[1])
-//        let views: [String: UIView] = ["view": view, "word01" : word01.view, "word02" : word02.view]
-//        let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|[word01(==view)]|", options: [], metrics: nil, views: views)
-//        let horizontalConstrains = NSLayoutConstraint.constraints(withVisualFormat: "H:|[word01(==view)][word02(==view)]|", options: [.alignAllTop, .alignAllBottom], metrics: nil, views: views)
-//        NSLayoutConstraint.activate(verticalConstraints + horizontalConstrains)
         setupWordsCollectionView()
+    }
+    
+//    override func awakeFromNib() {
+//        super.awakeFromNib()
+//    }
+    
+    func showAlert(title: String, message: String) {
+        print("Alert from delegation", title, message)
     }
     
     private func setupWordsCollectionView() {
         wordsCollectionView.delegate = self
         wordsCollectionView.dataSource = self
+        let nib = UINib(nibName: Identifiers.WordCollectionViewCell, bundle: nil)
+        wordsCollectionView.register(nib, forCellWithReuseIdentifier: Identifiers.WordCollectionViewCell)
         
         if let flowLayout = wordsCollectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.minimumLineSpacing = 0
+            flowLayout.itemSize = self.wordsCollectionView.frame.size
         }
-        wordsCollectionView.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
-        wordsCollectionView.scrollIndicatorInsets = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
-        let nib = UINib(nibName: Identifiers.WordCollectionViewCell, bundle: nil)
-        wordsCollectionView.register(nib, forCellWithReuseIdentifier: Identifiers.WordCollectionViewCell)
     }
-    
-    /*
-    private func setupWordCards(word: Word) -> WordVC {
-        let viewController = WordVC()
-        viewController.view.translatesAutoresizingMaskIntoConstraints = false
-//        viewController.word = word
-        wordsScrollView.addSubview(viewController.view)
-        addChild(viewController)
-        return viewController
-    }
-    */
-
 }
 
 
@@ -70,10 +49,9 @@ extension WordsVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColle
         }
         return UICollectionViewCell()
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: view.frame.height)
+        return CGSize(width: view.frame.width, height: view.frame.height - 40)
     }
-    
     
 }
