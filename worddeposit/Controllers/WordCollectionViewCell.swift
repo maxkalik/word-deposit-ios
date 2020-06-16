@@ -33,7 +33,11 @@ class WordCollectionViewCell: UICollectionViewCell {
         wordImageButton.layer.cornerRadius = 8
     }
     
-    func configureCell(word: Word) {
+    func configureCell(word: Word, delegate: WordCollectionViewCellDelegate) {
+        
+        self.word = word
+        self.delegate = delegate
+        
         self.word = word
         if let url = URL(string: word.imgUrl) {
             wordImageButton.imageView?.kf.indicatorType = .activity
@@ -69,10 +73,8 @@ class WordCollectionViewCell: UICollectionViewCell {
 
         wordRef.updateData(data) { error in
             if let error = error {
-//                self.simpleAlert(title: "Error", msg: error.localizedDescription)
                 self.delegate?.showAlert(title: "Error", message: error.localizedDescription)
             } else {
-//                self.simpleAlert(title: "Success", msg: "Word has been updated")
                 self.delegate?.showAlert(title: "Success", message: "Word has been updated")
             }
             self.word = updatedWord
@@ -83,7 +85,7 @@ class WordCollectionViewCell: UICollectionViewCell {
     }
 
     @IBAction func onCancelTouched(_ sender: UIButton) {
-        print("cancel pressed")
+        self.delegate?.showAlert(title: "Cancel Pressed", message: "Word has been updated")
     }
     
 }

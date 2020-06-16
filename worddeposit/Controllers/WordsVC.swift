@@ -15,10 +15,6 @@ class WordsVC: UIViewController, WordCollectionViewCellDelegate {
         setupWordsCollectionView()
     }
     
-//    override func awakeFromNib() {
-//        super.awakeFromNib()
-//    }
-    
     func showAlert(title: String, message: String) {
         print("Alert from delegation", title, message)
     }
@@ -44,7 +40,7 @@ extension WordsVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColle
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = wordsCollectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.WordCollectionViewCell, for: indexPath) as? WordCollectionViewCell {
-            cell.configureCell(word: words[indexPath.item])
+            cell.configureCell(word: words[indexPath.item], delegate: self)
             return cell
         }
         return UICollectionViewCell()
