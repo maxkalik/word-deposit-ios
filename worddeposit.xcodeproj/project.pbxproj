@@ -32,8 +32,6 @@
 		1171E70724981CDD00805D35 /* WordCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1171E70524981CDD00805D35 /* WordCollectionViewCell.xib */; };
 		1181BBF32498060F00DB682E /* WordsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1181BBF12498060F00DB682E /* WordsVC.swift */; };
 		1181BBF42498060F00DB682E /* WordsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1181BBF22498060F00DB682E /* WordsVC.xib */; };
-		11B47961249B7E210065A0EF /* WordsCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B4795F249B7E210065A0EF /* WordsCollectionVC.swift */; };
-		11B47962249B7E210065A0EF /* WordsCollectionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 11B47960249B7E210065A0EF /* WordsCollectionVC.xib */; };
 		779CE06B848B9F4E1AB37DDB /* Pods_worddeposit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F066F3CA351A4147BAE07B0 /* Pods_worddeposit.framework */; };
 /* End PBXBuildFile section */
 
@@ -65,8 +63,6 @@
 		1171E70524981CDD00805D35 /* WordCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordCollectionViewCell.xib; sourceTree = "<group>"; };
 		1181BBF12498060F00DB682E /* WordsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsVC.swift; sourceTree = "<group>"; };
 		1181BBF22498060F00DB682E /* WordsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordsVC.xib; sourceTree = "<group>"; };
-		11B4795F249B7E210065A0EF /* WordsCollectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsCollectionVC.swift; sourceTree = "<group>"; };
-		11B47960249B7E210065A0EF /* WordsCollectionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordsCollectionVC.xib; sourceTree = "<group>"; };
 		11D879B12494170B00FF7BA3 /* worddeposit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = worddeposit.entitlements; sourceTree = "<group>"; };
 		2F066F3CA351A4147BAE07B0 /* Pods_worddeposit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_worddeposit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		40ABEB8C9F0BFED3166DA792 /* Pods-worddeposit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-worddeposit.release.xcconfig"; path = "Target Support Files/Pods-worddeposit/Pods-worddeposit.release.xcconfig"; sourceTree = "<group>"; };
@@ -125,7 +121,6 @@
 			isa = PBXGroup;
 			children = (
 				1181BBF12498060F00DB682E /* WordsVC.swift */,
-				11B4795F249B7E210065A0EF /* WordsCollectionVC.swift */,
 				1158D30C24917B9B0087DC96 /* WordTableViewCell.swift */,
 				1171E70424981CDD00805D35 /* WordCollectionViewCell.swift */,
 				1128422A248E836300A014E9 /* PracticeVC.swift */,
@@ -170,7 +165,6 @@
 			isa = PBXGroup;
 			children = (
 				1181BBF22498060F00DB682E /* WordsVC.xib */,
-				11B47960249B7E210065A0EF /* WordsCollectionVC.xib */,
 				1158D30D24917B9B0087DC96 /* WordTableViewCell.xib */,
 				1171E70524981CDD00805D35 /* WordCollectionViewCell.xib */,
 			);
@@ -278,7 +272,6 @@
 				11284218248E7C5700A014E9 /* Main.storyboard in Resources */,
 				1181BBF42498060F00DB682E /* WordsVC.xib in Resources */,
 				11284229248E7D5100A014E9 /* Home.storyboard in Resources */,
-				11B47962249B7E210065A0EF /* WordsCollectionVC.xib in Resources */,
 				1158D30F24917B9B0087DC96 /* WordTableViewCell.xib in Resources */,
 				1158D31524917EC50087DC96 /* GoogleService-Info.plist in Resources */,
 			);
@@ -335,7 +328,6 @@
 			files = (
 				11284239248E83E000A014E9 /* RegistrationVC.swift in Sources */,
 				11284241248E846000A014E9 /* Word.swift in Sources */,
-				11B47961249B7E210065A0EF /* WordsCollectionVC.swift in Sources */,
 				1128423B248E83ED00A014E9 /* ForgotPasswordVC.swift in Sources */,
 				1128423D248E840000A014E9 /* RoundedViews.swift in Sources */,
 				1128422B248E836300A014E9 /* PracticeVC.swift in Sources */,

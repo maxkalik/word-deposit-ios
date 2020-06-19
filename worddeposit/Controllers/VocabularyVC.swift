@@ -112,12 +112,10 @@ extension VocabularyVC: UITableViewDelegate, UITableViewDataSource {
         let vc = WordsVC()
         vc.words = words
         vc.wordIndexPath = indexPath.row
-        present(vc, animated: true, completion: nil)
-        
-//        let collectionView = WordsCollectionVC()
-//        collectionView.words = words
-//        collectionView.wordIndexPath = indexPath.row
-//        present(collectionView, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            self.present(vc, animated: true, completion: nil)
+        }
+
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
