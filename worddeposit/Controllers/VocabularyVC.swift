@@ -108,14 +108,16 @@ extension VocabularyVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let viewController = WordVC()
-//        let selectedWord = words[indexPath.row]
-//        viewController.word = selectedWord
-//        present(viewController, animated: true, completion: nil)
+        
         let vc = WordsVC()
         vc.words = words
         vc.wordIndexPath = indexPath.row
         present(vc, animated: true, completion: nil)
+        
+//        let collectionView = WordsCollectionVC()
+//        collectionView.words = words
+//        collectionView.wordIndexPath = indexPath.row
+//        present(collectionView, animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

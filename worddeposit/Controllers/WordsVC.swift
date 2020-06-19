@@ -13,6 +13,7 @@ class WordsVC: UIViewController, WordCollectionViewCellDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupWordsCollectionView()
+        print("did loa words collection")
     }
     
     override func viewDidLayoutSubviews() {
@@ -35,6 +36,7 @@ class WordsVC: UIViewController, WordCollectionViewCellDelegate {
         if let flowLayout = wordsCollectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.minimumLineSpacing = 0
             flowLayout.itemSize = self.wordsCollectionView.frame.size
+            print(self.wordsCollectionView.frame.size);
         }
     }
 }
@@ -47,7 +49,6 @@ extension WordsVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColle
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = wordsCollectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.WordCollectionViewCell, for: indexPath) as? WordCollectionViewCell {
-            // indexpath item should == with tableview item
             cell.configureCell(word: words[indexPath.item], delegate: self)
             return cell
         }
@@ -57,5 +58,4 @@ extension WordsVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColle
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width, height: view.frame.height - 40)
     }
-    
 }

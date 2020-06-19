@@ -25,12 +25,7 @@ class WordCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        setupUI()
-    }
-
-    private func setupUI() {
         loader.isHidden = true
-        wordImageButton.layer.cornerRadius = 8
     }
     
     func configureCell(word: Word, delegate: WordCollectionViewCellDelegate) {
