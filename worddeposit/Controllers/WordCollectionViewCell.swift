@@ -28,6 +28,7 @@ class WordCollectionViewCell: UICollectionViewCell {
         loader.isHidden = true
     }
     
+    
     func configureCell(word: Word, delegate: WordCollectionViewCellDelegate) {
         
         self.word = word
@@ -82,5 +83,4 @@ class WordCollectionViewCell: UICollectionViewCell {
     @IBAction func onCancelTouched(_ sender: UIButton) {
         self.delegate?.showAlert(title: "Cancel Pressed", message: "Word has been updated")
     }
-    
 }
