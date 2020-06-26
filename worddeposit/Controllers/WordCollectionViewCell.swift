@@ -10,7 +10,13 @@ protocol WordCollectionViewCellDelegate: class {
 class WordCollectionViewCell: UICollectionViewCell {
 
     // Outlets
-    @IBOutlet weak var wordImageButton: UIButton!
+    @IBOutlet weak var wordImageButton: UIButton! {
+        didSet {
+            print("image did set")
+            let pinch = UIPinchGestureRecognizer(target: self, action: #selector(adjustImageButtonScale(byHandlingGestureRecognizedBy:)))
+            wordImageButton.addGestureRecognizer(pinch)
+        }
+    }
     @IBOutlet weak var wordExampleTextField: UITextField!
     @IBOutlet weak var wordTranslationTextField: UITextField!
     @IBOutlet weak var saveChangingButton: UIButton!
@@ -26,8 +32,29 @@ class WordCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         loader.isHidden = true
+        bringSubviewToFront(wordImageButton)
     }
     
+    var wordImageButtonScale: CGFloat = 1.0 {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    
+    @objc func adjustImageButtonScale(byHandlingGestureRecognizedBy recoginzer: UIPinchGestureRecognizer) {
+        switch recoginzer.state {
+        case .changed:
+            wordImageButtonScale *= recoginzer.scale
+            recoginzer.scale = 1.0
+        case .ended:
+            wordImageButtonScale = 1.0
+        default: break
+        }
+    }
+    
+    override func draw(_ rect: CGRect) {
+        wordImageButton.transform = CGAffineTransform(scaleX: wordImageButtonScale, y: wordImageButtonScale)
+    }
     
     func configureCell(word: Word, delegate: WordCollectionViewCellDelegate) {
         
