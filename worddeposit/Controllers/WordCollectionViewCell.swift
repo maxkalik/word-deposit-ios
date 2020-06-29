@@ -114,8 +114,12 @@ class WordCollectionViewCell: UICollectionViewCell {
         picker.didFinishPicking { (items, true) in
             if let photo = items.singlePhoto {
                 self.isImageSet = true
-                self.hideButtons(false)
                 self.wordImageButton.setImage(photo.image, for: .normal)
+                
+                if let example = self.wordExampleTextField.text,
+                   let translation = self.wordTranslationTextField.text, example.isNotEmpty, translation.isNotEmpty {
+                    self.hideButtons(false)
+                }
             }
             picker.dismiss(animated: true, completion: nil)
         }
@@ -147,7 +151,7 @@ class WordCollectionViewCell: UICollectionViewCell {
         
         if isImageSet {
             // if only image has been changed?
-            uploadImage(userId: user.uid, word: word)
+            uploadImage(userId: user.uid, preparedWord: word)
         } else {
             uploadWord(updatedWord)
         }
@@ -155,7 +159,7 @@ class WordCollectionViewCell: UICollectionViewCell {
     
     /* ********* */
     // check
-    func uploadImage(userId: String, word: Word) {
+    func uploadImage(userId: String, preparedWord: Word) {
         
         guard let image = wordImageButton.imageView?.image else {
             self.delegate?.showAlert(title: "Error", message: "Fields cannot be empty")
@@ -174,7 +178,7 @@ class WordCollectionViewCell: UICollectionViewCell {
             }
         }
         
-        var word = word // convert let to var
+        var preparedWord = preparedWord // convert let to var
         
         let resizedImg = image.resized(toWidth: 400.0)
         guard let imageData = resizedImg?.jpegData(compressionQuality: 0.5) else { return }
@@ -197,8 +201,12 @@ class WordCollectionViewCell: UICollectionViewCell {
                     return
                 }
                 guard let url = url else { return }
-                word.imgUrl = url.absoluteString
-                self.uploadWord(word)
+                preparedWord.imgUrl = url.absoluteString
+                
+                if preparedWord.example != self.word.example || preparedWord.translation != self.word.translation {
+                    print("upload word from uploading image")
+                    self.uploadWord(preparedWord)
+                }
             }
         }
     }
