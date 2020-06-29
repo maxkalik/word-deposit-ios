@@ -23,7 +23,11 @@ class WordsVC: UIViewController, WordCollectionViewCellDelegate {
     }
     
     func showAlert(title: String, message: String) {
-        print("Alert from delegation", title, message)
+        self.simpleAlert(title: title, msg: message)
+    }
+    
+    func presentVC(_ viewControllerToPresent: UIViewController) {
+        present(viewControllerToPresent, animated: true, completion: nil)
     }
     
     private func setupWordsCollectionView() {

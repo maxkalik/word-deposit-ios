@@ -17,6 +17,7 @@ class AddWordVC: UIViewController {
     var storage: Storage!
     var wordRef: DocumentReference!
     var imagePicker: UIImagePickerController!
+    var isPhotoSet = false
     
     enum ImageSource {
         case photoLibrary
@@ -50,9 +51,11 @@ class AddWordVC: UIViewController {
         picker.didFinishPicking { (items, true) in
             if let photo = items.singlePhoto {
                 self.wordImagePickerBtn.setImage(photo.image, for: .normal)
+                self.isPhotoSet = true
             }
             picker.dismiss(animated: true, completion: nil)
         }
+        
         present(picker, animated: true, completion: nil)
     }
     
@@ -77,7 +80,11 @@ class AddWordVC: UIViewController {
         var word = Word.init(imgUrl: "", example: example, translation: translation, id: "")
         word.id = wordRef.documentID
         
-        uploadImage(userId: user.uid, word: word)
+        if isPhotoSet {
+            uploadImage(userId: user.uid, word: word)
+        } else {
+            uploadWord(word: word)
+        }
     }
     
     
@@ -141,5 +148,14 @@ class AddWordVC: UIViewController {
         self.wordImagePickerBtn.setImage(UIImage(named: "logo"), for: .normal)
         wordExampleTextField.text = ""
         wordTranslationTextField.text = ""
+    }
+}
+
+class ImageView: UIImageView {
+    override var image: UIImage? {
+        didSet {
+            super.image = image
+            print("Image Set")
+        }
     }
 }

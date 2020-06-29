@@ -1,10 +1,14 @@
 import UIKit
+import Firebase
 import FirebaseAuth
+import FirebaseStorage
 import FirebaseFirestore
 import Kingfisher
+import YPImagePicker
 
 protocol WordCollectionViewCellDelegate: class {
     func showAlert(title: String, message: String)
+    func presentVC(_ viewControllerToPresent: UIViewController)
 }
 
 class WordCollectionViewCell: UICollectionViewCell {
@@ -24,18 +28,42 @@ class WordCollectionViewCell: UICollectionViewCell {
     
     // Variables
     var word: Word!
+    var wordRef: DocumentReference!
     var db = Firestore.firestore()
+    var storage = Storage.storage()
+    private var isImageSet = false
     
     weak var delegate: WordCollectionViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         loader.isHidden = true
+        saveChangingButton.isHidden = true
+        cancelButton.isHidden = true
+        
+        wordExampleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        wordTranslationTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
     var wordImageButtonScale: CGFloat = 1.0 {
         didSet {
             setNeedsDisplay()
+        }
+    }
+    
+    func hideButtons(_ isShow: Bool) {
+        saveChangingButton.isHidden = isShow
+        cancelButton.isHidden = isShow
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        
+        guard let wordExample = wordExampleTextField.text, let wordTranslation = wordTranslationTextField.text else { return }
+        
+        if wordExample != word.example || wordTranslation != word.translation, wordExample.isNotEmpty, wordTranslation.isNotEmpty {
+            hideButtons(false)
+        } else {
+            hideButtons(true)
         }
     }
     
@@ -55,11 +83,12 @@ class WordCollectionViewCell: UICollectionViewCell {
     }
     
     func configureCell(word: Word, delegate: WordCollectionViewCellDelegate) {
-        
         self.word = word
         self.delegate = delegate
-        
-        self.word = word
+        setupWord(word)
+    }
+    
+    func setupWord(_ word: Word) {
         if let url = URL(string: word.imgUrl) {
             wordImageButton.imageView?.kf.indicatorType = .activity
             let options: KingfisherOptionsInfo = [KingfisherOptionsInfoItem.transition(.fade(0.2))]
@@ -71,41 +100,128 @@ class WordCollectionViewCell: UICollectionViewCell {
     
     @IBAction func wordImageButtonTouched(_ sender: UIButton) {
         print(word.imgUrl)
+        var config = YPImagePickerConfiguration()
+        config.onlySquareImagesFromCamera = true
+        config.shouldSaveNewPicturesToAlbum = true
+        config.screens = [.library, .photo]
+        config.albumName = "WordDeposit"
+        config.showsPhotoFilters = false
+        
+        let newCapturePhotoImage = UIImage(systemName: "largecircle.fill.circle")?.withTintColor(UIColor.label) ?? config.icons.capturePhotoImage
+        config.icons.capturePhotoImage = newCapturePhotoImage
+        
+        let picker = YPImagePicker(configuration: config)
+        picker.didFinishPicking { (items, true) in
+            if let photo = items.singlePhoto {
+                self.isImageSet = true
+                self.hideButtons(false)
+                self.wordImageButton.setImage(photo.image, for: .normal)
+            }
+            picker.dismiss(animated: true, completion: nil)
+        }
+        self.delegate?.presentVC(picker)
+        
     }
 
     @IBAction func onSaveChangingTouched(_ sender: UIButton) {
         self.loader.isHidden = false
+        prepareForUpload()
+    }
+    
+    func prepareForUpload() {
         guard let example = wordExampleTextField.text, example.isNotEmpty,
             let translation = wordTranslationTextField.text, translation.isNotEmpty
             else {
-//                simpleAlert(title: "Error", msg: "Fields cannot be empty")
+                self.delegate?.showAlert(title: "Error", message: "Fields cannot be empty")
                 return
         }
         
         // TODO: shoud be rewrited in the singleton
         guard let user = Auth.auth().currentUser else { return }
-        let wordRef = db.collection("users").document(user.uid).collection("words").document(word.id)
+        wordRef = db.collection("users").document(user.uid).collection("words").document(word.id)
         
         // Making a copy of the word
         var updatedWord = word!
         updatedWord.example = example
         updatedWord.translation = translation
-        let data = Word.modelToData(word: updatedWord)
+        
+        if isImageSet {
+            // if only image has been changed?
+            uploadImage(userId: user.uid, word: word)
+        } else {
+            uploadWord(updatedWord)
+        }
+    }
+    
+    /* ********* */
+    // check
+    func uploadImage(userId: String, word: Word) {
+        
+        guard let image = wordImageButton.imageView?.image else {
+            self.delegate?.showAlert(title: "Error", message: "Fields cannot be empty")
+            loader.isHidden = true
+            return
+        }
+        
+        // remove image before uploading
+        if word.imgUrl.isNotEmpty {
+            self.storage.reference().child("/\(userId)/\(word.id).jpg").delete { (error) in
+                if let error = error {
+                    self.delegate?.showAlert(title: "Error", message: error.localizedDescription)
+                    debugPrint(error.localizedDescription)
+                    return
+                }
+            }
+        }
+        
+        var word = word // convert let to var
+        
+        let resizedImg = image.resized(toWidth: 400.0)
+        guard let imageData = resizedImg?.jpegData(compressionQuality: 0.5) else { return }
+        
+        let imageRef = Storage.storage().reference().child("/\(userId)/\(word.id).jpg")
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpg"
+        
+        imageRef.putData(imageData, metadata: metadata) { (storageMetadata, error) in
+            if let error = error {
+                self.delegate?.showAlert(title: "Error", message: "Unable to upload image")
+                debugPrint(error.localizedDescription)
+                return
+            }
+            
+            imageRef.downloadURL { (url, error) in
+                if let error = error {
+                    self.delegate?.showAlert(title: "Error", message: "Unable to upload image")
+                    debugPrint(error.localizedDescription)
+                    return
+                }
+                guard let url = url else { return }
+                word.imgUrl = url.absoluteString
+                self.uploadWord(word)
+            }
+        }
+    }
+    
+    func uploadWord(_ word: Word) {
+        let data = Word.modelToData(word: word)
 
         wordRef.updateData(data) { error in
             if let error = error {
                 self.delegate?.showAlert(title: "Error", message: error.localizedDescription)
             } else {
+                self.word = word
+                self.hideButtons(true)
                 self.delegate?.showAlert(title: "Success", message: "Word has been updated")
             }
-            self.word = updatedWord
             self.loader.isHidden = true
-//            self.navigationController?.popViewController(animated: true)
-//            self.dismiss(animated: true, completion: nil)
         }
     }
 
     @IBAction func onCancelTouched(_ sender: UIButton) {
-        self.delegate?.showAlert(title: "Cancel Pressed", message: "Word has been updated")
+        self.setupWord(word)
+        hideButtons(true)
+        isImageSet = false
+//        self.delegate?.showAlert(title: "Cancel Pressed", message: "Word has been updated")
     }
 }
