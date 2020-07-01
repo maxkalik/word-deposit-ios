@@ -57,7 +57,10 @@ class WordCollectionViewCell: UICollectionViewCell {
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
-        
+        textFieldValidation()
+    }
+    
+    func textFieldValidation() {
         guard let wordExample = wordExampleTextField.text, let wordTranslation = wordTranslationTextField.text else { return }
         
         if wordExample != word.example || wordTranslation != word.translation {
@@ -111,15 +114,7 @@ class WordCollectionViewCell: UICollectionViewCell {
                 self.isImageSet = true
                 self.wordImageButton.setImage(photo.image, for: .normal)
                 
-                // ------- //
-                // TODO
-                if let example = self.wordExampleTextField.text,
-                   let translation = self.wordTranslationTextField.text, example.isEmpty, translation.isEmpty {
-                    self.saveChangingButton.isHidden = true
-                    self.cancelButton.isHidden = false
-                } else {
-                    self.hideAllButtons(false)
-                }
+                self.textFieldValidation()
                 
             }
             picker.dismiss(animated: true, completion: nil)
