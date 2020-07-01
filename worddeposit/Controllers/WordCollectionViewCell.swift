@@ -51,7 +51,7 @@ class WordCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func hideButtons(_ isShow: Bool) {
+    func hideAllButtons(_ isShow: Bool) {
         saveChangingButton.isHidden = isShow
         cancelButton.isHidden = isShow
     }
@@ -60,10 +60,14 @@ class WordCollectionViewCell: UICollectionViewCell {
         
         guard let wordExample = wordExampleTextField.text, let wordTranslation = wordTranslationTextField.text else { return }
         
-        if wordExample != word.example || wordTranslation != word.translation, wordExample.isNotEmpty, wordTranslation.isNotEmpty {
-            hideButtons(false)
+        if wordExample != word.example || wordTranslation != word.translation {
+            hideAllButtons(false)
+            if wordExample.isEmpty || wordTranslation.isEmpty {
+                saveChangingButton.isHidden = true
+                cancelButton.isHidden = false
+            }
         } else {
-            hideButtons(true)
+            hideAllButtons(true)
         }
     }
     
@@ -107,10 +111,16 @@ class WordCollectionViewCell: UICollectionViewCell {
                 self.isImageSet = true
                 self.wordImageButton.setImage(photo.image, for: .normal)
                 
+                // ------- //
+                // TODO
                 if let example = self.wordExampleTextField.text,
-                   let translation = self.wordTranslationTextField.text, example.isNotEmpty, translation.isNotEmpty {
-                    self.hideButtons(false)
+                   let translation = self.wordTranslationTextField.text, example.isEmpty, translation.isEmpty {
+                    self.saveChangingButton.isHidden = true
+                    self.cancelButton.isHidden = false
+                } else {
+                    self.hideAllButtons(false)
                 }
+                
             }
             picker.dismiss(animated: true, completion: nil)
         }
@@ -209,7 +219,7 @@ class WordCollectionViewCell: UICollectionViewCell {
                 self.delegate?.showAlert(title: "Error", message: error.localizedDescription)
             } else {
                 self.word = word
-                self.hideButtons(true)
+                self.hideAllButtons(true)
                 self.delegate?.showAlert(title: "Success", message: "Word has been updated")
             }
             self.loader.isHidden = true
@@ -218,7 +228,7 @@ class WordCollectionViewCell: UICollectionViewCell {
 
     @IBAction func onCancelTouched(_ sender: UIButton) {
         self.setupWord(word)
-        hideButtons(true)
+        hideAllButtons(true)
         isImageSet = false
     }
 }
