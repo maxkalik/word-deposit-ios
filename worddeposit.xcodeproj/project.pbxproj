@@ -32,6 +32,7 @@
 		1171E70724981CDD00805D35 /* WordCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1171E70524981CDD00805D35 /* WordCollectionViewCell.xib */; };
 		1181BBF32498060F00DB682E /* WordsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1181BBF12498060F00DB682E /* WordsVC.swift */; };
 		1181BBF42498060F00DB682E /* WordsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1181BBF22498060F00DB682E /* WordsVC.xib */; };
+		119DBF5724ACCFBF009124B7 /* Configurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119DBF5624ACCFBF009124B7 /* Configurations.swift */; };
 		779CE06B848B9F4E1AB37DDB /* Pods_worddeposit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F066F3CA351A4147BAE07B0 /* Pods_worddeposit.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +64,7 @@
 		1171E70524981CDD00805D35 /* WordCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordCollectionViewCell.xib; sourceTree = "<group>"; };
 		1181BBF12498060F00DB682E /* WordsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsVC.swift; sourceTree = "<group>"; };
 		1181BBF22498060F00DB682E /* WordsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordsVC.xib; sourceTree = "<group>"; };
+		119DBF5624ACCFBF009124B7 /* Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
 		11D879B12494170B00FF7BA3 /* worddeposit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = worddeposit.entitlements; sourceTree = "<group>"; };
 		2F066F3CA351A4147BAE07B0 /* Pods_worddeposit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_worddeposit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		40ABEB8C9F0BFED3166DA792 /* Pods-worddeposit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-worddeposit.release.xcconfig"; path = "Target Support Files/Pods-worddeposit/Pods-worddeposit.release.xcconfig"; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 			children = (
 				116BC94B249182BD00968DA6 /* Constants.swift */,
 				116BC94D2491836B00968DA6 /* Extensions.swift */,
+				119DBF5624ACCFBF009124B7 /* Configurations.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 				1171E70624981CDD00805D35 /* WordCollectionViewCell.swift in Sources */,
 				1128422F248E839D00A014E9 /* AddWordVC.swift in Sources */,
 				1181BBF32498060F00DB682E /* WordsVC.swift in Sources */,
+				119DBF5724ACCFBF009124B7 /* Configurations.swift in Sources */,
 				1158D30E24917B9B0087DC96 /* WordTableViewCell.swift in Sources */,
 				11284233248E83BB00A014E9 /* VocabularyVC.swift in Sources */,
 				11284213248E7C5700A014E9 /* SceneDelegate.swift in Sources */,

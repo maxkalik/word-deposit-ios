@@ -35,18 +35,9 @@ class AddWordVC: UIViewController {
     }
     
     @IBAction func wordImagePickerBtnTapped(_ sender: UIButton) {
-        var config = YPImagePickerConfiguration()
-        config.onlySquareImagesFromCamera = true
-        config.shouldSaveNewPicturesToAlbum = true
-        config.screens = [.library, .photo]
-        config.albumName = "WordDeposit"
-        config.showsPhotoFilters = false
         
-        // get capture icon from system icon
-        let newCapturePhotoImage = UIImage(systemName: "largecircle.fill.circle")?.withTintColor(UIColor.label) ?? config.icons.capturePhotoImage
-        config.icons.capturePhotoImage = newCapturePhotoImage
-        
-        let picker = YPImagePicker(configuration: config)
+        let ypConfig = YPImagePickerConfig()
+        let picker = YPImagePicker(configuration: ypConfig.defaultConfig())
 
         picker.didFinishPicking { (items, true) in
             if let photo = items.singlePhoto {
