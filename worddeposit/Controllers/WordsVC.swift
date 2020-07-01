@@ -13,7 +13,6 @@ class WordsVC: UIViewController, WordCollectionViewCellDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupWordsCollectionView()
-        print("did loa words collection")
     }
     
     override func viewDidLayoutSubviews() {
@@ -58,7 +57,7 @@ extension WordsVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColle
         }
         return UICollectionViewCell()
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width, height: view.safeAreaLayoutGuide.layoutFrame.size.height)
     }
