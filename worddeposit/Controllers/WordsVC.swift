@@ -13,12 +13,20 @@ class WordsVC: UIViewController, WordCollectionViewCellDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupWordsCollectionView()
+        self.view.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        self.view.layer.borderWidth = 1
+    }
+    
+    override func viewLayoutMarginsDidChange() {
+        print("margin changed")
     }
     
     override func viewDidLayoutSubviews() {
+        print("view did layout subviews")
         super.viewDidLayoutSubviews()
         let indexPath = IndexPath(item: wordIndexPath, section: 0)
         self.wordsCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+        
     }
     
     func showAlert(title: String, message: String) {
@@ -33,13 +41,16 @@ class WordsVC: UIViewController, WordCollectionViewCellDelegate {
         wordsCollectionView.delegate = self
         wordsCollectionView.dataSource = self
     
+        
         let nib = UINib(nibName: Identifiers.WordCollectionViewCell, bundle: nil)
         wordsCollectionView.register(nib, forCellWithReuseIdentifier: Identifiers.WordCollectionViewCell)
         
         if let flowLayout = wordsCollectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.minimumLineSpacing = 0
-            flowLayout.itemSize = self.wordsCollectionView.frame.size
-            print(self.wordsCollectionView.frame.size);
+            flowLayout.minimumInteritemSpacing = 0
+//            flowLayout.shouldInvalidateLayout(forBoundsChange: <#T##CGRect#>)
+//            flowLayout.itemSize = self.wordsCollectionView.frame.size
+//            flowLayout.itemSize = CGSize(width: view.frame.width - 200, height: view.frame.height)
         }
     }
 }
