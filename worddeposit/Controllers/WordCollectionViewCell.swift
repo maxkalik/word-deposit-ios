@@ -63,7 +63,7 @@ class WordCollectionViewCell: UICollectionViewCell {
     func textFieldValidation() {
         guard let wordExample = wordExampleTextField.text, let wordTranslation = wordTranslationTextField.text else { return }
         
-        if wordExample != word.example || wordTranslation != word.translation {
+        if wordExample != word.example || wordTranslation != word.translation || isImageSet {
             hideAllButtons(false)
             if wordExample.isEmpty || wordTranslation.isEmpty {
                 saveChangingButton.isHidden = true
