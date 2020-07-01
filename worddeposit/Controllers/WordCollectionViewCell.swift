@@ -51,19 +51,26 @@ class WordCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func hideButtons(_ isShow: Bool) {
+    func hideAllButtons(_ isShow: Bool) {
         saveChangingButton.isHidden = isShow
         cancelButton.isHidden = isShow
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
-        
+        textFieldValidation()
+    }
+    
+    func textFieldValidation() {
         guard let wordExample = wordExampleTextField.text, let wordTranslation = wordTranslationTextField.text else { return }
         
-        if wordExample != word.example || wordTranslation != word.translation, wordExample.isNotEmpty, wordTranslation.isNotEmpty {
-            hideButtons(false)
+        if wordExample != word.example || wordTranslation != word.translation {
+            hideAllButtons(false)
+            if wordExample.isEmpty || wordTranslation.isEmpty {
+                saveChangingButton.isHidden = true
+                cancelButton.isHidden = false
+            }
         } else {
-            hideButtons(true)
+            hideAllButtons(true)
         }
     }
     
@@ -99,27 +106,16 @@ class WordCollectionViewCell: UICollectionViewCell {
     }
     
     @IBAction func wordImageButtonTouched(_ sender: UIButton) {
-        print(word.imgUrl)
-        var config = YPImagePickerConfiguration()
-        config.onlySquareImagesFromCamera = true
-        config.shouldSaveNewPicturesToAlbum = true
-        config.screens = [.library, .photo]
-        config.albumName = "WordDeposit"
-        config.showsPhotoFilters = false
-        
-        let newCapturePhotoImage = UIImage(systemName: "largecircle.fill.circle")?.withTintColor(UIColor.label) ?? config.icons.capturePhotoImage
-        config.icons.capturePhotoImage = newCapturePhotoImage
-        
-        let picker = YPImagePicker(configuration: config)
+        let ypConfig = YPImagePickerConfig()
+        let picker = YPImagePicker(configuration: ypConfig.defaultConfig())
+
         picker.didFinishPicking { (items, true) in
             if let photo = items.singlePhoto {
                 self.isImageSet = true
                 self.wordImageButton.setImage(photo.image, for: .normal)
                 
-                if let example = self.wordExampleTextField.text,
-                   let translation = self.wordTranslationTextField.text, example.isNotEmpty, translation.isNotEmpty {
-                    self.hideButtons(false)
-                }
+                self.textFieldValidation()
+                
             }
             picker.dismiss(animated: true, completion: nil)
         }
@@ -151,7 +147,7 @@ class WordCollectionViewCell: UICollectionViewCell {
         
         if isImageSet {
             // if only image has been changed?
-            uploadImage(userId: user.uid, preparedWord: word)
+            uploadImage(userId: user.uid, updatedWord: word)
         } else {
             uploadWord(updatedWord)
         }
@@ -159,7 +155,7 @@ class WordCollectionViewCell: UICollectionViewCell {
     
     /* ********* */
     // check
-    func uploadImage(userId: String, preparedWord: Word) {
+    func uploadImage(userId: String, updatedWord: Word) {
         
         guard let image = wordImageButton.imageView?.image else {
             self.delegate?.showAlert(title: "Error", message: "Fields cannot be empty")
@@ -178,12 +174,12 @@ class WordCollectionViewCell: UICollectionViewCell {
             }
         }
         
-        var preparedWord = preparedWord // convert let to var
+        var updatedWord = updatedWord // convert let to var
         
         let resizedImg = image.resized(toWidth: 400.0)
         guard let imageData = resizedImg?.jpegData(compressionQuality: 0.5) else { return }
         
-        let imageRef = Storage.storage().reference().child("/\(userId)/\(word.id).jpg")
+        let imageRef = Storage.storage().reference().child("/\(userId)/\(updatedWord.id).jpg")
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpg"
         
@@ -201,12 +197,11 @@ class WordCollectionViewCell: UICollectionViewCell {
                     return
                 }
                 guard let url = url else { return }
-                preparedWord.imgUrl = url.absoluteString
+                updatedWord.imgUrl = url.absoluteString
                 
-                if preparedWord.example != self.word.example || preparedWord.translation != self.word.translation {
-                    print("upload word from uploading image")
-                    self.uploadWord(preparedWord)
-                }
+                // updating wordUrl
+                // TODO - should have to own func to update just url may be
+                self.uploadWord(updatedWord)
             }
         }
     }
@@ -219,7 +214,7 @@ class WordCollectionViewCell: UICollectionViewCell {
                 self.delegate?.showAlert(title: "Error", message: error.localizedDescription)
             } else {
                 self.word = word
-                self.hideButtons(true)
+                self.hideAllButtons(true)
                 self.delegate?.showAlert(title: "Success", message: "Word has been updated")
             }
             self.loader.isHidden = true
@@ -228,8 +223,7 @@ class WordCollectionViewCell: UICollectionViewCell {
 
     @IBAction func onCancelTouched(_ sender: UIButton) {
         self.setupWord(word)
-        hideButtons(true)
+        hideAllButtons(true)
         isImageSet = false
-//        self.delegate?.showAlert(title: "Cancel Pressed", message: "Word has been updated")
     }
 }
