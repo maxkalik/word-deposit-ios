@@ -43,6 +43,9 @@ class WordCollectionViewCell: UICollectionViewCell {
         
         wordExampleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         wordTranslationTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     var wordImageButtonScale: CGFloat = 1.0 {
@@ -60,10 +63,22 @@ class WordCollectionViewCell: UICollectionViewCell {
         textFieldValidation()
     }
     
+    @objc func keyboardWillShow(sender: UIResponder) {
+//        self.view.frame.origin.y -= 150
+        print("keyboard show")
+        
+        print(frame.size.width, UIScreen.main.bounds.width)
+        print(frame.size.height, UIScreen.main.bounds.height)
+    }
+    @objc func keyboardWillHide(sender: UIResponder) {
+//        self.view.frame.origin.y += 150
+        print("keyboard hide")
+    }
+    
     func textFieldValidation() {
         guard let wordExample = wordExampleTextField.text, let wordTranslation = wordTranslationTextField.text else { return }
         
-        if wordExample != word.example || wordTranslation != word.translation {
+        if wordExample != word.example || wordTranslation != word.translation || isImageSet {
             hideAllButtons(false)
             if wordExample.isEmpty || wordTranslation.isEmpty {
                 saveChangingButton.isHidden = true

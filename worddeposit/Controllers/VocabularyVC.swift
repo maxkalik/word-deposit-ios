@@ -112,6 +112,9 @@ extension VocabularyVC: UITableViewDelegate, UITableViewDataSource {
         let vc = WordsVC()
         vc.words = words
         vc.wordIndexPath = indexPath.row
+//        vc.modalPresentationStyle = .overFullScreen
+//        vc.isModalInPresentation = true
+
         DispatchQueue.main.async {
             self.present(vc, animated: true, completion: nil)
         }
