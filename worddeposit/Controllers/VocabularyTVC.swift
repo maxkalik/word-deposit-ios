@@ -105,7 +105,7 @@ class VocabularyTVC: UITableViewController {
             snapshot?.documentChanges.forEach({ (docChange) in
                 let data = docChange.document.data()
                 let word = Word.init(data: data)
-                
+
                 switch docChange.type {
                 case .added:
                     self.onDocumentAdded(change: docChange, word: word)
@@ -149,16 +149,7 @@ class VocabularyTVC: UITableViewController {
 
 extension VocabularyTVC {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        /*
-        let selectedWord: Word!
-        // Check to see which table view cell was selected
-        if tableView === self.tableView {
-            selectedWord = words[indexPath.row]
-        } else {
-            selectedWord = resultsTableController.filteredWords[indexPath.row]
-        }
-        */
+
         let vc = WordsVC()
         
         if tableView === self.tableView {
@@ -207,7 +198,14 @@ extension VocabularyTVC {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
-            let selectedWord = words[indexPath.row]
+            
+            let selectedWord: Word!
+            // Check to see which table view cell was selected
+            if tableView === self.tableView {
+                selectedWord = words[indexPath.row]
+            } else {
+                selectedWord = resultsTableController.filteredWords[indexPath.row]
+            }
 
             // TODO: shoud be rewrited in the singleton
 
@@ -220,11 +218,13 @@ extension VocabularyTVC {
                     return
                 }
 
-                self.storage.reference().child("/\(user.uid)/\(selectedWord.id).jpg").delete { (error) in
-                    if let error = error {
-                        self.simpleAlert(title: "Error", msg: error.localizedDescription)
-                        debugPrint(error.localizedDescription)
-                        return
+                if selectedWord.imgUrl.isNotEmpty {
+                    self.storage.reference().child("/\(user.uid)/\(selectedWord.id).jpg").delete { (error) in
+                        if let error = error {
+                            self.simpleAlert(title: "Error", msg: error.localizedDescription)
+                            debugPrint(error.localizedDescription)
+                            return
+                        }
                     }
                 }
             }

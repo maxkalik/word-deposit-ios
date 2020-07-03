@@ -233,6 +233,7 @@ class WordCollectionViewCell: UICollectionViewCell {
                 self.delegate?.showAlert(title: "Success", message: "Word has been updated")
             }
             self.loader.isHidden = true
+            self.isImageSet = false
         }
     }
 

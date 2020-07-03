@@ -24,7 +24,7 @@ class WordTableViewCell: UITableViewCell {
     
     func configureCell(word: Word) {
         self.word = word
-
+        print("vocabulary cell", word)
         if let url = URL(string: word.imgUrl) {
             preview.kf.indicatorType = .activity
             let options: KingfisherOptionsInfo = [KingfisherOptionsInfoItem.transition(.fade(0.2))]

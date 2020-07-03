@@ -139,14 +139,6 @@ class AddWordVC: UIViewController {
         self.wordImagePickerBtn.setImage(UIImage(named: "logo"), for: .normal)
         wordExampleTextField.text = ""
         wordTranslationTextField.text = ""
-    }
-}
-
-class ImageView: UIImageView {
-    override var image: UIImage? {
-        didSet {
-            super.image = image
-            print("Image Set")
-        }
+        isPhotoSet = false
     }
 }
