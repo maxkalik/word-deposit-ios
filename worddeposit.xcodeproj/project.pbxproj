@@ -15,7 +15,7 @@
 		11284229248E7D5100A014E9 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11284228248E7D5100A014E9 /* Home.storyboard */; };
 		1128422B248E836300A014E9 /* PracticeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1128422A248E836300A014E9 /* PracticeVC.swift */; };
 		1128422F248E839D00A014E9 /* AddWordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1128422E248E839D00A014E9 /* AddWordVC.swift */; };
-		11284233248E83BB00A014E9 /* VocabularyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284232248E83BB00A014E9 /* VocabularyVC.swift */; };
+		11284233248E83BB00A014E9 /* VocabularyTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284232248E83BB00A014E9 /* VocabularyTVC.swift */; };
 		11284235248E83C800A014E9 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284234248E83C800A014E9 /* ProfileVC.swift */; };
 		11284237248E83D400A014E9 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284236248E83D400A014E9 /* LoginVC.swift */; };
 		11284239248E83E000A014E9 /* RegistrationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284238248E83E000A014E9 /* RegistrationVC.swift */; };
@@ -47,7 +47,7 @@
 		11284228248E7D5100A014E9 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		1128422A248E836300A014E9 /* PracticeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeVC.swift; sourceTree = "<group>"; };
 		1128422E248E839D00A014E9 /* AddWordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWordVC.swift; sourceTree = "<group>"; };
-		11284232248E83BB00A014E9 /* VocabularyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyVC.swift; sourceTree = "<group>"; };
+		11284232248E83BB00A014E9 /* VocabularyTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyTVC.swift; sourceTree = "<group>"; };
 		11284234248E83C800A014E9 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		11284236248E83D400A014E9 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		11284238248E83E000A014E9 /* RegistrationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationVC.swift; sourceTree = "<group>"; };
@@ -127,7 +127,7 @@
 				1171E70424981CDD00805D35 /* WordCollectionViewCell.swift */,
 				1128422A248E836300A014E9 /* PracticeVC.swift */,
 				1128422E248E839D00A014E9 /* AddWordVC.swift */,
-				11284232248E83BB00A014E9 /* VocabularyVC.swift */,
+				11284232248E83BB00A014E9 /* VocabularyTVC.swift */,
 				11284234248E83C800A014E9 /* ProfileVC.swift */,
 				11284236248E83D400A014E9 /* LoginVC.swift */,
 				11284238248E83E000A014E9 /* RegistrationVC.swift */,
@@ -345,7 +345,7 @@
 				1181BBF32498060F00DB682E /* WordsVC.swift in Sources */,
 				119DBF5724ACCFBF009124B7 /* Configurations.swift in Sources */,
 				1158D30E24917B9B0087DC96 /* WordTableViewCell.swift in Sources */,
-				11284233248E83BB00A014E9 /* VocabularyVC.swift in Sources */,
+				11284233248E83BB00A014E9 /* VocabularyTVC.swift in Sources */,
 				11284213248E7C5700A014E9 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -75,7 +75,7 @@
                     <connections>
                         <segue destination="iJg-J4-07g" kind="relationship" relationship="viewControllers" id="Zmd-bd-EH6"/>
                         <segue destination="8x7-ml-O9y" kind="relationship" relationship="viewControllers" id="nH2-Ad-uz4"/>
-                        <segue destination="jaf-ru-fRA" kind="relationship" relationship="viewControllers" id="kah-Zs-Tk3"/>
+                        <segue destination="yvr-8f-efO" kind="relationship" relationship="viewControllers" id="bDT-R9-12E"/>
                         <segue destination="PTR-Yg-RKo" kind="relationship" relationship="viewControllers" id="CUb-mD-ETh"/>
                     </connections>
                 </tabBarController>
@@ -84,42 +84,33 @@
             <point key="canvasLocation" x="-426.08695652173918" y="140.625"/>
         </scene>
         <!--Vocabulary-->
-        <scene sceneID="Zg4-3h-Vjg">
+        <scene sceneID="l4p-rC-xCH">
             <objects>
-                <viewController id="jaf-ru-fRA" customClass="VocabularyVC" customModule="worddeposit" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="1iw-9I-RcY">
+                <tableViewController id="yvr-8f-efO" customClass="VocabularyTVC" customModule="worddeposit" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Bqc-6z-Qtl">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" delaysContentTouches="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4yt-ZB-Njr">
-                                <rect key="frame" x="0.0" y="100" width="414" height="713"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                            </tableView>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="A0t-Di-3JT">
-                                <rect key="frame" x="0.0" y="44" width="414" height="56"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
-                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="4yt-ZB-Njr" firstAttribute="leading" secondItem="yoM-Eb-iHm" secondAttribute="leading" id="5cd-5Y-MRv"/>
-                            <constraint firstItem="A0t-Di-3JT" firstAttribute="trailing" secondItem="yoM-Eb-iHm" secondAttribute="trailing" id="KMt-lX-2R6"/>
-                            <constraint firstItem="4yt-ZB-Njr" firstAttribute="trailing" secondItem="yoM-Eb-iHm" secondAttribute="trailing" id="KyF-IU-aPK"/>
-                            <constraint firstItem="A0t-Di-3JT" firstAttribute="leading" secondItem="yoM-Eb-iHm" secondAttribute="leading" id="ivl-i6-MrK"/>
-                            <constraint firstItem="A0t-Di-3JT" firstAttribute="top" secondItem="yoM-Eb-iHm" secondAttribute="top" id="mI0-eE-B8f"/>
-                            <constraint firstItem="4yt-ZB-Njr" firstAttribute="bottom" secondItem="yoM-Eb-iHm" secondAttribute="bottom" id="ndz-AH-rcb"/>
-                            <constraint firstItem="4yt-ZB-Njr" firstAttribute="top" secondItem="A0t-Di-3JT" secondAttribute="bottom" id="q0J-PO-S5G"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="yoM-Eb-iHm"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Vocabulary" image="list.dash" catalog="system" id="AMc-np-7ej"/>
-                    <connections>
-                        <outlet property="wordsTableView" destination="4yt-ZB-Njr" id="Xts-Ur-GaL"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3Mh-lU-0jM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="9WB-cg-hf4">
+                                <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9WB-cg-hf4" id="DyH-0b-Yeo">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="yvr-8f-efO" id="Sol-si-9oN"/>
+                            <outlet property="delegate" destination="yvr-8f-efO" id="MdT-sR-seW"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="Vocabulary" image="list.dash" catalog="system" id="yLS-d6-QEP"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IEH-8u-IiS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1262.3188405797102" y="-249.10714285714283"/>
+            <point key="canvasLocation" x="1261" y="-257"/>
         </scene>
         <!--Add Word-->
         <scene sceneID="Jhm-gw-kU6">
