@@ -25,10 +25,19 @@ class WordTableViewCell: UITableViewCell {
     func configureCell(word: Word) {
         self.word = word
         print("vocabulary cell", word)
+        
         if let url = URL(string: word.imgUrl) {
             preview.kf.indicatorType = .activity
             let options: KingfisherOptionsInfo = [KingfisherOptionsInfoItem.transition(.fade(0.2))]
-            preview.kf.setImage(with: url, options: options)
+            let placeholder = UIImage(named: "logo")
+            print(url)
+            preview.kf.setImage(with: url, placeholder: placeholder, options: options)
+            
+            let cache = ImageCache.default
+            let cached = cache.isCached(forKey: word.imgUrl)
+            print("---------- image is cashed: ", cached)
+            cache.clearMemoryCache()
+            
         }
         
         wordExampleLabel.text = word.example

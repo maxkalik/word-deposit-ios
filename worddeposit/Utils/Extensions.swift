@@ -48,18 +48,11 @@ extension UIImageView {
 
 /*
 extension Firestore {
-    var words: CollectionReference {
-//        let userId = UserService.user.id
-        // TODO: shoud be rewrited in the singleton
-        guard let user = Auth.auth().currentUser else { return nil }
-        return Firestore.firestore().collection("users").document(user.uid).collection("words")
+    var categories: Query {
+        return collection("categories").order(by: "timeStamp", descending: true)
     }
-}
-
-extension Storage {
-    func getWordImageById(_ id: String) -> StorageReference {
-        let userId = UserService.user.id
-        return Storage.storage().reference().child("/\(userId)/\(id).jpg")
+    func products(categoryId: String) -> Query {
+        return collection("products").whereField("category", isEqualTo: categoryId).order(by: "timeStamp", descending: true)
     }
 }
 */
