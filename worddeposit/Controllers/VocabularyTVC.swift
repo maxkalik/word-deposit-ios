@@ -178,6 +178,8 @@ extension VocabularyTVC {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: Identifiers.WordCell, for: indexPath) as? WordTableViewCell {
+            // cell is reusable so before calling it we have to nil an image because it can show an image from previous usage
+//            cell.preview.image = nil
             cell.configureCell(word: words[indexPath.row])
             return cell
         }
