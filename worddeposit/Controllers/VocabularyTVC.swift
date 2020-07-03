@@ -75,7 +75,6 @@ class VocabularyTVC: UITableViewController {
         searchController.searchBar.sizeToFit()
         searchController.searchBar.searchBarStyle = .minimal
         searchController.definesPresentationContext = true
-//        searchController.dimsBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self // Monitor when the search button is tapped
         
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -84,8 +83,7 @@ class VocabularyTVC: UITableViewController {
         navigationItem.searchController = searchController
 
         // Make the search bar always visible
-        navigationItem.hidesSearchBarWhenScrolling = true
-        definesPresentationContext = true
+        navigationItem.hidesSearchBarWhenScrolling = false
         
     }
     

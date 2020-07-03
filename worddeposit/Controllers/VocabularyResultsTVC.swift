@@ -65,7 +65,11 @@ extension VocabularyResultsTVC {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
+            
             let selectedWord = filteredWords[indexPath.row]
+            
+            self.filteredWords.remove(at: indexPath.row)
+            tableView.deleteRows(at: [IndexPath(item: indexPath.row, section: 0)], with: .fade)
 
             // TODO: shoud be rewrited in the singleton
 
@@ -77,7 +81,7 @@ extension VocabularyResultsTVC {
                     debugPrint(error.localizedDescription)
                     return
                 }
-                
+
                 if selectedWord.imgUrl.isNotEmpty {
                     self.storage.reference().child("/\(user.uid)/\(selectedWord.id).jpg").delete { (error) in
                         if let error = error {
@@ -88,7 +92,7 @@ extension VocabularyResultsTVC {
                     }
                 }
                 
-                tableView.reloadData()
+                
             }
         }
     }
