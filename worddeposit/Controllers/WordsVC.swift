@@ -22,6 +22,8 @@ class WordsVC: UIViewController, WordCollectionViewCellDelegate {
     }
     
     override func viewDidLayoutSubviews() {
+        
+        // this should be checked because it is called by multiple times if try to drag the view
         print("view did layout subviews")
         super.viewDidLayoutSubviews()
         let indexPath = IndexPath(item: wordIndexPath, section: 0)

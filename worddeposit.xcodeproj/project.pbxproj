@@ -33,6 +33,10 @@
 		1181BBF32498060F00DB682E /* WordsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1181BBF12498060F00DB682E /* WordsVC.swift */; };
 		1181BBF42498060F00DB682E /* WordsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1181BBF22498060F00DB682E /* WordsVC.xib */; };
 		119DBF5724ACCFBF009124B7 /* Configurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119DBF5624ACCFBF009124B7 /* Configurations.swift */; };
+		11F32A5324AF46D00097BF39 /* VocabularyResultsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F32A5224AF46D00097BF39 /* VocabularyResultsTVC.swift */; };
+		11F32A5524AF49C30097BF39 /* VocabularyTVC+Restore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F32A5424AF49C30097BF39 /* VocabularyTVC+Restore.swift */; };
+		11F32A5724AF49D00097BF39 /* VocabularyTVC+DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F32A5624AF49D00097BF39 /* VocabularyTVC+DataSource.swift */; };
+		11F32A5924AF49DB0097BF39 /* VocabularyTVC+Updating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F32A5824AF49DB0097BF39 /* VocabularyTVC+Updating.swift */; };
 		779CE06B848B9F4E1AB37DDB /* Pods_worddeposit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F066F3CA351A4147BAE07B0 /* Pods_worddeposit.framework */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +70,10 @@
 		1181BBF22498060F00DB682E /* WordsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordsVC.xib; sourceTree = "<group>"; };
 		119DBF5624ACCFBF009124B7 /* Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
 		11D879B12494170B00FF7BA3 /* worddeposit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = worddeposit.entitlements; sourceTree = "<group>"; };
+		11F32A5224AF46D00097BF39 /* VocabularyResultsTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyResultsTVC.swift; sourceTree = "<group>"; };
+		11F32A5424AF49C30097BF39 /* VocabularyTVC+Restore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VocabularyTVC+Restore.swift"; sourceTree = "<group>"; };
+		11F32A5624AF49D00097BF39 /* VocabularyTVC+DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VocabularyTVC+DataSource.swift"; sourceTree = "<group>"; };
+		11F32A5824AF49DB0097BF39 /* VocabularyTVC+Updating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VocabularyTVC+Updating.swift"; sourceTree = "<group>"; };
 		2F066F3CA351A4147BAE07B0 /* Pods_worddeposit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_worddeposit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		40ABEB8C9F0BFED3166DA792 /* Pods-worddeposit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-worddeposit.release.xcconfig"; path = "Target Support Files/Pods-worddeposit/Pods-worddeposit.release.xcconfig"; sourceTree = "<group>"; };
 		E1DE54F9C817104748A378D7 /* Pods-worddeposit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-worddeposit.debug.xcconfig"; path = "Target Support Files/Pods-worddeposit/Pods-worddeposit.debug.xcconfig"; sourceTree = "<group>"; };
@@ -128,6 +136,10 @@
 				1128422A248E836300A014E9 /* PracticeVC.swift */,
 				1128422E248E839D00A014E9 /* AddWordVC.swift */,
 				11284232248E83BB00A014E9 /* VocabularyTVC.swift */,
+				11F32A5224AF46D00097BF39 /* VocabularyResultsTVC.swift */,
+				11F32A5424AF49C30097BF39 /* VocabularyTVC+Restore.swift */,
+				11F32A5624AF49D00097BF39 /* VocabularyTVC+DataSource.swift */,
+				11F32A5824AF49DB0097BF39 /* VocabularyTVC+Updating.swift */,
 				11284234248E83C800A014E9 /* ProfileVC.swift */,
 				11284236248E83D400A014E9 /* LoginVC.swift */,
 				11284238248E83E000A014E9 /* RegistrationVC.swift */,
@@ -331,16 +343,20 @@
 			files = (
 				11284239248E83E000A014E9 /* RegistrationVC.swift in Sources */,
 				11284241248E846000A014E9 /* Word.swift in Sources */,
+				11F32A5724AF49D00097BF39 /* VocabularyTVC+DataSource.swift in Sources */,
 				1128423B248E83ED00A014E9 /* ForgotPasswordVC.swift in Sources */,
 				1128423D248E840000A014E9 /* RoundedViews.swift in Sources */,
 				1128422B248E836300A014E9 /* PracticeVC.swift in Sources */,
 				116BC94C249182BD00968DA6 /* Constants.swift in Sources */,
 				1128423F248E845900A014E9 /* User.swift in Sources */,
 				11284235248E83C800A014E9 /* ProfileVC.swift in Sources */,
+				11F32A5324AF46D00097BF39 /* VocabularyResultsTVC.swift in Sources */,
 				11284237248E83D400A014E9 /* LoginVC.swift in Sources */,
+				11F32A5524AF49C30097BF39 /* VocabularyTVC+Restore.swift in Sources */,
 				11284211248E7C5700A014E9 /* AppDelegate.swift in Sources */,
 				116BC94E2491836B00968DA6 /* Extensions.swift in Sources */,
 				1171E70624981CDD00805D35 /* WordCollectionViewCell.swift in Sources */,
+				11F32A5924AF49DB0097BF39 /* VocabularyTVC+Updating.swift in Sources */,
 				1128422F248E839D00A014E9 /* AddWordVC.swift in Sources */,
 				1181BBF32498060F00DB682E /* WordsVC.swift in Sources */,
 				119DBF5724ACCFBF009124B7 /* Configurations.swift in Sources */,
