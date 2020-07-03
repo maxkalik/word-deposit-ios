@@ -35,6 +35,11 @@ class WordCollectionViewCell: UICollectionViewCell {
     
     weak var delegate: WordCollectionViewCellDelegate?
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        wordImageButton.setImage(UIImage(named: "logo"), for: .normal)
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         loader.isHidden = true

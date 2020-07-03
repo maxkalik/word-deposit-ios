@@ -68,7 +68,7 @@ class AddWordVC: UIViewController {
         guard let user = Auth.auth().currentUser else { return }
         
         wordRef = db.collection("users").document(user.uid).collection("words").document()
-        var word = Word.init(imgUrl: "", example: example, translation: translation, id: "")
+        var word = Word.init(imgUrl: "", example: example, translation: translation, id: "", timestamp: Timestamp())
         word.id = wordRef.documentID
         
         if isPhotoSet {

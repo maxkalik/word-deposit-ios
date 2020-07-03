@@ -93,7 +93,7 @@ class VocabularyTVC: UITableViewController {
         // shoud be rewrited
         guard let authUser = Auth.auth().currentUser else { return }
         let userRef = db.collection("users").document(authUser.uid)
-        let wordsRef = userRef.collection("words")
+        let wordsRef = userRef.collection("words").order(by: "timestamp", descending: true)
         wordsListener = wordsRef.addSnapshotListener({ (snapshot, error) in
             if let error = error {
                 debugPrint(error.localizedDescription)
