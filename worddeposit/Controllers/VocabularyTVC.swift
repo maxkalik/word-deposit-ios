@@ -157,6 +157,7 @@ extension VocabularyTVC {
         }
         vc.wordIndexPath = indexPath.row
         
+//        vc.modalPresentationStyle = .popover
         DispatchQueue.main.async {
             self.present(vc, animated: true, completion: nil)
         }

@@ -62,6 +62,7 @@ class WordCollectionViewCell: UICollectionViewCell {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+    
     // MARK: - selectors methods
     
     @objc func textFieldDidChange(_ textField: UITextField) {

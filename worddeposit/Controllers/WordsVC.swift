@@ -9,26 +9,38 @@ class WordsVC: UIViewController, WordCollectionViewCellDelegate {
     // Variables
     var words = [Word]()
     var wordIndexPath: Int = 0
+    var lastIndexPath: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupWordsCollectionView()
-        self.view.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        self.view.layer.borderWidth = 1
-        print("view did load collection view")
+        print("view did load")
     }
     
-    override func viewLayoutMarginsDidChange() {
-        print("margin changed")
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+//        wordsCollectionView.reloadData()
+        print("view will appear")
     }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//
+//        super.viewDidAppear(true)
+//        DispatchQueue.main.async {
+//            let indexPath = IndexPath(item: self.wordIndexPath, section: 0)
+//            self.wordsCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+//            print("stoped loading")
+//        }
+//    }
     
     override func viewDidLayoutSubviews() {
-        
         // this should be checked because it is called by multiple times if try to drag the view
-        print("view did layout subviews")
-        super.viewDidLayoutSubviews()
-        let indexPath = IndexPath(item: wordIndexPath, section: 0)
-        self.wordsCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+        print("wordIndexPath", wordIndexPath, "lastIndex", lastIndexPath)
+        if wordIndexPath != lastIndexPath {
+            lastIndexPath = wordIndexPath
+            let indexPath = IndexPath(item: self.wordIndexPath, section: 0)
+            self.wordsCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+        }
     }
     
     func showAlert(title: String, message: String) {
@@ -45,19 +57,24 @@ class WordsVC: UIViewController, WordCollectionViewCellDelegate {
         
         let nib = UINib(nibName: Identifiers.WordCollectionViewCell, bundle: nil)
         wordsCollectionView.register(nib, forCellWithReuseIdentifier: Identifiers.WordCollectionViewCell)
+        wordsCollectionView.isPrefetchingEnabled = false
+        wordsCollectionView.frame = view.bounds
+        // I turned off default adjustment wich solves the problem collectionView presenting popover. But it does not solve rerendering
+        wordsCollectionView.contentInsetAdjustmentBehavior = .never
         
         if let flowLayout = wordsCollectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.minimumLineSpacing = 0
             flowLayout.minimumInteritemSpacing = 0
-//            flowLayout.shouldInvalidateLayout(forBoundsChange: <#T##CGRect#>)
-//            flowLayout.itemSize = self.wordsCollectionView.frame.size
-//            flowLayout.itemSize = CGSize(width: view.frame.width - 200, height: view.frame.height)
+            flowLayout.scrollDirection = .horizontal
+//            wordsCollectionView.collectionViewLayout = flowLayout
+//            flowLayout.invalidateLayout()
         }
     }
 }
 
 
 extension WordsVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return words.count
     }
@@ -71,8 +88,7 @@ extension WordsVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: view.frame.width, height: view.safeAreaLayoutGuide.layoutFrame.size.height)
-        return CGSize(width: view.frame.width, height: view.frame.height - 100)
+        return CGSize(width: view.frame.width, height: view.safeAreaLayoutGuide.layoutFrame.size.height)
     }
 }
 
