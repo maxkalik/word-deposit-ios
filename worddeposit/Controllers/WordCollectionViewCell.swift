@@ -13,7 +13,8 @@ protocol WordCollectionViewCellDelegate: class {
 
 class WordCollectionViewCell: UICollectionViewCell {
 
-    // Outlets
+    // MARK: - Outlets
+
     @IBOutlet weak var wordImageButton: UIButton! {
         didSet {
             let pinch = UIPinchGestureRecognizer(target: self, action: #selector(adjustImageButtonScale(byHandlingGestureRecognizedBy:)))
@@ -26,14 +27,22 @@ class WordCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var loader: RoundedView!
     
-    // Variables
+    // MARK: - Variables
+
     var word: Word!
     var wordRef: DocumentReference!
     var db = Firestore.firestore()
     var storage = Storage.storage()
     private var isImageSet = false
+    var wordImageButtonScale: CGFloat = 1.0 {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
     
     weak var delegate: WordCollectionViewCellDelegate?
+    
+    // MARK: - View Life Cycle
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -53,45 +62,23 @@ class WordCollectionViewCell: UICollectionViewCell {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    var wordImageButtonScale: CGFloat = 1.0 {
-        didSet {
-            setNeedsDisplay()
-        }
-    }
-    
-    func hideAllButtons(_ isShow: Bool) {
-        saveChangingButton.isHidden = isShow
-        cancelButton.isHidden = isShow
-    }
+    // MARK: - selectors methods
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         textFieldValidation()
     }
     
     @objc func keyboardWillShow(sender: UIResponder) {
-//        self.view.frame.origin.y -= 150
+        // self.view.frame.origin.y -= 150
         print("keyboard show")
         
         print(frame.size.width, UIScreen.main.bounds.width)
         print(frame.size.height, UIScreen.main.bounds.height)
     }
-    @objc func keyboardWillHide(sender: UIResponder) {
-//        self.view.frame.origin.y += 150
-        print("keyboard hide")
-    }
     
-    func textFieldValidation() {
-        guard let wordExample = wordExampleTextField.text, let wordTranslation = wordTranslationTextField.text else { return }
-        
-        if wordExample != word.example || wordTranslation != word.translation || isImageSet {
-            hideAllButtons(false)
-            if wordExample.isEmpty || wordTranslation.isEmpty {
-                saveChangingButton.isHidden = true
-                cancelButton.isHidden = false
-            }
-        } else {
-            hideAllButtons(true)
-        }
+    @objc func keyboardWillHide(sender: UIResponder) {
+        // self.view.frame.origin.y += 150
+        print("keyboard hide")
     }
     
     @objc func adjustImageButtonScale(byHandlingGestureRecognizedBy recoginzer: UIPinchGestureRecognizer) {
@@ -109,6 +96,25 @@ class WordCollectionViewCell: UICollectionViewCell {
         wordImageButton.transform = CGAffineTransform(scaleX: wordImageButtonScale, y: wordImageButtonScale)
     }
     
+    func hideAllButtons(_ isShow: Bool) {
+        saveChangingButton.isHidden = isShow
+        cancelButton.isHidden = isShow
+    }
+    
+    func textFieldValidation() {
+        guard let wordExample = wordExampleTextField.text, let wordTranslation = wordTranslationTextField.text else { return }
+        
+        if wordExample != word.example || wordTranslation != word.translation || isImageSet {
+            hideAllButtons(false)
+            if wordExample.isEmpty || wordTranslation.isEmpty {
+                saveChangingButton.isHidden = true
+                cancelButton.isHidden = false
+            }
+        } else {
+            hideAllButtons(true)
+        }
+    }
+    
     func configureCell(word: Word, delegate: WordCollectionViewCellDelegate) {
         self.word = word
         self.delegate = delegate
@@ -124,6 +130,8 @@ class WordCollectionViewCell: UICollectionViewCell {
         wordExampleTextField.text = word.example
         wordTranslationTextField.text = word.translation
     }
+    
+    // MARK: - IBActions
     
     @IBAction func wordImageButtonTouched(_ sender: UIButton) {
         let ypConfig = YPImagePickerConfig()
@@ -146,6 +154,12 @@ class WordCollectionViewCell: UICollectionViewCell {
     @IBAction func onSaveChangingTouched(_ sender: UIButton) {
         self.loader.isHidden = false
         prepareForUpload()
+    }
+    
+    @IBAction func onCancelTouched(_ sender: UIButton) {
+        self.setupWord(word)
+        hideAllButtons(true)
+        isImageSet = false
     }
     
     func prepareForUpload() {
@@ -240,11 +254,5 @@ class WordCollectionViewCell: UICollectionViewCell {
             self.loader.isHidden = true
             self.isImageSet = false
         }
-    }
-
-    @IBAction func onCancelTouched(_ sender: UIButton) {
-        self.setupWord(word)
-        hideAllButtons(true)
-        isImageSet = false
     }
 }

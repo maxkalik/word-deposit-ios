@@ -147,7 +147,7 @@ class VocabularyTVC: UITableViewController {
 
 extension VocabularyTVC {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+        
         let vc = WordsVC()
         
         if tableView === self.tableView {
@@ -155,13 +155,11 @@ extension VocabularyTVC {
         } else {
             vc.words = resultsTableController.filteredWords
         }
-
         vc.wordIndexPath = indexPath.row
         
         DispatchQueue.main.async {
             self.present(vc, animated: true, completion: nil)
         }
-        
         // ?
         tableView.deselectRow(at: indexPath, animated: false)
     }

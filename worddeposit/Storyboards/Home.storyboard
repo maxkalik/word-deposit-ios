@@ -128,16 +128,6 @@
                                 <constraint firstItem="8fc-Yf-siE" firstAttribute="centerY" secondItem="eTM-BB-y9W" secondAttribute="centerY" id="JgH-cw-uyA"/>
                             </constraints>
                         </view>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="JnT-wJ-E3S">
-                                <rect key="frame" x="0.0" y="72" width="414" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JnT-wJ-E3S" id="piM-wR-e1t">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="nvF-OK-GSE" id="3rM-Si-ryT"/>
                             <outlet property="delegate" destination="nvF-OK-GSE" id="rAT-Wv-9ZJ"/>

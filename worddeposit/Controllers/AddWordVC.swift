@@ -78,7 +78,6 @@ class AddWordVC: UIViewController {
         }
     }
     
-    
     func uploadImage(userId: String, word: Word) {
         
         guard let image = wordImagePickerBtn.imageView?.image else {

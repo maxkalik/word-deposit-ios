@@ -15,6 +15,7 @@ class WordsVC: UIViewController, WordCollectionViewCellDelegate {
         setupWordsCollectionView()
         self.view.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         self.view.layer.borderWidth = 1
+        print("view did load collection view")
     }
     
     override func viewLayoutMarginsDidChange() {
@@ -28,7 +29,6 @@ class WordsVC: UIViewController, WordCollectionViewCellDelegate {
         super.viewDidLayoutSubviews()
         let indexPath = IndexPath(item: wordIndexPath, section: 0)
         self.wordsCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
-        
     }
     
     func showAlert(title: String, message: String) {
@@ -42,7 +42,6 @@ class WordsVC: UIViewController, WordCollectionViewCellDelegate {
     private func setupWordsCollectionView() {
         wordsCollectionView.delegate = self
         wordsCollectionView.dataSource = self
-    
         
         let nib = UINib(nibName: Identifiers.WordCollectionViewCell, bundle: nil)
         wordsCollectionView.register(nib, forCellWithReuseIdentifier: Identifiers.WordCollectionViewCell)
@@ -72,7 +71,8 @@ extension WordsVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: view.safeAreaLayoutGuide.layoutFrame.size.height)
+//        return CGSize(width: view.frame.width, height: view.safeAreaLayoutGuide.layoutFrame.size.height)
+        return CGSize(width: view.frame.width, height: view.frame.height - 100)
     }
 }
 
