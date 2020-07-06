@@ -16,7 +16,6 @@ class AddWordVC: UIViewController {
     var db: Firestore!
     var storage: Storage!
     var wordRef: DocumentReference!
-    var imagePicker: UIImagePickerController!
     var isPhotoSet = false
     
     enum ImageSource {
@@ -39,7 +38,8 @@ class AddWordVC: UIViewController {
         let ypConfig = YPImagePickerConfig()
         let picker = YPImagePicker(configuration: ypConfig.defaultConfig())
 
-        picker.didFinishPicking { (items, true) in
+        // unowned picker will help to avoid memory leak on each action
+        picker.didFinishPicking { [unowned picker] items, _ in
             if let photo = items.singlePhoto {
                 self.wordImagePickerBtn.setImage(photo.image, for: .normal)
                 self.isPhotoSet = true

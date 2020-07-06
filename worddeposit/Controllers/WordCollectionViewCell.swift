@@ -6,7 +6,7 @@ import FirebaseFirestore
 import Kingfisher
 import YPImagePicker
 
-protocol WordCollectionViewCellDelegate: class {
+protocol WordCollectionViewCellDelegate: AnyObject {
     func showAlert(title: String, message: String)
     func presentVC(_ viewControllerToPresent: UIViewController)
 }
@@ -126,7 +126,8 @@ class WordCollectionViewCell: UICollectionViewCell {
         if let url = URL(string: word.imgUrl) {
             wordImageButton.imageView?.kf.indicatorType = .activity
             let options: KingfisherOptionsInfo = [KingfisherOptionsInfoItem.transition(.fade(0.2))]
-            wordImageButton.kf.setImage(with: url, for: .normal, options: options)
+            let imgRecourse = ImageResource(downloadURL: url, cacheKey: word.imgUrl)
+            wordImageButton.kf.setImage(with: imgRecourse, for: .normal, options: options)
         }
         wordExampleTextField.text = word.example
         wordTranslationTextField.text = word.translation
@@ -138,7 +139,7 @@ class WordCollectionViewCell: UICollectionViewCell {
         let ypConfig = YPImagePickerConfig()
         let picker = YPImagePicker(configuration: ypConfig.defaultConfig())
 
-        picker.didFinishPicking { (items, true) in
+        picker.didFinishPicking { [unowned picker] items, _ in
             if let photo = items.singlePhoto {
                 self.isImageSet = true
                 self.wordImageButton.setImage(photo.image, for: .normal)
