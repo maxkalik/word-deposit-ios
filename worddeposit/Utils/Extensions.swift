@@ -36,6 +36,28 @@ extension UIImage {
             _ in draw(in: CGRect(origin: .zero, size: canvas))
         }
     }
+    
+    class func circle(diameter: CGFloat, color: UIColor) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: diameter, height: diameter), false, 0)
+        // Return the current graphics context (width, height, bpc, bpp, row bytes -> from UIGraphicsBeginImageContextWithOptions()
+        let ctx = UIGraphicsGetCurrentContext()!
+        print(ctx)
+        ctx.saveGState()
+        
+        // create a rect where we put an image
+        let rect = CGRect(x: 0, y: 0, width: diameter, height: diameter)
+        ctx.setFillColor(color.cgColor)
+        ctx.fillEllipse(in: rect)
+        
+        // Sets the current graphics state to the state most recently saved
+        // Core Graphics removes the graphics state at the top of the stack so that the most recently saved state becomes the current graphics state
+        ctx.restoreGState()
+        // Returns an image based on the contents of the current bitmap-based graphics context.
+        let img = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        
+        return img
+    }
 }
 
 

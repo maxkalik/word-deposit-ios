@@ -58,16 +58,14 @@ class WordsVC: UIViewController, WordCollectionViewCellDelegate {
         let nib = UINib(nibName: Identifiers.WordCollectionViewCell, bundle: nil)
         wordsCollectionView.register(nib, forCellWithReuseIdentifier: Identifiers.WordCollectionViewCell)
         wordsCollectionView.isPrefetchingEnabled = false
-        wordsCollectionView.frame = view.bounds
-        // I turned off default adjustment wich solves the problem collectionView presenting popover. But it does not solve rerendering
+        
+        // I turned off default adjustment wich solves the problem collectionView presenting popover.
         wordsCollectionView.contentInsetAdjustmentBehavior = .never
         
         if let flowLayout = wordsCollectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.minimumLineSpacing = 0
             flowLayout.minimumInteritemSpacing = 0
             flowLayout.scrollDirection = .horizontal
-//            wordsCollectionView.collectionViewLayout = flowLayout
-//            flowLayout.invalidateLayout()
         }
     }
 }
