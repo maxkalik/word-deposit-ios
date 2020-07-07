@@ -1,7 +1,7 @@
 import UIKit
 import Kingfisher
 
-class WordTableViewCell: UITableViewCell {
+class VocabularyTVCell: UITableViewCell {
 
     // Outlets
     @IBOutlet weak var preview: UIImageView!

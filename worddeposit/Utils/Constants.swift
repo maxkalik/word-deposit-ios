@@ -18,6 +18,6 @@ struct Colors {
 }
 
 struct Identifiers {
-    static let WordCell = "WordTableViewCell"
+    static let VocabularyTVCell = "VocabularyTVCell"
     static let WordCollectionViewCell = "WordCollectionViewCell"
 }

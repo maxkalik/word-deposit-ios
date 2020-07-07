@@ -60,8 +60,8 @@ class VocabularyTVC: UITableViewController {
     // MARK: - View setups
     
     func setupTableView() {
-        let nib = UINib(nibName: Identifiers.WordCell, bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: Identifiers.WordCell)
+        let nib = UINib(nibName: Identifiers.VocabularyTVCell, bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: Identifiers.VocabularyTVCell)
     }
     
     func setupResultsTableController() {
@@ -174,7 +174,7 @@ extension VocabularyTVC {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: Identifiers.WordCell, for: indexPath) as? WordTableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: Identifiers.VocabularyTVCell, for: indexPath) as? VocabularyTVCell {
             // cell is reusable so before calling it we have to nil an image because it can show an image from previous usage
 //            cell.preview.image = nil
             cell.configureCell(word: words[indexPath.row])

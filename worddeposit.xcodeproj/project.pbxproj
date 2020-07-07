@@ -23,8 +23,8 @@
 		1128423D248E840000A014E9 /* RoundedViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1128423C248E840000A014E9 /* RoundedViews.swift */; };
 		1128423F248E845900A014E9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1128423E248E845900A014E9 /* User.swift */; };
 		11284241248E846000A014E9 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284240248E846000A014E9 /* Word.swift */; };
-		1158D30E24917B9B0087DC96 /* WordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1158D30C24917B9B0087DC96 /* WordTableViewCell.swift */; };
-		1158D30F24917B9B0087DC96 /* WordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1158D30D24917B9B0087DC96 /* WordTableViewCell.xib */; };
+		1158D30E24917B9B0087DC96 /* VocabularyTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1158D30C24917B9B0087DC96 /* VocabularyTVCell.swift */; };
+		1158D30F24917B9B0087DC96 /* VocabularyTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1158D30D24917B9B0087DC96 /* VocabularyTVCell.xib */; };
 		1158D31524917EC50087DC96 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1158D31424917EC50087DC96 /* GoogleService-Info.plist */; };
 		116BC94C249182BD00968DA6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC94B249182BD00968DA6 /* Constants.swift */; };
 		116BC94E2491836B00968DA6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC94D2491836B00968DA6 /* Extensions.swift */; };
@@ -58,8 +58,8 @@
 		1128423C248E840000A014E9 /* RoundedViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedViews.swift; sourceTree = "<group>"; };
 		1128423E248E845900A014E9 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		11284240248E846000A014E9 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
-		1158D30C24917B9B0087DC96 /* WordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordTableViewCell.swift; sourceTree = "<group>"; };
-		1158D30D24917B9B0087DC96 /* WordTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordTableViewCell.xib; sourceTree = "<group>"; };
+		1158D30C24917B9B0087DC96 /* VocabularyTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyTVCell.swift; sourceTree = "<group>"; };
+		1158D30D24917B9B0087DC96 /* VocabularyTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VocabularyTVCell.xib; sourceTree = "<group>"; };
 		1158D31424917EC50087DC96 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		116BC94B249182BD00968DA6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		116BC94D2491836B00968DA6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -129,11 +129,11 @@
 			isa = PBXGroup;
 			children = (
 				1181BBF12498060F00DB682E /* WordsVC.swift */,
-				1158D30C24917B9B0087DC96 /* WordTableViewCell.swift */,
 				1171E70424981CDD00805D35 /* WordCollectionViewCell.swift */,
 				1128422A248E836300A014E9 /* PracticeVC.swift */,
 				1128422E248E839D00A014E9 /* AddWordVC.swift */,
 				11284232248E83BB00A014E9 /* VocabularyTVC.swift */,
+				1158D30C24917B9B0087DC96 /* VocabularyTVCell.swift */,
 				11F32A5224AF46D00097BF39 /* VocabularyResultsTVC.swift */,
 				11F32A5424AF49C30097BF39 /* VocabularyTVC+Restore.swift */,
 				11F32A5824AF49DB0097BF39 /* VocabularyTVC+Updating.swift */,
@@ -176,7 +176,7 @@
 			isa = PBXGroup;
 			children = (
 				1181BBF22498060F00DB682E /* WordsVC.xib */,
-				1158D30D24917B9B0087DC96 /* WordTableViewCell.xib */,
+				1158D30D24917B9B0087DC96 /* VocabularyTVCell.xib */,
 				1171E70524981CDD00805D35 /* WordCollectionViewCell.xib */,
 			);
 			path = XIBs;
@@ -284,7 +284,7 @@
 				11284218248E7C5700A014E9 /* Main.storyboard in Resources */,
 				1181BBF42498060F00DB682E /* WordsVC.xib in Resources */,
 				11284229248E7D5100A014E9 /* Home.storyboard in Resources */,
-				1158D30F24917B9B0087DC96 /* WordTableViewCell.xib in Resources */,
+				1158D30F24917B9B0087DC96 /* VocabularyTVCell.xib in Resources */,
 				1158D31524917EC50087DC96 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -356,7 +356,7 @@
 				1128422F248E839D00A014E9 /* AddWordVC.swift in Sources */,
 				1181BBF32498060F00DB682E /* WordsVC.swift in Sources */,
 				119DBF5724ACCFBF009124B7 /* Configurations.swift in Sources */,
-				1158D30E24917B9B0087DC96 /* WordTableViewCell.swift in Sources */,
+				1158D30E24917B9B0087DC96 /* VocabularyTVCell.swift in Sources */,
 				11284233248E83BB00A014E9 /* VocabularyTVC.swift in Sources */,
 				11284213248E7C5700A014E9 /* SceneDelegate.swift in Sources */,
 			);
