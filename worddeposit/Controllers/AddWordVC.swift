@@ -144,6 +144,8 @@ class AddWordVC: UIViewController {
         wordExampleTextField.text = ""
         wordTranslationTextField.text = ""
         isImageSet = false
+        addWordButton.isHidden = true
+        clearAllButton.isHidden = true
     }
     
     // MARK: - IBActions
