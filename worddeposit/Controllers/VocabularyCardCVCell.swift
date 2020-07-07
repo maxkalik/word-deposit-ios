@@ -6,12 +6,12 @@ import FirebaseFirestore
 import Kingfisher
 import YPImagePicker
 
-protocol WordCollectionViewCellDelegate: AnyObject {
+protocol VocabularyCardCVCellDelegate: AnyObject {
     func showAlert(title: String, message: String)
     func presentVC(_ viewControllerToPresent: UIViewController)
 }
 
-class WordCollectionViewCell: UICollectionViewCell {
+class VocabularyCardCVCell: UICollectionViewCell {
 
     // MARK: - Outlets
 
@@ -40,7 +40,7 @@ class WordCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    weak var delegate: WordCollectionViewCellDelegate?
+    weak var delegate: VocabularyCardCVCellDelegate?
     
     // MARK: - View Life Cycle
     
@@ -116,7 +116,7 @@ class WordCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func configureCell(word: Word, delegate: WordCollectionViewCellDelegate) {
+    func configureCell(word: Word, delegate: VocabularyCardCVCellDelegate) {
         self.word = word
         self.delegate = delegate
         setupWord(word)

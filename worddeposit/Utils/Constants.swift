@@ -19,5 +19,5 @@ struct Colors {
 
 struct Identifiers {
     static let VocabularyTVCell = "VocabularyTVCell"
-    static let WordCollectionViewCell = "WordCollectionViewCell"
+    static let VocabularyCardCVCell = "VocabularyCardCVCell"
 }

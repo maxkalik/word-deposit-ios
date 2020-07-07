@@ -1,6 +1,6 @@
 import UIKit
 
-class WordsVC: UIViewController {
+class VocabularyCardsVC: UIViewController {
 
     // MARK: - Outlets
 
@@ -35,7 +35,7 @@ class WordsVC: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+        super.viewWillDisappear(true)
         words.removeAll()
     }
     
@@ -54,14 +54,14 @@ class WordsVC: UIViewController {
         wordsCollectionView.delegate = self
         wordsCollectionView.dataSource = self
         
-        let nib = UINib(nibName: Identifiers.WordCollectionViewCell, bundle: nil)
-        wordsCollectionView.register(nib, forCellWithReuseIdentifier: Identifiers.WordCollectionViewCell)
+        let nib = UINib(nibName: Identifiers.VocabularyCardCVCell, bundle: nil)
+        wordsCollectionView.register(nib, forCellWithReuseIdentifier: Identifiers.VocabularyCardCVCell)
     }
 }
 
-// MARK: - WordCollectionViewCellDelegate
+// MARK: - VocabularyCardCVCellDelegate
 
-extension WordsVC: WordCollectionViewCellDelegate {
+extension VocabularyCardsVC: VocabularyCardCVCellDelegate {
     func showAlert(title: String, message: String) {
         self.simpleAlert(title: title, msg: message)
     }
@@ -73,14 +73,15 @@ extension WordsVC: WordCollectionViewCellDelegate {
 
 // MARK: - Setting up UICollecitonView
 
-extension WordsVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension VocabularyCardsVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return words.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = wordsCollectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.WordCollectionViewCell, for: indexPath) as? WordCollectionViewCell {
+        if let cell = wordsCollectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.VocabularyCardCVCell, for: indexPath) as? VocabularyCardCVCell {
+            // here was an fatal error - out of range
             cell.configureCell(word: words[indexPath.item], delegate: self)
             return cell
         }
