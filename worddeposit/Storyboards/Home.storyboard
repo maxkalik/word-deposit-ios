@@ -149,43 +149,43 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="GMM-oe-XGe">
-                                <rect key="frame" x="20" y="236" width="374" height="424"/>
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YLl-Up-aaC" customClass="RoundedButton" customModule="worddeposit" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="414"/>
+                                <color key="backgroundColor" white="0.92711900680000003" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="YLl-Up-aaC" secondAttribute="height" multiplier="1:1" id="dMQ-7A-SzF"/>
+                                </constraints>
+                                <state key="normal" image="logo"/>
+                                <connections>
+                                    <action selector="wordImagePickerBtnTapped:" destination="8x7-ml-O9y" eventType="touchUpInside" id="xi0-8W-hHR"/>
+                                </connections>
+                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="GMM-oe-XGe">
+                                <rect key="frame" x="30" y="444" width="354" height="210"/>
                                 <subviews>
-                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YLl-Up-aaC" customClass="RoundedButton" customModule="worddeposit" customModuleProvider="target">
-                                        <rect key="frame" x="105" y="0.0" width="164" height="164"/>
-                                        <color key="backgroundColor" white="0.92711900680000003" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Example" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Chl-jj-J0Y">
+                                        <rect key="frame" x="0.0" y="0.0" width="354" height="50"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="164" id="64F-dg-LoJ"/>
-                                            <constraint firstAttribute="width" constant="164" id="ciq-zK-wxk"/>
+                                            <constraint firstAttribute="height" constant="50" id="Wkb-Dw-ztP"/>
                                         </constraints>
-                                        <state key="normal" image="logo"/>
-                                        <connections>
-                                            <action selector="wordImagePickerBtnTapped:" destination="8x7-ml-O9y" eventType="touchUpInside" id="xi0-8W-hHR"/>
-                                        </connections>
-                                    </button>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Example" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Chl-jj-J0Y">
-                                        <rect key="frame" x="20" y="184" width="334" height="50"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="pQm-v6-17n"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Translation" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VKL-sr-heo">
-                                        <rect key="frame" x="20" y="254" width="334" height="50"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Translation" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VKL-sr-heo">
+                                        <rect key="frame" x="0.0" y="60" width="354" height="50"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="4cS-0t-bgc"/>
+                                            <constraint firstAttribute="height" constant="50" id="BNe-sn-pr2"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EN0-4t-0qf" customClass="RoundedButton" customModule="worddeposit" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="324" width="334" height="50"/>
+                                        <rect key="frame" x="0.0" y="120" width="354" height="50"/>
                                         <color key="backgroundColor" systemColor="systemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="3Ue-TP-42f"/>
+                                            <constraint firstAttribute="height" constant="50" id="WsS-I1-Bvb"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                         <state key="normal" title="Add word">
                                             <color key="titleColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -194,46 +194,40 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bhh-6m-fMG">
-                                        <rect key="frame" x="158.5" y="394" width="57" height="30"/>
+                                        <rect key="frame" x="0.0" y="180" width="354" height="30"/>
                                         <state key="normal" title="Clear All"/>
                                         <connections>
                                             <action selector="onClearAllBtnPress:" destination="8x7-ml-O9y" eventType="touchUpInside" id="5bg-bz-J3L"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="EN0-4t-0qf" secondAttribute="trailing" constant="20" id="IiD-Tt-8MM"/>
-                                    <constraint firstAttribute="trailing" secondItem="VKL-sr-heo" secondAttribute="trailing" constant="20" id="JWL-Dw-eud"/>
-                                    <constraint firstItem="Chl-jj-J0Y" firstAttribute="leading" secondItem="GMM-oe-XGe" secondAttribute="leading" constant="20" id="NUe-dP-fr9"/>
-                                    <constraint firstAttribute="trailing" secondItem="Chl-jj-J0Y" secondAttribute="trailing" constant="20" id="bSY-l6-gGY"/>
-                                    <constraint firstItem="VKL-sr-heo" firstAttribute="leading" secondItem="GMM-oe-XGe" secondAttribute="leading" constant="20" id="bTO-XO-CkL"/>
-                                    <constraint firstItem="EN0-4t-0qf" firstAttribute="leading" secondItem="GMM-oe-XGe" secondAttribute="leading" constant="20" id="oNe-S1-WbL"/>
-                                </constraints>
                             </stackView>
                             <view alpha="0.69999998807907104" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wbd-0V-7q5" customClass="RoundedView" customModule="worddeposit" customModuleProvider="target">
                                 <rect key="frame" x="157" y="398" width="100" height="100"/>
                                 <subviews>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="8cZ-9p-eGx">
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="8cZ-9p-eGx">
                                         <rect key="frame" x="31.5" y="31.5" width="37" height="37"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="A4E-JQ-U8H"/>
-                                    <constraint firstAttribute="height" constant="100" id="CKg-nN-38Q"/>
-                                    <constraint firstItem="8cZ-9p-eGx" firstAttribute="centerX" secondItem="wbd-0V-7q5" secondAttribute="centerX" id="IfX-o0-NX4"/>
-                                    <constraint firstItem="8cZ-9p-eGx" firstAttribute="centerY" secondItem="wbd-0V-7q5" secondAttribute="centerY" id="vik-Cz-a2a"/>
+                                    <constraint firstAttribute="width" constant="100" id="YJe-bq-LUs"/>
+                                    <constraint firstAttribute="height" constant="100" id="kuF-vl-gHf"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="wbd-0V-7q5" firstAttribute="centerX" secondItem="0hT-VJ-UGF" secondAttribute="centerX" id="QXu-fp-J7G"/>
-                            <constraint firstItem="GMM-oe-XGe" firstAttribute="centerY" secondItem="0hT-VJ-UGF" secondAttribute="centerY" id="WRx-bm-1C9"/>
-                            <constraint firstItem="GMM-oe-XGe" firstAttribute="leading" secondItem="2au-z7-W9i" secondAttribute="leading" constant="20" id="j5e-LF-yw6"/>
-                            <constraint firstItem="wbd-0V-7q5" firstAttribute="centerY" secondItem="0hT-VJ-UGF" secondAttribute="centerY" id="wkP-oj-Kud"/>
-                            <constraint firstItem="2au-z7-W9i" firstAttribute="trailing" secondItem="GMM-oe-XGe" secondAttribute="trailing" constant="20" id="yiE-II-F50"/>
+                            <constraint firstItem="wbd-0V-7q5" firstAttribute="centerX" secondItem="0hT-VJ-UGF" secondAttribute="centerX" id="0R2-iL-8eJ"/>
+                            <constraint firstItem="wbd-0V-7q5" firstAttribute="centerY" secondItem="0hT-VJ-UGF" secondAttribute="centerY" id="9kZ-Dn-EK5"/>
+                            <constraint firstItem="GMM-oe-XGe" firstAttribute="top" secondItem="YLl-Up-aaC" secondAttribute="bottom" constant="30" id="Cts-5L-hDk"/>
+                            <constraint firstItem="2au-z7-W9i" firstAttribute="trailing" secondItem="GMM-oe-XGe" secondAttribute="trailing" constant="30" id="Oeq-Ya-XhV"/>
+                            <constraint firstItem="GMM-oe-XGe" firstAttribute="leading" secondItem="2au-z7-W9i" secondAttribute="leading" constant="30" id="ZWL-4C-fxP"/>
+                            <constraint firstItem="YLl-Up-aaC" firstAttribute="top" secondItem="0hT-VJ-UGF" secondAttribute="top" id="h1B-Ss-Jkj"/>
+                            <constraint firstItem="YLl-Up-aaC" firstAttribute="leading" secondItem="2au-z7-W9i" secondAttribute="leading" id="l5l-PL-l8x"/>
+                            <constraint firstItem="YLl-Up-aaC" firstAttribute="trailing" secondItem="2au-z7-W9i" secondAttribute="trailing" id="n1e-af-XT7"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="2au-z7-W9i"/>
                     </view>
@@ -249,7 +243,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cnt-8P-Lg8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1262" y="433"/>
+            <point key="canvasLocation" x="1260.8695652173915" y="432.58928571428572"/>
         </scene>
         <!--Profile-->
         <scene sceneID="K7f-0l-J6m">

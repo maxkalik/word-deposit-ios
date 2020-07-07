@@ -42,6 +42,12 @@ class AddWordVC: UIViewController {
         wordTranslationTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        wordExampleTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        wordTranslationTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+    }
+    
     // MARK: - @objc Methods
     @objc func textFieldDidChange(_ textField: UITextField) {
         textFieldValidation()

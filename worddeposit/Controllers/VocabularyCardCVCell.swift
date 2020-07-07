@@ -19,6 +19,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
         didSet {
             let pinch = UIPinchGestureRecognizer(target: self, action: #selector(adjustImageButtonScale(byHandlingGestureRecognizedBy:)))
             wordImageButton.addGestureRecognizer(pinch)
+            wordImageButton.imageView?.contentMode = .scaleAspectFill
         }
     }
     @IBOutlet weak var wordExampleTextField: UITextField!
@@ -49,10 +50,6 @@ class VocabularyCardCVCell: UICollectionViewCell {
         wordImageButton.setImage(UIImage(named: Placeholders.Logo), for: .normal)
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         loader.isHidden = true
@@ -64,6 +61,12 @@ class VocabularyCardCVCell: UICollectionViewCell {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+        wordExampleTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        wordTranslationTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
     // MARK: - @objc methods
