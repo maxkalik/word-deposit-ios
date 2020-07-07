@@ -46,7 +46,11 @@ class VocabularyCardCVCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        wordImageButton.setImage(UIImage(named: "logo"), for: .normal)
+        wordImageButton.setImage(UIImage(named: Placeholders.Logo), for: .normal)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func awakeFromNib() {
@@ -62,8 +66,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    
-    // MARK: - selectors methods
+    // MARK: - @objc methods
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         textFieldValidation()
@@ -93,9 +96,13 @@ class VocabularyCardCVCell: UICollectionViewCell {
         }
     }
     
+    // MARK: - Override methods
+    
     override func draw(_ rect: CGRect) {
         wordImageButton.transform = CGAffineTransform(scaleX: wordImageButtonScale, y: wordImageButtonScale)
     }
+    
+    // MARK: - Other methods
     
     func hideAllButtons(_ isShow: Bool) {
         saveChangingButton.isHidden = isShow

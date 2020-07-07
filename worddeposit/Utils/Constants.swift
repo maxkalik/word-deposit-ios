@@ -15,3 +15,7 @@ struct XIBs {
 struct Colors {
     static let black = UIColor.black.cgColor
 }
+
+struct Placeholders {
+    static let Logo = "logo"
+}

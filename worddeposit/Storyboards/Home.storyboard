@@ -239,6 +239,8 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Add Word" image="plus" catalog="system" id="Mmj-xg-myp"/>
                     <connections>
+                        <outlet property="addWordButton" destination="EN0-4t-0qf" id="2eV-4O-u62"/>
+                        <outlet property="clearAllButton" destination="bhh-6m-fMG" id="UqK-cM-eJE"/>
                         <outlet property="loader" destination="wbd-0V-7q5" id="pmy-CO-cMO"/>
                         <outlet property="wordExampleTextField" destination="Chl-jj-J0Y" id="j5n-9G-g8T"/>
                         <outlet property="wordImagePickerBtn" destination="YLl-Up-aaC" id="aCd-hC-Kwt"/>

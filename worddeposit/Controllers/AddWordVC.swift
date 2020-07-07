@@ -9,6 +9,8 @@ class AddWordVC: UIViewController {
     // MARK: - Outlets
     
     @IBOutlet weak var wordImagePickerBtn: UIButton!
+    @IBOutlet weak var addWordButton: RoundedButton!
+    @IBOutlet weak var clearAllButton: UIButton!
     @IBOutlet weak var wordExampleTextField: UITextField!
     @IBOutlet weak var wordTranslationTextField: UITextField!
     @IBOutlet weak var loader: RoundedView!
@@ -18,7 +20,7 @@ class AddWordVC: UIViewController {
     var db: Firestore!
     var storage: Storage!
     var wordRef: DocumentReference!
-    var isPhotoSet = false
+    var isImageSet = false
     
     enum ImageSource {
         case photoLibrary
@@ -31,13 +33,38 @@ class AddWordVC: UIViewController {
         super.viewDidLoad()
         db = Firestore.firestore()
         storage = Storage.storage()
-        wordImagePickerBtn.layer.cornerRadius = 8
-        loader.isHidden = true
-        wordExampleTextField.autocorrectionType = .no
-        wordTranslationTextField.autocorrectionType = .no
+        setupUI()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        wordExampleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        wordTranslationTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+    }
+    
+    // MARK: - @objc Methods
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        textFieldValidation()
     }
     
     // MARK: - Support Methods
+    
+    func textFieldValidation() {
+        guard let wordExample = wordExampleTextField.text, let wordTranslation = wordTranslationTextField.text else { return }
+        print(wordExample.isEmpty && wordTranslation.isEmpty, wordExample.isEmpty || wordTranslation.isEmpty)
+        
+        addWordButton.isHidden = wordExample.isEmpty || wordTranslation.isEmpty
+        clearAllButton.isHidden = wordExample.isEmpty && wordTranslation.isEmpty
+    }
+    
+    private func setupUI() {
+        loader.isHidden = true
+        wordImagePickerBtn.layer.cornerRadius = 8
+        wordExampleTextField.autocorrectionType = .no
+        wordTranslationTextField.autocorrectionType = .no
+        addWordButton.isHidden = true
+        clearAllButton.isHidden = true
+    }
     
     func prepareForUpload() {
         guard let example = wordExampleTextField.text, example.isNotEmpty,
@@ -54,7 +81,7 @@ class AddWordVC: UIViewController {
         var word = Word.init(imgUrl: "", example: example, translation: translation, id: "", timestamp: Timestamp())
         word.id = wordRef.documentID
         
-        if isPhotoSet {
+        if isImageSet {
             uploadImage(userId: user.uid, word: word)
         } else {
             uploadWord(word: word)
@@ -113,10 +140,10 @@ class AddWordVC: UIViewController {
     }
     
     func updateUI() {
-        self.wordImagePickerBtn.setImage(UIImage(named: "logo"), for: .normal)
+        self.wordImagePickerBtn.setImage(UIImage(named: Placeholders.Logo), for: .normal)
         wordExampleTextField.text = ""
         wordTranslationTextField.text = ""
-        isPhotoSet = false
+        isImageSet = false
     }
     
     // MARK: - IBActions
@@ -129,7 +156,7 @@ class AddWordVC: UIViewController {
         picker.didFinishPicking { [unowned picker] items, _ in
             if let photo = items.singlePhoto {
                 self.wordImagePickerBtn.setImage(photo.image, for: .normal)
-                self.isPhotoSet = true
+                self.isImageSet = true
             }
             picker.dismiss(animated: true, completion: nil)
         }

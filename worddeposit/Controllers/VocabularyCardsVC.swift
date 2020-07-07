@@ -30,15 +30,6 @@ class VocabularyCardsVC: UIViewController {
         setupWordsCollectionView()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(true)
-        words.removeAll()
-    }
-    
     override func viewDidLayoutSubviews() {
         // this should be checked because it is called by multiple times if try to drag the view
         if wordIndexPath != lastIndexPath {

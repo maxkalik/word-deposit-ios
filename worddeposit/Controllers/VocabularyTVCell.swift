@@ -15,7 +15,7 @@ class VocabularyTVCell: UITableViewCell {
     /// dequeueReusableCell(withIdentifier:) . For performance reasons, you should only reset attributes of the cell that are not related to content
     override func prepareForReuse() {
         super.prepareForReuse()
-        preview.image = UIImage(named: "logo")
+        preview.image = UIImage(named: Placeholders.Logo)
     }
     
     override func awakeFromNib() {
@@ -34,7 +34,7 @@ class VocabularyTVCell: UITableViewCell {
         if let url = URL(string: word.imgUrl) {
             preview.kf.indicatorType = .activity
             let options: KingfisherOptionsInfo = [KingfisherOptionsInfoItem.transition(.fade(0.2))]
-            let placeholder = UIImage(named: "logo")
+            let placeholder = UIImage(named: Placeholders.Logo)
             preview.kf.setImage(with: url, placeholder: placeholder, options: options)
         }
         
