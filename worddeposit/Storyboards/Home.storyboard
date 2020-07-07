@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="to1-eN-B6t">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -75,7 +75,7 @@
                     <connections>
                         <segue destination="iJg-J4-07g" kind="relationship" relationship="viewControllers" id="Zmd-bd-EH6"/>
                         <segue destination="8x7-ml-O9y" kind="relationship" relationship="viewControllers" id="nH2-Ad-uz4"/>
-                        <segue destination="jaf-ru-fRA" kind="relationship" relationship="viewControllers" id="kah-Zs-Tk3"/>
+                        <segue destination="eSR-CY-Dzt" kind="relationship" relationship="viewControllers" id="bDT-R9-12E"/>
                         <segue destination="PTR-Yg-RKo" kind="relationship" relationship="viewControllers" id="CUb-mD-ETh"/>
                     </connections>
                 </tabBarController>
@@ -84,42 +84,62 @@
             <point key="canvasLocation" x="-426.08695652173918" y="140.625"/>
         </scene>
         <!--Vocabulary-->
-        <scene sceneID="Zg4-3h-Vjg">
+        <scene sceneID="l4p-rC-xCH">
             <objects>
-                <viewController id="jaf-ru-fRA" customClass="VocabularyVC" customModule="worddeposit" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="1iw-9I-RcY">
+                <tableViewController id="yvr-8f-efO" customClass="VocabularyTVC" customModule="worddeposit" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Bqc-6z-Qtl">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4yt-ZB-Njr">
-                                <rect key="frame" x="0.0" y="100" width="414" height="713"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                            </tableView>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="A0t-Di-3JT">
-                                <rect key="frame" x="0.0" y="44" width="414" height="56"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
-                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="4yt-ZB-Njr" firstAttribute="leading" secondItem="yoM-Eb-iHm" secondAttribute="leading" id="5cd-5Y-MRv"/>
-                            <constraint firstItem="A0t-Di-3JT" firstAttribute="trailing" secondItem="yoM-Eb-iHm" secondAttribute="trailing" id="KMt-lX-2R6"/>
-                            <constraint firstItem="4yt-ZB-Njr" firstAttribute="trailing" secondItem="yoM-Eb-iHm" secondAttribute="trailing" id="KyF-IU-aPK"/>
-                            <constraint firstItem="A0t-Di-3JT" firstAttribute="leading" secondItem="yoM-Eb-iHm" secondAttribute="leading" id="ivl-i6-MrK"/>
-                            <constraint firstItem="A0t-Di-3JT" firstAttribute="top" secondItem="yoM-Eb-iHm" secondAttribute="top" id="mI0-eE-B8f"/>
-                            <constraint firstItem="4yt-ZB-Njr" firstAttribute="bottom" secondItem="yoM-Eb-iHm" secondAttribute="bottom" id="ndz-AH-rcb"/>
-                            <constraint firstItem="4yt-ZB-Njr" firstAttribute="top" secondItem="A0t-Di-3JT" secondAttribute="bottom" id="q0J-PO-S5G"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="yoM-Eb-iHm"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Vocabulary" image="list.dash" catalog="system" id="AMc-np-7ej"/>
-                    <connections>
-                        <outlet property="wordsTableView" destination="4yt-ZB-Njr" id="Xts-Ur-GaL"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3Mh-lU-0jM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                        <connections>
+                            <outlet property="dataSource" destination="yvr-8f-efO" id="Sol-si-9oN"/>
+                            <outlet property="delegate" destination="yvr-8f-efO" id="MdT-sR-seW"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Vocabulary" id="uKz-c3-4M2"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IEH-8u-IiS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1262.3188405797102" y="-249.10714285714283"/>
+            <point key="canvasLocation" x="2171.0144927536235" y="-257.14285714285711"/>
+        </scene>
+        <!--Vocabulary ResultsTVC-->
+        <scene sceneID="TWp-d1-VCd">
+            <objects>
+                <tableViewController storyboardIdentifier="VocabularyResultsTVC" id="nvF-OK-GSE" customClass="VocabularyResultsTVC" customModule="worddeposit" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="uga-o6-7yK">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="eTM-BB-y9W">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8fc-Yf-siE">
+                                    <rect key="frame" x="18" y="22" width="378" height="0.0"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <color key="textColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="8fc-Yf-siE" secondAttribute="trailing" constant="18" id="2q1-D8-HoJ"/>
+                                <constraint firstItem="8fc-Yf-siE" firstAttribute="leading" secondItem="eTM-BB-y9W" secondAttribute="leading" constant="18" id="5Kc-p2-5AB"/>
+                                <constraint firstItem="8fc-Yf-siE" firstAttribute="centerY" secondItem="eTM-BB-y9W" secondAttribute="centerY" id="JgH-cw-uyA"/>
+                            </constraints>
+                        </view>
+                        <connections>
+                            <outlet property="dataSource" destination="nvF-OK-GSE" id="3rM-Si-ryT"/>
+                            <outlet property="delegate" destination="nvF-OK-GSE" id="rAT-Wv-9ZJ"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="resultsLabel" destination="8fc-Yf-siE" id="0rf-wE-kwq"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="S9R-qR-rm5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3039" y="-257"/>
         </scene>
         <!--Add Word-->
         <scene sceneID="Jhm-gw-kU6">
@@ -266,6 +286,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XC5-CJ-dXs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="470" y="-411"/>
+        </scene>
+        <!--Vocabulary-->
+        <scene sceneID="B5u-h6-MZb">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="eSR-CY-Dzt" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Vocabulary" image="list.dash" catalog="system" id="yLS-d6-QEP"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="JJ9-1V-Ut2">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="yvr-8f-efO" kind="relationship" relationship="rootViewController" id="R3z-jY-o4I"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gPr-Vo-pVi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1260.8695652173915" y="-257.14285714285711"/>
         </scene>
     </scenes>
     <resources>

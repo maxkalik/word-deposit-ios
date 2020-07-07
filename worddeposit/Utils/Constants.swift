@@ -4,11 +4,13 @@ import UIKit
 struct Storyboards {
     static let Login = "Login"
     static let Home = "Home"
+    static let VocabularyResults = "VocabularyResultsTVC"
 }
 
 struct StoryboardIds {
     static let Login = "login"
     static let Main = "home"
+    static let VocabularyResults = "VocabularyResultsTVC"
 }
 
 struct Colors {
@@ -17,4 +19,5 @@ struct Colors {
 
 struct Identifiers {
     static let WordCell = "WordTableViewCell"
+    static let WordCollectionViewCell = "WordCollectionViewCell"
 }
