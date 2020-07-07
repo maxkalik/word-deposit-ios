@@ -9,7 +9,7 @@ class ProfileVC: UIViewController {
     
     func showLoginVC() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let loginVC = storyboard.instantiateViewController(identifier: "login")
+        let loginVC = storyboard.instantiateViewController(identifier: Storyboards.Login)
         self.view.window?.rootViewController = loginVC
         self.view.window?.makeKeyAndVisible()
     }

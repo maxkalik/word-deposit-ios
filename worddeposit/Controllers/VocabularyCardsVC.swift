@@ -34,8 +34,8 @@ class VocabularyCardsVC: UIViewController {
         super.viewWillAppear(true)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(true)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
         words.removeAll()
     }
     
@@ -54,8 +54,8 @@ class VocabularyCardsVC: UIViewController {
         wordsCollectionView.delegate = self
         wordsCollectionView.dataSource = self
         
-        let nib = UINib(nibName: Identifiers.VocabularyCardCVCell, bundle: nil)
-        wordsCollectionView.register(nib, forCellWithReuseIdentifier: Identifiers.VocabularyCardCVCell)
+        let nib = UINib(nibName: XIBs.VocabularyCardCVCell, bundle: nil)
+        wordsCollectionView.register(nib, forCellWithReuseIdentifier: XIBs.VocabularyCardCVCell)
     }
 }
 
@@ -80,7 +80,7 @@ extension VocabularyCardsVC: UICollectionViewDelegate, UICollectionViewDataSourc
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = wordsCollectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.VocabularyCardCVCell, for: indexPath) as? VocabularyCardCVCell {
+        if let cell = wordsCollectionView.dequeueReusableCell(withReuseIdentifier: XIBs.VocabularyCardCVCell, for: indexPath) as? VocabularyCardCVCell {
             // here was an fatal error - out of range
             cell.configureCell(word: words[indexPath.item], delegate: self)
             return cell

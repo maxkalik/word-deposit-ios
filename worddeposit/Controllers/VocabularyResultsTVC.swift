@@ -40,8 +40,8 @@ class VocabularyResultsTVC: UITableViewController {
     // MARK: - Methods
     
     func setupTableView() {
-        let nib = UINib(nibName: Identifiers.VocabularyTVCell, bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: Identifiers.VocabularyTVCell)
+        let nib = UINib(nibName: XIBs.VocabularyTVCell, bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: XIBs.VocabularyTVCell)
     }
 
     // MARK: - UITableViewDataSource
@@ -51,7 +51,7 @@ class VocabularyResultsTVC: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: Identifiers.VocabularyTVCell, for: indexPath) as? VocabularyTVCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: XIBs.VocabularyTVCell, for: indexPath) as? VocabularyTVCell {
             cell.configureCell(word: filteredWords[indexPath.row])
             return cell
         }

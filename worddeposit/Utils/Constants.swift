@@ -7,17 +7,11 @@ struct Storyboards {
     static let VocabularyResults = "VocabularyResultsTVC"
 }
 
-struct StoryboardIds {
-    static let Login = "login"
-    static let Main = "home"
-    static let VocabularyResults = "VocabularyResultsTVC"
+struct XIBs {
+    static let VocabularyTVCell = "VocabularyTVCell"
+    static let VocabularyCardCVCell = "VocabularyCardCVCell"
 }
 
 struct Colors {
     static let black = UIColor.black.cgColor
-}
-
-struct Identifiers {
-    static let VocabularyTVCell = "VocabularyTVCell"
-    static let VocabularyCardCVCell = "VocabularyCardCVCell"
 }

@@ -35,7 +35,7 @@ class VocabularyTVC: UITableViewController {
     }
         
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        super.viewDidAppear(true)
         setWordsListener() // It's good place for network fetch
         
         // Restore the searchController's active state.
@@ -51,7 +51,7 @@ class VocabularyTVC: UITableViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+        super.viewWillDisappear(true)
         wordsListener.remove()
         words.removeAll()
         tableView.reloadData()
@@ -60,12 +60,12 @@ class VocabularyTVC: UITableViewController {
     // MARK: - View setups
     
     func setupTableView() {
-        let nib = UINib(nibName: Identifiers.VocabularyTVCell, bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: Identifiers.VocabularyTVCell)
+        let nib = UINib(nibName: XIBs.VocabularyTVCell, bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: XIBs.VocabularyTVCell)
     }
     
     func setupResultsTableController() {
-        resultsTableController = self.storyboard?.instantiateViewController(withIdentifier: StoryboardIds.VocabularyResults) as? VocabularyResultsTVC
+        resultsTableController = self.storyboard?.instantiateViewController(withIdentifier: Storyboards.VocabularyResults) as? VocabularyResultsTVC
         resultsTableController.tableView.delegate = self
         
         searchController = UISearchController(searchResultsController: resultsTableController)
@@ -173,7 +173,7 @@ extension VocabularyTVC {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: Identifiers.VocabularyTVCell, for: indexPath) as? VocabularyTVCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: XIBs.VocabularyTVCell, for: indexPath) as? VocabularyTVCell {
             // cell is reusable so before calling it we have to nil an image because it can show an image from previous usage
             cell.configureCell(word: words[indexPath.row])
             return cell

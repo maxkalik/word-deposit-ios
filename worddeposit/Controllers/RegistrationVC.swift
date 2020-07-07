@@ -40,7 +40,7 @@ class RegistrationVC: UIViewController {
                 self.showError(error)
             } else {
                 let storyboard = UIStoryboard(name: "Home", bundle: nil)
-                let homeViewController = storyboard.instantiateViewController(identifier: "home") as? UITabBarController
+                let homeViewController = storyboard.instantiateViewController(identifier: Storyboards.Home) as? UITabBarController
                 self.view.window?.rootViewController = homeViewController
             }
             self.loading.isHidden = true
