@@ -11,6 +11,13 @@ class WordTableViewCell: UITableViewCell {
     // Variables
     private var word: Word!
     
+    /// If a UITableViewCell object is reusable—that is, it has a reuse identifier—this method is invoked just before the object is returned from the UITableView method
+    /// dequeueReusableCell(withIdentifier:) . For performance reasons, you should only reset attributes of the cell that are not related to content
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        preview.image = UIImage(named: "logo")
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         preview.makeRounded()
@@ -24,11 +31,12 @@ class WordTableViewCell: UITableViewCell {
     
     func configureCell(word: Word) {
         self.word = word
-
+        
         if let url = URL(string: word.imgUrl) {
             preview.kf.indicatorType = .activity
             let options: KingfisherOptionsInfo = [KingfisherOptionsInfoItem.transition(.fade(0.2))]
-            preview.kf.setImage(with: url, options: options)
+            let placeholder = UIImage(named: "logo")
+            preview.kf.setImage(with: url, placeholder: placeholder, options: options)
         }
         
         wordExampleLabel.text = word.example

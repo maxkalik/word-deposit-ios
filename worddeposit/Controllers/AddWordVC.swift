@@ -6,22 +6,26 @@ import YPImagePicker
 
 class AddWordVC: UIViewController {
     
-    // Outlets
+    // MARK: - Outlets
+    
     @IBOutlet weak var wordImagePickerBtn: UIButton!
     @IBOutlet weak var wordExampleTextField: UITextField!
     @IBOutlet weak var wordTranslationTextField: UITextField!
     @IBOutlet weak var loader: RoundedView!
     
-    // Variables
+    // MARK: - Variables
+    
     var db: Firestore!
     var storage: Storage!
     var wordRef: DocumentReference!
-    var imagePicker: UIImagePickerController!
+    var isPhotoSet = false
     
     enum ImageSource {
         case photoLibrary
         case camera
     }
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,34 +37,7 @@ class AddWordVC: UIViewController {
         wordTranslationTextField.autocorrectionType = .no
     }
     
-    @IBAction func wordImagePickerBtnTapped(_ sender: UIButton) {
-        var config = YPImagePickerConfiguration()
-        config.onlySquareImagesFromCamera = true
-        config.shouldSaveNewPicturesToAlbum = true
-        config.screens = [.library, .photo]
-        config.albumName = "WordDeposit"
-        config.showsPhotoFilters = false
-        
-        // get capture icon from system icon
-        let newCapturePhotoImage = UIImage(systemName: "largecircle.fill.circle")?.withTintColor(UIColor.label) ?? config.icons.capturePhotoImage
-        config.icons.capturePhotoImage = newCapturePhotoImage
-        
-        let picker = YPImagePicker(configuration: config)
-
-        picker.didFinishPicking { (items, true) in
-            if let photo = items.singlePhoto {
-                self.wordImagePickerBtn.setImage(photo.image, for: .normal)
-            }
-            picker.dismiss(animated: true, completion: nil)
-        }
-        present(picker, animated: true, completion: nil)
-    }
-    
-    // Actions
-    @IBAction func onAddWordBtnPress(_ sender: Any) {
-        loader.isHidden = false
-        prepareForUpload()
-    }
+    // MARK: - Support Methods
     
     func prepareForUpload() {
         guard let example = wordExampleTextField.text, example.isNotEmpty,
@@ -74,15 +51,17 @@ class AddWordVC: UIViewController {
         guard let user = Auth.auth().currentUser else { return }
         
         wordRef = db.collection("users").document(user.uid).collection("words").document()
-        var word = Word.init(imgUrl: "", example: example, translation: translation, id: "")
+        var word = Word.init(imgUrl: "", example: example, translation: translation, id: "", timestamp: Timestamp())
         word.id = wordRef.documentID
         
-        uploadImage(userId: user.uid, word: word)
+        if isPhotoSet {
+            uploadImage(userId: user.uid, word: word)
+        } else {
+            uploadWord(word: word)
+        }
     }
     
-    
     func uploadImage(userId: String, word: Word) {
-        
         guard let image = wordImagePickerBtn.imageView?.image else {
             simpleAlert(title: "Error", msg: "Fill all fields")
             loader.isHidden = true
@@ -133,13 +112,37 @@ class AddWordVC: UIViewController {
         }
     }
     
-    @IBAction func onClearAllBtnPress(_ sender: Any) {
-        updateUI()
-    }
-    
     func updateUI() {
         self.wordImagePickerBtn.setImage(UIImage(named: "logo"), for: .normal)
         wordExampleTextField.text = ""
         wordTranslationTextField.text = ""
+        isPhotoSet = false
+    }
+    
+    // MARK: - IBActions
+    
+    @IBAction func wordImagePickerBtnTapped(_ sender: UIButton) {
+        let ypConfig = YPImagePickerConfig()
+        let picker = YPImagePicker(configuration: ypConfig.defaultConfig())
+
+        // unowned picker will help to avoid memory leak on each action
+        picker.didFinishPicking { [unowned picker] items, _ in
+            if let photo = items.singlePhoto {
+                self.wordImagePickerBtn.setImage(photo.image, for: .normal)
+                self.isPhotoSet = true
+            }
+            picker.dismiss(animated: true, completion: nil)
+        }
+        
+        present(picker, animated: true, completion: nil)
+    }
+    
+    @IBAction func onAddWordBtnPress(_ sender: Any) {
+        loader.isHidden = false
+        prepareForUpload()
+    }
+    
+    @IBAction func onClearAllBtnPress(_ sender: Any) {
+        updateUI()
     }
 }

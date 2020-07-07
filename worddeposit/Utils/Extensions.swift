@@ -15,6 +15,7 @@ extension UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    // maybe I do not need this
     func actionsheet(viewController: UIViewController, title: String? = nil, message: String? = nil, actions: [(String, UIAlertAction.Style)], completion: @escaping (_ index: Int) -> Void) {
         let alertViewController = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         for (index, (title, style)) in actions.enumerated() {
@@ -35,6 +36,27 @@ extension UIImage {
             _ in draw(in: CGRect(origin: .zero, size: canvas))
         }
     }
+    
+    class func circle(diameter: CGFloat, color: UIColor) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: diameter, height: diameter), false, 0)
+        // Return the current graphics context (width, height, bpc, bpp, row bytes -> from UIGraphicsBeginImageContextWithOptions()
+        let ctx = UIGraphicsGetCurrentContext()!
+        ctx.saveGState()
+        
+        // create a rect where we put an image
+        let rect = CGRect(x: 0, y: 0, width: diameter, height: diameter)
+        ctx.setFillColor(color.cgColor)
+        ctx.fillEllipse(in: rect)
+        
+        // Sets the current graphics state to the state most recently saved
+        // Core Graphics removes the graphics state at the top of the stack so that the most recently saved state becomes the current graphics state
+        ctx.restoreGState()
+        // Returns an image based on the contents of the current bitmap-based graphics context.
+        let img = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        
+        return img
+    }
 }
 
 
@@ -47,18 +69,11 @@ extension UIImageView {
 
 /*
 extension Firestore {
-    var words: CollectionReference {
-//        let userId = UserService.user.id
-        // TODO: shoud be rewrited in the singleton
-        guard let user = Auth.auth().currentUser else { return nil }
-        return Firestore.firestore().collection("users").document(user.uid).collection("words")
+    var categories: Query {
+        return collection("categories").order(by: "timeStamp", descending: true)
     }
-}
-
-extension Storage {
-    func getWordImageById(_ id: String) -> StorageReference {
-        let userId = UserService.user.id
-        return Storage.storage().reference().child("/\(userId)/\(id).jpg")
+    func products(categoryId: String) -> Query {
+        return collection("products").whereField("category", isEqualTo: categoryId).order(by: "timeStamp", descending: true)
     }
 }
 */

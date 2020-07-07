@@ -21,9 +21,10 @@ class PracticeVC: UIViewController {
     }
     
     override func viewDidLoad() {
+        welcomeLbl.isHidden = true
+        wordsLbl.isHidden = true
         activityIndicator.startAnimating()
         print(words)
-        
     }
     
     func getCurrentUser() {
@@ -40,6 +41,7 @@ class PracticeVC: UIViewController {
             self.user = User.init(data: data)
             self.activityIndicator.stopAnimating()
             self.welcomeLbl.text = self.user.email
+            self.welcomeLbl.isHidden = false
         })
         
         fetchWords(from: userRef)
@@ -60,6 +62,7 @@ class PracticeVC: UIViewController {
                 self.words.append(word)
             }
             self.wordsLbl.text = String(self.words.count)
+            self.wordsLbl.isHidden = false
         })
     }
 }
