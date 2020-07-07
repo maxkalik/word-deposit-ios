@@ -13,15 +13,16 @@ import FirebaseStorage
 
 class VocabularyResultsTVC: UITableViewController {
 
-    
+    // MARK: - IBOutlets
     @IBOutlet weak var resultsLabel: UILabel!
     
-    var filteredWords = [Word]()
+    // MARK: - Instances
     
-    /// Listeners
+    var filteredWords = [Word]()
     var db: Firestore!
     var storage: Storage!
     
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,6 +32,13 @@ class VocabularyResultsTVC: UITableViewController {
         setupTableView()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        filteredWords.removeAll()
+    }
+    
+    // MARK: - Methods
+    
     func setupTableView() {
         let nib = UINib(nibName: Identifiers.WordCell, bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: Identifiers.WordCell)
@@ -39,7 +47,6 @@ class VocabularyResultsTVC: UITableViewController {
     // MARK: - UITableViewDataSource
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("from result tvc", filteredWords)
         return filteredWords.count
     }
 
@@ -91,8 +98,6 @@ extension VocabularyResultsTVC {
                         }
                     }
                 }
-                
-                
             }
         }
     }

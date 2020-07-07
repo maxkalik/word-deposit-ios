@@ -5,7 +5,7 @@ import FirebaseStorage
 
 class VocabularyTVC: UITableViewController {
     
-    // MARK: - Properties
+    // MARK: - Instances
     
     /// Data model for the table view
     var words = [Word]()
@@ -33,16 +33,10 @@ class VocabularyTVC: UITableViewController {
         setupTableView()
         setupResultsTableController()
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        wordsListener.remove()
-        words.removeAll()
-        tableView.reloadData()
-    }
-    
+        
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        setWordsListener()
+        setWordsListener() // It's good place for network fetch
         
         // Restore the searchController's active state.
         if restoredState.wasActive {
@@ -54,6 +48,13 @@ class VocabularyTVC: UITableViewController {
                 restoredState.wasFirstResponder = false
             }
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        wordsListener.remove()
+        words.removeAll()
+        tableView.reloadData()
     }
     
     // MARK: - View setups
@@ -157,7 +158,6 @@ extension VocabularyTVC {
         }
         vc.wordIndexPath = indexPath.row
         
-//        vc.modalPresentationStyle = .popover
         DispatchQueue.main.async {
             self.present(vc, animated: true, completion: nil)
         }
@@ -206,8 +206,7 @@ extension VocabularyTVC {
                 selectedWord = resultsTableController.filteredWords[indexPath.row]
             }
 
-            // TODO: shoud be rewrited in the singleton
-
+            // TODO: shoud be rewrited in the singleton if needed
             guard let user = Auth.auth().currentUser else { return }
             
             db.collection("users").document(user.uid).collection("words").document(selectedWord.id).delete { (error) in

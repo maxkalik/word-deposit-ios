@@ -41,7 +41,6 @@ extension UIImage {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: diameter, height: diameter), false, 0)
         // Return the current graphics context (width, height, bpc, bpp, row bytes -> from UIGraphicsBeginImageContextWithOptions()
         let ctx = UIGraphicsGetCurrentContext()!
-        print(ctx)
         ctx.saveGState()
         
         // create a rect where we put an image
