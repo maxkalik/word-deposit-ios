@@ -23,7 +23,7 @@
                                 <rect key="frame" x="10" y="10" width="249" height="500"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="dby-dI-Ln7">
-                                        <rect key="frame" x="0.0" y="249" width="249" height="204"/>
+                                        <rect key="frame" x="0.0" y="279" width="249" height="204"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Example" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bYr-Ab-Q6M">
                                                 <rect key="frame" x="0.0" y="0.0" width="249" height="50"/>
@@ -86,7 +86,7 @@
                                     <constraint firstItem="dby-dI-Ln7" firstAttribute="leading" secondItem="NG3-UZ-tdL" secondAttribute="leading" id="NFb-Gn-ges"/>
                                     <constraint firstAttribute="trailing" secondItem="qEf-66-3td" secondAttribute="trailing" id="Ukz-dA-qRS"/>
                                     <constraint firstAttribute="trailing" secondItem="dby-dI-Ln7" secondAttribute="trailing" id="eMA-nT-z6s"/>
-                                    <constraint firstItem="dby-dI-Ln7" firstAttribute="top" secondItem="qEf-66-3td" secondAttribute="bottom" id="kZo-F1-Opp"/>
+                                    <constraint firstItem="dby-dI-Ln7" firstAttribute="top" secondItem="qEf-66-3td" secondAttribute="bottom" constant="30" id="kZo-F1-Opp"/>
                                 </constraints>
                             </view>
                         </subviews>
