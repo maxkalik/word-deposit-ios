@@ -24,6 +24,7 @@ class PracticeVC: UIViewController {
         welcomeLbl.isHidden = true
         wordsLbl.isHidden = true
         activityIndicator.startAnimating()
+        
         print(words)
     }
     

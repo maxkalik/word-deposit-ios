@@ -9,7 +9,6 @@ class AddWordVC: UIViewController {
     // MARK: - Outlets
     
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var wordImagePickerBtn: UIButton! {
         didSet {
             wordImagePickerBtn.imageView?.contentMode = .scaleAspectFill
@@ -37,7 +36,9 @@ class AddWordVC: UIViewController {
         storage = Storage.storage()
         
         scrollView.delegate = self
-//        scrollView.contentSize = contentView.frame.size;
+        // this will allow to put content view to the scroll without including safearea in the top
+        scrollView.contentInsetAdjustmentBehavior = .never
+
         setupUI()
     }
     
@@ -197,8 +198,7 @@ class AddWordVC: UIViewController {
 extension AddWordVC: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-//        wordImagePickerBtn.frame = CGRect(x: wordImagePickerBtn.frame.origin.x, y: wordImagePickerBtn.frame.origin.y, width: wordImagePickerBtn.frame.width, height: wordImagePickerBtn.frame.size.height - offsetY)
-
+        // make image scale on scroll
         let offset = scrollView.contentOffset
 
         if offset.y < 0.0 {
@@ -212,4 +212,3 @@ extension AddWordVC: UIScrollViewDelegate {
         }
     }
 }
-
