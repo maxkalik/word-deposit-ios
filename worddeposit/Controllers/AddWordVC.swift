@@ -76,7 +76,6 @@ class AddWordVC: UIViewController {
     
     private func setupUI() {
         loader.isHidden = true
-        wordImagePickerBtn.layer.cornerRadius = 8
         wordExampleTextField.autocorrectionType = .no
         wordTranslationTextField.autocorrectionType = .no
         addWordButton.isHidden = true
@@ -197,23 +196,20 @@ class AddWordVC: UIViewController {
 
 extension AddWordVC: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offsetY = scrollView.contentOffset.y
-        let btnImageHeight = wordImagePickerBtn.frame.height
-    
-        print(btnImageHeight - offsetY)
+        
 //        wordImagePickerBtn.frame = CGRect(x: wordImagePickerBtn.frame.origin.x, y: wordImagePickerBtn.frame.origin.y, width: wordImagePickerBtn.frame.width, height: wordImagePickerBtn.frame.size.height - offsetY)
 
         let offset = scrollView.contentOffset
 
         if offset.y < 0.0 {
-            var transform = CATransform3DTranslate(CATransform3DIdentity, 0, offset.y, 0)
+            var transform = CATransform3DTranslate(CATransform3DIdentity, 0, (offset.y), 0)
             let scaleFactor = 1 + (-1 * offset.y / (wordImagePickerBtn.frame.size.height / 2))
-        transform = CATransform3DScale(transform, scaleFactor, scaleFactor, 1)
+            transform = CATransform3DScale(transform, scaleFactor, scaleFactor, 1)
+            print(scaleFactor)
             wordImagePickerBtn.layer.transform = transform
         } else {
             wordImagePickerBtn.layer.transform = CATransform3DIdentity
         }
-        
     }
 }
 
