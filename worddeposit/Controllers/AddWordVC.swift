@@ -69,8 +69,6 @@ class AddWordVC: UIViewController {
     
     func textFieldValidation() {
         guard let wordExample = wordExampleTextField.text, let wordTranslation = wordTranslationTextField.text else { return }
-        print(wordExample.isEmpty && wordTranslation.isEmpty, wordExample.isEmpty || wordTranslation.isEmpty)
-        
         addWordButton.isHidden = wordExample.isEmpty || wordTranslation.isEmpty
         clearAllButton.isHidden = wordExample.isEmpty && wordTranslation.isEmpty
     }
@@ -205,7 +203,6 @@ extension AddWordVC: UIScrollViewDelegate {
             var transform = CATransform3DTranslate(CATransform3DIdentity, 0, (offset.y), 0)
             let scaleFactor = 1 + (-1 * offset.y / (wordImagePickerBtn.frame.size.height / 2))
             transform = CATransform3DScale(transform, scaleFactor, scaleFactor, 1)
-            print(scaleFactor)
             wordImagePickerBtn.layer.transform = transform
         } else {
             wordImagePickerBtn.layer.transform = CATransform3DIdentity

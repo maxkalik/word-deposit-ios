@@ -32,14 +32,14 @@ class LoginVC: UIViewController {
                 return
         }
         
-        Auth.auth().signIn(withEmail: email, password: password) { (authDataResult, error) in
+        Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
             if let error = error {
-                self.loader.isHidden = true
-                self.simpleAlert(title: "Error", msg: error.localizedDescription)
+                self?.loader.isHidden = true
+                self?.simpleAlert(title: "Error", msg: error.localizedDescription)
                 return
             }
-            self.loader.isHidden = true
-            self.showHomeVC()
+            self?.loader.isHidden = true
+            self?.showHomeVC()
         }
     }
 }
