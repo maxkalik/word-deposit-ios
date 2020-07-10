@@ -98,8 +98,6 @@
                             <constraint firstAttribute="trailing" secondItem="NG3-UZ-tdL" secondAttribute="trailing" constant="10" id="ggn-T7-669"/>
                             <constraint firstItem="NG3-UZ-tdL" firstAttribute="centerX" secondItem="YMn-75-jd0" secondAttribute="centerX" id="oOp-pv-GNs"/>
                         </constraints>
-                        <viewLayoutGuide key="contentLayoutGuide" id="pdv-Iz-2t9"/>
-                        <viewLayoutGuide key="frameLayoutGuide" id="ydR-GO-iPK"/>
                     </scrollView>
                     <view alpha="0.69999998807907104" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vMz-nY-pBv" customClass="RoundedView" customModule="worddeposit" customModuleProvider="target">
                         <rect key="frame" x="84.5" y="210" width="100" height="100"/>

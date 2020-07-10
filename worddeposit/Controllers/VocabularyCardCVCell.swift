@@ -9,6 +9,7 @@ import YPImagePicker
 protocol VocabularyCardCVCellDelegate: AnyObject {
     func showAlert(title: String, message: String)
     func presentVC(_ viewControllerToPresent: UIViewController)
+    func disableEnableScroll(isKeyboardShow: Bool)
 }
 
 class VocabularyCardCVCell: UICollectionViewCell {
@@ -77,6 +78,8 @@ class VocabularyCardCVCell: UICollectionViewCell {
     
     @objc func keyboardWillShow(sender: UIResponder) {
         // self.view.frame.origin.y -= 150
+//        self.frame.origin.y -= 150
+        delegate?.disableEnableScroll(isKeyboardShow: true)
         print("keyboard show")
         
         print(frame.size.width, UIScreen.main.bounds.width)
@@ -84,8 +87,8 @@ class VocabularyCardCVCell: UICollectionViewCell {
     }
     
     @objc func keyboardWillHide(sender: UIResponder) {
-        // self.view.frame.origin.y += 150
         print("keyboard hide")
+        delegate?.disableEnableScroll(isKeyboardShow: false)
     }
     
     @objc func adjustImageButtonScale(byHandlingGestureRecognizedBy recoginzer: UIPinchGestureRecognizer) {

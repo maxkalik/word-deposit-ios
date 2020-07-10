@@ -28,11 +28,22 @@ class VocabularyCardsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupWordsCollectionView()
+        view.layer.borderColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        view.layer.borderWidth = 1.0
+        print(view.frame.height)
+        print(UIScreen.main.bounds.size.height)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+//        view.frame.size.height = UIScreen.main.bounds.size.height
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        self.modalPresentationStyle = .fullScreen
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -64,6 +75,10 @@ extension VocabularyCardsVC: VocabularyCardCVCellDelegate {
     
     func presentVC(_ viewControllerToPresent: UIViewController) {
         present(viewControllerToPresent, animated: true, completion: nil)
+    }
+    
+    func disableEnableScroll(isKeyboardShow: Bool) {
+        wordsCollectionView.isScrollEnabled = !isKeyboardShow
     }
 }
 
