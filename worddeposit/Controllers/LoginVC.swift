@@ -3,18 +3,25 @@ import FirebaseAuth
 
 class LoginVC: UIViewController {
     
-    // Outlets
+    // MARK: - Outlets
+    
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loader: RoundedView!
     
-    // Variables
+    // MARK: - Instances
+    
+    var auth: Auth!
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        auth = Auth.auth()
         loader.isHidden = true
     }
     
+    // MARK: - Methods
     func showHomeVC() {
         let storyboard = UIStoryboard(name: Storyboards.Home, bundle: nil)
         let homeViewController = storyboard.instantiateViewController(identifier: Storyboards.Home) as? UITabBarController
@@ -22,7 +29,7 @@ class LoginVC: UIViewController {
         self.view.window?.makeKeyAndVisible()
     }
     
-    // Actions
+    // MARK: - IBActions
     @IBAction func onSignInBtnPress(_ sender: Any) {
         loader.isHidden = false
         guard let email = emailTextField.text, email.isNotEmpty,
@@ -32,7 +39,7 @@ class LoginVC: UIViewController {
                 return
         }
         
-        Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
+        auth.signIn(withEmail: email, password: password) { [weak self] authResult, error in
             if let error = error {
                 self?.loader.isHidden = true
                 self?.simpleAlert(title: "Error", msg: error.localizedDescription)
