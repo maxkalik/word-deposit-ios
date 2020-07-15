@@ -6,8 +6,7 @@ class ProfileTVC: UITableViewController {
     
     @IBOutlet weak var userFullName: UILabel!
     @IBOutlet weak var userEmail: UILabel!
-    
-    
+        
     // MARK: - Instances
     
     var user: User! {
@@ -24,6 +23,7 @@ class ProfileTVC: UITableViewController {
     }
     var auth: Auth!
     var db: Firestore!
+    var profileRef: DocumentReference!
     var handle: AuthStateDidChangeListenerHandle?
     
     // MARK: - Lifecycle
@@ -63,6 +63,18 @@ class ProfileTVC: UITableViewController {
                 } else {
                     print("Document does not exist")
                 }
+            }
+        }
+    }
+    
+    private func updateProfile(user: User) {
+        profileRef = db.collection("users").document(user.id)
+        let data = User.modelToData(user: user)
+        profileRef.updateData(data) { error in
+            if let error = error {
+                debugPrint(error)
+            } else {
+                print("success")
             }
         }
     }
@@ -113,7 +125,9 @@ class ProfileTVC: UITableViewController {
 }
 
 extension ProfileTVC: UserInfoTVCDelegate {
-    func updateProfile(firstName: String, lastName: String) {
-        print(firstName, lastName)
+    func updateUserInfo(firstName: String, lastName: String) {
+        user.firstName = firstName
+        user.lastName = lastName
+        updateProfile(user: user)
     }
 }

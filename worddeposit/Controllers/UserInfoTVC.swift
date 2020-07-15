@@ -1,7 +1,7 @@
 import UIKit
 
 protocol UserInfoTVCDelegate: AnyObject {
-    func updateProfile(firstName: String, lastName: String)
+    func updateUserInfo(firstName: String, lastName: String)
 }
 
 class UserInfoTVC: UITableViewController {
@@ -43,7 +43,7 @@ class UserInfoTVC: UITableViewController {
     
     @IBAction func doneTouched(_ sender: UIBarButtonItem) {
         guard let first = firstNameTextField.text, let last = lastNameTextField.text else { return }
-        delegate?.updateProfile(firstName: first, lastName: last)
+        delegate?.updateUserInfo(firstName: first, lastName: last)
         navigationController?.popViewController(animated: true)
     }
 }
