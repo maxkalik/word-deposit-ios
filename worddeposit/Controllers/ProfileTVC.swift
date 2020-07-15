@@ -6,7 +6,8 @@ class ProfileTVC: UITableViewController {
     
     @IBOutlet weak var userFullName: UILabel!
     @IBOutlet weak var userEmail: UILabel!
-        
+    @IBOutlet weak var wordsAmount: UILabel!
+    
     // MARK: - Instances
     
     var user: User! {
@@ -59,11 +60,24 @@ class ProfileTVC: UITableViewController {
                 if let document = document, document.exists {
                     guard let data = document.data() else { return }
                     self.user = User.init(data: data)
-                    
+                    self.fetchWords(from: userRef)
                 } else {
                     print("Document does not exist")
                 }
             }
+        }
+    }
+    
+    private func fetchWords(from: DocumentReference) {
+        let wordsRef = from.collection("words")
+        
+        wordsRef.getDocuments { (snapshot, error) in
+            if let error = error {
+                debugPrint(error.localizedDescription)
+                return
+            }
+            guard let documents = snapshot?.documents else { return }
+            self.wordsAmount.text = String(documents.count)
         }
     }
     
