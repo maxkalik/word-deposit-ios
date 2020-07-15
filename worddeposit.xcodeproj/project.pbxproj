@@ -16,7 +16,7 @@
 		1128422B248E836300A014E9 /* PracticeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1128422A248E836300A014E9 /* PracticeVC.swift */; };
 		1128422F248E839D00A014E9 /* AddWordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1128422E248E839D00A014E9 /* AddWordVC.swift */; };
 		11284233248E83BB00A014E9 /* VocabularyTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284232248E83BB00A014E9 /* VocabularyTVC.swift */; };
-		11284235248E83C800A014E9 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284234248E83C800A014E9 /* ProfileVC.swift */; };
+		11284235248E83C800A014E9 /* ProfileTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284234248E83C800A014E9 /* ProfileTVC.swift */; };
 		11284237248E83D400A014E9 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284236248E83D400A014E9 /* LoginVC.swift */; };
 		11284239248E83E000A014E9 /* RegistrationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284238248E83E000A014E9 /* RegistrationVC.swift */; };
 		1128423B248E83ED00A014E9 /* ForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1128423A248E83ED00A014E9 /* ForgotPasswordVC.swift */; };
@@ -51,7 +51,7 @@
 		1128422A248E836300A014E9 /* PracticeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeVC.swift; sourceTree = "<group>"; };
 		1128422E248E839D00A014E9 /* AddWordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWordVC.swift; sourceTree = "<group>"; };
 		11284232248E83BB00A014E9 /* VocabularyTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyTVC.swift; sourceTree = "<group>"; };
-		11284234248E83C800A014E9 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		11284234248E83C800A014E9 /* ProfileTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTVC.swift; sourceTree = "<group>"; };
 		11284236248E83D400A014E9 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		11284238248E83E000A014E9 /* RegistrationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationVC.swift; sourceTree = "<group>"; };
 		1128423A248E83ED00A014E9 /* ForgotPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVC.swift; sourceTree = "<group>"; };
@@ -139,7 +139,7 @@
 				1158D30C24917B9B0087DC96 /* VocabularyTVCell.swift */,
 				1181BBF12498060F00DB682E /* VocabularyCardsVC.swift */,
 				1171E70424981CDD00805D35 /* VocabularyCardCVCell.swift */,
-				11284234248E83C800A014E9 /* ProfileVC.swift */,
+				11284234248E83C800A014E9 /* ProfileTVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -345,7 +345,7 @@
 				1128422B248E836300A014E9 /* PracticeVC.swift in Sources */,
 				116BC94C249182BD00968DA6 /* Constants.swift in Sources */,
 				1128423F248E845900A014E9 /* User.swift in Sources */,
-				11284235248E83C800A014E9 /* ProfileVC.swift in Sources */,
+				11284235248E83C800A014E9 /* ProfileTVC.swift in Sources */,
 				11F32A5324AF46D00097BF39 /* VocabularyResultsTVC.swift in Sources */,
 				11284237248E83D400A014E9 /* LoginVC.swift in Sources */,
 				11F32A5524AF49C30097BF39 /* VocabularyTVC+Restore.swift in Sources */,

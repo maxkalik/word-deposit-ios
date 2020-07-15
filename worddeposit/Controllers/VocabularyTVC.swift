@@ -24,7 +24,7 @@ class VocabularyTVC: UITableViewController {
     /// Restoration state for UISearchController
     var restoredState = SearchControllerRestorableState()
     
-    // MARK: - View Life Cicle
+    // MARK: - View Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()

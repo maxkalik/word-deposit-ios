@@ -55,14 +55,26 @@ class ProfileTVC: UITableViewController {
     
     private func showLoginVC() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let loginVC = storyboard.instantiateViewController(identifier: Storyboards.Login)
-        self.view.window?.rootViewController = loginVC
-        self.view.window?.makeKeyAndVisible()
+       let loginVC = storyboard.instantiateViewController(identifier: Storyboards.Login)
+        
+        guard let window = self.view.window else {
+            self.view.window?.rootViewController = loginVC
+            self.view.window?.makeKeyAndVisible()
+            return
+        }
+        
+        window.rootViewController = loginVC
+        window.makeKeyAndVisible()
+
+        let options: UIView.AnimationOptions = .transitionCrossDissolve
+        let duration: TimeInterval = 0.3
+        
+        UIView.transition(with: window, duration: duration, options: options, animations: nil, completion: nil)
     }
     
     // MARK: - IBActions
     
-    @IBAction func signOut(_ sender: UIButton) {
+    @IBAction func logOut(_ sender: UIButton) {
        do {
             try auth.signOut()
             // clear all listeners and ui
@@ -72,7 +84,4 @@ class ProfileTVC: UITableViewController {
             debugPrint(error.localizedDescription)
         }
     }
-    
-    
-//    cellforrowat
 }

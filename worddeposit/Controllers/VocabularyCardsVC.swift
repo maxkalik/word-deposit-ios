@@ -6,6 +6,8 @@ class VocabularyCardsVC: UIViewController {
 
     @IBOutlet weak var wordsCollectionView: UICollectionView! {
         didSet {
+            wordsCollectionView.delegate = self
+            wordsCollectionView.dataSource = self
             wordsCollectionView.isPrefetchingEnabled = false
             // I turned off default adjustment wich solves the problem collectionView presenting popover.
             wordsCollectionView.contentInsetAdjustmentBehavior = .never
@@ -28,17 +30,14 @@ class VocabularyCardsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupWordsCollectionView()
-        view.layer.borderColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        view.layer.borderWidth = 1.0
-        print(view.frame.height)
-        print(UIScreen.main.bounds.size.height)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-//        view.frame.size.height = UIScreen.main.bounds.size.height
-        
-        
+        view.layer.borderColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        view.layer.borderWidth = 1.0
+//        print(view.frame.height)
+//        print(UIScreen.main.bounds.size.height)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,9 +57,6 @@ class VocabularyCardsVC: UIViewController {
     // MARK: - Supporting Methods
     
     private func setupWordsCollectionView() {
-        wordsCollectionView.delegate = self
-        wordsCollectionView.dataSource = self
-        
         let nib = UINib(nibName: XIBs.VocabularyCardCVCell, bundle: nil)
         wordsCollectionView.register(nib, forCellWithReuseIdentifier: XIBs.VocabularyCardCVCell)
     }
