@@ -105,7 +105,15 @@ class ProfileTVC: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let userInfo = segue.destination as? UserInfoTVC {
-            
+            userInfo.firstName = user.firstName
+            userInfo.lastName = user.lastName
+            userInfo.delegate = self
         }
+    }
+}
+
+extension ProfileTVC: UserInfoTVCDelegate {
+    func updateProfile(firstName: String, lastName: String) {
+        print(firstName, lastName)
     }
 }

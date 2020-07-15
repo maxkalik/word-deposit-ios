@@ -529,7 +529,7 @@
                         <sections>
                             <tableViewSection id="dUc-ND-JOC">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="VBB-eL-dC2">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="VBB-eL-dC2">
                                         <rect key="frame" x="0.0" y="18" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VBB-eL-dC2" id="XaK-fu-KzF">
@@ -562,7 +562,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="bn6-to-wN2">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="bn6-to-wN2">
                                         <rect key="frame" x="0.0" y="61.5" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bn6-to-wN2" id="jJK-wk-i0f">
@@ -604,8 +604,17 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="User Info" largeTitleDisplayMode="never" id="Edd-AQ-UzJ">
-                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Done" id="csU-tv-Eev"/>
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Done" id="csU-tv-Eev">
+                            <connections>
+                                <action selector="doneTouched:" destination="bSy-fF-0Nz" id="qyy-Tb-gi8"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="doneButton" destination="csU-tv-Eev" id="6lb-N0-Nee"/>
+                        <outlet property="firstNameTextField" destination="XeH-88-fk6" id="z67-xI-oX7"/>
+                        <outlet property="lastNameTextField" destination="Cyt-nF-HyN" id="jXU-V4-J4t"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uVC-LW-nZg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

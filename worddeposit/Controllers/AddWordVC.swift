@@ -8,7 +8,13 @@ class AddWordVC: UIViewController {
     
     // MARK: - Outlets
     
-    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var scrollView: UIScrollView! {
+        didSet {
+            scrollView.delegate = self
+            // this will allow to put content view to the scroll without including safearea in the top
+            scrollView.contentInsetAdjustmentBehavior = .never
+        }
+    }
     @IBOutlet weak var wordImagePickerBtn: UIButton! {
         didSet {
             wordImagePickerBtn.imageView?.contentMode = .scaleAspectFill
@@ -34,10 +40,6 @@ class AddWordVC: UIViewController {
         super.viewDidLoad()
         db = Firestore.firestore()
         storage = Storage.storage()
-        
-        scrollView.delegate = self
-        // this will allow to put content view to the scroll without including safearea in the top
-        scrollView.contentInsetAdjustmentBehavior = .never
 
         setupUI()
     }
