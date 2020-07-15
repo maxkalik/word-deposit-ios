@@ -4,11 +4,24 @@ import FirebaseFirestore
 
 class ProfileTVC: UITableViewController {
     
+    @IBOutlet weak var userFullName: UILabel!
+    @IBOutlet weak var userEmail: UILabel!
     
     
     // MARK: - Instances
     
-    var user = User()
+    var user: User! {
+        didSet {
+            guard let user = user else { return }
+            if user.firstName != "", user.lastName != "" {
+                userFullName.text = "\(user.firstName) \(user.lastName)"
+            }
+            userEmail.text = user.email
+            DispatchQueue.main.async() {
+                self.tableView.reloadData()
+            }
+        }
+    }
     var auth: Auth!
     var db: Firestore!
     var handle: AuthStateDidChangeListenerHandle?
@@ -17,6 +30,7 @@ class ProfileTVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        user = User()
         auth = Auth.auth()
         db = Firestore.firestore()
     }
@@ -35,8 +49,8 @@ class ProfileTVC: UITableViewController {
     
     private func getCurrentUser() {
         handle = auth.addStateDidChangeListener { (auth, user) in
-            guard let user = auth.currentUser else { return }
-            let userRef = self.db.collection("users").document(user.uid)
+            guard let currentUser = auth.currentUser else { return }
+            let userRef = self.db.collection("users").document(currentUser.uid)
             userRef.getDocument { (document, error) in
                 if let error = error {
                     debugPrint(error.localizedDescription)
@@ -45,7 +59,7 @@ class ProfileTVC: UITableViewController {
                 if let document = document, document.exists {
                     guard let data = document.data() else { return }
                     self.user = User.init(data: data)
-                    print(self.user)
+                    
                 } else {
                     print("Document does not exist")
                 }
@@ -82,6 +96,16 @@ class ProfileTVC: UITableViewController {
         } catch let error as NSError {
             simpleAlert(title: "Error", msg: error.localizedDescription)
             debugPrint(error.localizedDescription)
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: Segues.UserInfo, sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let userInfo = segue.destination as? UserInfoTVC {
+            
         }
     }
 }

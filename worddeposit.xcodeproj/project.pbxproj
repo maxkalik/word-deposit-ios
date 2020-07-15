@@ -30,8 +30,10 @@
 		116BC94E2491836B00968DA6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC94D2491836B00968DA6 /* Extensions.swift */; };
 		1171E70624981CDD00805D35 /* VocabularyCardCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1171E70424981CDD00805D35 /* VocabularyCardCVCell.swift */; };
 		1171E70724981CDD00805D35 /* VocabularyCardCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1171E70524981CDD00805D35 /* VocabularyCardCVCell.xib */; };
+		118162EF24BFB08E0088C0E1 /* UserInfoTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118162EE24BFB08E0088C0E1 /* UserInfoTVC.swift */; };
 		1181BBF32498060F00DB682E /* VocabularyCardsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1181BBF12498060F00DB682E /* VocabularyCardsVC.swift */; };
 		1181BBF42498060F00DB682E /* VocabularyCardsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1181BBF22498060F00DB682E /* VocabularyCardsVC.xib */; };
+		1192355024BFB66C00E76403 /* TextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1192354F24BFB66C00E76403 /* TextFields.swift */; };
 		119DBF5724ACCFBF009124B7 /* Configurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119DBF5624ACCFBF009124B7 /* Configurations.swift */; };
 		11F32A5324AF46D00097BF39 /* VocabularyResultsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F32A5224AF46D00097BF39 /* VocabularyResultsTVC.swift */; };
 		11F32A5524AF49C30097BF39 /* VocabularyTVC+Restore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F32A5424AF49C30097BF39 /* VocabularyTVC+Restore.swift */; };
@@ -65,8 +67,10 @@
 		116BC94D2491836B00968DA6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		1171E70424981CDD00805D35 /* VocabularyCardCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyCardCVCell.swift; sourceTree = "<group>"; };
 		1171E70524981CDD00805D35 /* VocabularyCardCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VocabularyCardCVCell.xib; sourceTree = "<group>"; };
+		118162EE24BFB08E0088C0E1 /* UserInfoTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoTVC.swift; sourceTree = "<group>"; };
 		1181BBF12498060F00DB682E /* VocabularyCardsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyCardsVC.swift; sourceTree = "<group>"; };
 		1181BBF22498060F00DB682E /* VocabularyCardsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VocabularyCardsVC.xib; sourceTree = "<group>"; };
+		1192354F24BFB66C00E76403 /* TextFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFields.swift; sourceTree = "<group>"; };
 		119DBF5624ACCFBF009124B7 /* Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
 		11D879B12494170B00FF7BA3 /* worddeposit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = worddeposit.entitlements; sourceTree = "<group>"; };
 		11F32A5224AF46D00097BF39 /* VocabularyResultsTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyResultsTVC.swift; sourceTree = "<group>"; };
@@ -140,6 +144,7 @@
 				1181BBF12498060F00DB682E /* VocabularyCardsVC.swift */,
 				1171E70424981CDD00805D35 /* VocabularyCardCVCell.swift */,
 				11284234248E83C800A014E9 /* ProfileTVC.swift */,
+				118162EE24BFB08E0088C0E1 /* UserInfoTVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -148,6 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				1128423C248E840000A014E9 /* RoundedViews.swift */,
+				1192354F24BFB66C00E76403 /* TextFields.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -340,10 +346,12 @@
 			files = (
 				11284239248E83E000A014E9 /* RegistrationVC.swift in Sources */,
 				11284241248E846000A014E9 /* Word.swift in Sources */,
+				1192355024BFB66C00E76403 /* TextFields.swift in Sources */,
 				1128423B248E83ED00A014E9 /* ForgotPasswordVC.swift in Sources */,
 				1128423D248E840000A014E9 /* RoundedViews.swift in Sources */,
 				1128422B248E836300A014E9 /* PracticeVC.swift in Sources */,
 				116BC94C249182BD00968DA6 /* Constants.swift in Sources */,
+				118162EF24BFB08E0088C0E1 /* UserInfoTVC.swift in Sources */,
 				1128423F248E845900A014E9 /* User.swift in Sources */,
 				11284235248E83C800A014E9 /* ProfileTVC.swift in Sources */,
 				11F32A5324AF46D00097BF39 /* VocabularyResultsTVC.swift in Sources */,

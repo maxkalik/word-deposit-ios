@@ -12,6 +12,10 @@ struct XIBs {
     static let VocabularyCardCVCell = "VocabularyCardCVCell"
 }
 
+struct Segues {
+    static let UserInfo = "UserInfo"
+}
+
 struct Colors {
     static let black = UIColor.black.cgColor
 }

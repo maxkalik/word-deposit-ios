@@ -40,8 +40,8 @@ class PracticeVC: UIViewController {
     
     private func getCurrentUser() {
         handle = auth.addStateDidChangeListener { (auth, user) in
-            guard let user = auth.currentUser else { return }
-            let userRef = self.db.collection("users").document(user.uid)
+            guard let currentUser = auth.currentUser else { return }
+            let userRef = self.db.collection("users").document(currentUser.uid)
             userRef.getDocument { (document, error) in
                 if let error = error {
                     debugPrint(error.localizedDescription)
