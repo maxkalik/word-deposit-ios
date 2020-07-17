@@ -14,6 +14,16 @@ struct XIBs {
 
 struct Segues {
     static let UserInfo = "UserInfo"
+    static let NativeLanguage = "NativeLanguage"
+    static let AccountType = "AccountType"
+    static let Appearance = "Appearance"
+    static let PrivacyAndSecurity = "PrivacyAndSecurity"
+    static let FAQ = "FAQ"
+    static let About = "About"
+}
+
+struct ReusableIdentifiers {
+    static let CheckedCell = "CheckedCell"
 }
 
 struct Colors {

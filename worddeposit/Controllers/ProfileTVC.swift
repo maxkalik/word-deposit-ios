@@ -2,6 +2,9 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
+/* use the link below where you can store user token */
+/* https://github.com/jrendel/SwiftKeychainWrapper */
+
 class ProfileTVC: UITableViewController {
     
     @IBOutlet weak var userFullName: UILabel!
@@ -34,6 +37,12 @@ class ProfileTVC: UITableViewController {
         user = User()
         auth = Auth.auth()
         db = Firestore.firestore()
+        let defaults = UserDefaults.standard
+        guard let id = defaults.object(forKey: "id") else { return }
+        let userTouchID = defaults.bool(forKey: "UseTouchID")
+        print(id)
+        print("userTouchId", userTouchID)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -126,14 +135,51 @@ class ProfileTVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: Segues.UserInfo, sender: self)
+//        let identifier: String
+//        identifier = Segues.UserInfo
+//        self.performSegue(withIdentifier: identifier, sender: self)
+//        print(indexPath.row)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let userInfo = segue.destination as? UserInfoTVC {
-            userInfo.firstName = user.firstName
-            userInfo.lastName = user.lastName
-            userInfo.delegate = self
+        if let userInfoTVC = segue.destination as? UserInfoTVC {
+            userInfoTVC.firstName = user.firstName
+            userInfoTVC.lastName = user.lastName
+            userInfoTVC.delegate = self
+            userInfoTVC.title = "User Info"
+        }
+        
+        if let tvc = segue.destination as? ProfileTVCCheckmark {
+            switch segue.identifier {
+            case Segues.NativeLanguage:
+                tvc.data = ["English", "French", "Russian", "Latvian", "German", "Finish"]
+                tvc.selected = 0
+                tvc.title = "Native Language"
+            case Segues.AccountType:
+                tvc.data = ["Regular"]
+                tvc.selected = 0
+                tvc.title = "Account"
+            case Segues.Appearance:
+                tvc.data = ["Dark", "Light"]
+                tvc.selected = 0
+                tvc.title = "Appearance"
+            default:
+                break
+            }
+        }
+        
+        if let webvc = segue.destination as? WKWebVC {
+            webvc.modalPresentationStyle = .popover
+            switch segue.identifier {
+            case Segues.PrivacyAndSecurity:
+                webvc.link = "https://www.worddeposit.com/privacy-policy"
+            case Segues.FAQ:
+                webvc.link = "https://www.worddeposit.com/faq"
+            case Segues.About:
+                webvc.link = "https://www.worddeposit.com/about"
+            default:
+                webvc.link = "https://www.worddeposit.com"
+            }
         }
     }
 }

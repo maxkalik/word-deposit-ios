@@ -24,6 +24,10 @@ class PracticeVC: UIViewController {
         welcomeLbl.isHidden = true
         wordsLbl.isHidden = true
         activityIndicator.startAnimating()
+        let defaults = UserDefaults.standard
+        defaults.set("something like string", forKey: "id")
+        defaults.set(true, forKey: "UseTouchID")
+        defaults.set(Date(), forKey: "LastRun")
     }
     
     override func viewWillAppear(_ animated: Bool) {
