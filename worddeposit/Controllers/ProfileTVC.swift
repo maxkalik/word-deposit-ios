@@ -29,6 +29,7 @@ class ProfileTVC: UITableViewController {
     var db: Firestore!
     var profileRef: DocumentReference!
     var handle: AuthStateDidChangeListenerHandle?
+    var languages: [String] = []
     
     // MARK: - Lifecycle
     
@@ -37,12 +38,22 @@ class ProfileTVC: UITableViewController {
         user = User()
         auth = Auth.auth()
         db = Firestore.firestore()
+        
+        
+        // user defaults
         let defaults = UserDefaults.standard
         guard let id = defaults.object(forKey: "id") else { return }
         let userTouchID = defaults.bool(forKey: "UseTouchID")
         print(id)
         print("userTouchId", userTouchID)
-        
+
+        for code in NSLocale.isoLanguageCodes  {
+            let id = NSLocale.localeIdentifier(fromComponents: [NSLocale.Key.languageCode.rawValue: code])
+            let name = NSLocale(localeIdentifier: "en").displayName(forKey: NSLocale.Key.identifier, value: id) ?? ""
+            if name != "" {
+                languages.append(name)
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -150,10 +161,17 @@ class ProfileTVC: UITableViewController {
         }
         
         if let tvc = segue.destination as? ProfileTVCCheckmark {
+            tvc.delegate = self
             switch segue.identifier {
             case Segues.NativeLanguage:
-                tvc.data = ["English", "French", "Russian", "Latvian", "German", "Finish"]
-                tvc.selected = 0
+                
+                let currentLanguageCode = NSLocale.current.languageCode ?? "en"
+                let currentLanguage = NSLocale(localeIdentifier: currentLanguageCode).displayName(forKey: NSLocale.Key.identifier, value: currentLanguageCode) ?? "English"
+                guard let selected = languages.firstIndex(of: currentLanguage) else { return }
+                
+                
+                tvc.data = languages
+                tvc.selected = selected
                 tvc.title = "Native Language"
             case Segues.AccountType:
                 tvc.data = ["Regular"]
@@ -189,5 +207,11 @@ extension ProfileTVC: UserInfoTVCDelegate {
         user.firstName = firstName
         user.lastName = lastName
         updateProfile(user: user)
+    }
+}
+
+extension ProfileTVC: ProfileTVCCheckmarkDelegate {
+    func getCheckmared(checkmarked: Int) {
+        print(checkmarked)
     }
 }

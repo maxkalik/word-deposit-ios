@@ -37,6 +37,7 @@
 		1181BBF42498060F00DB682E /* VocabularyCardsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1181BBF22498060F00DB682E /* VocabularyCardsVC.xib */; };
 		1192355024BFB66C00E76403 /* TextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1192354F24BFB66C00E76403 /* TextFields.swift */; };
 		119DBF5724ACCFBF009124B7 /* Configurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119DBF5624ACCFBF009124B7 /* Configurations.swift */; };
+		11DD99D924C60DBA0080B394 /* Languages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DD99D824C60DBA0080B394 /* Languages.swift */; };
 		11F32A5324AF46D00097BF39 /* VocabularyResultsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F32A5224AF46D00097BF39 /* VocabularyResultsTVC.swift */; };
 		11F32A5524AF49C30097BF39 /* VocabularyTVC+Restore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F32A5424AF49C30097BF39 /* VocabularyTVC+Restore.swift */; };
 		11F32A5924AF49DB0097BF39 /* VocabularyTVC+Updating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F32A5824AF49DB0097BF39 /* VocabularyTVC+Updating.swift */; };
@@ -77,6 +78,7 @@
 		1192354F24BFB66C00E76403 /* TextFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFields.swift; sourceTree = "<group>"; };
 		119DBF5624ACCFBF009124B7 /* Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
 		11D879B12494170B00FF7BA3 /* worddeposit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = worddeposit.entitlements; sourceTree = "<group>"; };
+		11DD99D824C60DBA0080B394 /* Languages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Languages.swift; sourceTree = "<group>"; };
 		11F32A5224AF46D00097BF39 /* VocabularyResultsTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyResultsTVC.swift; sourceTree = "<group>"; };
 		11F32A5424AF49C30097BF39 /* VocabularyTVC+Restore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VocabularyTVC+Restore.swift"; sourceTree = "<group>"; };
 		11F32A5824AF49DB0097BF39 /* VocabularyTVC+Updating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VocabularyTVC+Updating.swift"; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 				119DBF5624ACCFBF009124B7 /* Configurations.swift */,
 				116BC94B249182BD00968DA6 /* Constants.swift */,
 				116BC94D2491836B00968DA6 /* Extensions.swift */,
+				11DD99D824C60DBA0080B394 /* Languages.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -373,6 +376,7 @@
 				1181BBF32498060F00DB682E /* VocabularyCardsVC.swift in Sources */,
 				119DBF5724ACCFBF009124B7 /* Configurations.swift in Sources */,
 				1158D30E24917B9B0087DC96 /* VocabularyTVCell.swift in Sources */,
+				11DD99D924C60DBA0080B394 /* Languages.swift in Sources */,
 				11284233248E83BB00A014E9 /* VocabularyTVC.swift in Sources */,
 				11284213248E7C5700A014E9 /* SceneDelegate.swift in Sources */,
 			);

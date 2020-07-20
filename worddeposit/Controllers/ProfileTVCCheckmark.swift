@@ -1,25 +1,18 @@
-//
-//  ProfileTVCCheckmark.swift
-//  worddeposit
-//
-//  Created by Maksim Kalik on 7/17/20.
-//  Copyright © 2020 Maksim Kalik. All rights reserved.
-//
-
 import UIKit
+
+protocol ProfileTVCCheckmarkDelegate: ProfileTVC {
+    func getCheckmared(checkmarked: Int)
+}
 
 class ProfileTVCCheckmark: UITableViewController {
 
     var data: [String]!
     var selected: Int!
+    weak var delegate: ProfileTVCCheckmarkDelegate?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        guard let data = data, let selected = selected else { return }
-        
-        print(data)
-        print(selected)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        tableView.scrollToRow(at: IndexPath(item: selected, section: 0), at: .middle, animated: false)
     }
 
     // MARK: - Table view data source
@@ -35,6 +28,8 @@ class ProfileTVCCheckmark: UITableViewController {
         cell.textLabel?.text = data[indexPath.row]
         if indexPath.row == selected {
             cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
         }
         return cell
     }
@@ -45,8 +40,9 @@ class ProfileTVCCheckmark: UITableViewController {
             tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
             selected = indexPath.row
             tableView.deselectRow(at: indexPath, animated: true)
+            delegate?.getCheckmared(checkmarked: indexPath.row)
         }
-        // + delegate
     }
+    
     
 }
