@@ -1,13 +1,14 @@
 import UIKit
 
 protocol ProfileTVCCheckmarkDelegate: ProfileTVC {
-    func getCheckmared(checkmarked: Int)
+    func getCheckmared(checkmarked: Int, segueId: String)
 }
 
 class ProfileTVCCheckmark: UITableViewController {
 
     var data: [String]!
     var selected: Int!
+    var segueId: String?
     weak var delegate: ProfileTVCCheckmarkDelegate?
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,7 +41,8 @@ class ProfileTVCCheckmark: UITableViewController {
             tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
             selected = indexPath.row
             tableView.deselectRow(at: indexPath, animated: true)
-            delegate?.getCheckmared(checkmarked: indexPath.row)
+            guard let segueId = segueId else {return }
+            delegate?.getCheckmared(checkmarked: indexPath.row, segueId: segueId)
         }
     }
     

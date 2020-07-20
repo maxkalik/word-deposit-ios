@@ -556,6 +556,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Profile" id="28z-Na-XoR"/>
                     <connections>
+                        <outlet property="nativeLanguage" destination="ryT-Q9-CiL" id="HGt-x7-OhP"/>
                         <outlet property="userEmail" destination="Zmk-Ak-3ki" id="97v-X4-D7t"/>
                         <outlet property="userFullName" destination="SG3-LR-KhG" id="CW4-eg-Aiu"/>
                         <outlet property="wordsAmount" destination="ILT-Ll-bY0" id="HVl-jv-rGG"/>

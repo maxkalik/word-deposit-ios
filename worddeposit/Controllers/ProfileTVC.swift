@@ -10,6 +10,7 @@ class ProfileTVC: UITableViewController {
     @IBOutlet weak var userFullName: UILabel!
     @IBOutlet weak var userEmail: UILabel!
     @IBOutlet weak var wordsAmount: UILabel!
+    @IBOutlet weak var nativeLanguage: UILabel!
     
     // MARK: - Instances
     
@@ -20,6 +21,7 @@ class ProfileTVC: UITableViewController {
                 userFullName.text = "\(user.firstName) \(user.lastName)"
             }
             userEmail.text = user.email
+            nativeLanguage.text = user.nativeLanguage
             DispatchQueue.main.async() {
                 self.tableView.reloadData()
             }
@@ -38,22 +40,16 @@ class ProfileTVC: UITableViewController {
         user = User()
         auth = Auth.auth()
         db = Firestore.firestore()
-        
+        getAllLanguages()
         
         // user defaults
-        let defaults = UserDefaults.standard
-        guard let id = defaults.object(forKey: "id") else { return }
-        let userTouchID = defaults.bool(forKey: "UseTouchID")
-        print(id)
-        print("userTouchId", userTouchID)
+//        let defaults = UserDefaults.standard
+//        guard let id = defaults.object(forKey: "id") else { return }
+//        let userTouchID = defaults.bool(forKey: "UseTouchID")
+//        print(id)
+//        print("userTouchId", userTouchID)
 
-        for code in NSLocale.isoLanguageCodes  {
-            let id = NSLocale.localeIdentifier(fromComponents: [NSLocale.Key.languageCode.rawValue: code])
-            let name = NSLocale(localeIdentifier: "en").displayName(forKey: NSLocale.Key.identifier, value: id) ?? ""
-            if name != "" {
-                languages.append(name)
-            }
-        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -67,6 +63,16 @@ class ProfileTVC: UITableViewController {
     }
     
     // MARK: - Methods
+    
+    private func getAllLanguages() {
+        for code in NSLocale.isoLanguageCodes  {
+            let id = NSLocale.localeIdentifier(fromComponents: [NSLocale.Key.languageCode.rawValue: code])
+            let name = NSLocale(localeIdentifier: "en").displayName(forKey: NSLocale.Key.identifier, value: id) ?? ""
+            if name != "" {
+                languages.append(name)
+            }
+        }
+    }
     
     private func getCurrentUser() {
         handle = auth.addStateDidChangeListener { (auth, user) in
@@ -145,13 +151,6 @@ class ProfileTVC: UITableViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let identifier: String
-//        identifier = Segues.UserInfo
-//        self.performSegue(withIdentifier: identifier, sender: self)
-//        print(indexPath.row)
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let userInfoTVC = segue.destination as? UserInfoTVC {
             userInfoTVC.firstName = user.firstName
@@ -162,11 +161,14 @@ class ProfileTVC: UITableViewController {
         
         if let tvc = segue.destination as? ProfileTVCCheckmark {
             tvc.delegate = self
+            tvc.segueId = segue.identifier
             switch segue.identifier {
             case Segues.NativeLanguage:
                 
                 let currentLanguageCode = NSLocale.current.languageCode ?? "en"
-                let currentLanguage = NSLocale(localeIdentifier: currentLanguageCode).displayName(forKey: NSLocale.Key.identifier, value: currentLanguageCode) ?? "English"
+                let defaultLanguage = NSLocale(localeIdentifier: currentLanguageCode).displayName(forKey: NSLocale.Key.identifier, value: currentLanguageCode) ?? "English"
+                
+                let currentLanguage = defaultLanguage != user.nativeLanguage ? user.nativeLanguage : defaultLanguage
                 guard let selected = languages.firstIndex(of: currentLanguage) else { return }
                 
                 
@@ -202,6 +204,8 @@ class ProfileTVC: UITableViewController {
     }
 }
 
+// MARK: - UserInfoTVCDelegate
+
 extension ProfileTVC: UserInfoTVCDelegate {
     func updateUserInfo(firstName: String, lastName: String) {
         user.firstName = firstName
@@ -211,7 +215,14 @@ extension ProfileTVC: UserInfoTVCDelegate {
 }
 
 extension ProfileTVC: ProfileTVCCheckmarkDelegate {
-    func getCheckmared(checkmarked: Int) {
-        print(checkmarked)
+    func getCheckmared(checkmarked: Int, segueId: String) {
+        print(languages[checkmarked], segueId)
+        switch segueId {
+        case Segues.NativeLanguage:
+            user.nativeLanguage = languages[checkmarked]
+            updateProfile(user: user)
+        default:
+            break
+        }
     }
 }
