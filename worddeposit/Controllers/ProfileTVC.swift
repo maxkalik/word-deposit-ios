@@ -11,6 +11,7 @@ class ProfileTVC: UITableViewController {
     @IBOutlet weak var userEmail: UILabel!
     @IBOutlet weak var wordsAmount: UILabel!
     @IBOutlet weak var nativeLanguage: UILabel!
+    @IBOutlet weak var notificationsSwitch: UISwitch!
     
     // MARK: - Instances
     
@@ -22,6 +23,7 @@ class ProfileTVC: UITableViewController {
             }
             userEmail.text = user.email
             nativeLanguage.text = user.nativeLanguage
+            notificationsSwitch.isOn = user.notifications
             DispatchQueue.main.async() {
                 self.tableView.reloadData()
             }
@@ -41,22 +43,13 @@ class ProfileTVC: UITableViewController {
         auth = Auth.auth()
         db = Firestore.firestore()
         getAllLanguages()
-        
-        // user defaults
-//        let defaults = UserDefaults.standard
-//        guard let id = defaults.object(forKey: "id") else { return }
-//        let userTouchID = defaults.bool(forKey: "UseTouchID")
-//        print(id)
-//        print("userTouchId", userTouchID)
-
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getCurrentUser()
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         auth.removeStateDidChangeListener(handle!)
@@ -72,6 +65,7 @@ class ProfileTVC: UITableViewController {
                 languages.append(name)
             }
         }
+        languages.sort()
     }
     
     private func getCurrentUser() {
@@ -120,7 +114,7 @@ class ProfileTVC: UITableViewController {
     }
     
     private func showLoginVC() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+       let storyboard = UIStoryboard(name: "Main", bundle: nil)
        let loginVC = storyboard.instantiateViewController(identifier: Storyboards.Login)
         
         guard let window = self.view.window else {
@@ -138,6 +132,20 @@ class ProfileTVC: UITableViewController {
         UIView.transition(with: window, duration: duration, options: options, animations: nil, completion: nil)
     }
     
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footerView = UIView()
+        if section == 3 {
+            let versionLabel = UILabel()
+            versionLabel.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width - 40, height: 60)
+            versionLabel.font = UIFont.systemFont(ofSize: 14)
+            versionLabel.textColor = #colorLiteral(red: 0.6666666865, green: 0.6666666865, blue: 0.6666666865, alpha: 1)
+            versionLabel.textAlignment = .center
+            versionLabel.text = "Version 2.0.0"
+            footerView.addSubview(versionLabel)
+        }
+        return footerView
+    }
+    
     // MARK: - IBActions
     
     @IBAction func logOut(_ sender: UIButton) {
@@ -151,10 +159,18 @@ class ProfileTVC: UITableViewController {
         }
     }
     
+    @IBAction func notificationSwitched(_ sender: UISwitch) {
+        user.notifications = sender.isOn
+        updateProfile(user: user)
+    }
+    
+    // MARK: - Segue
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let userInfoTVC = segue.destination as? UserInfoTVC {
             userInfoTVC.firstName = user.firstName
             userInfoTVC.lastName = user.lastName
+            userInfoTVC.email = user.email
             userInfoTVC.delegate = self
             userInfoTVC.title = "User Info"
         }
@@ -167,7 +183,6 @@ class ProfileTVC: UITableViewController {
                 
                 let currentLanguageCode = NSLocale.current.languageCode ?? "en"
                 let defaultLanguage = NSLocale(localeIdentifier: currentLanguageCode).displayName(forKey: NSLocale.Key.identifier, value: currentLanguageCode) ?? "English"
-                
                 let currentLanguage = defaultLanguage != user.nativeLanguage ? user.nativeLanguage : defaultLanguage
                 guard let selected = languages.firstIndex(of: currentLanguage) else { return }
                 
@@ -189,14 +204,14 @@ class ProfileTVC: UITableViewController {
         }
         
         if let webvc = segue.destination as? WKWebVC {
-            webvc.modalPresentationStyle = .popover
+//            webvc.modalPresentationStyle = .overFullScreen
             switch segue.identifier {
             case Segues.PrivacyAndSecurity:
-                webvc.link = "https://www.worddeposit.com/privacy-policy"
+                webvc.link = "https://www.worddeposit.com"
             case Segues.FAQ:
-                webvc.link = "https://www.worddeposit.com/faq"
+                webvc.link = "https://www.worddeposit.com"
             case Segues.About:
-                webvc.link = "https://www.worddeposit.com/about"
+                webvc.link = "https://www.worddeposit.com"
             default:
                 webvc.link = "https://www.worddeposit.com"
             }

@@ -46,5 +46,10 @@ class ProfileTVCCheckmark: UITableViewController {
         }
     }
     
-    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return CGFloat.leastNormalMagnitude
+        }
+        return tableView.sectionHeaderHeight
+    }
 }

@@ -19,5 +19,4 @@ class WKWebVC: UIViewController, WKNavigationDelegate {
         webView.load(URLRequest(url: url))
         webView.allowsBackForwardNavigationGestures = true
     }
-
 }
