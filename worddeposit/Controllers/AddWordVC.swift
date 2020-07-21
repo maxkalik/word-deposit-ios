@@ -15,19 +15,21 @@ class AddWordVC: UIViewController {
             scrollView.contentInsetAdjustmentBehavior = .never
         }
     }
+    
     @IBOutlet weak var wordImagePickerBtn: UIButton! {
         didSet {
             wordImagePickerBtn.imageView?.contentMode = .scaleAspectFill
         }
         
     }
+    
     @IBOutlet weak var addWordButton: RoundedButton!
     @IBOutlet weak var clearAllButton: UIButton!
     @IBOutlet weak var wordExampleTextField: UITextField!
     @IBOutlet weak var wordTranslationTextField: UITextField!
     @IBOutlet weak var loader: RoundedView!
     
-    // MARK: - Variables
+    // MARK: - Instances
     
     var db: Firestore!
     var storage: Storage!
@@ -44,25 +46,20 @@ class AddWordVC: UIViewController {
         setupUI()
     }
     
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-//        scrollView.contentInset = UIEdgeInsets(top: 40, left: 0, bottom: 40, right: 0)
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
+        super.viewDidAppear(animated)
         wordExampleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         wordTranslationTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(true)
+        super.viewDidDisappear(animated)
         wordExampleTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         wordTranslationTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
     // MARK: - @objc Methods
+    
     @objc func textFieldDidChange(_ textField: UITextField) {
         textFieldValidation()
     }

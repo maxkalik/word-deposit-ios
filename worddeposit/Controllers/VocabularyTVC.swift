@@ -35,7 +35,7 @@ class VocabularyTVC: UITableViewController {
     }
         
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
+        super.viewDidAppear(animated)
         setWordsListener() // It's good place for network fetch
         
         // Restore the searchController's active state.
@@ -51,7 +51,7 @@ class VocabularyTVC: UITableViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(true)
+        super.viewWillDisappear(animated)
         wordsListener.remove()
         words.removeAll()
         tableView.reloadData()

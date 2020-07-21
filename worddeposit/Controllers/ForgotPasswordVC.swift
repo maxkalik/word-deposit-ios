@@ -3,7 +3,7 @@ import FirebaseAuth
 
 class ForgotPasswordVC: UIViewController {
 
-    // Outlets
+    // MARK: - IBOutlets
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var loading: RoundedView!
     
@@ -12,7 +12,7 @@ class ForgotPasswordVC: UIViewController {
         loading.isHidden = true
     }
     
-    // Actions
+    // MARK: - IBActions
     @IBAction func onResetPasswordBtnPress(_ sender: Any) {
         guard let email = emailTextField.text, email.isNotEmpty else {
             simpleAlert(title: "Error", msg: "Fill email field out")

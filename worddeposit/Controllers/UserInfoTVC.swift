@@ -34,13 +34,13 @@ class UserInfoTVC: UITableViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
+        super.viewDidAppear(animated)
         firstNameTextField.addTarget(self, action: #selector(userNameDidChange), for: .editingChanged)
         lastNameTextField.addTarget(self, action: #selector(userNameDidChange), for: .editingChanged)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(true)
+        super.viewDidDisappear(animated)
         firstNameTextField.removeTarget(self, action: #selector(userNameDidChange), for: .editingChanged)
         lastNameTextField.removeTarget(self, action: #selector(userNameDidChange), for: .editingChanged)
     }

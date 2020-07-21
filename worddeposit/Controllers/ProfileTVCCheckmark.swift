@@ -12,7 +12,7 @@ class ProfileTVCCheckmark: UITableViewController {
     weak var delegate: ProfileTVCCheckmarkDelegate?
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        super.viewWillAppear(animated)
         tableView.scrollToRow(at: IndexPath(item: selected, section: 0), at: .middle, animated: false)
     }
 

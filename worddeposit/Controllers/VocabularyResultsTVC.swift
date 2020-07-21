@@ -14,6 +14,7 @@ import FirebaseStorage
 class VocabularyResultsTVC: UITableViewController {
 
     // MARK: - IBOutlets
+    
     @IBOutlet weak var resultsLabel: UILabel!
     
     // MARK: - Instances
@@ -23,6 +24,7 @@ class VocabularyResultsTVC: UITableViewController {
     var storage: Storage!
     
     // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
