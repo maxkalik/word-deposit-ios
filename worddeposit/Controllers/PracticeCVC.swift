@@ -144,6 +144,21 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(trainers[indexPath.row].viewController)
+//        let vc = PracticeReadVC()
+//        if let vc = self.storyboard?.instantiateViewController(withIdentifier: Storyboards.PracticeReadVC) as? PracticeReadVC {
+//            vc.modalPresentationStyle = .fullScreen
+//            self.present(vc, animated: true, completion: nil)
+//        }
+//        .delegate = self
+//        DispatchQueue.main.async {
+//        }
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let practiceReadVC = segue.destination as? PracticeReadVC {
+            print(practiceReadVC)
+        }
     }
     
     // MARK: UICollectionViewDelegate

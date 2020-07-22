@@ -5,6 +5,7 @@ struct Storyboards {
     static let Login = "Login"
     static let Home = "Home"
     static let VocabularyResults = "VocabularyResultsTVC"
+    static let PracticeReadVC = "PracticeReadVC"
 }
 
 struct XIBs {

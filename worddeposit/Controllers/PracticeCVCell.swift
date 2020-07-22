@@ -9,9 +9,6 @@ class PracticeCVCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.layer.cornerRadius = 10
-        self.setNeedsUpdateConstraints()
-        self.updateFocusIfNeeded()
-        self.layoutIfNeeded()
     }
     
     func configureCell(cover: String, title: String) {
