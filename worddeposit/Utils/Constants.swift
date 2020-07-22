@@ -10,6 +10,7 @@ struct Storyboards {
 struct XIBs {
     static let VocabularyTVCell = "VocabularyTVCell"
     static let VocabularyCardCVCell = "VocabularyCardCVCell"
+    static let PracticeCVCell = "PracticeCVCell"
 }
 
 struct Segues {
@@ -32,4 +33,9 @@ struct Colors {
 
 struct Placeholders {
     static let Logo = "logo"
+}
+
+struct Images {
+    static let trainerWordToTranslate = "trainer-word-to-translate.png"
+    static let trainerTranslateToWord = "trainer-translate-to-word.png"
 }

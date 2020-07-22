@@ -18,6 +18,7 @@ class ProfileTVC: UITableViewController {
     var user: User! {
         didSet {
             guard let user = user else { return }
+            
             if user.firstName != "", user.lastName != "" {
                 userFullName.text = "\(user.firstName) \(user.lastName)"
             }
@@ -43,6 +44,7 @@ class ProfileTVC: UITableViewController {
         auth = Auth.auth()
         db = Firestore.firestore()
         getAllLanguages()
+        getDefaults()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,6 +58,15 @@ class ProfileTVC: UITableViewController {
     }
     
     // MARK: - Methods
+    
+    private func getDefaults() {
+        let defaults = UserDefaults.standard
+        // print(defaults.string(forKey: "native_language"))
+        guard let defaultNativeLanguage = defaults.string(forKey: "native_language") else { return }
+        let defaultNotifications = defaults.bool(forKey: "notifications")
+        user.nativeLanguage = defaultNativeLanguage
+        user.notifications = defaultNotifications
+    }
     
     private func getAllLanguages() {
         for code in NSLocale.isoLanguageCodes  {

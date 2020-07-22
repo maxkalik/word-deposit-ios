@@ -8,50 +8,30 @@
     </dependencies>
     <scenes>
         <!--Practice-->
-        <scene sceneID="PAE-WB-ZBr">
+        <scene sceneID="SVv-Ow-xyB">
             <objects>
-                <viewController id="iJg-J4-07g" customClass="PracticeVC" customModule="worddeposit" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="GoY-0i-Gv2">
+                <collectionViewController id="cyQ-JK-l0X" customClass="PracticeCVC" customModule="worddeposit" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" id="V4q-AB-bAe">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NEz-XD-9X9">
-                                <rect key="frame" x="171.5" y="437.5" width="71" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="Reo-Vw-IDU">
-                                <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
-                            </activityIndicatorView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Words: 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7J5-6y-j0P">
-                                <rect key="frame" x="172.5" y="358.5" width="69" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="Reo-Vw-IDU" firstAttribute="centerX" secondItem="zJz-vA-fpR" secondAttribute="centerX" id="0YU-PI-5Nm"/>
-                            <constraint firstItem="NEz-XD-9X9" firstAttribute="centerY" secondItem="GoY-0i-Gv2" secondAttribute="centerY" id="2Fq-1G-8jL"/>
-                            <constraint firstItem="Reo-Vw-IDU" firstAttribute="centerY" secondItem="GoY-0i-Gv2" secondAttribute="centerY" id="WaE-i0-bih"/>
-                            <constraint firstItem="NEz-XD-9X9" firstAttribute="centerX" secondItem="zJz-vA-fpR" secondAttribute="centerX" id="be8-Bd-c6g"/>
-                            <constraint firstItem="7J5-6y-j0P" firstAttribute="centerX" secondItem="zJz-vA-fpR" secondAttribute="centerX" id="ejb-fF-8jF"/>
-                            <constraint firstItem="Reo-Vw-IDU" firstAttribute="top" secondItem="7J5-6y-j0P" secondAttribute="bottom" constant="50" id="ztg-jN-DDn"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="zJz-vA-fpR"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Practice" id="Ccu-qN-8bV"/>
-                    <connections>
-                        <outlet property="activityIndicator" destination="Reo-Vw-IDU" id="bit-8R-wRD"/>
-                        <outlet property="welcomeLbl" destination="NEz-XD-9X9" id="4un-K4-a6r"/>
-                        <outlet property="wordsLbl" destination="7J5-6y-j0P" id="2tq-13-34s"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="UDh-DO-3xF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="20" sectionInsetReference="layoutMargins" id="ol7-uC-IW5">
+                            <size key="itemSize" width="250" height="250"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                        <connections>
+                            <outlet property="dataSource" destination="cyQ-JK-l0X" id="RFc-4i-1Ea"/>
+                            <outlet property="delegate" destination="cyQ-JK-l0X" id="sHr-sL-raA"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Practice" id="0Cu-Qy-S6P"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wOH-sQ-2z1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1379.7101449275362" y="-1197.3214285714284"/>
+            <point key="canvasLocation" x="1698.5507246376812" y="-1442.4107142857142"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="HfZ-1V-o4J">
@@ -64,7 +44,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="VuQ-TM-qIc" kind="relationship" relationship="viewControllers" id="Zmd-bd-EH6"/>
+                        <segue destination="Q6o-nl-XP1" kind="relationship" relationship="viewControllers" id="FTn-dh-AtF"/>
                         <segue destination="8x7-ml-O9y" kind="relationship" relationship="viewControllers" id="nH2-Ad-uz4"/>
                         <segue destination="eSR-CY-Dzt" kind="relationship" relationship="viewControllers" id="bDT-R9-12E"/>
                         <segue destination="5Oc-vH-7SN" kind="relationship" relationship="viewControllers" id="CUb-mD-ETh"/>
@@ -576,7 +556,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XeH-88-fk6" customClass="CellTextField" customModule="worddeposit" customModuleProvider="target">
-                                                    <rect key="frame" x="154" y="11" width="240" height="22"/>
+                                                    <rect key="frame" x="154" y="11" width="200" height="22"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words" textContentType="given-name"/>
                                                 </textField>
@@ -609,7 +589,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Cyt-nF-HyN" customClass="CellTextField" customModule="worddeposit" customModuleProvider="target">
-                                                    <rect key="frame" x="154" y="11" width="240" height="22"/>
+                                                    <rect key="frame" x="154" y="11" width="200" height="22"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words" textContentType="family-name"/>
                                                 </textField>
@@ -798,23 +778,23 @@
             <point key="canvasLocation" x="206" y="2426"/>
         </scene>
         <!--Practice-->
-        <scene sceneID="RwF-NG-8cR">
+        <scene sceneID="WLh-AX-HSn">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="VuQ-TM-qIc" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Practice" image="book.fill" catalog="system" id="Q02-XF-BC4"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Q6o-nl-XP1" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Practice" image="pencil.and.outline" catalog="system" id="Kck-HL-rmo"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="W5x-eu-2bs">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="oty-tH-WAA">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="iJg-J4-07g" kind="relationship" relationship="rootViewController" id="yjK-ki-VMD"/>
+                        <segue destination="cyQ-JK-l0X" kind="relationship" relationship="rootViewController" id="MjD-4k-vJd"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0ad-Gr-4kd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cAr-k5-Wcd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="469.56521739130437" y="-1197.3214285714284"/>
+            <point key="canvasLocation" x="787" y="-1442"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
@@ -822,9 +802,9 @@
         <segue reference="wQV-jD-p7z"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="book.fill" catalog="system" width="128" height="100"/>
         <image name="list.dash" catalog="system" width="128" height="85"/>
         <image name="logo" width="64" height="64"/>
+        <image name="pencil.and.outline" catalog="system" width="128" height="119"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="plus" catalog="system" width="128" height="113"/>
     </resources>

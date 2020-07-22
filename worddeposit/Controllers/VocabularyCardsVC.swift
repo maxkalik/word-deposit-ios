@@ -32,17 +32,6 @@ class VocabularyCardsVC: UIViewController {
         setupWordsCollectionView()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        view.layer.borderColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        view.layer.borderWidth = 1.0
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-    }
-    
     override func viewDidLayoutSubviews() {
         // this should be checked because it is called by multiple times if try to drag the view
         if wordIndexPath != lastIndexPath {
@@ -57,22 +46,6 @@ class VocabularyCardsVC: UIViewController {
     private func setupWordsCollectionView() {
         let nib = UINib(nibName: XIBs.VocabularyCardCVCell, bundle: nil)
         wordsCollectionView.register(nib, forCellWithReuseIdentifier: XIBs.VocabularyCardCVCell)
-    }
-}
-
-// MARK: - VocabularyCardCVCellDelegate
-
-extension VocabularyCardsVC: VocabularyCardCVCellDelegate {
-    func showAlert(title: String, message: String) {
-        self.simpleAlert(title: title, msg: message)
-    }
-    
-    func presentVC(_ viewControllerToPresent: UIViewController) {
-        present(viewControllerToPresent, animated: true, completion: nil)
-    }
-    
-    func disableEnableScroll(isKeyboardShow: Bool) {
-        wordsCollectionView.isScrollEnabled = !isKeyboardShow
     }
 }
 
@@ -98,3 +71,18 @@ extension VocabularyCardsVC: UICollectionViewDelegate, UICollectionViewDataSourc
     }
 }
 
+// MARK: - VocabularyCardCVCellDelegate
+
+extension VocabularyCardsVC: VocabularyCardCVCellDelegate {
+    func showAlert(title: String, message: String) {
+        self.simpleAlert(title: title, msg: message)
+    }
+    
+    func presentVC(_ viewControllerToPresent: UIViewController) {
+        present(viewControllerToPresent, animated: true, completion: nil)
+    }
+    
+    func disableEnableScroll(isKeyboardShow: Bool) {
+        wordsCollectionView.isScrollEnabled = !isKeyboardShow
+    }
+}
