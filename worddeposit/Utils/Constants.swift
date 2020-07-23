@@ -8,6 +8,11 @@ struct Storyboards {
     static let PracticeReadVC = "PracticeReadVC"
 }
 
+struct Controllers {
+    static let TrainerWordToTranslate = "TrainerWordToTranslate"
+    static let TrainerTranslateToWord = "TrainerTranslateToWord"
+}
+
 struct XIBs {
     static let VocabularyTVCell = "VocabularyTVCell"
     static let VocabularyCardCVCell = "VocabularyCardCVCell"
@@ -22,6 +27,7 @@ struct Segues {
     static let PrivacyAndSecurity = "PrivacyAndSecurity"
     static let FAQ = "FAQ"
     static let About = "About"
+    static let PracticeRead = "PracticeRead"
 }
 
 struct ReusableIdentifiers {

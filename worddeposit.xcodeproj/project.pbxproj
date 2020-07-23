@@ -22,8 +22,8 @@
 		1128423D248E840000A014E9 /* RoundedViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1128423C248E840000A014E9 /* RoundedViews.swift */; };
 		1128423F248E845900A014E9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1128423E248E845900A014E9 /* User.swift */; };
 		11284241248E846000A014E9 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284240248E846000A014E9 /* Word.swift */; };
-		112EA43324C83B7200FA55E3 /* Trainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112EA43224C83B7200FA55E3 /* Trainer.swift */; };
-		112EA43524C84A2900FA55E3 /* Trainers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112EA43424C84A2900FA55E3 /* Trainers.swift */; };
+		112EA43324C83B7200FA55E3 /* PracticeTrainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112EA43224C83B7200FA55E3 /* PracticeTrainer.swift */; };
+		112EA43524C84A2900FA55E3 /* PracticeTrainers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112EA43424C84A2900FA55E3 /* PracticeTrainers.swift */; };
 		1158D30E24917B9B0087DC96 /* VocabularyTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1158D30C24917B9B0087DC96 /* VocabularyTVCell.swift */; };
 		1158D30F24917B9B0087DC96 /* VocabularyTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1158D30D24917B9B0087DC96 /* VocabularyTVCell.xib */; };
 		1158D31524917EC50087DC96 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1158D31424917EC50087DC96 /* GoogleService-Info.plist */; };
@@ -68,8 +68,8 @@
 		1128423C248E840000A014E9 /* RoundedViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedViews.swift; sourceTree = "<group>"; };
 		1128423E248E845900A014E9 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		11284240248E846000A014E9 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
-		112EA43224C83B7200FA55E3 /* Trainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trainer.swift; sourceTree = "<group>"; };
-		112EA43424C84A2900FA55E3 /* Trainers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trainers.swift; sourceTree = "<group>"; };
+		112EA43224C83B7200FA55E3 /* PracticeTrainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeTrainer.swift; sourceTree = "<group>"; };
+		112EA43424C84A2900FA55E3 /* PracticeTrainers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeTrainers.swift; sourceTree = "<group>"; };
 		1158D30C24917B9B0087DC96 /* VocabularyTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyTVCell.swift; sourceTree = "<group>"; };
 		1158D30D24917B9B0087DC96 /* VocabularyTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VocabularyTVCell.xib; sourceTree = "<group>"; };
 		1158D31424917EC50087DC96 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -186,8 +186,8 @@
 			children = (
 				1128423E248E845900A014E9 /* User.swift */,
 				11284240248E846000A014E9 /* Word.swift */,
-				112EA43224C83B7200FA55E3 /* Trainer.swift */,
-				112EA43424C84A2900FA55E3 /* Trainers.swift */,
+				112EA43224C83B7200FA55E3 /* PracticeTrainer.swift */,
+				112EA43424C84A2900FA55E3 /* PracticeTrainers.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -382,7 +382,7 @@
 				116BC94C249182BD00968DA6 /* Constants.swift in Sources */,
 				11B20D6D24C8E00800C1CB4E /* PracticeReadVC.swift in Sources */,
 				11F0327024C8272700BD6350 /* PracticeCVC.swift in Sources */,
-				112EA43524C84A2900FA55E3 /* Trainers.swift in Sources */,
+				112EA43524C84A2900FA55E3 /* PracticeTrainers.swift in Sources */,
 				118162EF24BFB08E0088C0E1 /* UserInfoTVC.swift in Sources */,
 				1128423F248E845900A014E9 /* User.swift in Sources */,
 				11284235248E83C800A014E9 /* ProfileTVC.swift in Sources */,
@@ -392,7 +392,7 @@
 				11284237248E83D400A014E9 /* LoginVC.swift in Sources */,
 				11F32A5524AF49C30097BF39 /* VocabularyTVC+Restore.swift in Sources */,
 				11284211248E7C5700A014E9 /* AppDelegate.swift in Sources */,
-				112EA43324C83B7200FA55E3 /* Trainer.swift in Sources */,
+				112EA43324C83B7200FA55E3 /* PracticeTrainer.swift in Sources */,
 				116BC94E2491836B00968DA6 /* Extensions.swift in Sources */,
 				1171E70624981CDD00805D35 /* VocabularyCardCVCell.swift in Sources */,
 				11F32A5924AF49DB0097BF39 /* VocabularyTVC+Updating.swift in Sources */,

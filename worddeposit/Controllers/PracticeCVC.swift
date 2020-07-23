@@ -14,7 +14,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     var db: Firestore!
     var handle: AuthStateDidChangeListenerHandle?
     
-    private var trainers = [Trainer]()
+    private var trainers = [PracticeTrainer]()
     
     // MARK: - Lifecycle
     
@@ -23,7 +23,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         auth = Auth.auth()
         db = Firestore.firestore()
         
-        trainers = Trainers().data
+        trainers = PracticeTrainers().data
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -32,8 +32,6 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         let nib = UINib(nibName: XIBs.PracticeCVCell, bundle: nil)
         self.collectionView!.register(nib, forCellWithReuseIdentifier: reuseIdentifier)
         self.collectionView!.isPrefetchingEnabled = false
-
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -143,21 +141,36 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(trainers[indexPath.row].viewController)
-//        let vc = PracticeReadVC()
-//        if let vc = self.storyboard?.instantiateViewController(withIdentifier: Storyboards.PracticeReadVC) as? PracticeReadVC {
-//            vc.modalPresentationStyle = .fullScreen
-//            self.present(vc, animated: true, completion: nil)
-//        }
-//        .delegate = self
-//        DispatchQueue.main.async {
-//        }
-        
+        let sender = trainers[indexPath.row]
+        performSegue(withIdentifier: Segues.PracticeRead, sender: sender)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let practiceReadVC = segue.destination as? PracticeReadVC {
-            print(practiceReadVC)
+        if segue.identifier == Segues.PracticeRead {
+            if let practiceReadVC = segue.destination as? PracticeReadVC {
+                if let sender = (sender as? PracticeTrainer) {
+                    
+                    self.hidesBottomBarWhenPushed = true
+                    self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+                    self.navigationController?.navigationBar.shadowImage = UIImage()
+                    self.navigationController?.navigationBar.isTranslucent = true
+                    self.navigationController?.view.backgroundColor = .clear
+                    
+                    let backItem = UIBarButtonItem()
+                    backItem.title = ""
+                    self.navigationItem.backBarButtonItem = backItem
+                    self.navigationController?.navigationBar.tintColor = UIColor.white
+                    
+                    switch sender.controller {
+                    case Controllers.TrainerWordToTranslate:
+                        practiceReadVC.view.backgroundColor = .purple
+                    case Controllers.TrainerTranslateToWord:
+                        practiceReadVC.view.backgroundColor = .blue
+                    default:
+                        break
+                    }
+                }
+            }
         }
     }
     
