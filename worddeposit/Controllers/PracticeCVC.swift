@@ -36,7 +36,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         if let flowlayout = collectionViewLayout as? UICollectionViewFlowLayout {
             flowlayout.minimumLineSpacing = 20
         }
@@ -150,7 +150,12 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
             if let practiceReadVC = segue.destination as? PracticeReadVC {
                 if let sender = (sender as? PracticeTrainer) {
                     
-                    self.hidesBottomBarWhenPushed = true
+                    // Hide the tabbar during this segue
+                    hidesBottomBarWhenPushed = true
+
+                    // Restore the tabbar when it's popped in the future
+                    DispatchQueue.main.async { self.hidesBottomBarWhenPushed = false }
+                    
                     self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
                     self.navigationController?.navigationBar.shadowImage = UIImage()
                     self.navigationController?.navigationBar.isTranslucent = true

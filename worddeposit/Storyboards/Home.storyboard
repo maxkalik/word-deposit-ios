@@ -54,17 +54,29 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Fie-T9-cv2">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZYo-Il-Qpb">
                                         <rect key="frame" x="0.0" y="404" width="414" height="404"/>
+                                        <subviews>
+                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Fie-T9-cv2">
+                                                <rect key="frame" x="30" y="40" width="354" height="324"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="hx5-Nh-1rQ">
+                                                    <size key="itemSize" width="128" height="128"/>
+                                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                </collectionViewFlowLayout>
+                                                <cells/>
+                                            </collectionView>
+                                        </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="hx5-Nh-1rQ">
-                                            <size key="itemSize" width="128" height="128"/>
-                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        </collectionViewFlowLayout>
-                                        <cells/>
-                                    </collectionView>
+                                        <constraints>
+                                            <constraint firstItem="Fie-T9-cv2" firstAttribute="top" secondItem="ZYo-Il-Qpb" secondAttribute="top" constant="40" id="2K7-JU-lJ9"/>
+                                            <constraint firstAttribute="bottom" secondItem="Fie-T9-cv2" secondAttribute="bottom" constant="40" id="ADo-6s-uD7"/>
+                                            <constraint firstItem="Fie-T9-cv2" firstAttribute="leading" secondItem="ZYo-Il-Qpb" secondAttribute="leading" constant="30" id="LMC-6x-Fcw"/>
+                                            <constraint firstAttribute="trailing" secondItem="Fie-T9-cv2" secondAttribute="trailing" constant="30" id="bnr-vy-tyT"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -78,10 +90,14 @@
                         <viewLayoutGuide key="safeArea" id="nNU-s2-D8s"/>
                     </view>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="keS-6x-LG6"/>
+                    <connections>
+                        <outlet property="collectionView" destination="Fie-T9-cv2" id="gQb-jT-yce"/>
+                        <outlet property="practiceLabel" destination="HlN-VU-D6V" id="Xdh-y8-JQ5"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8bh-Uw-CKi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2623.1999999999998" y="-1442.4287856071965"/>
+            <point key="canvasLocation" x="2623.1884057971015" y="-1443.0803571428571"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="HfZ-1V-o4J">
