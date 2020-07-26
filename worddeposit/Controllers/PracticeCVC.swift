@@ -100,6 +100,24 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
             // self.wordsLbl.isHidden = false
         }
     }
+    
+    func makeWordDesk(size: Int, wordsData: [Word], _ result: [Word] = []) -> [Word] {
+        var result = result
+        if wordsData.count < 5 {
+            return result
+        }
+        var tmpCount = size
+        if tmpCount <= 0 {
+            return result.shuffled()
+        }
+        let randomWord: Word = wordsData.randomElement() ?? wordsData[0]
+        if !result.contains(where: { $0.id == randomWord.id }) {
+            result.append(randomWord)
+            tmpCount -= 1
+        }
+        return makeWordDesk(size: tmpCount, wordsData: wordsData, result)
+    }
+
 
     /*
     // MARK: - Navigation
@@ -166,11 +184,17 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                     self.navigationItem.backBarButtonItem = backItem
                     self.navigationController?.navigationBar.tintColor = UIColor.white
                     
+                    let wordsDesk = makeWordDesk(size: 5, wordsData: words)
+                    practiceReadVC.trainedWord = wordsDesk.randomElement()
+                    practiceReadVC.wordsDesk = wordsDesk
+                    
                     switch sender.controller {
                     case Controllers.TrainerWordToTranslate:
                         practiceReadVC.view.backgroundColor = .purple
+                        practiceReadVC.practiceType = Controllers.TrainerWordToTranslate
                     case Controllers.TrainerTranslateToWord:
                         practiceReadVC.view.backgroundColor = .blue
+                        practiceReadVC.practiceType = Controllers.TrainerTranslateToWord
                     default:
                         break
                     }

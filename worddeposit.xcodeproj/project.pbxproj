@@ -155,6 +155,7 @@
 				11F0326F24C8272700BD6350 /* PracticeCVC.swift */,
 				11F0326B24C8267E00BD6350 /* PracticeCVCell.swift */,
 				11B20D6C24C8E00800C1CB4E /* PracticeReadVC.swift */,
+				11B20D6824C8DF2E00C1CB4E /* PracticeAnswerItem.swift */,
 				1128422E248E839D00A014E9 /* AddWordVC.swift */,
 				11284232248E83BB00A014E9 /* VocabularyTVC.swift */,
 				11F32A5224AF46D00097BF39 /* VocabularyResultsTVC.swift */,
@@ -166,7 +167,6 @@
 				11284234248E83C800A014E9 /* ProfileTVC.swift */,
 				118162EE24BFB08E0088C0E1 /* UserInfoTVC.swift */,
 				11621A2424C24819003087AB /* ProfileTVCCheckmark.swift */,
-				11B20D6824C8DF2E00C1CB4E /* PracticeAnswerItem.swift */,
 				11621A2624C25EFA003087AB /* WKWebVC.swift */,
 			);
 			path = Controllers;

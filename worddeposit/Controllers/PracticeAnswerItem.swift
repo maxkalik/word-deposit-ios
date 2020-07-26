@@ -1,18 +1,26 @@
-//
-//  PracticeAnswerItem.swift
-//  worddeposit
-//
-//  Created by Maksim Kalik on 7/22/20.
-//  Copyright © 2020 Maksim Kalik. All rights reserved.
-//
-
 import UIKit
 
 class PracticeAnswerItem: UICollectionViewCell {
 
+    @IBOutlet weak var wordButton: UIButton!
+    
+    var word: Word! {
+        didSet {
+            wordButton.setTitle(word.translation, for: .normal)
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
+    func configureCell(word: Word) {
+        self.word = word
+    }
+    
+    @IBAction func wordLabelTouched(_ sender: UIButton) {
+        print("tapped")
+    }
+    
 }
