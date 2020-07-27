@@ -11,17 +11,26 @@ class PracticeReadVC: UIViewController {
         didSet {
             collectionView.delegate = self
             collectionView.dataSource = self
+            collectionView.layer.borderColor = CGColor(srgbRed: 0, green: 0, blue: 0, alpha: 1)
+            collectionView.layer.borderWidth = 1
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
+        
+        let layout = UICollectionViewCenterLayout()
+        layout.estimatedItemSize = CGSize(width: layout.itemSize.width, height: 40)
+        collectionView.collectionViewLayout = layout
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print(practiceType ?? "nil")
+        if wordsDesk.isEmpty {
+            print("BUG! word desk is empty")
+        }
         guard let word = trainedWord else { return }
         practiceLabel.text = word.example
     }
@@ -29,6 +38,12 @@ class PracticeReadVC: UIViewController {
     private func setupCollectionView() {
         let nib = UINib(nibName: XIBs.PracticeAnswerItem, bundle: nil)
         collectionView.register(nib, forCellWithReuseIdentifier: XIBs.PracticeAnswerItem)
+    }
+    
+    @objc private func wordDeskTouched(sender : UIButton) {
+//        print(wordsDesk[sender.tag])
+        sender.isHighlighted = true
+        sender.isSelected = true
     }
 }
 
@@ -40,6 +55,9 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: XIBs.PracticeAnswerItem, for: indexPath) as? PracticeAnswerItem {
             cell.configureCell(word: wordsDesk[indexPath.row])
+            cell.deskItemButton.tag = indexPath.row
+            cell.isSelected = false
+            cell.deskItemButton.addTarget(self, action: #selector(self.wordDeskTouched), for: .touchUpInside)
             return cell
         }
         return UICollectionViewCell()

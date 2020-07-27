@@ -1,26 +1,50 @@
 import UIKit
 
 class PracticeAnswerItem: UICollectionViewCell {
+   
+    @IBOutlet weak var deskItemButton: PracticeDeskItemButton!
 
-    @IBOutlet weak var wordButton: UIButton!
-    
     var word: Word! {
         didSet {
-            wordButton.setTitle(word.translation, for: .normal)
+            deskItemButton.setTitle(word.translation, for: .normal)
+        }
+    }
+    
+    override var isSelected: Bool {
+        didSet {
+            setNeedsLayout()
+            layoutIfNeeded()
+            
+//            print("is selected")
+        }
+    }
+    
+    override var isHighlighted: Bool {
+        didSet {
+            setNeedsLayout()
+            layoutIfNeeded()
+//            print("is highlighter")
+//            print(isSelected)
+        }
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        print(isSelected, isHighlighted)
+        if isHighlighted {
+            deskItemButton.backgroundColor = .blue
+        } else {
+            deskItemButton.alpha = 0.2
+            deskItemButton.isUserInteractionEnabled = false
         }
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+
     }
     
     func configureCell(word: Word) {
         self.word = word
     }
-    
-    @IBAction func wordLabelTouched(_ sender: UIButton) {
-        print("tapped")
-    }
-    
 }
