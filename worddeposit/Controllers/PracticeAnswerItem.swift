@@ -14,34 +14,26 @@ class PracticeAnswerItem: UICollectionViewCell {
         didSet {
             setNeedsLayout()
             layoutIfNeeded()
-            
-//            print("is selected")
         }
     }
     
-    override var isHighlighted: Bool {
-        didSet {
-            setNeedsLayout()
-            layoutIfNeeded()
-//            print("is highlighter")
-//            print(isSelected)
-        }
-    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        print(isSelected, isHighlighted)
-        if isHighlighted {
-            deskItemButton.backgroundColor = .blue
+//        print(isSelected, isHighlighted)
+        if isSelected {
+            deskItemButton.layer.backgroundColor = CGColor(srgbRed: 0, green: 0, blue: 255, alpha: 0)
+            deskItemButton.alpha = 1
+//            deskItemButton.backgroundColor = .black
+            deskItemButton.titleLabel?.textColor = UIColor.white
         } else {
-            deskItemButton.alpha = 0.2
-            deskItemButton.isUserInteractionEnabled = false
+            deskItemButton.alpha = 0.5
+//            deskItemButton.isEnabled = false
         }
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-
     }
     
     func configureCell(word: Word) {

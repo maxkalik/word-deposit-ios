@@ -13,6 +13,7 @@ class PracticeReadVC: UIViewController {
             collectionView.dataSource = self
             collectionView.layer.borderColor = CGColor(srgbRed: 0, green: 0, blue: 0, alpha: 1)
             collectionView.layer.borderWidth = 1
+            collectionView.allowsMultipleSelection = false
         }
     }
     
@@ -41,13 +42,13 @@ class PracticeReadVC: UIViewController {
     }
     
     @objc private func wordDeskTouched(sender : UIButton) {
-//        print(wordsDesk[sender.tag])
-        sender.isHighlighted = true
+        print(wordsDesk[sender.tag])
         sender.isSelected = true
     }
 }
 
 extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return wordsDesk.count
     }
@@ -56,10 +57,16 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: XIBs.PracticeAnswerItem, for: indexPath) as? PracticeAnswerItem {
             cell.configureCell(word: wordsDesk[indexPath.row])
             cell.deskItemButton.tag = indexPath.row
-            cell.isSelected = false
+//            cell.isSelected = false
+//            self.selectedIndexPath = indexPath
             cell.deskItemButton.addTarget(self, action: #selector(self.wordDeskTouched), for: .touchUpInside)
             return cell
         }
         return UICollectionViewCell()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+//        cell?.contentView.backgroundColor = UIColor.red
     }
 }
