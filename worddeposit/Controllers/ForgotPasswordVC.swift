@@ -13,7 +13,7 @@ class ForgotPasswordVC: UIViewController {
     }
     
     // MARK: - IBActions
-    @IBAction func onResetPasswordBtnPress(_ sender: Any) {
+    @IBAction func onResetPasswordBtnPress(_ sender: RoundedButton) {
         guard let email = emailTextField.text, email.isNotEmpty else {
             simpleAlert(title: "Error", msg: "Fill email field out")
             return
@@ -25,12 +25,12 @@ class ForgotPasswordVC: UIViewController {
                 self.simpleAlert(title: "Error", msg: error.localizedDescription)
                 return
             }
-            self.dismiss(animated: true, completion: nil)
+            self.navigationController?.popViewController(animated: true)
             self.loading.isHidden = true
         }
     }
     
-    @IBAction func onCancelBtnPress(_ sender: Any) {
+    @IBAction func onCancelBtnPress(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
     }
 }
