@@ -6,6 +6,9 @@ class PracticeReadVC: UIViewController {
     var trainedWord: Word!
     var wordsDesk = [Word]()
 
+    var selectedIndex: Int?
+    var isSelected = false
+    
     @IBOutlet weak var practiceLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView! {
         didSet {
@@ -41,10 +44,9 @@ class PracticeReadVC: UIViewController {
         collectionView.register(nib, forCellWithReuseIdentifier: XIBs.PracticeAnswerItem)
     }
     
-    @objc private func wordDeskTouched(sender : UIButton) {
-        print(wordsDesk[sender.tag])
-        sender.isSelected = true
-    }
+//    @objc private func wordDeskTouched(sender : UIButton) {
+//        print(wordsDesk[sender.tag])
+//    }
 }
 
 extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -56,17 +58,27 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: XIBs.PracticeAnswerItem, for: indexPath) as? PracticeAnswerItem {
             cell.configureCell(word: wordsDesk[indexPath.row])
-            cell.deskItemButton.tag = indexPath.row
-//            cell.isSelected = false
-//            self.selectedIndexPath = indexPath
-            cell.deskItemButton.addTarget(self, action: #selector(self.wordDeskTouched), for: .touchUpInside)
+            
+            if selectedIndex == indexPath.row {
+                cell.backgroundColor = UIColor.red
+            } else {
+                if isSelected {
+                    cell.backgroundColor = UIColor.white
+                    cell.alpha = 0.5
+                    cell.contentView.alpha = 0.5
+                    cell.isUserInteractionEnabled = false
+                }
+            }
+            
+            
             return cell
         }
         return UICollectionViewCell()
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-//        cell?.contentView.backgroundColor = UIColor.red
+        selectedIndex = selectedIndex == indexPath.row ? nil : indexPath.row
+        isSelected = true
+        collectionView.reloadData()
     }
 }

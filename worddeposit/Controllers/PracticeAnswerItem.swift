@@ -2,38 +2,20 @@ import UIKit
 
 class PracticeAnswerItem: UICollectionViewCell {
    
-    @IBOutlet weak var deskItemButton: PracticeDeskItemButton!
+    @IBOutlet weak var deskItemLabel: UILabel!
 
     var word: Word! {
         didSet {
-            deskItemButton.setTitle(word.translation, for: .normal)
-        }
-    }
-    
-    override var isSelected: Bool {
-        didSet {
-            setNeedsLayout()
-            layoutIfNeeded()
-        }
-    }
-    
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-//        print(isSelected, isHighlighted)
-        if isSelected {
-            deskItemButton.layer.backgroundColor = CGColor(srgbRed: 0, green: 0, blue: 255, alpha: 0)
-            deskItemButton.alpha = 1
-//            deskItemButton.backgroundColor = .black
-            deskItemButton.titleLabel?.textColor = UIColor.white
-        } else {
-            deskItemButton.alpha = 0.5
-//            deskItemButton.isEnabled = false
+            deskItemLabel.text = word.translation
         }
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        backgroundColor = UIColor.green
+        layer.cornerRadius = 12
+        clipsToBounds = true
+        
     }
     
     func configureCell(word: Word) {

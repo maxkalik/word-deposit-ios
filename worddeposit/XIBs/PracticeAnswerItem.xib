@@ -16,26 +16,25 @@
                 <rect key="frame" x="0.0" y="0.0" width="231" height="50"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ihG-qF-xtL" customClass="PracticeDeskItemButton" customModule="worddeposit" customModuleProvider="target">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0XS-4c-or2" customClass="PracticeDeskItemLabel" customModule="worddeposit" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="231" height="50"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                        <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
-                        <state key="normal" title="Button"/>
-                    </button>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </label>
                 </subviews>
             </view>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="ihG-qF-xtL" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="boO-fb-3gy"/>
-                <constraint firstAttribute="bottom" secondItem="ihG-qF-xtL" secondAttribute="bottom" id="cV4-Kw-DL0"/>
-                <constraint firstAttribute="trailing" secondItem="ihG-qF-xtL" secondAttribute="trailing" id="yEb-70-FVV"/>
-                <constraint firstItem="ihG-qF-xtL" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="yRG-SL-HMC"/>
+                <constraint firstAttribute="trailing" secondItem="0XS-4c-or2" secondAttribute="trailing" id="5Mr-yv-z4m"/>
+                <constraint firstItem="0XS-4c-or2" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="GwI-Pd-dJD"/>
+                <constraint firstAttribute="bottom" secondItem="0XS-4c-or2" secondAttribute="bottom" id="sG4-XJ-aEo"/>
+                <constraint firstItem="0XS-4c-or2" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="yKB-xr-o08"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="231" height="50"/>
             <connections>
-                <outlet property="deskItemButton" destination="ihG-qF-xtL" id="DDW-aV-WWR"/>
+                <outlet property="deskItemLabel" destination="0XS-4c-or2" id="NRZ-Lo-iH9"/>
             </connections>
             <point key="canvasLocation" x="271.73913043478262" y="153.34821428571428"/>
         </collectionViewCell>
