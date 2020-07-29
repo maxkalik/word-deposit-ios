@@ -79,20 +79,33 @@
                                     </view>
                                 </subviews>
                             </stackView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="5e3-ty-oLk">
+                                <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
+                                <color key="color" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="5e3-ty-oLk" firstAttribute="centerX" secondItem="7Zb-h6-gYF" secondAttribute="centerX" id="9Ws-xE-khf"/>
                             <constraint firstAttribute="trailing" secondItem="TCq-te-lsk" secondAttribute="trailing" id="OkA-Nh-oa2"/>
                             <constraint firstItem="TCq-te-lsk" firstAttribute="leading" secondItem="nNU-s2-D8s" secondAttribute="leading" id="b5C-Ce-rlC"/>
+                            <constraint firstItem="5e3-ty-oLk" firstAttribute="centerY" secondItem="7Zb-h6-gYF" secondAttribute="centerY" id="cwK-fn-fnM"/>
                             <constraint firstItem="TCq-te-lsk" firstAttribute="top" secondItem="nNU-s2-D8s" secondAttribute="top" id="h1o-7R-AsC"/>
                             <constraint firstAttribute="bottom" secondItem="TCq-te-lsk" secondAttribute="bottom" id="mCR-nI-Cgs"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="nNU-s2-D8s"/>
                     </view>
-                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="keS-6x-LG6"/>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="keS-6x-LG6">
+                        <barButtonItem key="rightBarButtonItem" title="☹️" id="e0T-BB-hks">
+                            <connections>
+                                <action selector="skip:" destination="XGr-ab-fSU" id="fc0-pC-oXb"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="Fie-T9-cv2" id="gQb-jT-yce"/>
                         <outlet property="practiceLabel" destination="HlN-VU-D6V" id="Xdh-y8-JQ5"/>
+                        <outlet property="spinner" destination="5e3-ty-oLk" id="3sH-VB-9Jr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8bh-Uw-CKi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -19,13 +19,14 @@ class PracticeReadVC: UIViewController {
     
     // MARK: - IBOutlets
     
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var practiceLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView! {
         didSet {
             collectionView.delegate = self
             collectionView.dataSource = self
-            collectionView.layer.borderColor = CGColor(srgbRed: 0, green: 0, blue: 0, alpha: 1)
-            collectionView.layer.borderWidth = 1
+//            collectionView.layer.borderColor = CGColor(srgbRed: 0, green: 0, blue: 0, alpha: 1)
+//            collectionView.layer.borderWidth = 1
             collectionView.allowsMultipleSelection = false
         }
     }
@@ -43,6 +44,7 @@ class PracticeReadVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        spinner.stopAnimating()
         print(practiceType ?? "nil")
         if wordsDesk.isEmpty {
             print("BUG! word desk is empty")
@@ -70,12 +72,29 @@ class PracticeReadVC: UIViewController {
             break
         }
     }
+    
+    private func updateUI() {
+        self.delegate?.updatePracticeVC()
+        self.selectedIndex = nil
+        self.isSelected = false
+        self.collectionView.isUserInteractionEnabled = true
+        self.setupTrainedWord()
+        self.collectionView.reloadData()
+    }
+    
+    // MARK: - IBActions
+    
+    @IBAction func skip(_ sender: UIBarButtonItem) {
+        updateUI()
+    }
+    
 }
 
 
 extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     // MARK: - UICollectionViewDataSource
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return wordsDesk.count
     }
@@ -115,14 +134,12 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedIndex = selectedIndex == indexPath.row ? nil : indexPath.row
         isSelected = true
+        spinner.startAnimating()
         collectionView.isUserInteractionEnabled = false
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            self.delegate?.updatePracticeVC()
-            self.selectedIndex = nil
-            self.isSelected = false
-            self.collectionView.isUserInteractionEnabled = true
-            self.setupTrainedWord()
-            self.collectionView.reloadData()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            // TODO: - check main queue
+            self.updateUI()
+            self.spinner.stopAnimating()
         }
         self.collectionView.reloadData()
     }
