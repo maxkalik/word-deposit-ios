@@ -96,9 +96,6 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                 let word = Word.init(data: data)
                 self.words.append(word)
             }
-            // self.activityIndicator.stopAnimating()
-            // self.wordsLbl.text = String(self.words.count)
-            // self.wordsLbl.isHidden = false
         }
     }
     

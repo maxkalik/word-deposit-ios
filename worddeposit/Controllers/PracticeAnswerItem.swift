@@ -23,7 +23,7 @@ class PracticeAnswerItem: UICollectionViewCell {
     func setupCell() {
         alpha = 1
         contentView.alpha = 1
-        backgroundColor = UIColor.green
+        backgroundColor = UIColor.white
         layer.cornerRadius = 12
         clipsToBounds = true
     }

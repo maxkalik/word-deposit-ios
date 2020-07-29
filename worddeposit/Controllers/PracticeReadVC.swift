@@ -6,6 +6,8 @@ protocol PracticeReadVCDelegate: AnyObject {
 
 class PracticeReadVC: UIViewController {
     
+    // MARK: - Instances
+    
     var practiceType: String?
     var trainedWord: Word?
     var wordsDesk = [Word]()
@@ -14,6 +16,8 @@ class PracticeReadVC: UIViewController {
     var isSelected = false
     
     weak var delegate: PracticeReadVCDelegate?
+    
+    // MARK: - IBOutlets
     
     @IBOutlet weak var practiceLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView! {
@@ -26,19 +30,7 @@ class PracticeReadVC: UIViewController {
         }
     }
     
-    func setupTrainedWord() {
-        trainedWord = wordsDesk.randomElement()
-        guard let word = trainedWord else { return }
-        // setup ui
-        switch practiceType {
-        case Controllers.TrainerWordToTranslate:
-            practiceLabel.text = word.example
-        case Controllers.TrainerTranslateToWord:
-            practiceLabel.text = word.translation
-        default:
-            break
-        }
-    }
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,14 +50,32 @@ class PracticeReadVC: UIViewController {
         setupTrainedWord()
     }
     
+    // MARK: - Methods
+    
     private func setupCollectionView() {
         let nib = UINib(nibName: XIBs.PracticeAnswerItem, bundle: nil)
         collectionView.register(nib, forCellWithReuseIdentifier: XIBs.PracticeAnswerItem)
     }
+    
+    private func setupTrainedWord() {
+        trainedWord = wordsDesk.randomElement()
+        guard let word = trainedWord else { return }
+        // setup ui
+        switch practiceType {
+        case Controllers.TrainerWordToTranslate:
+            practiceLabel.text = word.example
+        case Controllers.TrainerTranslateToWord:
+            practiceLabel.text = word.translation
+        default:
+            break
+        }
+    }
 }
+
 
 extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    // MARK: - UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return wordsDesk.count
     }
@@ -83,7 +93,11 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
             }
 
             if selectedIndex == indexPath.row {
-                cell.backgroundColor = UIColor.red
+                if wordsDesk[selectedIndex!].id == trainedWord?.id {
+                    cell.backgroundColor = UIColor.green
+                } else {
+                    cell.backgroundColor = UIColor.red
+                }
             } else {
                 if isSelected {
                     cell.backgroundColor = UIColor.white
