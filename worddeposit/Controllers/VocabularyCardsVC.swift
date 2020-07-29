@@ -1,11 +1,13 @@
 import UIKit
 
-class WordsVC: UIViewController {
+class VocabularyCardsVC: UIViewController {
 
     // MARK: - Outlets
 
     @IBOutlet weak var wordsCollectionView: UICollectionView! {
         didSet {
+            wordsCollectionView.delegate = self
+            wordsCollectionView.dataSource = self
             wordsCollectionView.isPrefetchingEnabled = false
             // I turned off default adjustment wich solves the problem collectionView presenting popover.
             wordsCollectionView.contentInsetAdjustmentBehavior = .never
@@ -30,15 +32,6 @@ class WordsVC: UIViewController {
         setupWordsCollectionView()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        words.removeAll()
-    }
-    
     override func viewDidLayoutSubviews() {
         // this should be checked because it is called by multiple times if try to drag the view
         if wordIndexPath != lastIndexPath {
@@ -51,36 +44,22 @@ class WordsVC: UIViewController {
     // MARK: - Supporting Methods
     
     private func setupWordsCollectionView() {
-        wordsCollectionView.delegate = self
-        wordsCollectionView.dataSource = self
-        
-        let nib = UINib(nibName: Identifiers.WordCollectionViewCell, bundle: nil)
-        wordsCollectionView.register(nib, forCellWithReuseIdentifier: Identifiers.WordCollectionViewCell)
-    }
-}
-
-// MARK: - WordCollectionViewCellDelegate
-
-extension WordsVC: WordCollectionViewCellDelegate {
-    func showAlert(title: String, message: String) {
-        self.simpleAlert(title: title, msg: message)
-    }
-    
-    func presentVC(_ viewControllerToPresent: UIViewController) {
-        present(viewControllerToPresent, animated: true, completion: nil)
+        let nib = UINib(nibName: XIBs.VocabularyCardCVCell, bundle: nil)
+        wordsCollectionView.register(nib, forCellWithReuseIdentifier: XIBs.VocabularyCardCVCell)
     }
 }
 
 // MARK: - Setting up UICollecitonView
 
-extension WordsVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension VocabularyCardsVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return words.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = wordsCollectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.WordCollectionViewCell, for: indexPath) as? WordCollectionViewCell {
+        if let cell = wordsCollectionView.dequeueReusableCell(withReuseIdentifier: XIBs.VocabularyCardCVCell, for: indexPath) as? VocabularyCardCVCell {
+            // here was an fatal error - out of range
             cell.configureCell(word: words[indexPath.item], delegate: self)
             return cell
         }
@@ -92,3 +71,18 @@ extension WordsVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColle
     }
 }
 
+// MARK: - VocabularyCardCVCellDelegate
+
+extension VocabularyCardsVC: VocabularyCardCVCellDelegate {
+    func showAlert(title: String, message: String) {
+        self.simpleAlert(title: title, msg: message)
+    }
+    
+    func presentVC(_ viewControllerToPresent: UIViewController) {
+        present(viewControllerToPresent, animated: true, completion: nil)
+    }
+    
+    func disableEnableScroll(isKeyboardShow: Bool) {
+        wordsCollectionView.isScrollEnabled = !isKeyboardShow
+    }
+}

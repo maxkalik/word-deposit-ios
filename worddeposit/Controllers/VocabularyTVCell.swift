@@ -1,7 +1,7 @@
 import UIKit
 import Kingfisher
 
-class WordTableViewCell: UITableViewCell {
+class VocabularyTVCell: UITableViewCell {
 
     // Outlets
     @IBOutlet weak var preview: UIImageView!
@@ -15,7 +15,7 @@ class WordTableViewCell: UITableViewCell {
     /// dequeueReusableCell(withIdentifier:) . For performance reasons, you should only reset attributes of the cell that are not related to content
     override func prepareForReuse() {
         super.prepareForReuse()
-        preview.image = UIImage(named: "logo")
+        preview.image = UIImage(named: Placeholders.Logo)
     }
     
     override func awakeFromNib() {
@@ -26,7 +26,6 @@ class WordTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
     }
     
     func configureCell(word: Word) {
@@ -35,7 +34,7 @@ class WordTableViewCell: UITableViewCell {
         if let url = URL(string: word.imgUrl) {
             preview.kf.indicatorType = .activity
             let options: KingfisherOptionsInfo = [KingfisherOptionsInfoItem.transition(.fade(0.2))]
-            let placeholder = UIImage(named: "logo")
+            let placeholder = UIImage(named: Placeholders.Logo)
             preview.kf.setImage(with: url, placeholder: placeholder, options: options)
         }
         

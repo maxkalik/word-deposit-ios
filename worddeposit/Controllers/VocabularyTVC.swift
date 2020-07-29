@@ -24,7 +24,7 @@ class VocabularyTVC: UITableViewController {
     /// Restoration state for UISearchController
     var restoredState = SearchControllerRestorableState()
     
-    // MARK: - View Life Cicle
+    // MARK: - View Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,12 +60,12 @@ class VocabularyTVC: UITableViewController {
     // MARK: - View setups
     
     func setupTableView() {
-        let nib = UINib(nibName: Identifiers.WordCell, bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: Identifiers.WordCell)
+        let nib = UINib(nibName: XIBs.VocabularyTVCell, bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: XIBs.VocabularyTVCell)
     }
     
     func setupResultsTableController() {
-        resultsTableController = self.storyboard?.instantiateViewController(withIdentifier: StoryboardIds.VocabularyResults) as? VocabularyResultsTVC
+        resultsTableController = self.storyboard?.instantiateViewController(withIdentifier: Storyboards.VocabularyResults) as? VocabularyResultsTVC
         resultsTableController.tableView.delegate = self
         
         searchController = UISearchController(searchResultsController: resultsTableController)
@@ -148,8 +148,7 @@ class VocabularyTVC: UITableViewController {
 
 extension VocabularyTVC {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let vc = WordsVC()
+        let vc = VocabularyCardsVC()
         
         if tableView === self.tableView {
             vc.words = words
@@ -174,9 +173,8 @@ extension VocabularyTVC {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: Identifiers.WordCell, for: indexPath) as? WordTableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: XIBs.VocabularyTVCell, for: indexPath) as? VocabularyTVCell {
             // cell is reusable so before calling it we have to nil an image because it can show an image from previous usage
-//            cell.preview.image = nil
             cell.configureCell(word: words[indexPath.row])
             return cell
         }

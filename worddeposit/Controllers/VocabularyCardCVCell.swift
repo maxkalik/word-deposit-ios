@@ -6,12 +6,13 @@ import FirebaseFirestore
 import Kingfisher
 import YPImagePicker
 
-protocol WordCollectionViewCellDelegate: AnyObject {
+protocol VocabularyCardCVCellDelegate: AnyObject {
     func showAlert(title: String, message: String)
     func presentVC(_ viewControllerToPresent: UIViewController)
+    func disableEnableScroll(isKeyboardShow: Bool)
 }
 
-class WordCollectionViewCell: UICollectionViewCell {
+class VocabularyCardCVCell: UICollectionViewCell {
 
     // MARK: - Outlets
 
@@ -19,6 +20,7 @@ class WordCollectionViewCell: UICollectionViewCell {
         didSet {
             let pinch = UIPinchGestureRecognizer(target: self, action: #selector(adjustImageButtonScale(byHandlingGestureRecognizedBy:)))
             wordImageButton.addGestureRecognizer(pinch)
+            wordImageButton.imageView?.contentMode = .scaleAspectFill
         }
     }
     @IBOutlet weak var wordExampleTextField: UITextField!
@@ -40,13 +42,13 @@ class WordCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    weak var delegate: WordCollectionViewCellDelegate?
+    weak var delegate: VocabularyCardCVCellDelegate?
     
     // MARK: - View Life Cycle
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        wordImageButton.setImage(UIImage(named: "logo"), for: .normal)
+        wordImageButton.setImage(UIImage(named: Placeholders.Logo), for: .normal)
     }
     
     override func awakeFromNib() {
@@ -62,8 +64,13 @@ class WordCollectionViewCell: UICollectionViewCell {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+        wordExampleTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        wordTranslationTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+    }
     
-    // MARK: - selectors methods
+    // MARK: - @objc methods
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         textFieldValidation()
@@ -71,6 +78,8 @@ class WordCollectionViewCell: UICollectionViewCell {
     
     @objc func keyboardWillShow(sender: UIResponder) {
         // self.view.frame.origin.y -= 150
+//        self.frame.origin.y -= 150
+        delegate?.disableEnableScroll(isKeyboardShow: true)
         print("keyboard show")
         
         print(frame.size.width, UIScreen.main.bounds.width)
@@ -78,8 +87,8 @@ class WordCollectionViewCell: UICollectionViewCell {
     }
     
     @objc func keyboardWillHide(sender: UIResponder) {
-        // self.view.frame.origin.y += 150
         print("keyboard hide")
+        delegate?.disableEnableScroll(isKeyboardShow: false)
     }
     
     @objc func adjustImageButtonScale(byHandlingGestureRecognizedBy recoginzer: UIPinchGestureRecognizer) {
@@ -93,9 +102,13 @@ class WordCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    // MARK: - Override methods
+    
     override func draw(_ rect: CGRect) {
         wordImageButton.transform = CGAffineTransform(scaleX: wordImageButtonScale, y: wordImageButtonScale)
     }
+    
+    // MARK: - Other methods
     
     func hideAllButtons(_ isShow: Bool) {
         saveChangingButton.isHidden = isShow
@@ -116,7 +129,7 @@ class WordCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func configureCell(word: Word, delegate: WordCollectionViewCellDelegate) {
+    func configureCell(word: Word, delegate: VocabularyCardCVCellDelegate) {
         self.word = word
         self.delegate = delegate
         setupWord(word)

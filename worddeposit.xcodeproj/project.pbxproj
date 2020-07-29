@@ -13,26 +13,39 @@
 		1128421A248E7C5800A014E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11284219248E7C5800A014E9 /* Assets.xcassets */; };
 		1128421D248E7C5800A014E9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1128421B248E7C5800A014E9 /* LaunchScreen.storyboard */; };
 		11284229248E7D5100A014E9 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11284228248E7D5100A014E9 /* Home.storyboard */; };
-		1128422B248E836300A014E9 /* PracticeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1128422A248E836300A014E9 /* PracticeVC.swift */; };
 		1128422F248E839D00A014E9 /* AddWordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1128422E248E839D00A014E9 /* AddWordVC.swift */; };
 		11284233248E83BB00A014E9 /* VocabularyTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284232248E83BB00A014E9 /* VocabularyTVC.swift */; };
-		11284235248E83C800A014E9 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284234248E83C800A014E9 /* ProfileVC.swift */; };
+		11284235248E83C800A014E9 /* ProfileTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284234248E83C800A014E9 /* ProfileTVC.swift */; };
 		11284237248E83D400A014E9 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284236248E83D400A014E9 /* LoginVC.swift */; };
 		11284239248E83E000A014E9 /* RegistrationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284238248E83E000A014E9 /* RegistrationVC.swift */; };
 		1128423B248E83ED00A014E9 /* ForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1128423A248E83ED00A014E9 /* ForgotPasswordVC.swift */; };
 		1128423D248E840000A014E9 /* RoundedViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1128423C248E840000A014E9 /* RoundedViews.swift */; };
 		1128423F248E845900A014E9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1128423E248E845900A014E9 /* User.swift */; };
 		11284241248E846000A014E9 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284240248E846000A014E9 /* Word.swift */; };
-		1158D30E24917B9B0087DC96 /* WordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1158D30C24917B9B0087DC96 /* WordTableViewCell.swift */; };
-		1158D30F24917B9B0087DC96 /* WordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1158D30D24917B9B0087DC96 /* WordTableViewCell.xib */; };
+		112EA43324C83B7200FA55E3 /* PracticeTrainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112EA43224C83B7200FA55E3 /* PracticeTrainer.swift */; };
+		112EA43524C84A2900FA55E3 /* PracticeTrainers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112EA43424C84A2900FA55E3 /* PracticeTrainers.swift */; };
+		1158D30E24917B9B0087DC96 /* VocabularyTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1158D30C24917B9B0087DC96 /* VocabularyTVCell.swift */; };
+		1158D30F24917B9B0087DC96 /* VocabularyTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1158D30D24917B9B0087DC96 /* VocabularyTVCell.xib */; };
 		1158D31524917EC50087DC96 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1158D31424917EC50087DC96 /* GoogleService-Info.plist */; };
+		11621A2524C24819003087AB /* ProfileTVCCheckmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11621A2424C24819003087AB /* ProfileTVCCheckmark.swift */; };
+		11621A2724C25EFA003087AB /* WKWebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11621A2624C25EFA003087AB /* WKWebVC.swift */; };
 		116BC94C249182BD00968DA6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC94B249182BD00968DA6 /* Constants.swift */; };
 		116BC94E2491836B00968DA6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC94D2491836B00968DA6 /* Extensions.swift */; };
-		1171E70624981CDD00805D35 /* WordCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1171E70424981CDD00805D35 /* WordCollectionViewCell.swift */; };
-		1171E70724981CDD00805D35 /* WordCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1171E70524981CDD00805D35 /* WordCollectionViewCell.xib */; };
-		1181BBF32498060F00DB682E /* WordsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1181BBF12498060F00DB682E /* WordsVC.swift */; };
-		1181BBF42498060F00DB682E /* WordsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1181BBF22498060F00DB682E /* WordsVC.xib */; };
+		1171E70624981CDD00805D35 /* VocabularyCardCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1171E70424981CDD00805D35 /* VocabularyCardCVCell.swift */; };
+		1171E70724981CDD00805D35 /* VocabularyCardCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1171E70524981CDD00805D35 /* VocabularyCardCVCell.xib */; };
+		117FA4CA24CEE78A0043024D /* CollectionViewCenterLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117FA4C924CEE78A0043024D /* CollectionViewCenterLayout.swift */; };
+		117FA4CC24CEEC350043024D /* PracticeDeskItemButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117FA4CB24CEEC350043024D /* PracticeDeskItemButton.swift */; };
+		118162EF24BFB08E0088C0E1 /* UserInfoTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118162EE24BFB08E0088C0E1 /* UserInfoTVC.swift */; };
+		1181BBF32498060F00DB682E /* VocabularyCardsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1181BBF12498060F00DB682E /* VocabularyCardsVC.swift */; };
+		1181BBF42498060F00DB682E /* VocabularyCardsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1181BBF22498060F00DB682E /* VocabularyCardsVC.xib */; };
+		1192355024BFB66C00E76403 /* TextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1192354F24BFB66C00E76403 /* TextFields.swift */; };
 		119DBF5724ACCFBF009124B7 /* Configurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119DBF5624ACCFBF009124B7 /* Configurations.swift */; };
+		11B20D6A24C8DF2E00C1CB4E /* PracticeAnswerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B20D6824C8DF2E00C1CB4E /* PracticeAnswerItem.swift */; };
+		11B20D6B24C8DF2E00C1CB4E /* PracticeAnswerItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 11B20D6924C8DF2E00C1CB4E /* PracticeAnswerItem.xib */; };
+		11B20D6D24C8E00800C1CB4E /* PracticeReadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B20D6C24C8E00800C1CB4E /* PracticeReadVC.swift */; };
+		11F0326D24C8267E00BD6350 /* PracticeCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F0326B24C8267E00BD6350 /* PracticeCVCell.swift */; };
+		11F0326E24C8267E00BD6350 /* PracticeCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 11F0326C24C8267E00BD6350 /* PracticeCVCell.xib */; };
+		11F0327024C8272700BD6350 /* PracticeCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F0326F24C8272700BD6350 /* PracticeCVC.swift */; };
 		11F32A5324AF46D00097BF39 /* VocabularyResultsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F32A5224AF46D00097BF39 /* VocabularyResultsTVC.swift */; };
 		11F32A5524AF49C30097BF39 /* VocabularyTVC+Restore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F32A5424AF49C30097BF39 /* VocabularyTVC+Restore.swift */; };
 		11F32A5924AF49DB0097BF39 /* VocabularyTVC+Updating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F32A5824AF49DB0097BF39 /* VocabularyTVC+Updating.swift */; };
@@ -48,27 +61,40 @@
 		1128421C248E7C5800A014E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1128421E248E7C5800A014E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		11284228248E7D5100A014E9 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
-		1128422A248E836300A014E9 /* PracticeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeVC.swift; sourceTree = "<group>"; };
 		1128422E248E839D00A014E9 /* AddWordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWordVC.swift; sourceTree = "<group>"; };
 		11284232248E83BB00A014E9 /* VocabularyTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyTVC.swift; sourceTree = "<group>"; };
-		11284234248E83C800A014E9 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		11284234248E83C800A014E9 /* ProfileTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTVC.swift; sourceTree = "<group>"; };
 		11284236248E83D400A014E9 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		11284238248E83E000A014E9 /* RegistrationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationVC.swift; sourceTree = "<group>"; };
 		1128423A248E83ED00A014E9 /* ForgotPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVC.swift; sourceTree = "<group>"; };
 		1128423C248E840000A014E9 /* RoundedViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedViews.swift; sourceTree = "<group>"; };
 		1128423E248E845900A014E9 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		11284240248E846000A014E9 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
-		1158D30C24917B9B0087DC96 /* WordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordTableViewCell.swift; sourceTree = "<group>"; };
-		1158D30D24917B9B0087DC96 /* WordTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordTableViewCell.xib; sourceTree = "<group>"; };
+		112EA43224C83B7200FA55E3 /* PracticeTrainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeTrainer.swift; sourceTree = "<group>"; };
+		112EA43424C84A2900FA55E3 /* PracticeTrainers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeTrainers.swift; sourceTree = "<group>"; };
+		1158D30C24917B9B0087DC96 /* VocabularyTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyTVCell.swift; sourceTree = "<group>"; };
+		1158D30D24917B9B0087DC96 /* VocabularyTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VocabularyTVCell.xib; sourceTree = "<group>"; };
 		1158D31424917EC50087DC96 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		11621A2424C24819003087AB /* ProfileTVCCheckmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfileTVCCheckmark.swift; path = worddeposit/Controllers/ProfileTVCCheckmark.swift; sourceTree = SOURCE_ROOT; };
+		11621A2624C25EFA003087AB /* WKWebVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WKWebVC.swift; path = worddeposit/Controllers/WKWebVC.swift; sourceTree = SOURCE_ROOT; };
 		116BC94B249182BD00968DA6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		116BC94D2491836B00968DA6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		1171E70424981CDD00805D35 /* WordCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCollectionViewCell.swift; sourceTree = "<group>"; };
-		1171E70524981CDD00805D35 /* WordCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordCollectionViewCell.xib; sourceTree = "<group>"; };
-		1181BBF12498060F00DB682E /* WordsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsVC.swift; sourceTree = "<group>"; };
-		1181BBF22498060F00DB682E /* WordsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordsVC.xib; sourceTree = "<group>"; };
+		1171E70424981CDD00805D35 /* VocabularyCardCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyCardCVCell.swift; sourceTree = "<group>"; };
+		1171E70524981CDD00805D35 /* VocabularyCardCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VocabularyCardCVCell.xib; sourceTree = "<group>"; };
+		117FA4C924CEE78A0043024D /* CollectionViewCenterLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCenterLayout.swift; sourceTree = "<group>"; };
+		117FA4CB24CEEC350043024D /* PracticeDeskItemButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeDeskItemButton.swift; sourceTree = "<group>"; };
+		118162EE24BFB08E0088C0E1 /* UserInfoTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoTVC.swift; sourceTree = "<group>"; };
+		1181BBF12498060F00DB682E /* VocabularyCardsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyCardsVC.swift; sourceTree = "<group>"; };
+		1181BBF22498060F00DB682E /* VocabularyCardsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VocabularyCardsVC.xib; sourceTree = "<group>"; };
+		1192354F24BFB66C00E76403 /* TextFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFields.swift; sourceTree = "<group>"; };
 		119DBF5624ACCFBF009124B7 /* Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
+		11B20D6824C8DF2E00C1CB4E /* PracticeAnswerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PracticeAnswerItem.swift; path = worddeposit/Controllers/PracticeAnswerItem.swift; sourceTree = SOURCE_ROOT; };
+		11B20D6924C8DF2E00C1CB4E /* PracticeAnswerItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = PracticeAnswerItem.xib; path = worddeposit/XIBs/PracticeAnswerItem.xib; sourceTree = SOURCE_ROOT; };
+		11B20D6C24C8E00800C1CB4E /* PracticeReadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PracticeReadVC.swift; path = worddeposit/Controllers/PracticeReadVC.swift; sourceTree = SOURCE_ROOT; };
 		11D879B12494170B00FF7BA3 /* worddeposit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = worddeposit.entitlements; sourceTree = "<group>"; };
+		11F0326B24C8267E00BD6350 /* PracticeCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeCVCell.swift; sourceTree = "<group>"; };
+		11F0326C24C8267E00BD6350 /* PracticeCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PracticeCVCell.xib; sourceTree = "<group>"; };
+		11F0326F24C8272700BD6350 /* PracticeCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeCVC.swift; sourceTree = "<group>"; };
 		11F32A5224AF46D00097BF39 /* VocabularyResultsTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyResultsTVC.swift; sourceTree = "<group>"; };
 		11F32A5424AF49C30097BF39 /* VocabularyTVC+Restore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VocabularyTVC+Restore.swift"; sourceTree = "<group>"; };
 		11F32A5824AF49DB0097BF39 /* VocabularyTVC+Updating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VocabularyTVC+Updating.swift"; sourceTree = "<group>"; };
@@ -118,7 +144,6 @@
 				11284224248E7CCD00A014E9 /* Controllers */,
 				11284227248E7CF900A014E9 /* Storyboards */,
 				11FAD1342497FBB2007EBDDD /* Support Files */,
-				11284219248E7C5800A014E9 /* Assets.xcassets */,
 				1128421E248E7C5800A014E9 /* Info.plist */,
 				1158D31424917EC50087DC96 /* GoogleService-Info.plist */,
 			);
@@ -128,19 +153,25 @@
 		11284224248E7CCD00A014E9 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				1181BBF12498060F00DB682E /* WordsVC.swift */,
-				1158D30C24917B9B0087DC96 /* WordTableViewCell.swift */,
-				1171E70424981CDD00805D35 /* WordCollectionViewCell.swift */,
-				1128422A248E836300A014E9 /* PracticeVC.swift */,
+				11284236248E83D400A014E9 /* LoginVC.swift */,
+				11284238248E83E000A014E9 /* RegistrationVC.swift */,
+				1128423A248E83ED00A014E9 /* ForgotPasswordVC.swift */,
+				11F0326F24C8272700BD6350 /* PracticeCVC.swift */,
+				11F0326B24C8267E00BD6350 /* PracticeCVCell.swift */,
+				11B20D6C24C8E00800C1CB4E /* PracticeReadVC.swift */,
+				11B20D6824C8DF2E00C1CB4E /* PracticeAnswerItem.swift */,
 				1128422E248E839D00A014E9 /* AddWordVC.swift */,
 				11284232248E83BB00A014E9 /* VocabularyTVC.swift */,
 				11F32A5224AF46D00097BF39 /* VocabularyResultsTVC.swift */,
 				11F32A5424AF49C30097BF39 /* VocabularyTVC+Restore.swift */,
 				11F32A5824AF49DB0097BF39 /* VocabularyTVC+Updating.swift */,
-				11284234248E83C800A014E9 /* ProfileVC.swift */,
-				11284236248E83D400A014E9 /* LoginVC.swift */,
-				11284238248E83E000A014E9 /* RegistrationVC.swift */,
-				1128423A248E83ED00A014E9 /* ForgotPasswordVC.swift */,
+				1158D30C24917B9B0087DC96 /* VocabularyTVCell.swift */,
+				1181BBF12498060F00DB682E /* VocabularyCardsVC.swift */,
+				1171E70424981CDD00805D35 /* VocabularyCardCVCell.swift */,
+				11284234248E83C800A014E9 /* ProfileTVC.swift */,
+				118162EE24BFB08E0088C0E1 /* UserInfoTVC.swift */,
+				11621A2424C24819003087AB /* ProfileTVCCheckmark.swift */,
+				11621A2624C25EFA003087AB /* WKWebVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -149,6 +180,8 @@
 			isa = PBXGroup;
 			children = (
 				1128423C248E840000A014E9 /* RoundedViews.swift */,
+				1192354F24BFB66C00E76403 /* TextFields.swift */,
+				117FA4CB24CEEC350043024D /* PracticeDeskItemButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -158,6 +191,8 @@
 			children = (
 				1128423E248E845900A014E9 /* User.swift */,
 				11284240248E846000A014E9 /* Word.swift */,
+				112EA43224C83B7200FA55E3 /* PracticeTrainer.swift */,
+				112EA43424C84A2900FA55E3 /* PracticeTrainers.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -175,9 +210,11 @@
 		1158D30B2491720C0087DC96 /* XIBs */ = {
 			isa = PBXGroup;
 			children = (
-				1181BBF22498060F00DB682E /* WordsVC.xib */,
-				1158D30D24917B9B0087DC96 /* WordTableViewCell.xib */,
-				1171E70524981CDD00805D35 /* WordCollectionViewCell.xib */,
+				11F0326C24C8267E00BD6350 /* PracticeCVCell.xib */,
+				11B20D6924C8DF2E00C1CB4E /* PracticeAnswerItem.xib */,
+				1158D30D24917B9B0087DC96 /* VocabularyTVCell.xib */,
+				1181BBF22498060F00DB682E /* VocabularyCardsVC.xib */,
+				1171E70524981CDD00805D35 /* VocabularyCardCVCell.xib */,
 			);
 			path = XIBs;
 			sourceTree = "<group>";
@@ -185,9 +222,10 @@
 		116BC94A249182A500968DA6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				117FA4C924CEE78A0043024D /* CollectionViewCenterLayout.swift */,
+				119DBF5624ACCFBF009124B7 /* Configurations.swift */,
 				116BC94B249182BD00968DA6 /* Constants.swift */,
 				116BC94D2491836B00968DA6 /* Extensions.swift */,
-				119DBF5624ACCFBF009124B7 /* Configurations.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -195,6 +233,7 @@
 		11FAD1342497FBB2007EBDDD /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
+				11284219248E7C5800A014E9 /* Assets.xcassets */,
 				11284210248E7C5700A014E9 /* AppDelegate.swift */,
 				11284212248E7C5700A014E9 /* SceneDelegate.swift */,
 			);
@@ -279,12 +318,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				1128421D248E7C5800A014E9 /* LaunchScreen.storyboard in Resources */,
+				11B20D6B24C8DF2E00C1CB4E /* PracticeAnswerItem.xib in Resources */,
+				11F0326E24C8267E00BD6350 /* PracticeCVCell.xib in Resources */,
 				1128421A248E7C5800A014E9 /* Assets.xcassets in Resources */,
-				1171E70724981CDD00805D35 /* WordCollectionViewCell.xib in Resources */,
+				1171E70724981CDD00805D35 /* VocabularyCardCVCell.xib in Resources */,
 				11284218248E7C5700A014E9 /* Main.storyboard in Resources */,
-				1181BBF42498060F00DB682E /* WordsVC.xib in Resources */,
+				1181BBF42498060F00DB682E /* VocabularyCardsVC.xib in Resources */,
 				11284229248E7D5100A014E9 /* Home.storyboard in Resources */,
-				1158D30F24917B9B0087DC96 /* WordTableViewCell.xib in Resources */,
+				1158D30F24917B9B0087DC96 /* VocabularyTVCell.xib in Resources */,
 				1158D31524917EC50087DC96 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -338,27 +379,38 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11B20D6A24C8DF2E00C1CB4E /* PracticeAnswerItem.swift in Sources */,
 				11284239248E83E000A014E9 /* RegistrationVC.swift in Sources */,
 				11284241248E846000A014E9 /* Word.swift in Sources */,
+				1192355024BFB66C00E76403 /* TextFields.swift in Sources */,
 				1128423B248E83ED00A014E9 /* ForgotPasswordVC.swift in Sources */,
 				1128423D248E840000A014E9 /* RoundedViews.swift in Sources */,
-				1128422B248E836300A014E9 /* PracticeVC.swift in Sources */,
 				116BC94C249182BD00968DA6 /* Constants.swift in Sources */,
+				11B20D6D24C8E00800C1CB4E /* PracticeReadVC.swift in Sources */,
+				11F0327024C8272700BD6350 /* PracticeCVC.swift in Sources */,
+				112EA43524C84A2900FA55E3 /* PracticeTrainers.swift in Sources */,
+				118162EF24BFB08E0088C0E1 /* UserInfoTVC.swift in Sources */,
 				1128423F248E845900A014E9 /* User.swift in Sources */,
-				11284235248E83C800A014E9 /* ProfileVC.swift in Sources */,
+				11284235248E83C800A014E9 /* ProfileTVC.swift in Sources */,
 				11F32A5324AF46D00097BF39 /* VocabularyResultsTVC.swift in Sources */,
+				11621A2724C25EFA003087AB /* WKWebVC.swift in Sources */,
+				11621A2524C24819003087AB /* ProfileTVCCheckmark.swift in Sources */,
 				11284237248E83D400A014E9 /* LoginVC.swift in Sources */,
 				11F32A5524AF49C30097BF39 /* VocabularyTVC+Restore.swift in Sources */,
 				11284211248E7C5700A014E9 /* AppDelegate.swift in Sources */,
+				112EA43324C83B7200FA55E3 /* PracticeTrainer.swift in Sources */,
 				116BC94E2491836B00968DA6 /* Extensions.swift in Sources */,
-				1171E70624981CDD00805D35 /* WordCollectionViewCell.swift in Sources */,
+				1171E70624981CDD00805D35 /* VocabularyCardCVCell.swift in Sources */,
 				11F32A5924AF49DB0097BF39 /* VocabularyTVC+Updating.swift in Sources */,
 				1128422F248E839D00A014E9 /* AddWordVC.swift in Sources */,
-				1181BBF32498060F00DB682E /* WordsVC.swift in Sources */,
+				1181BBF32498060F00DB682E /* VocabularyCardsVC.swift in Sources */,
+				11F0326D24C8267E00BD6350 /* PracticeCVCell.swift in Sources */,
 				119DBF5724ACCFBF009124B7 /* Configurations.swift in Sources */,
-				1158D30E24917B9B0087DC96 /* WordTableViewCell.swift in Sources */,
+				117FA4CA24CEE78A0043024D /* CollectionViewCenterLayout.swift in Sources */,
+				1158D30E24917B9B0087DC96 /* VocabularyTVCell.swift in Sources */,
 				11284233248E83BB00A014E9 /* VocabularyTVC.swift in Sources */,
 				11284213248E7C5700A014E9 /* SceneDelegate.swift in Sources */,
+				117FA4CC24CEEC350043024D /* PracticeDeskItemButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

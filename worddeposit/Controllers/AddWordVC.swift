@@ -8,22 +8,33 @@ class AddWordVC: UIViewController {
     
     // MARK: - Outlets
     
-    @IBOutlet weak var wordImagePickerBtn: UIButton!
+    @IBOutlet weak var scrollView: UIScrollView! {
+        didSet {
+            scrollView.delegate = self
+            // this will allow to put content view to the scroll without including safearea in the top
+            scrollView.contentInsetAdjustmentBehavior = .never
+        }
+    }
+    
+    @IBOutlet weak var wordImagePickerBtn: UIButton! {
+        didSet {
+            wordImagePickerBtn.imageView?.contentMode = .scaleAspectFill
+        }
+        
+    }
+    
+    @IBOutlet weak var addWordButton: RoundedButton!
+    @IBOutlet weak var clearAllButton: UIButton!
     @IBOutlet weak var wordExampleTextField: UITextField!
     @IBOutlet weak var wordTranslationTextField: UITextField!
     @IBOutlet weak var loader: RoundedView!
     
-    // MARK: - Variables
+    // MARK: - Instances
     
     var db: Firestore!
     var storage: Storage!
     var wordRef: DocumentReference!
-    var isPhotoSet = false
-    
-    enum ImageSource {
-        case photoLibrary
-        case camera
-    }
+    var isImageSet = false
     
     // MARK: - Lifecycle
     
@@ -31,13 +42,43 @@ class AddWordVC: UIViewController {
         super.viewDidLoad()
         db = Firestore.firestore()
         storage = Storage.storage()
-        wordImagePickerBtn.layer.cornerRadius = 8
-        loader.isHidden = true
-        wordExampleTextField.autocorrectionType = .no
-        wordTranslationTextField.autocorrectionType = .no
+
+        setupUI()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        wordExampleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        wordTranslationTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        wordExampleTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        wordTranslationTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+    }
+    
+    // MARK: - @objc Methods
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        textFieldValidation()
     }
     
     // MARK: - Support Methods
+    
+    func textFieldValidation() {
+        guard let wordExample = wordExampleTextField.text, let wordTranslation = wordTranslationTextField.text else { return }
+        addWordButton.isHidden = wordExample.isEmpty || wordTranslation.isEmpty
+        clearAllButton.isHidden = wordExample.isEmpty && wordTranslation.isEmpty
+    }
+    
+    private func setupUI() {
+        loader.isHidden = true
+        wordExampleTextField.autocorrectionType = .no
+        wordTranslationTextField.autocorrectionType = .no
+        addWordButton.isHidden = true
+        clearAllButton.isHidden = true
+    }
     
     func prepareForUpload() {
         guard let example = wordExampleTextField.text, example.isNotEmpty,
@@ -54,7 +95,7 @@ class AddWordVC: UIViewController {
         var word = Word.init(imgUrl: "", example: example, translation: translation, id: "", timestamp: Timestamp())
         word.id = wordRef.documentID
         
-        if isPhotoSet {
+        if isImageSet {
             uploadImage(userId: user.uid, word: word)
         } else {
             uploadWord(word: word)
@@ -113,10 +154,12 @@ class AddWordVC: UIViewController {
     }
     
     func updateUI() {
-        self.wordImagePickerBtn.setImage(UIImage(named: "logo"), for: .normal)
+        self.wordImagePickerBtn.setImage(UIImage(named: Placeholders.Logo), for: .normal)
         wordExampleTextField.text = ""
         wordTranslationTextField.text = ""
-        isPhotoSet = false
+        isImageSet = false
+        addWordButton.isHidden = true
+        clearAllButton.isHidden = true
     }
     
     // MARK: - IBActions
@@ -129,7 +172,7 @@ class AddWordVC: UIViewController {
         picker.didFinishPicking { [unowned picker] items, _ in
             if let photo = items.singlePhoto {
                 self.wordImagePickerBtn.setImage(photo.image, for: .normal)
-                self.isPhotoSet = true
+                self.isImageSet = true
             }
             picker.dismiss(animated: true, completion: nil)
         }
@@ -144,5 +187,24 @@ class AddWordVC: UIViewController {
     
     @IBAction func onClearAllBtnPress(_ sender: Any) {
         updateUI()
+    }
+}
+
+// MARK: - ScrollViewDelegate
+
+extension AddWordVC: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        // make image scale on scroll
+        let offset = scrollView.contentOffset
+
+        if offset.y < 0.0 {
+            var transform = CATransform3DTranslate(CATransform3DIdentity, 0, (offset.y), 0)
+            let scaleFactor = 1 + (-1 * offset.y / (wordImagePickerBtn.frame.size.height / 2))
+            transform = CATransform3DScale(transform, scaleFactor, scaleFactor, 1)
+            wordImagePickerBtn.layer.transform = transform
+        } else {
+            wordImagePickerBtn.layer.transform = CATransform3DIdentity
+        }
     }
 }

@@ -14,6 +14,7 @@ import FirebaseStorage
 class VocabularyResultsTVC: UITableViewController {
 
     // MARK: - IBOutlets
+    
     @IBOutlet weak var resultsLabel: UILabel!
     
     // MARK: - Instances
@@ -23,6 +24,7 @@ class VocabularyResultsTVC: UITableViewController {
     var storage: Storage!
     
     // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,8 +42,8 @@ class VocabularyResultsTVC: UITableViewController {
     // MARK: - Methods
     
     func setupTableView() {
-        let nib = UINib(nibName: Identifiers.WordCell, bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: Identifiers.WordCell)
+        let nib = UINib(nibName: XIBs.VocabularyTVCell, bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: XIBs.VocabularyTVCell)
     }
 
     // MARK: - UITableViewDataSource
@@ -51,7 +53,7 @@ class VocabularyResultsTVC: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: Identifiers.WordCell, for: indexPath) as? WordTableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: XIBs.VocabularyTVCell, for: indexPath) as? VocabularyTVCell {
             cell.configureCell(word: filteredWords[indexPath.row])
             return cell
         }

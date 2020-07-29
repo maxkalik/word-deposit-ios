@@ -3,26 +3,33 @@ import FirebaseAuth
 
 class LoginVC: UIViewController {
     
-    // Outlets
+    // MARK: - Outlets
+    
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loader: RoundedView!
     
-    // Variables
+    // MARK: - Instances
+    
+    var auth: Auth!
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        auth = Auth.auth()
         loader.isHidden = true
     }
     
+    // MARK: - Methods
     func showHomeVC() {
-        let storyboard = UIStoryboard(name: "Home", bundle: nil)
-        let homeViewController = storyboard.instantiateViewController(identifier: "home") as? UITabBarController
+        let storyboard = UIStoryboard(name: Storyboards.Home, bundle: nil)
+        let homeViewController = storyboard.instantiateViewController(identifier: Storyboards.Home) as? UITabBarController
         self.view.window?.rootViewController = homeViewController
         self.view.window?.makeKeyAndVisible()
     }
     
-    // Actions
+    // MARK: - IBActions
     @IBAction func onSignInBtnPress(_ sender: Any) {
         loader.isHidden = false
         guard let email = emailTextField.text, email.isNotEmpty,
@@ -32,14 +39,14 @@ class LoginVC: UIViewController {
                 return
         }
         
-        Auth.auth().signIn(withEmail: email, password: password) { (authDataResult, error) in
+        auth.signIn(withEmail: email, password: password) { [weak self] authResult, error in
             if let error = error {
-                self.loader.isHidden = true
-                self.simpleAlert(title: "Error", msg: error.localizedDescription)
+                self?.loader.isHidden = true
+                self?.simpleAlert(title: "Error", msg: error.localizedDescription)
                 return
             }
-            self.loader.isHidden = true
-            self.showHomeVC()
+            self?.loader.isHidden = true
+            self?.showHomeVC()
         }
     }
 }
