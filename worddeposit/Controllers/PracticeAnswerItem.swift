@@ -4,21 +4,31 @@ class PracticeAnswerItem: UICollectionViewCell {
    
     @IBOutlet weak var deskItemLabel: UILabel!
 
-    var word: Word! {
+    var word: String! {
         didSet {
-            deskItemLabel.text = word.translation
+            deskItemLabel.text = word
         }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        setupCell()
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        setupCell()
+    }
+    
+    func setupCell() {
+        alpha = 1
+        contentView.alpha = 1
         backgroundColor = UIColor.green
         layer.cornerRadius = 12
         clipsToBounds = true
-        
     }
     
-    func configureCell(word: Word) {
+    func configureCell(word: String) {
         self.word = word
     }
 }

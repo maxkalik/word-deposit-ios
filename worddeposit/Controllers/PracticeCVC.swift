@@ -13,6 +13,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     var auth: Auth!
     var db: Firestore!
     var handle: AuthStateDidChangeListenerHandle?
+    var practiceReadVC: PracticeReadVC?
     
     private var trainers = [PracticeTrainer]()
     
@@ -118,26 +119,6 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         return makeWordDesk(size: tmpCount, wordsData: wordsData, result)
     }
 
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-    // MARK: - UICollectionViewDataSource
-
-    /*
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-    */
-
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
         return trainers.count
@@ -165,73 +146,48 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Segues.PracticeRead {
-            if let practiceReadVC = segue.destination as? PracticeReadVC {
-                if let sender = (sender as? PracticeTrainer) {
-                    
-                    // Hide the tabbar during this segue
-                    hidesBottomBarWhenPushed = true
+            self.practiceReadVC = segue.destination as? PracticeReadVC
+            if let sender = (sender as? PracticeTrainer) {
+                
+                // Hide the tabbar during this segue
+                hidesBottomBarWhenPushed = true
 
-                    // Restore the tabbar when it's popped in the future
-                    DispatchQueue.main.async { self.hidesBottomBarWhenPushed = false }
-                    
-                    self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-                    self.navigationController?.navigationBar.shadowImage = UIImage()
-                    self.navigationController?.navigationBar.isTranslucent = true
-                    self.navigationController?.view.backgroundColor = .clear
-                    
-                    let backItem = UIBarButtonItem()
-                    backItem.title = ""
-                    self.navigationItem.backBarButtonItem = backItem
-                    self.navigationController?.navigationBar.tintColor = UIColor.white
-                    
-                    let wordsDesk = makeWordDesk(size: 5, wordsData: words)
-                    practiceReadVC.trainedWord = wordsDesk.randomElement()
-                    practiceReadVC.wordsDesk = wordsDesk
-                    
-                    switch sender.controller {
-                    case Controllers.TrainerWordToTranslate:
-                        practiceReadVC.view.backgroundColor = .purple
-                        practiceReadVC.practiceType = Controllers.TrainerWordToTranslate
-                    case Controllers.TrainerTranslateToWord:
-                        practiceReadVC.view.backgroundColor = .blue
-                        practiceReadVC.practiceType = Controllers.TrainerTranslateToWord
-                    default:
-                        break
-                    }
+                // Restore the tabbar when it's popped in the future
+                DispatchQueue.main.async { self.hidesBottomBarWhenPushed = false }
+                
+                self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+                self.navigationController?.navigationBar.shadowImage = UIImage()
+                self.navigationController?.navigationBar.isTranslucent = true
+                self.navigationController?.view.backgroundColor = .clear
+                
+                let backItem = UIBarButtonItem()
+                backItem.title = ""
+                self.navigationItem.backBarButtonItem = backItem
+                self.navigationController?.navigationBar.tintColor = UIColor.white
+                
+                practiceReadVC?.delegate = self
+                // worddesk
+                updatePracticeVC()
+                
+                switch sender.controller {
+                case Controllers.TrainerWordToTranslate:
+                    practiceReadVC?.view.backgroundColor = .purple
+                    practiceReadVC?.practiceType = Controllers.TrainerWordToTranslate
+                case Controllers.TrainerTranslateToWord:
+                    practiceReadVC?.view.backgroundColor = .blue
+                    practiceReadVC?.practiceType = Controllers.TrainerTranslateToWord
+                default:
+                    break
                 }
             }
         }
     }
-    
-    // MARK: UICollectionViewDelegate
+}
 
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
+extension PracticeCVC: PracticeReadVCDelegate {
+    func updatePracticeVC() {
+        let wordsDesk = makeWordDesk(size: 5, wordsData: words)
+//        practiceReadVC?.trainedWord = wordsDesk.randomElement()
+        practiceReadVC?.wordsDesk = wordsDesk
     }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }
-    */
-
 }
