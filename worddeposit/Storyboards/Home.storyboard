@@ -67,7 +67,7 @@
                                                 </constraints>
                                             </imageView>
                                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="5e3-ty-oLk">
-                                                <rect key="frame" x="189" y="184" width="37" height="37"/>
+                                                <rect key="frame" x="188.5" y="183.5" width="37" height="37"/>
                                                 <color key="color" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </activityIndicatorView>
                                         </subviews>

@@ -14,6 +14,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     var db: Firestore!
     var handle: AuthStateDidChangeListenerHandle?
     var practiceReadVC: PracticeReadVC?
+    var progressHUD = ProgressHUD(title: "Welcome")
     
     private var trainers = [PracticeTrainer]()
     
@@ -41,7 +42,6 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         }
         getCurrentUser()
 
-        let progressHUD = ProgressHUD(text: "Hello")
         self.view.addSubview(progressHUD)
     }
     
@@ -66,7 +66,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                     self.user = User.init(data: data)
                     // self.welcomeLbl.text = self.user.email
                     // self.welcomeLbl.isHidden = false
-                    
+                    self.progressHUD.setTitle(title: "\(self.user.firstName) \(self.user.lastName)")
                     // user defaults
                     let defaults = UserDefaults.standard
                     defaults.set(self.user.nativeLanguage, forKey: "native_language")
@@ -90,8 +90,9 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                 return
             }
             self.words.removeAll()
+            self.progressHUD.hide()
             guard let documents = snapshot?.documents else { return }
-            print(documents.count)
+            
             for document in documents {
                 let data = document.data()
                 let word = Word.init(data: data)

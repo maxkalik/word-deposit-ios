@@ -7,7 +7,8 @@ class LoginVC: UIViewController {
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var loader: RoundedView!
+//    @IBOutlet weak var loader: RoundedView!
+    var progressHUD = ProgressHUD()
     
     // MARK: - Instances
     
@@ -18,7 +19,12 @@ class LoginVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         auth = Auth.auth()
-        loader.isHidden = true
+        self.view.addSubview(progressHUD)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        progressHUD.hide()
     }
     
     // MARK: - Methods
@@ -31,21 +37,19 @@ class LoginVC: UIViewController {
     
     // MARK: - IBActions
     @IBAction func onSignInBtnPress(_ sender: Any) {
-        loader.isHidden = false
+        progressHUD.show()
         guard let email = emailTextField.text, email.isNotEmpty,
               let password = passwordTextField.text, password.isNotEmpty else {
-                loader.isHidden = true
                 simpleAlert(title: "Error", msg: "Please fill out all fields")
                 return
         }
         
         auth.signIn(withEmail: email, password: password) { [weak self] authResult, error in
             if let error = error {
-                self?.loader.isHidden = true
                 self?.simpleAlert(title: "Error", msg: error.localizedDescription)
                 return
             }
-            self?.loader.isHidden = true
+            self?.progressHUD.hide()
             self?.showHomeVC()
         }
     }
