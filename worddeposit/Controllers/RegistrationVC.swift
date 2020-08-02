@@ -8,7 +8,7 @@ class RegistrationVC: UIViewController {
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-//    @IBOutlet weak var loading: RoundedView!
+    var progressHUD = ProgressHUD()
 
     // MARK: - Instances
     
@@ -21,7 +21,7 @@ class RegistrationVC: UIViewController {
         super.viewDidLoad()
         auth = Auth.auth()
         db = Firestore.firestore()
-//        loading.isHidden = true
+        self.view.addSubview(progressHUD)
     }
     
     // MARK: - Methods
@@ -38,13 +38,13 @@ class RegistrationVC: UIViewController {
                 let homeViewController = storyboard.instantiateViewController(identifier: Storyboards.Home) as? UITabBarController
                 self.view.window?.rootViewController = homeViewController
             }
-//            self.loading.isHidden = true
+            self.progressHUD.hide()
         }
     }
     
     func showError(_ error: Error) {
         self.simpleAlert(title: "Error", msg: error.localizedDescription)
-//        self.loading.isHidden = true
+        self.progressHUD.hide()
         return
     }
     
@@ -57,7 +57,7 @@ class RegistrationVC: UIViewController {
                 simpleAlert(title: "Error", msg: "Please fill out all fields.")
                 return
         }
-//        loading.isHidden = false
+        self.progressHUD.show()
         
         auth.createUser(withEmail: email, password: password) { (authResult, error) in
             if let error = error { self.showError(error) }

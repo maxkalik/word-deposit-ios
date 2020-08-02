@@ -27,10 +27,11 @@ class AddWordVC: UIViewController {
     @IBOutlet weak var clearAllButton: UIButton!
     @IBOutlet weak var wordExampleTextField: UITextField!
     @IBOutlet weak var wordTranslationTextField: UITextField!
-    @IBOutlet weak var loader: RoundedView!
+    
     
     // MARK: - Instances
     
+    var progressHUD = ProgressHUD(title: "Saving")
     var db: Firestore!
     var storage: Storage!
     var wordRef: DocumentReference!
@@ -42,7 +43,7 @@ class AddWordVC: UIViewController {
         super.viewDidLoad()
         db = Firestore.firestore()
         storage = Storage.storage()
-
+        
         setupUI()
     }
     
@@ -73,7 +74,8 @@ class AddWordVC: UIViewController {
     }
     
     private func setupUI() {
-        loader.isHidden = true
+        view.addSubview(progressHUD)
+        progressHUD.hide()
         wordExampleTextField.autocorrectionType = .no
         wordTranslationTextField.autocorrectionType = .no
         addWordButton.isHidden = true
@@ -84,7 +86,7 @@ class AddWordVC: UIViewController {
         guard let example = wordExampleTextField.text, example.isNotEmpty,
             let translation = wordTranslationTextField.text, example.isNotEmpty else {
                 simpleAlert(title: "Error", msg: "Fill all fields")
-                loader.isHidden = true
+                progressHUD.hide()
                 return
         }
         
@@ -105,7 +107,7 @@ class AddWordVC: UIViewController {
     func uploadImage(userId: String, word: Word) {
         guard let image = wordImagePickerBtn.imageView?.image else {
             simpleAlert(title: "Error", msg: "Fill all fields")
-            loader.isHidden = true
+            progressHUD.hide()
             return
         }
         
@@ -128,7 +130,7 @@ class AddWordVC: UIViewController {
             imageRef.downloadURL { (url, error) in
                 if let error = error {
                     self.simpleAlert(title: "Error", msg: "Unable to upload image")
-                    self.loader.isHidden = true
+                    self.progressHUD.hide()
                     debugPrint(error.localizedDescription)
                     return
                 }
@@ -144,12 +146,12 @@ class AddWordVC: UIViewController {
         wordRef.setData(data, merge: true) { (error) in
             if let error = error {
                 self.simpleAlert(title: "error", msg: error.localizedDescription)
-                self.loader.isHidden = true
+                self.progressHUD.hide()
                 return
             }
             // success message here
             self.updateUI()
-            self.loader.isHidden = true
+            self.progressHUD.hide()
         }
     }
     
@@ -181,7 +183,7 @@ class AddWordVC: UIViewController {
     }
     
     @IBAction func onAddWordBtnPress(_ sender: Any) {
-        loader.isHidden = false
+        progressHUD.show()
         prepareForUpload()
     }
     

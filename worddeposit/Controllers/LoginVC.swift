@@ -7,7 +7,6 @@ class LoginVC: UIViewController {
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-//    @IBOutlet weak var loader: RoundedView!
     var progressHUD = ProgressHUD()
     
     // MARK: - Instances
