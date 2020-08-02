@@ -1,4 +1,5 @@
 import UIKit
+import Kingfisher
 
 protocol PracticeReadVCDelegate: AnyObject {
     func updatePracticeVC()
@@ -9,7 +10,19 @@ class PracticeReadVC: UIViewController {
     // MARK: - Instances
     
     var practiceType: String?
-    var trainedWord: Word?
+    var trainedWord: Word? {
+        didSet {
+            guard let word = trainedWord else { return }
+            if let url = URL(string: word.imgUrl) {
+                wordImage.kf.indicatorType = .activity
+                let options: KingfisherOptionsInfo = [KingfisherOptionsInfoItem.transition(.fade(0.2))]
+                let imgRecourse = ImageResource(downloadURL: url, cacheKey: word.imgUrl)
+                wordImage.kf.setImage(with: imgRecourse, options: options)
+            } else {
+                wordImage.isHidden = true
+            }
+        }
+    }
     var wordsDesk = [Word]()
 
     var selectedIndex: Int?
@@ -19,6 +32,7 @@ class PracticeReadVC: UIViewController {
     
     // MARK: - IBOutlets
     
+    @IBOutlet weak var wordImage: UIImageView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var practiceLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView! {

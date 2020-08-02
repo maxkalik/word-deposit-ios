@@ -218,11 +218,11 @@ class ProfileTVC: UITableViewController {
 //            webvc.modalPresentationStyle = .overFullScreen
             switch segue.identifier {
             case Segues.PrivacyAndSecurity:
-                webvc.link = "https://www.worddeposit.com"
+                webvc.link = "https://www.worddeposit.com/privacy-policy"
             case Segues.FAQ:
                 webvc.link = "https://www.worddeposit.com"
             case Segues.About:
-                webvc.link = "https://www.worddeposit.com"
+                webvc.link = "https://www.worddeposit.com/about"
             default:
                 webvc.link = "https://www.worddeposit.com"
             }

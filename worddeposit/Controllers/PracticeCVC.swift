@@ -25,9 +25,6 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         db = Firestore.firestore()
         
         trainers = PracticeTrainers().data
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
 
         // Register cell classes
         let nib = UINib(nibName: XIBs.PracticeCVCell, bundle: nil)
@@ -35,14 +32,17 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         self.collectionView!.isPrefetchingEnabled = false
     }
     
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         if let flowlayout = collectionViewLayout as? UICollectionViewFlowLayout {
             flowlayout.minimumLineSpacing = 20
         }
-
         getCurrentUser()
+
+        let progressHUD = ProgressHUD(text: "Hello")
+        self.view.addSubview(progressHUD)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -91,6 +91,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
             }
             self.words.removeAll()
             guard let documents = snapshot?.documents else { return }
+            print(documents.count)
             for document in documents {
                 let data = document.data()
                 let word = Word.init(data: data)
@@ -138,7 +139,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let sender = trainers[indexPath.row]
-        performSegue(withIdentifier: Segues.PracticeRead, sender: sender)
+        self.performSegue(withIdentifier: Segues.PracticeRead, sender: sender)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
