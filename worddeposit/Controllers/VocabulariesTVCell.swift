@@ -6,10 +6,17 @@ class VocabulariesTVCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var languageLabel: UILabel!
     @IBOutlet weak var wordsAmount: UILabel!
+    @IBOutlet weak var selectionSwitch: UISwitch!
+    
+    override var isSelected: Bool {
+        didSet {
+            selectionSwitch.isOn = isSelected
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

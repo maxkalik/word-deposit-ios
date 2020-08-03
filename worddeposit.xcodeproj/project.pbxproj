@@ -51,6 +51,7 @@
 		11F32A5924AF49DB0097BF39 /* VocabularyTVC+Updating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F32A5824AF49DB0097BF39 /* VocabularyTVC+Updating.swift */; };
 		150FA46124D8B6E40083D653 /* Vocabulary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150FA46024D8B6E40083D653 /* Vocabulary.swift */; };
 		150FA46324D8B9A70083D653 /* VocabulariesTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150FA46224D8B9A70083D653 /* VocabulariesTVC.swift */; };
+		156C80B724D8D27E0077905D /* VocabularyDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156C80B624D8D27E0077905D /* VocabularyDetailsVC.swift */; };
 		15A7E04924D8B322006804FD /* VocabulariesTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A7E04724D8B322006804FD /* VocabulariesTVCell.swift */; };
 		15A7E04A24D8B322006804FD /* VocabulariesTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15A7E04824D8B322006804FD /* VocabulariesTVCell.xib */; };
 		15CEBC6124D71A0300D48C0E /* ProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CEBC6024D71A0300D48C0E /* ProgressHUD.swift */; };
@@ -105,6 +106,7 @@
 		11F32A5824AF49DB0097BF39 /* VocabularyTVC+Updating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VocabularyTVC+Updating.swift"; sourceTree = "<group>"; };
 		150FA46024D8B6E40083D653 /* Vocabulary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vocabulary.swift; sourceTree = "<group>"; };
 		150FA46224D8B9A70083D653 /* VocabulariesTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VocabulariesTVC.swift; path = "/Users/maksimkalik/Documents/worddeposit/word-deposit-ios/worddeposit/Controllers/VocabulariesTVC.swift"; sourceTree = "<absolute>"; };
+		156C80B624D8D27E0077905D /* VocabularyDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyDetailsVC.swift; sourceTree = "<group>"; };
 		15A7E04724D8B322006804FD /* VocabulariesTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabulariesTVCell.swift; sourceTree = "<group>"; };
 		15A7E04824D8B322006804FD /* VocabulariesTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VocabulariesTVCell.xib; sourceTree = "<group>"; };
 		15CEBC6024D71A0300D48C0E /* ProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressHUD.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 				11621A2624C25EFA003087AB /* WKWebVC.swift */,
 				150FA46224D8B9A70083D653 /* VocabulariesTVC.swift */,
 				15A7E04724D8B322006804FD /* VocabulariesTVCell.swift */,
+				156C80B624D8D27E0077905D /* VocabularyDetailsVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -427,6 +430,7 @@
 				117FA4CA24CEE78A0043024D /* CollectionViewCenterLayout.swift in Sources */,
 				15A7E04924D8B322006804FD /* VocabulariesTVCell.swift in Sources */,
 				1158D30E24917B9B0087DC96 /* VocabularyTVCell.swift in Sources */,
+				156C80B724D8D27E0077905D /* VocabularyDetailsVC.swift in Sources */,
 				11284233248E83BB00A014E9 /* VocabularyTVC.swift in Sources */,
 				150FA46324D8B9A70083D653 /* VocabulariesTVC.swift in Sources */,
 				11284213248E7C5700A014E9 /* SceneDelegate.swift in Sources */,
