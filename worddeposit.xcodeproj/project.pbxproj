@@ -49,6 +49,10 @@
 		11F32A5324AF46D00097BF39 /* VocabularyResultsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F32A5224AF46D00097BF39 /* VocabularyResultsTVC.swift */; };
 		11F32A5524AF49C30097BF39 /* VocabularyTVC+Restore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F32A5424AF49C30097BF39 /* VocabularyTVC+Restore.swift */; };
 		11F32A5924AF49DB0097BF39 /* VocabularyTVC+Updating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F32A5824AF49DB0097BF39 /* VocabularyTVC+Updating.swift */; };
+		150FA46124D8B6E40083D653 /* Vocabulary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150FA46024D8B6E40083D653 /* Vocabulary.swift */; };
+		150FA46324D8B9A70083D653 /* VocabulariesTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150FA46224D8B9A70083D653 /* VocabulariesTVC.swift */; };
+		15A7E04924D8B322006804FD /* VocabulariesTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A7E04724D8B322006804FD /* VocabulariesTVCell.swift */; };
+		15A7E04A24D8B322006804FD /* VocabulariesTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15A7E04824D8B322006804FD /* VocabulariesTVCell.xib */; };
 		15CEBC6124D71A0300D48C0E /* ProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CEBC6024D71A0300D48C0E /* ProgressHUD.swift */; };
 		779CE06B848B9F4E1AB37DDB /* Pods_worddeposit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F066F3CA351A4147BAE07B0 /* Pods_worddeposit.framework */; };
 /* End PBXBuildFile section */
@@ -99,6 +103,10 @@
 		11F32A5224AF46D00097BF39 /* VocabularyResultsTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyResultsTVC.swift; sourceTree = "<group>"; };
 		11F32A5424AF49C30097BF39 /* VocabularyTVC+Restore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VocabularyTVC+Restore.swift"; sourceTree = "<group>"; };
 		11F32A5824AF49DB0097BF39 /* VocabularyTVC+Updating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VocabularyTVC+Updating.swift"; sourceTree = "<group>"; };
+		150FA46024D8B6E40083D653 /* Vocabulary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vocabulary.swift; sourceTree = "<group>"; };
+		150FA46224D8B9A70083D653 /* VocabulariesTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VocabulariesTVC.swift; path = "/Users/maksimkalik/Documents/worddeposit/word-deposit-ios/worddeposit/Controllers/VocabulariesTVC.swift"; sourceTree = "<absolute>"; };
+		15A7E04724D8B322006804FD /* VocabulariesTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabulariesTVCell.swift; sourceTree = "<group>"; };
+		15A7E04824D8B322006804FD /* VocabulariesTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VocabulariesTVCell.xib; sourceTree = "<group>"; };
 		15CEBC6024D71A0300D48C0E /* ProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressHUD.swift; sourceTree = "<group>"; };
 		2F066F3CA351A4147BAE07B0 /* Pods_worddeposit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_worddeposit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		40ABEB8C9F0BFED3166DA792 /* Pods-worddeposit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-worddeposit.release.xcconfig"; path = "Target Support Files/Pods-worddeposit/Pods-worddeposit.release.xcconfig"; sourceTree = "<group>"; };
@@ -174,6 +182,8 @@
 				118162EE24BFB08E0088C0E1 /* UserInfoTVC.swift */,
 				11621A2424C24819003087AB /* ProfileTVCCheckmark.swift */,
 				11621A2624C25EFA003087AB /* WKWebVC.swift */,
+				150FA46224D8B9A70083D653 /* VocabulariesTVC.swift */,
+				15A7E04724D8B322006804FD /* VocabulariesTVCell.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -193,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				1128423E248E845900A014E9 /* User.swift */,
+				150FA46024D8B6E40083D653 /* Vocabulary.swift */,
 				11284240248E846000A014E9 /* Word.swift */,
 				112EA43224C83B7200FA55E3 /* PracticeTrainer.swift */,
 				112EA43424C84A2900FA55E3 /* PracticeTrainers.swift */,
@@ -218,6 +229,7 @@
 				1158D30D24917B9B0087DC96 /* VocabularyTVCell.xib */,
 				1181BBF22498060F00DB682E /* VocabularyCardsVC.xib */,
 				1171E70524981CDD00805D35 /* VocabularyCardCVCell.xib */,
+				15A7E04824D8B322006804FD /* VocabulariesTVCell.xib */,
 			);
 			path = XIBs;
 			sourceTree = "<group>";
@@ -323,6 +335,7 @@
 				1128421D248E7C5800A014E9 /* LaunchScreen.storyboard in Resources */,
 				11B20D6B24C8DF2E00C1CB4E /* PracticeAnswerItem.xib in Resources */,
 				11F0326E24C8267E00BD6350 /* PracticeCVCell.xib in Resources */,
+				15A7E04A24D8B322006804FD /* VocabulariesTVCell.xib in Resources */,
 				1128421A248E7C5800A014E9 /* Assets.xcassets in Resources */,
 				1171E70724981CDD00805D35 /* VocabularyCardCVCell.xib in Resources */,
 				11284218248E7C5700A014E9 /* Main.storyboard in Resources */,
@@ -393,6 +406,7 @@
 				11B20D6D24C8E00800C1CB4E /* PracticeReadVC.swift in Sources */,
 				11F0327024C8272700BD6350 /* PracticeCVC.swift in Sources */,
 				112EA43524C84A2900FA55E3 /* PracticeTrainers.swift in Sources */,
+				150FA46124D8B6E40083D653 /* Vocabulary.swift in Sources */,
 				118162EF24BFB08E0088C0E1 /* UserInfoTVC.swift in Sources */,
 				1128423F248E845900A014E9 /* User.swift in Sources */,
 				11284235248E83C800A014E9 /* ProfileTVC.swift in Sources */,
@@ -411,8 +425,10 @@
 				11F0326D24C8267E00BD6350 /* PracticeCVCell.swift in Sources */,
 				119DBF5724ACCFBF009124B7 /* Configurations.swift in Sources */,
 				117FA4CA24CEE78A0043024D /* CollectionViewCenterLayout.swift in Sources */,
+				15A7E04924D8B322006804FD /* VocabulariesTVCell.swift in Sources */,
 				1158D30E24917B9B0087DC96 /* VocabularyTVCell.swift in Sources */,
 				11284233248E83BB00A014E9 /* VocabularyTVC.swift in Sources */,
+				150FA46324D8B9A70083D653 /* VocabulariesTVC.swift in Sources */,
 				11284213248E7C5700A014E9 /* SceneDelegate.swift in Sources */,
 				117FA4CC24CEEC350043024D /* PracticeDeskItemButton.swift in Sources */,
 			);

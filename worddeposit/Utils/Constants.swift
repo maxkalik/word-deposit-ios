@@ -14,6 +14,7 @@ struct Controllers {
 }
 
 struct XIBs {
+    static let VocabulariesTVCell = "VocabulariesTVCell"
     static let VocabularyTVCell = "VocabularyTVCell"
     static let VocabularyCardCVCell = "VocabularyCardCVCell"
     static let PracticeCVCell = "PracticeCVCell"

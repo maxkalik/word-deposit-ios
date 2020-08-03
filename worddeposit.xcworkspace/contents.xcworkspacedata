@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/maksimkalik/Documents/worddeposit/word-deposit-ios/worddeposit/Controllers/VocabulariesTVC.swift">
+   </FileRef>
+   <FileRef
       location = "group:worddeposit.xcodeproj">
    </FileRef>
    <FileRef
