@@ -4,7 +4,7 @@ import FirebaseFirestore
 class VocabulariesTVC: UITableViewController {
 
     var vocabularies = [Vocabulary]()
-//    var selectedVocabularyIndex = 0
+    var selectedVocabularyIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,11 +38,27 @@ class VocabulariesTVC: UITableViewController {
         return vocabularies.count
     }
 
+    @objc func switchChaged(sender: UISwitch) {
+        if sender.tag != selectedVocabularyIndex {
+            selectedVocabularyIndex = sender.tag
+            tableView.reloadData()
+        } else {
+            sender.isOn = true
+        }
+    }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: XIBs.VocabulariesTVCell, for: indexPath) as? VocabulariesTVCell {
             let vocabulary = vocabularies[indexPath.row]
             cell.configureCell(title: vocabulary.title, language: vocabulary.language, amount: vocabulary.words.count)
+            
+            if indexPath.row == selectedVocabularyIndex {
+                cell.isSelectedVocabulary = true
+            }
+            
+            cell.selectionSwitch.tag = indexPath.row
+            cell.selectionSwitch.addTarget(self, action: #selector(switchChaged(sender:)), for: .valueChanged)
+            
             return cell
         }
         return UITableViewCell()

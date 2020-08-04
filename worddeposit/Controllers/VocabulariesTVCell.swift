@@ -1,17 +1,21 @@
 import UIKit
 
 class VocabulariesTVCell: UITableViewCell {
-
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var languageLabel: UILabel!
     @IBOutlet weak var wordsAmount: UILabel!
     @IBOutlet weak var selectionSwitch: UISwitch!
     
-    override var isSelected: Bool {
+    var isSelectedVocabulary: Bool! {
         didSet {
-            selectionSwitch.isOn = isSelected
+            selectionSwitch.isOn = isSelectedVocabulary
         }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        selectionSwitch.isOn = false
     }
     
     override func awakeFromNib() {
