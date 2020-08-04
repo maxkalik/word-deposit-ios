@@ -37,6 +37,8 @@ class AddWordVC: UIViewController {
     var wordRef: DocumentReference!
     var isImageSet = false
     
+    var vocabulary: Vocabulary!
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -45,6 +47,11 @@ class AddWordVC: UIViewController {
         storage = Storage.storage()
         
         setupUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // user defaults vocabulary id
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -93,7 +100,7 @@ class AddWordVC: UIViewController {
         // TODO: shoud be rewrited in the singleton
         guard let user = Auth.auth().currentUser else { return }
         
-        wordRef = db.collection("users").document(user.uid).collection("words").document()
+        wordRef = db.collection("users").document(user.uid).collection("vocabulries").document(vocabulary.id).collection("words").document()
         var word = Word.init(imgUrl: "", example: example, translation: translation, id: "", timestamp: Timestamp())
         word.id = wordRef.documentID
         

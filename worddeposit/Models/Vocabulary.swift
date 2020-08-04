@@ -7,6 +7,7 @@ struct Vocabulary {
     var title: String
     var language: String
     var words: [Word]
+    var isSelected: Bool
     var timestamp: Timestamp
     
     init(
@@ -14,12 +15,14 @@ struct Vocabulary {
         title: String,
         language: String,
         words: [Word],
+        isSelected: Bool,
         timestamp: Timestamp
     ) {
         self.id = id
         self.title = title
         self.language = language
         self.words = words
+        self.isSelected = isSelected
         self.timestamp = timestamp
     }
     
@@ -28,6 +31,7 @@ struct Vocabulary {
         self.title = data["title"] as? String ?? ""
         self.language = data["language"] as? String ?? ""
         self.words = data["words"] as? [Word] ?? []
+        self.isSelected = data["is_selected"] as? Bool ?? false
         self.timestamp = data["timestamp"] as? Timestamp ?? Timestamp()
     }
     
@@ -37,6 +41,7 @@ struct Vocabulary {
             "title": vocabulary.title,
             "language": vocabulary.language,
             "words": vocabulary.words,
+            "is_selected": vocabulary.isSelected,
             "timestamp": vocabulary.timestamp
         ]
         return data

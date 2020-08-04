@@ -11,6 +11,7 @@ class VocabulariesTVC: UITableViewController {
     
     var db: Firestore!
     var vocabulariesListener: ListenerRegistration!
+    var vocabulariesRef: DocumentReference!
     
     // MARK: - Lifecycle
     
@@ -101,9 +102,40 @@ class VocabulariesTVC: UITableViewController {
         return vocabularies.count
     }
 
+    func updateVocabulary(_ vocabulary: Vocabulary) {
+        // TODO: - Refactoring
+        guard let user = Auth.auth().currentUser else { return }
+        vocabulariesRef = db.collection("users").document(user.uid).collection("vocabularies").document(vocabulary.id)
+        print(vocabulary)
+        let data = Vocabulary.modelToData(vocabulary: vocabulary)
+        vocabulariesRef.setData(data, merge: true) { (error) in
+            if let error = error {
+                self.simpleAlert(title: "Error", msg: error.localizedDescription)
+            }
+            // success
+            print("success")
+        }
+    }
+    
     @objc func switchChaged(sender: UISwitch) {
         if sender.tag != selectedVocabularyIndex {
+            
+            print("sender ---> ", sender.tag)
+            print("old one --> ", selectedVocabularyIndex)
+            // update old one
+            let oldIndex = selectedVocabularyIndex
+            vocabularies[oldIndex].isSelected = false
+            updateVocabulary(vocabularies[oldIndex])
+            
+            // update new one
             selectedVocabularyIndex = sender.tag
+            print("changed --> ", selectedVocabularyIndex)
+            var vocabulary = vocabularies[selectedVocabularyIndex]
+            vocabulary.isSelected = true
+            updateVocabulary(vocabulary)
+            
+            
+            
             tableView.reloadData()
         } else {
             sender.isOn = true

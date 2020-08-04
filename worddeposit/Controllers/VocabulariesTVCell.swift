@@ -1,4 +1,6 @@
 import UIKit
+import FirebaseAuth
+import FirebaseFirestore
 
 class VocabulariesTVCell: UITableViewCell {
     
@@ -7,6 +9,8 @@ class VocabulariesTVCell: UITableViewCell {
     @IBOutlet weak var wordsAmount: UILabel!
     @IBOutlet weak var selectionSwitch: UISwitch!
     @IBOutlet weak var containerView: UIView!
+    
+    // MARK: - Istances
     
     var isSelectedVocabulary: Bool! {
         didSet {
@@ -19,6 +23,8 @@ class VocabulariesTVCell: UITableViewCell {
         }
     }
     
+    // MARK: - Lifecycle
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         selectionSwitch.isOn = false
@@ -28,9 +34,12 @@ class VocabulariesTVCell: UITableViewCell {
         super.awakeFromNib()
     }
     
+    // MARK: - Own Methods
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         if selected == true {
             containerView.layer.backgroundColor = CGColor(srgbRed: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1)
+            
         } else {
             if isSelectedVocabulary == true {
                 containerView.layer.backgroundColor = .none

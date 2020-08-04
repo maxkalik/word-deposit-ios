@@ -58,7 +58,7 @@ class VocabularyDetailsVC: UIViewController {
         
 
         if vocabulary == nil {
-            vocabulary = Vocabulary.init(id: "", title: title, language: language, words: [], timestamp: Timestamp())
+            vocabulary = Vocabulary.init(id: "", title: title, language: language, words: [], isSelected: true, timestamp: Timestamp())
             vocabulary!.id = vocabularyRef.documentID
         }
         

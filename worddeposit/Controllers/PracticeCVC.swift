@@ -64,8 +64,6 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                 if let document = document, document.exists {
                     guard let data = document.data() else { return }
                     self.user = User.init(data: data)
-                    // self.welcomeLbl.text = self.user.email
-                    // self.welcomeLbl.isHidden = false
                     self.progressHUD.setTitle(title: "\(self.user.firstName) \(self.user.lastName)")
                     // user defaults
                     let defaults = UserDefaults.standard
