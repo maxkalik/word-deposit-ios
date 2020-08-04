@@ -12,23 +12,12 @@ class VocabulariesTVC: UITableViewController {
         vocabularies = [Vocabulary(id: "0001", title: "Atkal majas Latvija!", language: "Latvian", words: [], timestamp: Timestamp()), Vocabulary(id: "0002", title: "Atkal majas Latvija2!", language: "Latvian", words: [], timestamp: Timestamp())]
         
         setupTableView()
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        let indexPath = IndexPath(row: 0, section: 0)
-        tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
     }
     
     func setupTableView() {
         let nib = UINib(nibName: XIBs.VocabulariesTVCell, bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: XIBs.VocabulariesTVCell)
+        tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
     }
 
     // MARK: - Table view data source
@@ -51,11 +40,10 @@ class VocabulariesTVC: UITableViewController {
         if let cell = tableView.dequeueReusableCell(withIdentifier: XIBs.VocabulariesTVCell, for: indexPath) as? VocabulariesTVCell {
             let vocabulary = vocabularies[indexPath.row]
             cell.configureCell(title: vocabulary.title, language: vocabulary.language, amount: vocabulary.words.count)
-            
+            cell.isSelectedVocabulary = false
             if indexPath.row == selectedVocabularyIndex {
                 cell.isSelectedVocabulary = true
             }
-            
             cell.selectionSwitch.tag = indexPath.row
             cell.selectionSwitch.addTarget(self, action: #selector(switchChaged(sender:)), for: .valueChanged)
             
@@ -63,7 +51,6 @@ class VocabulariesTVC: UITableViewController {
         }
         return UITableViewCell()
     }
-
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
@@ -73,7 +60,6 @@ class VocabulariesTVC: UITableViewController {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            print(indexPath.row)
             // Delete the row from the data source
             vocabularies.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
