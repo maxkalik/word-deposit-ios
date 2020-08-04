@@ -205,6 +205,9 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dxh-uR-aQh">
                                                         <rect key="frame" x="0.0" y="122" width="354" height="30"/>
                                                         <state key="normal" title="Save"/>
+                                                        <connections>
+                                                            <action selector="savePressed:" destination="qvX-RP-zC0" eventType="touchUpInside" id="5p3-Al-Kc1"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h0h-rd-BDX">
                                                         <rect key="frame" x="0.0" y="179" width="354" height="30"/>
@@ -242,7 +245,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="HRO-fl-eEq"/>
                     <connections>
+                        <outlet property="languageTextField" destination="4fs-rZ-Sqq" id="Maz-Y3-2FE"/>
                         <outlet property="scrollView" destination="Xha-PU-sYA" id="pZo-QQ-QpG"/>
+                        <outlet property="titleTextField" destination="ZD9-di-RMR" id="QZj-QT-BQH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C1Y-xQ-XOM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -4,6 +4,7 @@ import FirebaseFirestore
 class VocabulariesTVC: UITableViewController {
 
     var vocabularies = [Vocabulary]()
+//    var selectedVocabularyIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,14 +64,20 @@ class VocabulariesTVC: UITableViewController {
         }
     }
 
-    /*
+
     // MARK: - Navigation
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: Segues.VocabularyDetails, sender: indexPath.row)
+    }
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if let vocabularyDetailsVC = segue.destination as? VocabularyDetailsVC {
+            if let index = sender as? Int {
+                vocabularyDetailsVC.vocabularyTitle = vocabularies[index].title
+                vocabularyDetailsVC.vocabularyLanguage = vocabularies[index].language
+            }
+        }
     }
-    */
-
 }
