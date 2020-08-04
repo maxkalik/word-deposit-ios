@@ -1,17 +1,91 @@
 import UIKit
+import FirebaseAuth
 import FirebaseFirestore
 
 class VocabulariesTVC: UITableViewController {
 
+    // MARK: - Instances
+    
     var vocabularies = [Vocabulary]()
     var selectedVocabularyIndex = 0
     
+    var db: Firestore!
+    var vocabulariesListener: ListenerRegistration!
+    
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        vocabularies = [Vocabulary(id: "0001", title: "Atkal majas Latvija!", language: "Latvian", words: [], timestamp: Timestamp()), Vocabulary(id: "0002", title: "Atkal majas Latvija2!", language: "Latvian", words: [], timestamp: Timestamp())]
-        
+        db = Firestore.firestore()
         setupTableView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setVocabularyListener()
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        vocabulariesListener.remove()
+        vocabularies.removeAll()
+        tableView.reloadData()
+    }
+    
+    // MARK: - Methods
+    
+    func setVocabularyListener() {
+        // shoud be rewrited
+        guard let authUser = Auth.auth().currentUser else { return }
+        let userRef = db.collection("users").document(authUser.uid)
+        let vocabulariesRef = userRef.collection("vocabularies").order(by: "timestamp", descending: true)
+        vocabulariesListener = vocabulariesRef.addSnapshotListener({ (snapshot, error) in
+            if let error = error {
+                debugPrint(error.localizedDescription)
+                return
+            }
+            
+            snapshot?.documentChanges.forEach({ (docChange) in
+                let data = docChange.document.data()
+                let vocabulary = Vocabulary.init(data: data)
+
+                switch docChange.type {
+                case .added:
+                    self.onDocumentAdded(change: docChange, vocabulary: vocabulary)
+                case .modified:
+                    self.onDocumentModified(change: docChange, vocabulary: vocabulary)
+                case .removed:
+                    self.onDocumentRemoved(change: docChange)
+                }
+            })
+        })
+    }
+    
+    func onDocumentAdded(change: DocumentChange, vocabulary: Vocabulary) {
+        let newIndex = Int(change.newIndex)
+        vocabularies.insert(vocabulary, at: newIndex)
+        tableView.insertRows(at: [IndexPath(item: newIndex, section: 0)], with: .fade)
+    }
+    
+    func onDocumentModified(change: DocumentChange, vocabulary: Vocabulary) {
+        if change.newIndex == change.oldIndex {
+            let index = Int(change.newIndex)
+            vocabularies[index] = vocabulary
+            tableView.reloadRows(at: [IndexPath(item: index, section: 0)], with: .none)
+        } else {
+            let oldIndex = Int(change.oldIndex)
+            let newIndex = Int(change.newIndex)
+            vocabularies.remove(at: oldIndex)
+            vocabularies.insert(vocabulary, at: newIndex)
+            tableView.moveRow(at: IndexPath(item: oldIndex, section: 0), to: IndexPath(item: newIndex, section: 0))
+        }
+    }
+    
+    func onDocumentRemoved(change: DocumentChange) {
+        let oldIndex = Int(change.oldIndex)
+        vocabularies.remove(at: oldIndex)
+        tableView.deleteRows(at: [IndexPath(item: oldIndex, section: 0)], with: .fade)
     }
     
     func setupTableView() {
@@ -77,8 +151,7 @@ class VocabulariesTVC: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vocabularyDetailsVC = segue.destination as? VocabularyDetailsVC {
             if let index = sender as? Int {
-                vocabularyDetailsVC.vocabularyTitle = vocabularies[index].title
-                vocabularyDetailsVC.vocabularyLanguage = vocabularies[index].language
+                vocabularyDetailsVC.vocabulary = vocabularies[index]
             }
         }
     }

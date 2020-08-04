@@ -190,7 +190,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="27" translatesAutoresizingMaskIntoConstraints="NO" id="DNU-r9-0JB">
-                                                <rect key="frame" x="30" y="258" width="354" height="209"/>
+                                                <rect key="frame" x="30" y="286.5" width="354" height="152"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZD9-di-RMR">
                                                         <rect key="frame" x="0.0" y="0.0" width="354" height="34"/>
@@ -208,10 +208,6 @@
                                                         <connections>
                                                             <action selector="savePressed:" destination="qvX-RP-zC0" eventType="touchUpInside" id="5p3-Al-Kc1"/>
                                                         </connections>
-                                                    </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h0h-rd-BDX">
-                                                        <rect key="frame" x="0.0" y="179" width="354" height="30"/>
-                                                        <state key="normal" title="Clear"/>
                                                     </button>
                                                 </subviews>
                                             </stackView>
@@ -246,6 +242,7 @@
                     <navigationItem key="navigationItem" id="HRO-fl-eEq"/>
                     <connections>
                         <outlet property="languageTextField" destination="4fs-rZ-Sqq" id="Maz-Y3-2FE"/>
+                        <outlet property="saveButton" destination="dxh-uR-aQh" id="Rhb-Xh-HlL"/>
                         <outlet property="scrollView" destination="Xha-PU-sYA" id="pZo-QQ-QpG"/>
                         <outlet property="titleTextField" destination="ZD9-di-RMR" id="QZj-QT-BQH"/>
                     </connections>
