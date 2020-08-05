@@ -55,16 +55,19 @@ class VocabulariesTVCell: UITableViewCell {
         
         var amount = 0
         
-        let vocabularyRef = userRef.collection("vocabularies").document(vocabulary.id)
-        vocabularyRef.getDocument { (snapshot, error) in
+        let ref = userRef.collection("vocabularies").document(vocabulary.id).collection("words")
+        ref.getDocuments { (snapshot, error) in
             if let error = error {
                 print(error.localizedDescription)
             } else  {
-                amount = snapshot?.data()?.count ?? 0
+                guard let snap = snapshot else { return }
+                amount = snap.count
+                DispatchQueue.main.async {
+                    self.wordsAmount.text = String(amount)
+                }
             }
         }
         
-        wordsAmount.text = String(amount)
         containerView.layer.cornerRadius = 8
         containerView.layer.borderWidth = 0
         containerView.layer.backgroundColor = CGColor(srgbRed: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 0.5)

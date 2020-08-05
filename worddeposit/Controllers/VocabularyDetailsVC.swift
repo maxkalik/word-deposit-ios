@@ -70,8 +70,7 @@ class VocabularyDetailsVC: UIViewController {
             }
             // success
             self.progressHUD.hide()
-            self.dismiss(animated: true, completion: nil)
-            print("success")
+            self.navigationController?.popViewController(animated: true)
         }
     }
 }

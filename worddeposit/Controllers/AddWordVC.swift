@@ -125,7 +125,7 @@ class AddWordVC: UIViewController {
                     word.id = self.wordRef.documentID
                     
                     if self.isImageSet {
-                        self.uploadImage(userId: user.uid, word: word)
+                        self.uploadImage(userId: user.uid, vocabularyId: vocabulary.id, word: word)
                     } else {
                         self.uploadWord(word: word)
                     }
@@ -136,7 +136,7 @@ class AddWordVC: UIViewController {
         
     }
     
-    func uploadImage(userId: String, word: Word) {
+    func uploadImage(userId: String, vocabularyId: String, word: Word) {
         guard let image = wordImagePickerBtn.imageView?.image else {
             simpleAlert(title: "Error", msg: "Fill all fields")
             progressHUD.hide()
@@ -148,7 +148,7 @@ class AddWordVC: UIViewController {
         let resizedImg = image.resized(toWidth: 400.0)
         guard let imageData = resizedImg?.jpegData(compressionQuality: 0.5) else { return }
         
-        let imageRef = Storage.storage().reference().child("/\(userId)/\(word.id).jpg")
+        let imageRef = Storage.storage().reference().child("/\(userId)/\(vocabularyId)/\(word.id).jpg")
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpg"
         

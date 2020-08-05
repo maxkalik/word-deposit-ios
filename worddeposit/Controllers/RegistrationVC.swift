@@ -50,7 +50,7 @@ class RegistrationVC: UIViewController {
     
     // MARK: - IBActions
     
-    @IBAction func onSignUpBtnPress(_ sender: Any) {
+    @IBAction func onSignUpBtnPress(_ sender: UIButton) {
 
         guard let email = emailTextField.text, email.isNotEmpty,
             let password = passwordTextField.text, password.isNotEmpty else {
@@ -69,7 +69,7 @@ class RegistrationVC: UIViewController {
     }
     
     
-    @IBAction func onHaveAccountBtnPress(_ sender: Any) {
+    @IBAction func onHaveAccountBtnPress(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
     }
 }
