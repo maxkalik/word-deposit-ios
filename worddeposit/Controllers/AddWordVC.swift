@@ -45,17 +45,15 @@ class AddWordVC: UIViewController {
         super.viewDidLoad()
         db = Firestore.firestore()
         storage = Storage.storage()
-        
-//        let defaults = UserDefaults.standard
-//        guard let selectedVocabularyId = defaults.string(forKey: "vocabulary") else { return }
-//        print(selectedVocabularyId)
-        
         setupUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // user defaults vocabulary id
+        let defaults = UserDefaults.standard
+        guard let selectedVocabularyId = defaults.string(forKey: "vocabulary_id") else { return }
+        print(selectedVocabularyId)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -103,11 +101,6 @@ class AddWordVC: UIViewController {
         
         // TODO: shoud be rewrited in the singleton
         guard let user = Auth.auth().currentUser else { return }
-        
-//        let defaults = UserDefaults.standard
-//        guard let selectedVocabularyId = defaults.string(forKey: "vocabulary") else { return }
-//        print(selectedVocabularyId)
-        
         
         let vocabularyRef = db.collection("users").document(user.uid).collection("vocabularies")
         

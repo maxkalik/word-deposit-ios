@@ -15,9 +15,10 @@ class VocabularyDetailsVC: UIViewController {
     
     var progressHUD = ProgressHUD(title: "Saving")
     var vocabulary: Vocabulary?
+    var isFirstSelected = true
     
     var db: Firestore!
-    var vocabularyRef: DocumentReference!
+    var userRef: DocumentReference!
     
     // MARK: - Lifecycle
     
@@ -25,6 +26,7 @@ class VocabularyDetailsVC: UIViewController {
         super.viewDidLoad()
         db = Firestore.firestore()
         setupUI()
+        print(isFirstSelected)
     }
     
     // MARK: - Methods
@@ -43,6 +45,20 @@ class VocabularyDetailsVC: UIViewController {
         }
     }
     
+    private func setVocabulary(_ vocabulary: Vocabulary) {
+        let ref = userRef.collection("vocabularies").document(vocabulary.id)
+        let data = Vocabulary.modelToData(vocabulary: vocabulary)
+        ref.setData(data, merge: true) { (error) in
+            if let error = error {
+                self.simpleAlert(title: "Error", msg: error.localizedDescription)
+                self.progressHUD.hide()
+            }
+            // success
+            self.progressHUD.hide()
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+    
     // MARK: - IBActions
     
     @IBAction func savePressed(_ sender: UIButton) {
@@ -54,23 +70,18 @@ class VocabularyDetailsVC: UIViewController {
         }
         
         guard let user = Auth.auth().currentUser else { return }
-        vocabularyRef = db.collection("users").document(user.uid).collection("vocabularies").document()
+        userRef = db.collection("users").document(user.uid)
         
-
         if vocabulary == nil {
-            vocabulary = Vocabulary.init(id: "", title: title, language: language, isSelected: false, timestamp: Timestamp())
+            let vocabularyRef = userRef.collection("vocabularies").document()
+            vocabulary = Vocabulary.init(id: "", title: title, language: language, isSelected: isFirstSelected, timestamp: Timestamp())
             vocabulary!.id = vocabularyRef.documentID
-        }
-        
-        let data = Vocabulary.modelToData(vocabulary: vocabulary!)
-        vocabularyRef.setData(data, merge: true) { (error) in
-            if let error = error {
-                self.simpleAlert(title: "Error", msg: error.localizedDescription)
-                self.progressHUD.hide()
-            }
-            // success
-            self.progressHUD.hide()
-            self.navigationController?.popViewController(animated: true)
+            setVocabulary(vocabulary!)
+        } else {
+            guard var existingVocabulary = vocabulary else { return }
+            existingVocabulary.title = title
+            existingVocabulary.language = language
+            setVocabulary(existingVocabulary)
         }
     }
 }

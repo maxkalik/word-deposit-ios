@@ -94,6 +94,10 @@ class VocabularyTVC: UITableViewController {
         // shoud be rewrited
         guard let authUser = Auth.auth().currentUser else { return }
         let userRef = db.collection("users").document(authUser.uid)
+        
+        
+        
+//        let vocabularyRef = userRef.collection("vocabularies").document(vocabularyId)
         let wordsRef = userRef.collection("words").order(by: "timestamp", descending: true)
         wordsListener = wordsRef.addSnapshotListener({ (snapshot, error) in
             if let error = error {

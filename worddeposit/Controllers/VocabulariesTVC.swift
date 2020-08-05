@@ -7,7 +7,12 @@ class VocabulariesTVC: UITableViewController {
     // MARK: - Instances
     
     var vocabularies = [Vocabulary]()
-    var selectedVocabularyIndex = 0
+    var selectedVocabularyIndex = 0 {
+        didSet {
+            let defaults = UserDefaults.standard
+            defaults.set(vocabularies[selectedVocabularyIndex].id, forKey: "vocabulary_id")
+        }
+    }
     
     var db: Firestore!
     var vocabulariesListener: ListenerRegistration!
@@ -173,8 +178,26 @@ class VocabulariesTVC: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            vocabularies.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            let vocabulary = vocabularies[indexPath.row]
+            
+            if vocabulary.isSelected == true {
+                simpleAlert(title: "You cannot delete", msg: "Before removing vocabulary, please switch to another vocabulary")
+            } else {
+                
+                let alert = UIAlertController(title: title, message: "Are you sure?", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Remove", style: .default, handler: { (action) in
+                    self.userRef.collection("vocabularies").document(vocabulary.id).delete { (error) in
+                        if let error = error {
+                            self.simpleAlert(title: "Error", msg: error.localizedDescription)
+                            debugPrint(error.localizedDescription)
+                            return
+                        }
+                    }
+                }))
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                present(alert, animated: true, completion: nil)
+            }
         }
     }
 
@@ -190,6 +213,10 @@ class VocabulariesTVC: UITableViewController {
         if let vocabularyDetailsVC = segue.destination as? VocabularyDetailsVC {
             if let index = sender as? Int {
                 vocabularyDetailsVC.vocabulary = vocabularies[index]
+            }
+            // we need to set very first vocabulary is selected = true
+            if vocabularies.count > 0 {
+                vocabularyDetailsVC.isFirstSelected = false
             }
         }
     }
