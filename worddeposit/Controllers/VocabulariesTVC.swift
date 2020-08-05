@@ -11,6 +11,7 @@ class VocabulariesTVC: UITableViewController {
     
     var db: Firestore!
     var vocabulariesListener: ListenerRegistration!
+    var userRef: DocumentReference!
     var vocabulariesRef: DocumentReference!
     
     // MARK: - Lifecycle
@@ -19,6 +20,10 @@ class VocabulariesTVC: UITableViewController {
         super.viewDidLoad()
         db = Firestore.firestore()
         setupTableView()
+        
+        guard let authUser = Auth.auth().currentUser else { return }
+        userRef = db.collection("users").document(authUser.uid)
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -38,8 +43,8 @@ class VocabulariesTVC: UITableViewController {
     
     func setVocabularyListener() {
         // shoud be rewrited
-        guard let authUser = Auth.auth().currentUser else { return }
-        let userRef = db.collection("users").document(authUser.uid)
+//        guard let authUser = Auth.auth().currentUser else { return }
+//        let userRef = db.collection("users").document(authUser.uid)
         let vocabulariesRef = userRef.collection("vocabularies").order(by: "timestamp", descending: true)
         vocabulariesListener = vocabulariesRef.addSnapshotListener({ (snapshot, error) in
             if let error = error {
@@ -145,10 +150,11 @@ class VocabulariesTVC: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: XIBs.VocabulariesTVCell, for: indexPath) as? VocabulariesTVCell {
             let vocabulary = vocabularies[indexPath.row]
-            cell.configureCell(title: vocabulary.title, language: vocabulary.language, amount: vocabulary.words.count)
+            cell.configureCell(vocabulary: vocabulary, userRef: userRef)
             cell.isSelectedVocabulary = false
-            if indexPath.row == selectedVocabularyIndex {
+            if vocabulary.isSelected == true {
                 cell.isSelectedVocabulary = true
+                selectedVocabularyIndex = indexPath.row
             }
             cell.selectionSwitch.tag = indexPath.row
             cell.selectionSwitch.addTarget(self, action: #selector(switchChaged(sender:)), for: .valueChanged)

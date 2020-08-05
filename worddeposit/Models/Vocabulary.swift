@@ -6,7 +6,7 @@ struct Vocabulary {
     var id: String
     var title: String
     var language: String
-    var words: [Word]
+//    var words: [Word]
     var isSelected: Bool
     var timestamp: Timestamp
     
@@ -14,14 +14,14 @@ struct Vocabulary {
         id: String,
         title: String,
         language: String,
-        words: [Word],
+//        words: [Word],
         isSelected: Bool,
         timestamp: Timestamp
     ) {
         self.id = id
         self.title = title
         self.language = language
-        self.words = words
+//        self.words = words
         self.isSelected = isSelected
         self.timestamp = timestamp
     }
@@ -30,7 +30,7 @@ struct Vocabulary {
         self.id = data["id"] as? String ?? ""
         self.title = data["title"] as? String ?? ""
         self.language = data["language"] as? String ?? ""
-        self.words = data["words"] as? [Word] ?? []
+//        self.words = data["words"] as? [Word] ?? []
         self.isSelected = data["is_selected"] as? Bool ?? false
         self.timestamp = data["timestamp"] as? Timestamp ?? Timestamp()
     }
@@ -40,7 +40,7 @@ struct Vocabulary {
             "id": vocabulary.id,
             "title": vocabulary.title,
             "language": vocabulary.language,
-            "words": vocabulary.words,
+//            "words": vocabulary.words,
             "is_selected": vocabulary.isSelected,
             "timestamp": vocabulary.timestamp
         ]

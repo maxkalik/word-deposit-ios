@@ -49,9 +49,21 @@ class VocabulariesTVCell: UITableViewCell {
         }
     }
     
-    func configureCell(title: String, language: String, amount: Int) {
-        titleLabel.text = title
-        languageLabel.text = language
+    func configureCell(vocabulary: Vocabulary, userRef: DocumentReference) {
+        titleLabel.text = vocabulary.title
+        languageLabel.text = vocabulary.language
+        
+        var amount = 0
+        
+        let vocabularyRef = userRef.collection("vocabularies").document(vocabulary.id)
+        vocabularyRef.getDocument { (snapshot, error) in
+            if let error = error {
+                print(error.localizedDescription)
+            } else  {
+                amount = snapshot?.data()?.count ?? 0
+            }
+        }
+        
         wordsAmount.text = String(amount)
         containerView.layer.cornerRadius = 8
         containerView.layer.borderWidth = 0
@@ -60,5 +72,4 @@ class VocabulariesTVCell: UITableViewCell {
             containerView.layer.backgroundColor = .none
         }
     }
-    
 }

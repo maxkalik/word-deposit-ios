@@ -37,7 +37,7 @@ class AddWordVC: UIViewController {
     var wordRef: DocumentReference!
     var isImageSet = false
     
-    var vocabulary: Vocabulary!
+//    var vocabulary: Vocabulary!
     
     // MARK: - Lifecycle
     
@@ -45,6 +45,10 @@ class AddWordVC: UIViewController {
         super.viewDidLoad()
         db = Firestore.firestore()
         storage = Storage.storage()
+        
+//        let defaults = UserDefaults.standard
+//        guard let selectedVocabularyId = defaults.string(forKey: "vocabulary") else { return }
+//        print(selectedVocabularyId)
         
         setupUI()
     }
@@ -100,15 +104,36 @@ class AddWordVC: UIViewController {
         // TODO: shoud be rewrited in the singleton
         guard let user = Auth.auth().currentUser else { return }
         
-        wordRef = db.collection("users").document(user.uid).collection("vocabulries").document(vocabulary.id).collection("words").document()
-        var word = Word.init(imgUrl: "", example: example, translation: translation, id: "", timestamp: Timestamp())
-        word.id = wordRef.documentID
+//        let defaults = UserDefaults.standard
+//        guard let selectedVocabularyId = defaults.string(forKey: "vocabulary") else { return }
+//        print(selectedVocabularyId)
         
-        if isImageSet {
-            uploadImage(userId: user.uid, word: word)
-        } else {
-            uploadWord(word: word)
+        
+        let vocabularyRef = db.collection("users").document(user.uid).collection("vocabularies")
+        
+        vocabularyRef.whereField("is_selected", isEqualTo: true).getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                    let data = document.data()
+                    let vocabulary = Vocabulary.init(data: data)
+                    
+                    print(vocabulary)
+                    self.wordRef = vocabularyRef.document(vocabulary.id).collection("words").document()
+                    var word = Word.init(imgUrl: "", example: example, translation: translation, id: "", timestamp: Timestamp())
+                    word.id = self.wordRef.documentID
+                    
+                    if self.isImageSet {
+                        self.uploadImage(userId: user.uid, word: word)
+                    } else {
+                        self.uploadWord(word: word)
+                    }
+                }
+            }
         }
+        
+        
     }
     
     func uploadImage(userId: String, word: Word) {

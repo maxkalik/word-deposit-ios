@@ -71,9 +71,32 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                     defaults.set(self.user.notifications, forKey: "notifications")
                     defaults.set(Date(), forKey: "last_run")
                     
+//                    self.fetchVocabularies(from: userRef)
                     self.fetchWords(from: userRef)
                 } else {
                     print("Document does not exist")
+                }
+            }
+        }
+    }
+    
+    private func fetchVocabularies(from: DocumentReference) {
+        let ref = from.collection("vocabularies")
+        
+        ref.getDocuments { (snapshot, error) in
+            if let error = error {
+                debugPrint(error.localizedDescription)
+                return
+            }
+
+            guard let documents = snapshot?.documents else { return }
+            
+            for document in documents {
+                let data = document.data()
+                let vocabulary = Vocabulary.init(data: data)
+                if vocabulary.isSelected == true {
+                    let defaults = UserDefaults.standard
+                    defaults.set(vocabulary.id, forKey: "vocabulary")
                 }
             }
         }
