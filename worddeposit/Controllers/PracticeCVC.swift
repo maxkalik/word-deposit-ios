@@ -81,8 +81,25 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     }
     
     private func fetchVocabularies(from: DocumentReference) {
+        
+        print("here")
         let vocabularyRef = from.collection("vocabularies")
         
+        vocabularyRef.getDocuments { (snapshot, error) in
+            if let error = error {
+                print("Error getting documents: \(error)")
+            }
+
+            for document in snapshot!.documents {
+                if document.exists {
+                    print("exists")
+                } else {
+                    print("not exist")
+                }
+            }
+        }
+        
+        /*
         vocabularyRef.whereField("is_selected", isEqualTo: true).getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
@@ -99,6 +116,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                 }
             }
         }
+        */
     }
     
     private func fetchWords(from: DocumentReference) {
