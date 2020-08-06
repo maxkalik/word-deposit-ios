@@ -41,6 +41,7 @@
                     </navigationItem>
                     <connections>
                         <segue destination="XGr-ab-fSU" kind="show" identifier="PracticeRead" id="maD-IU-10B"/>
+                        <segue destination="12l-q6-uD8" kind="show" identifier="Vocabularies" id="Yg3-Wp-i9I"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wOH-sQ-2z1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1008,7 +1009,7 @@
         <!--Navigation Controller-->
         <scene sceneID="mP5-a8-hMf">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="12l-q6-uD8" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="Vocabularies" automaticallyAdjustsScrollViewInsets="NO" id="12l-q6-uD8" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="1dy-gx-DME"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="jyl-6D-Cr8">
@@ -1026,10 +1027,11 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="Yg3-Wp-i9I"/>
         <segue reference="JpH-Z0-vxD"/>
         <segue reference="cT5-yM-GyM"/>
         <segue reference="wQV-jD-p7z"/>
-        <segue reference="75v-FD-7ZM"/>
+        <segue reference="FgU-uN-MIW"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="list.dash" catalog="system" width="128" height="85"/>

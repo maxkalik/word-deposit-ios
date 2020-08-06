@@ -22,6 +22,7 @@ struct XIBs {
 }
 
 struct Segues {
+    static let Vocabularies = "Vocabularies"
     static let VocabularyDetails = "VocabularyDetails"
     static let UserInfo = "UserInfo"
     static let NativeLanguage = "NativeLanguage"

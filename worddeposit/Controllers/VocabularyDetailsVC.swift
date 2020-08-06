@@ -34,8 +34,8 @@ class VocabularyDetailsVC: UIViewController {
     private func setupUI() {
         view.addSubview(progressHUD)
         progressHUD.hide()
-        titleTextField.autocorrectionType = .no
-        languageTextField.autocorrectionType = .no
+        titleTextField?.autocorrectionType = .no
+        languageTextField?.autocorrectionType = .no
 //        saveButton.isEnabled = false
         
         guard let title = vocabulary?.title, let language = vocabulary?.language else { return }

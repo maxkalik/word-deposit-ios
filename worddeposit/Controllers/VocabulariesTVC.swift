@@ -10,7 +10,9 @@ class VocabulariesTVC: UITableViewController {
     var selectedVocabularyIndex = 0 {
         didSet {
             let defaults = UserDefaults.standard
-            defaults.set(vocabularies[selectedVocabularyIndex].id, forKey: "vocabulary_id")
+            if vocabularies.count > 0 {
+                defaults.set(vocabularies[selectedVocabularyIndex].id, forKey: "vocabulary_id")
+            }
         }
     }
     
@@ -143,9 +145,7 @@ class VocabulariesTVC: UITableViewController {
             var vocabulary = vocabularies[selectedVocabularyIndex]
             vocabulary.isSelected = true
             updateVocabulary(vocabulary)
-            
-            
-            
+
             tableView.reloadData()
         } else {
             sender.isOn = true

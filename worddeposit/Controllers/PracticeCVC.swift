@@ -4,7 +4,7 @@ import FirebaseFirestore
 
 private let reuseIdentifier = XIBs.PracticeCVCell
 
-class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIPopoverPresentationControllerDelegate {
 
     // MARK: - Instances
     
@@ -50,6 +50,11 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         auth.removeStateDidChangeListener(handle!)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+    }
+    
     // MARK: - Methods
     
     private func getCurrentUser() {
@@ -81,42 +86,36 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     }
     
     private func fetchVocabularies(from: DocumentReference) {
-        
-        print("here")
         let vocabularyRef = from.collection("vocabularies")
-        
-        vocabularyRef.getDocuments { (snapshot, error) in
-            if let error = error {
-                print("Error getting documents: \(error)")
-            }
-
-            for document in snapshot!.documents {
-                if document.exists {
-                    print("exists")
-                } else {
-                    print("not exist")
-                }
-            }
-        }
-        
-        /*
-        vocabularyRef.whereField("is_selected", isEqualTo: true).getDocuments() { (querySnapshot, err) in
+        vocabularyRef.whereField("is_selected", isEqualTo: true).addSnapshotListener() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
+                return
             } else {
+                print(querySnapshot!.documents.isEmpty)
+                if querySnapshot!.documents.isEmpty {
+                    print("no vocabularies")
+                }
                 for document in querySnapshot!.documents {
-                    if document.exists {
-                        let data = document.data()
-                        let vocabulary = Vocabulary.init(data: data)
-                        let defaults = UserDefaults.standard
-                        defaults.set(vocabulary.id, forKey: "vocabulary_id")
-                    } else {
-                        print("document not exist")
+                    let data = document.data()
+                    let vocabulary = Vocabulary.init(data: data)
+                    print("From practices", vocabulary.id)
+                    let defaults = UserDefaults.standard
+                    defaults.set(vocabulary.id, forKey: "vocabulary_id")
+                    
+                    print("start instantiate")
+                    
+                    let storyboard = UIStoryboard(name: "Home", bundle: Bundle.main)
+                    let vc = storyboard.instantiateViewController(withIdentifier: "Vocabularies")
+                    vc.modalPresentationStyle = .popover
+                    if let popoverPresentationController = vc.popoverPresentationController {
+                        popoverPresentationController.delegate = self
+                        // set the .sourceView and .sourceRect so that the popover can position itself and arrow accordingly
                     }
+                    self.present(vc, animated: true)
                 }
             }
         }
-        */
     }
     
     private func fetchWords(from: DocumentReference) {
