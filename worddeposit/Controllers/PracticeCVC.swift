@@ -94,7 +94,13 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
             } else {
                 print(querySnapshot!.documents.isEmpty)
                 if querySnapshot!.documents.isEmpty {
-                    print("no vocabularies")
+                    let storyboard = UIStoryboard(name: "Home", bundle: Bundle.main)
+                    let vc = storyboard.instantiateViewController(withIdentifier: "Vocabularies")
+                    vc.modalPresentationStyle = .popover
+                    if let popoverPresentationController = vc.popoverPresentationController {
+                        popoverPresentationController.delegate = self
+                    }
+                    self.present(vc, animated: true)
                 }
                 for document in querySnapshot!.documents {
                     let data = document.data()
@@ -102,17 +108,6 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                     print("From practices", vocabulary.id)
                     let defaults = UserDefaults.standard
                     defaults.set(vocabulary.id, forKey: "vocabulary_id")
-                    
-                    print("start instantiate")
-                    
-                    let storyboard = UIStoryboard(name: "Home", bundle: Bundle.main)
-                    let vc = storyboard.instantiateViewController(withIdentifier: "Vocabularies")
-                    vc.modalPresentationStyle = .popover
-                    if let popoverPresentationController = vc.popoverPresentationController {
-                        popoverPresentationController.delegate = self
-                        // set the .sourceView and .sourceRect so that the popover can position itself and arrow accordingly
-                    }
-                    self.present(vc, animated: true)
                 }
             }
         }

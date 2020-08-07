@@ -16,6 +16,8 @@ class VocabulariesTVC: UITableViewController {
         }
     }
     
+    var messageView = MessageView()
+    
     var db: Firestore!
     var vocabulariesListener: ListenerRegistration!
     var userRef: DocumentReference!
@@ -30,7 +32,15 @@ class VocabulariesTVC: UITableViewController {
         
         guard let authUser = Auth.auth().currentUser else { return }
         userRef = db.collection("users").document(authUser.uid)
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.view.addSubview(messageView)
+        messageView.setTitle(title: "You have no any vocabularies yet. Please add them.")
+        messageView.onButtonTap { [unowned self] in
+            print("pressed")
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -57,6 +67,10 @@ class VocabulariesTVC: UITableViewController {
             if let error = error {
                 debugPrint(error.localizedDescription)
                 return
+            }
+            
+            DispatchQueue.main.async {
+                self.isModalInPresentation = snapshot!.documents.isEmpty
             }
             
             snapshot?.documentChanges.forEach({ (docChange) in

@@ -21,6 +21,12 @@
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
+                        <view key="backgroundView" contentMode="scaleToFill" id="kyP-zW-Sva">
+                            <rect key="frame" x="0.0" y="-88" width="414" height="896"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <viewLayoutGuide key="safeArea" id="ejz-Jy-Tzo"/>
+                        </view>
                         <cells/>
                         <connections>
                             <outlet property="dataSource" destination="cyQ-JK-l0X" id="RFc-4i-1Ea"/>
@@ -41,7 +47,6 @@
                     </navigationItem>
                     <connections>
                         <segue destination="XGr-ab-fSU" kind="show" identifier="PracticeRead" id="maD-IU-10B"/>
-                        <segue destination="12l-q6-uD8" kind="show" identifier="Vocabularies" id="Yg3-Wp-i9I"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wOH-sQ-2z1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1027,7 +1032,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Yg3-Wp-i9I"/>
         <segue reference="JpH-Z0-vxD"/>
         <segue reference="cT5-yM-GyM"/>
         <segue reference="wQV-jD-p7z"/>
