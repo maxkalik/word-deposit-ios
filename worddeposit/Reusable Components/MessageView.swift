@@ -1,6 +1,5 @@
 import UIKit
 
-@IBDesignable
 class MessageView: UIView {
 
     let nibName = "MessageView"
@@ -58,5 +57,13 @@ class MessageView: UIView {
     
     @IBAction func buttonTap(_ sender: UIButton) {
         action?()
+    }
+    
+    func hide() {
+        self.isHidden = true
+    }
+    
+    func show() {
+        self.isHidden = false
     }
 }

@@ -37,11 +37,11 @@ class VocabulariesTVC: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.view.addSubview(messageView)
-        messageView.isHidden = true
+        messageView.hide()
     }
     
     func setupMessage() {
-        messageView.isHidden = false
+        messageView.show()
         messageView.setTitles(messageTxt: "You have no any vocabularies yet. Please add them.", buttonTitle: "+ Add vocabulary")
         messageView.onButtonTap { [unowned self] in
             self.performSegue(withIdentifier: Segues.VocabularyDetails, sender: nil)

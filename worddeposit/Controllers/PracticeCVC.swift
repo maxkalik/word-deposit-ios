@@ -3,7 +3,7 @@ import Firebase
 import FirebaseFirestore
 
 private let reuseIdentifier = XIBs.PracticeCVCell
-
+private let minWordsAmount = 10
 class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIPopoverPresentationControllerDelegate {
 
     // MARK: - Instances
@@ -15,6 +15,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     var handle: AuthStateDidChangeListenerHandle?
     var practiceReadVC: PracticeReadVC?
     var progressHUD = ProgressHUD(title: "Welcome")
+    var messageView = MessageView()
     
     private var trainers = [PracticeTrainer]()
     
@@ -29,7 +30,9 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
 
         // Register cell classes
         let nib = UINib(nibName: XIBs.PracticeCVCell, bundle: nil)
+        let messageNib = UINib(nibName: XIBs.MessageCVCell, bundle: nil)
         self.collectionView!.register(nib, forCellWithReuseIdentifier: reuseIdentifier)
+        self.collectionView!.register(messageNib, forCellWithReuseIdentifier: XIBs.MessageCVCell)
         self.collectionView!.isPrefetchingEnabled = false
     }
     
@@ -43,6 +46,8 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         getCurrentUser()
 
         self.view.addSubview(progressHUD)
+//        self.view.addSubview(messageView)
+//        messageView.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -77,7 +82,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                     defaults.set(Date(), forKey: "last_run")
                     
                     self.fetchVocabularies(from: userRef)
-                    self.fetchWords(from: userRef)
+                    
                 } else {
                     print("Document does not exist")
                 }
@@ -92,7 +97,6 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                 print("Error getting documents: \(err)")
                 return
             } else {
-                print(querySnapshot!.documents.isEmpty)
                 if querySnapshot!.documents.isEmpty {
                     let storyboard = UIStoryboard(name: "Home", bundle: Bundle.main)
                     let vc = storyboard.instantiateViewController(withIdentifier: "Vocabularies")
@@ -102,12 +106,16 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                     }
                     self.present(vc, animated: true)
                 }
+                
                 for document in querySnapshot!.documents {
                     let data = document.data()
                     let vocabulary = Vocabulary.init(data: data)
-                    print("From practices", vocabulary.id)
                     let defaults = UserDefaults.standard
                     defaults.set(vocabulary.id, forKey: "vocabulary_id")
+                    
+                    // fetch words from current vocabulary
+                    print("From practices", vocabulary.id)
+                    self.fetchWords(from: vocabularyRef.document(vocabulary.id))
                 }
             }
         }
@@ -125,11 +133,17 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
             self.progressHUD.hide()
             guard let documents = snapshot?.documents else { return }
             
+            if documents.isEmpty {
+                print("no words")
+            }
+            
             for document in documents {
                 let data = document.data()
                 let word = Word.init(data: data)
                 self.words.append(word)
             }
+            self.collectionView.reloadData()
+            print(self.words)
         }
     }
     
@@ -151,22 +165,39 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return trainers.count
+        if words.count > minWordsAmount {
+            return trainers.count
+        } else {
+            return 1
+        }
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? PracticeCVCell {
-            let trainer = trainers[indexPath.row]
-            cell.backgroundColor = trainer.backgroundColor
-            cell.configureCell(cover: trainer.coverImageSource, title: trainer.title)
-            return cell
+        if words.count > minWordsAmount {
+            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? PracticeCVCell {
+                let trainer = trainers[indexPath.row]
+                cell.backgroundColor = trainer.backgroundColor
+                cell.configureCell(cover: trainer.coverImageSource, title: trainer.title)
+                return cell
+            }
         }
+            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: XIBs.MessageCVCell, for: indexPath) as? MessageCVCell {
+                cell.messageView.setTitles(messageTxt: "You have no sufficient amount of words. Add at least \(minWordsAmount - words.count) words", buttonTitle: "Add more words")
+                cell.messageView.onButtonTap {
+                    print("pressed")
+                    self.tabBarController?.selectedIndex = 1
+                }
+                return cell
+            }
+            
         return PracticeCVCell()
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let screenSize = UIScreen.main.bounds
+        if words.count < minWordsAmount {
+            return CGSize(width: screenSize.width - 40, height: screenSize.height - collectionView.safeAreaInsets.top - collectionView.safeAreaInsets.bottom)
+        }
         return CGSize(width: screenSize.width - 40, height: 200)
     }
     

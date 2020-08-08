@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MessageCVCell" id="gTV-IL-0wX" customClass="MessageCVCell" customModule="worddeposit" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="388" height="366"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="388" height="366"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XDu-cT-e4c" customClass="MessageView" customModule="worddeposit" customModuleProvider="target">
+                        <rect key="frame" x="34" y="83" width="320" height="200"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="200" id="e77-Ay-uFQ"/>
+                            <constraint firstAttribute="width" constant="320" id="gKF-2p-kdB"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="XDu-cT-e4c" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="1Vn-Cr-qMn"/>
+                <constraint firstItem="XDu-cT-e4c" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="7Dr-lB-tPn"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <size key="customSize" width="388" height="366"/>
+            <connections>
+                <outlet property="messageView" destination="XDu-cT-e4c" id="2T0-Y8-O5F"/>
+            </connections>
+            <point key="canvasLocation" x="178.2608695652174" y="156.69642857142856"/>
+        </collectionViewCell>
+    </objects>
+</document>

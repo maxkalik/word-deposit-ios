@@ -19,6 +19,7 @@ struct XIBs {
     static let VocabularyCardCVCell = "VocabularyCardCVCell"
     static let PracticeCVCell = "PracticeCVCell"
     static let PracticeAnswerItem = "PracticeAnswerItem"
+    static let MessageCVCell = "MessageCVCell"
 }
 
 struct Segues {
