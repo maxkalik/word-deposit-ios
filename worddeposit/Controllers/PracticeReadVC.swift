@@ -68,6 +68,11 @@ class PracticeReadVC: UIViewController {
     
     // MARK: - Methods
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.navigationBar.tintColor = UIColor.systemBlue
+    }
+    
     private func setupCollectionView() {
         let nib = UINib(nibName: XIBs.PracticeAnswerItem, bundle: nil)
         collectionView.register(nib, forCellWithReuseIdentifier: XIBs.PracticeAnswerItem)
