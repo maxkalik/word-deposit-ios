@@ -154,7 +154,7 @@
             </objects>
             <point key="canvasLocation" x="4443.4782608695659" y="-1443.0803571428571"/>
         </scene>
-        <!--VocabulariesTVC-->
+        <!--Vocabularies-->
         <scene sceneID="sOt-IX-2ph">
             <objects>
                 <tableViewController id="LHH-B4-HKM" customClass="VocabulariesTVC" customModule="worddeposit" customModuleProvider="target" sceneMemberID="viewController">
@@ -166,7 +166,7 @@
                             <outlet property="delegate" destination="LHH-B4-HKM" id="fJM-Qw-eVo"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="iUH-cY-NBg">
+                    <navigationItem key="navigationItem" title="Vocabularies" id="iUH-cY-NBg">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Sd8-2t-pyB">
                             <connections>
                                 <segue destination="qvX-RP-zC0" kind="show" id="FgU-uN-MIW"/>
@@ -190,13 +190,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xha-PU-sYA">
-                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <rect key="frame" x="0.0" y="140" width="414" height="673"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O2W-Gh-JuS">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="673"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="27" translatesAutoresizingMaskIntoConstraints="NO" id="DNU-r9-0JB">
-                                                <rect key="frame" x="30" y="286.5" width="354" height="152"/>
+                                                <rect key="frame" x="30" y="260.5" width="354" height="152"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZD9-di-RMR">
                                                         <rect key="frame" x="0.0" y="0.0" width="354" height="34"/>
@@ -1017,8 +1017,8 @@
                 <navigationController storyboardIdentifier="Vocabularies" automaticallyAdjustsScrollViewInsets="NO" id="12l-q6-uD8" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="1dy-gx-DME"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="jyl-6D-Cr8">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="jyl-6D-Cr8">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

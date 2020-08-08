@@ -10,7 +10,7 @@ class MessageView: UIView {
     var contentView: UIView!
     var action: (() -> Void)?
     
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var label: UILabel!
     @IBOutlet weak var button: RoundedButton!
     
     override init(frame: CGRect) {
@@ -34,8 +34,9 @@ class MessageView: UIView {
         setupOnSuperView()
     }
     
-    func setTitle(title: String) {
-        titleLabel.text  = title
+    func setTitles(messageTxt: String, buttonTitle: String) {
+        label.text  = messageTxt
+        button.setTitle(buttonTitle, for: .normal)
     }
 
     func setupOnSuperView() {

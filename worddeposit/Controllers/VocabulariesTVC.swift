@@ -37,8 +37,14 @@ class VocabulariesTVC: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.view.addSubview(messageView)
-        messageView.setTitle(title: "You have no any vocabularies yet. Please add them.")
+        messageView.isHidden = true
+    }
+    
+    func setupMessage() {
+        messageView.isHidden = false
+        messageView.setTitles(messageTxt: "You have no any vocabularies yet. Please add them.", buttonTitle: "+ Add vocabulary")
         messageView.onButtonTap { [unowned self] in
+            self.performSegue(withIdentifier: Segues.VocabularyDetails, sender: nil)
             print("pressed")
         }
     }
@@ -70,7 +76,12 @@ class VocabulariesTVC: UITableViewController {
             }
             
             DispatchQueue.main.async {
-                self.isModalInPresentation = snapshot!.documents.isEmpty
+                if snapshot!.documents.isEmpty {
+                    self.setupMessage()
+                    self.isModalInPresentation = true
+                } else {
+                    self.isModalInPresentation = false
+                }
             }
             
             snapshot?.documentChanges.forEach({ (docChange) in
