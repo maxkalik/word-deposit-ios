@@ -17,10 +17,9 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XDu-cT-e4c" customClass="MessageView" customModule="worddeposit" customModuleProvider="target">
-                        <rect key="frame" x="34" y="83" width="320" height="200"/>
+                        <rect key="frame" x="34" y="104.5" width="320" height="157"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="200" id="e77-Ay-uFQ"/>
                             <constraint firstAttribute="width" constant="320" id="gKF-2p-kdB"/>
                         </constraints>
                     </view>
@@ -29,6 +28,7 @@
             <constraints>
                 <constraint firstItem="XDu-cT-e4c" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="1Vn-Cr-qMn"/>
                 <constraint firstItem="XDu-cT-e4c" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="7Dr-lB-tPn"/>
+                <constraint firstItem="XDu-cT-e4c" firstAttribute="height" secondItem="gTV-IL-0wX" secondAttribute="height" multiplier="0.428962" id="Fc2-bl-IgU"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="388" height="366"/>

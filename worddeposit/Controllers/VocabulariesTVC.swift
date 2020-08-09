@@ -29,14 +29,15 @@ class VocabulariesTVC: UITableViewController {
         super.viewDidLoad()
         db = Firestore.firestore()
         setupTableView()
-        
-        guard let authUser = Auth.auth().currentUser else { return }
-        userRef = db.collection("users").document(authUser.uid)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.view.addSubview(messageView)
+        
+        guard let authUser = Auth.auth().currentUser else { return }
+        userRef = db.collection("users").document(authUser.uid)
+        
         messageView.hide()
     }
     
@@ -65,9 +66,6 @@ class VocabulariesTVC: UITableViewController {
     // MARK: - Methods
     
     func setVocabularyListener() {
-        // shoud be rewrited
-//        guard let authUser = Auth.auth().currentUser else { return }
-//        let userRef = db.collection("users").document(authUser.uid)
         let vocabulariesRef = userRef.collection("vocabularies").order(by: "timestamp", descending: true)
         vocabulariesListener = vocabulariesRef.addSnapshotListener({ (snapshot, error) in
             if let error = error {
@@ -145,7 +143,7 @@ class VocabulariesTVC: UITableViewController {
         vocabulariesRef = db.collection("users").document(user.uid).collection("vocabularies").document(vocabulary.id)
         print(vocabulary)
         let data = Vocabulary.modelToData(vocabulary: vocabulary)
-        vocabulariesRef.setData(data, merge: true) { (error) in
+        vocabulariesRef.updateData(data) { (error) in
             if let error = error {
                 self.simpleAlert(title: "Error", msg: error.localizedDescription)
             }

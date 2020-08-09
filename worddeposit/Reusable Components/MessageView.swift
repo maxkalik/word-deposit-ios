@@ -3,8 +3,7 @@ import UIKit
 class MessageView: UIView {
 
     let nibName = "MessageView"
-    let width: CGFloat = 320.0
-    let height: CGFloat = 200.0
+    let height: CGFloat = 300.0
     
     var contentView: UIView!
     var action: (() -> Void)?
@@ -25,6 +24,8 @@ class MessageView: UIView {
     func commonInit() {
         guard let view = loadViewFromNib() else { return }
         view.frame = self.bounds
+        button.contentEdgeInsets.left = 20
+        button.contentEdgeInsets.right = 20
         self.addSubview(view)
         contentView = view
     }
@@ -39,11 +40,15 @@ class MessageView: UIView {
     }
 
     func setupOnSuperView() {
-        self.frame = CGRect(x: (UIScreen.main.bounds.width / 2) - (width / 2),
-                            y: (UIScreen.main.bounds.height / 2) - height,
-                            width: width,
-                            height: height)
-        contentView.frame = self.bounds
+        if let superview = self.superview {
+            self.center = superview.center
+            
+            self.frame = CGRect(x: 0,
+                                y: 0,
+                                width: superview.frame.width,
+                                height: UIScreen.main.bounds.height / 2 - 40)
+            contentView.frame = self.bounds
+        }
     }
     
     func loadViewFromNib() -> UIView? {

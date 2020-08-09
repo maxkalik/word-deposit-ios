@@ -22,7 +22,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <view key="backgroundView" contentMode="scaleToFill" id="kyP-zW-Sva">
-                            <rect key="frame" x="0.0" y="-88" width="414" height="896"/>
+                            <rect key="frame" x="0.0" y="-140" width="414" height="896"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             <viewLayoutGuide key="safeArea" id="ejz-Jy-Tzo"/>
@@ -291,7 +291,12 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Vocabulary" id="uKz-c3-4M2">
-                        <barButtonItem key="rightBarButtonItem" title="User" image="rectangle.stack.person.crop.fill" catalog="system" style="plain" id="lcJ-ix-GSG">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="tray.2.fill" catalog="system" id="UuC-Hs-bwX">
+                            <connections>
+                                <segue destination="12l-q6-uD8" kind="show" id="cIB-pM-tsi"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="User" image="rectangle.stack.person.crop.fill" catalog="system" id="lcJ-ix-GSG">
                             <connections>
                                 <segue destination="5Oc-vH-7SN" kind="show" id="L4V-Nc-46o"/>
                             </connections>
@@ -1032,7 +1037,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="JpH-Z0-vxD"/>
+        <segue reference="cIB-pM-tsi"/>
+        <segue reference="L4V-Nc-46o"/>
         <segue reference="cT5-yM-GyM"/>
         <segue reference="wQV-jD-p7z"/>
         <segue reference="FgU-uN-MIW"/>

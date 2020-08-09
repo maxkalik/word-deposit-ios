@@ -10,14 +10,17 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     
     var user = User()
     var words = [Word]()
-    var auth: Auth!
-    var db: Firestore!
-    var handle: AuthStateDidChangeListenerHandle?
+    private var trainers = [PracticeTrainer]()
+    
     var practiceReadVC: PracticeReadVC?
     var progressHUD = ProgressHUD(title: "Welcome")
     var messageView = MessageView()
     
-    private var trainers = [PracticeTrainer]()
+    /// Listeners
+    var auth: Auth!
+    var db: Firestore!
+    var authHandle: AuthStateDidChangeListenerHandle?
+    var vocabulariesListener: ListenerRegistration!
     
     // MARK: - Lifecycle
     
@@ -30,10 +33,12 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
 
         // Register cell classes
         let nib = UINib(nibName: XIBs.PracticeCVCell, bundle: nil)
-        let messageNib = UINib(nibName: XIBs.MessageCVCell, bundle: nil)
         self.collectionView!.register(nib, forCellWithReuseIdentifier: reuseIdentifier)
-        self.collectionView!.register(messageNib, forCellWithReuseIdentifier: XIBs.MessageCVCell)
+        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: ReusableIdentifiers.MessageView)
+        
         self.collectionView!.isPrefetchingEnabled = false
+        self.view.backgroundColor = UIColor.white
+        self.collectionView.isHidden = true
     }
     
     
@@ -43,16 +48,16 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         if let flowlayout = collectionViewLayout as? UICollectionViewFlowLayout {
             flowlayout.minimumLineSpacing = 20
         }
-        getCurrentUser()
+        setCurrentUser()
 
         self.view.addSubview(progressHUD)
-//        self.view.addSubview(messageView)
-//        messageView.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        auth.removeStateDidChangeListener(handle!)
+        auth.removeStateDidChangeListener(authHandle!)
+        vocabulariesListener.remove()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -60,10 +65,11 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
 
     }
     
+    
     // MARK: - Methods
     
-    private func getCurrentUser() {
-        handle = auth.addStateDidChangeListener { (auth, user) in
+    private func setCurrentUser() {
+        authHandle = auth.addStateDidChangeListener { (auth, user) in
             guard let currentUser = auth.currentUser else { return }
             let userRef = self.db.collection("users").document(currentUser.uid)
             userRef.getDocument { (document, error) in
@@ -81,7 +87,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                     defaults.set(self.user.notifications, forKey: "notifications")
                     defaults.set(Date(), forKey: "last_run")
                     
-                    self.fetchVocabularies(from: userRef)
+                    self.setVocabulariesListener(from: userRef)
                     
                 } else {
                     print("Document does not exist")
@@ -90,9 +96,9 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         }
     }
     
-    private func fetchVocabularies(from: DocumentReference) {
+    private func setVocabulariesListener(from: DocumentReference) {
         let vocabularyRef = from.collection("vocabularies")
-        vocabularyRef.whereField("is_selected", isEqualTo: true).addSnapshotListener() { (querySnapshot, err) in
+        vocabulariesListener = vocabularyRef.whereField("is_selected", isEqualTo: true).addSnapshotListener() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
                 return
@@ -104,6 +110,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                     if let popoverPresentationController = vc.popoverPresentationController {
                         popoverPresentationController.delegate = self
                     }
+                    self.collectionView.isHidden = false
                     self.present(vc, animated: true)
                 }
                 
@@ -143,7 +150,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                 self.words.append(word)
             }
             self.collectionView.reloadData()
-            print(self.words)
+            self.collectionView.isHidden = false
         }
     }
     
@@ -173,37 +180,46 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if words.count > minWordsAmount {
-            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? PracticeCVCell {
-                let trainer = trainers[indexPath.row]
-                cell.backgroundColor = trainer.backgroundColor
-                cell.configureCell(cover: trainer.coverImageSource, title: trainer.title)
-                return cell
+        
+        if words.count < minWordsAmount {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReusableIdentifiers.MessageView, for: indexPath)
+            cell.contentView.addSubview(messageView)
+            messageView.setTitles(messageTxt: "You have insufficient words amount for practice.\nAdd at least \(minWordsAmount - words.count) words", buttonTitle: "Add more words")
+            messageView.onButtonTap {
+                print("pressed")
+                self.tabBarController?.selectedIndex = 1
             }
+//            messageView.center = collectionView.center
+            return cell
         }
-            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: XIBs.MessageCVCell, for: indexPath) as? MessageCVCell {
-                cell.messageView.setTitles(messageTxt: "You have no sufficient amount of words. Add at least \(minWordsAmount - words.count) words", buttonTitle: "Add more words")
-                cell.messageView.onButtonTap {
-                    print("pressed")
-                    self.tabBarController?.selectedIndex = 1
-                }
-                return cell
-            }
-            
+        
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? PracticeCVCell {
+            let trainer = trainers[indexPath.row]
+            cell.backgroundColor = trainer.backgroundColor
+            cell.configureCell(cover: trainer.coverImageSource, title: trainer.title)
+            return cell
+        }
+        
         return PracticeCVCell()
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let screenSize = UIScreen.main.bounds
+        /*
         if words.count < minWordsAmount {
-            return CGSize(width: screenSize.width - 40, height: screenSize.height - collectionView.safeAreaInsets.top - collectionView.safeAreaInsets.bottom)
+            let width = screenSize.width - 40
+            let height = screenSize.height / 2 + 40
+            return CGSize(width: width, height: height)
         }
+        */
         return CGSize(width: screenSize.width - 40, height: 200)
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let sender = trainers[indexPath.row]
-        self.performSegue(withIdentifier: Segues.PracticeRead, sender: sender)
+        if words.count > minWordsAmount {
+            let sender = trainers[indexPath.row]
+            self.performSegue(withIdentifier: Segues.PracticeRead, sender: sender)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

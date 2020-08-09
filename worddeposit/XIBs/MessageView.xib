@@ -25,7 +25,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RvO-2T-0iS" customClass="RoundedButton" customModule="worddeposit" customModuleProvider="target">
-                    <rect key="frame" x="20" y="87" width="280" height="50"/>
+                    <rect key="frame" x="131.5" y="87" width="57" height="50"/>
                     <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="DeI-Nv-Yxa"/>
@@ -42,11 +42,10 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="RvO-2T-0iS" secondAttribute="bottom" constant="20" id="ACx-Vl-IS8"/>
-                <constraint firstItem="RvO-2T-0iS" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="Cgl-5p-C78"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="RvO-2T-0iS" secondAttribute="trailing" constant="20" id="aRp-Xt-frJ"/>
                 <constraint firstItem="4o4-GO-EKh" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="ngi-Av-aBp"/>
                 <constraint firstItem="RvO-2T-0iS" firstAttribute="top" secondItem="4o4-GO-EKh" secondAttribute="bottom" constant="20" id="oKU-cX-P3T"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="4o4-GO-EKh" secondAttribute="trailing" constant="20" id="okz-RT-kuT"/>
+                <constraint firstItem="RvO-2T-0iS" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="yfX-Xa-7bT"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>

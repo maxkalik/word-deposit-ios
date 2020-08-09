@@ -6,12 +6,17 @@ class VocabulariesTVCell: UITableViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var languageLabel: UILabel!
-    @IBOutlet weak var wordsAmount: UILabel!
+    @IBOutlet weak var wordsAmountLabel: UILabel!
     @IBOutlet weak var selectionSwitch: UISwitch!
     @IBOutlet weak var containerView: UIView!
     
     // MARK: - Istances
     
+    var wordsAmount: Int! {
+        didSet {
+            wordsAmountLabel.text = String(wordsAmount)
+        }
+    }
     var isSelectedVocabulary: Bool! {
         didSet {
             selectionSwitch.isOn = isSelectedVocabulary
@@ -28,10 +33,12 @@ class VocabulariesTVCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         selectionSwitch.isOn = false
+        wordsAmountLabel.text = "0"
     }
     
     override class func awakeFromNib() {
         super.awakeFromNib()
+        
     }
     
     // MARK: - Own Methods
@@ -53,18 +60,13 @@ class VocabulariesTVCell: UITableViewCell {
         titleLabel.text = vocabulary.title
         languageLabel.text = vocabulary.language
         
-        var amount = 0
-        
         let ref = userRef.collection("vocabularies").document(vocabulary.id).collection("words")
         ref.getDocuments { (snapshot, error) in
             if let error = error {
                 print(error.localizedDescription)
             } else  {
                 guard let snap = snapshot else { return }
-                amount = snap.count
-                DispatchQueue.main.async {
-                    self.wordsAmount.text = String(amount)
-                }
+                self.wordsAmount = snap.count
             }
         }
         

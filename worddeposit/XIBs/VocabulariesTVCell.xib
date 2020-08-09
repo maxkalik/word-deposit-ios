@@ -76,7 +76,7 @@
                 <outlet property="languageLabel" destination="qgF-H7-8Ne" id="juZ-Xh-CHD"/>
                 <outlet property="selectionSwitch" destination="Y5A-D7-qRy" id="ajv-OG-ujf"/>
                 <outlet property="titleLabel" destination="hVN-64-Wyy" id="M2d-P2-M6y"/>
-                <outlet property="wordsAmount" destination="yyE-G3-p92" id="6hC-hI-6eq"/>
+                <outlet property="wordsAmountLabel" destination="yyE-G3-p92" id="6hC-hI-6eq"/>
             </connections>
             <point key="canvasLocation" x="76.811594202898561" y="181.13839285714286"/>
         </tableViewCell>

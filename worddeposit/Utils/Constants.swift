@@ -37,6 +37,7 @@ struct Segues {
 
 struct ReusableIdentifiers {
     static let CheckedCell = "CheckedCell"
+    static let MessageView = "MessageView"
 }
 
 struct Colors {

@@ -56,8 +56,6 @@
 		15A7E04A24D8B322006804FD /* VocabulariesTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15A7E04824D8B322006804FD /* VocabulariesTVCell.xib */; };
 		15BD0C0224DE0631007E8D27 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BD0C0124DE0631007E8D27 /* MessageView.swift */; };
 		15BD0C0424DE0657007E8D27 /* MessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15BD0C0324DE0657007E8D27 /* MessageView.xib */; };
-		15BD0C0724DED9E8007E8D27 /* MessageCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BD0C0524DED9E8007E8D27 /* MessageCVCell.swift */; };
-		15BD0C0824DED9E8007E8D27 /* MessageCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15BD0C0624DED9E8007E8D27 /* MessageCVCell.xib */; };
 		15CEBC6124D71A0300D48C0E /* ProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CEBC6024D71A0300D48C0E /* ProgressHUD.swift */; };
 		779CE06B848B9F4E1AB37DDB /* Pods_worddeposit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F066F3CA351A4147BAE07B0 /* Pods_worddeposit.framework */; };
 /* End PBXBuildFile section */
@@ -115,8 +113,6 @@
 		15A7E04824D8B322006804FD /* VocabulariesTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VocabulariesTVCell.xib; sourceTree = "<group>"; };
 		15BD0C0124DE0631007E8D27 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		15BD0C0324DE0657007E8D27 /* MessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageView.xib; sourceTree = "<group>"; };
-		15BD0C0524DED9E8007E8D27 /* MessageCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCVCell.swift; sourceTree = "<group>"; };
-		15BD0C0624DED9E8007E8D27 /* MessageCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageCVCell.xib; sourceTree = "<group>"; };
 		15CEBC6024D71A0300D48C0E /* ProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressHUD.swift; sourceTree = "<group>"; };
 		2F066F3CA351A4147BAE07B0 /* Pods_worddeposit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_worddeposit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		40ABEB8C9F0BFED3166DA792 /* Pods-worddeposit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-worddeposit.release.xcconfig"; path = "Target Support Files/Pods-worddeposit/Pods-worddeposit.release.xcconfig"; sourceTree = "<group>"; };
@@ -242,7 +238,6 @@
 				1171E70524981CDD00805D35 /* VocabularyCardCVCell.xib */,
 				15A7E04824D8B322006804FD /* VocabulariesTVCell.xib */,
 				15BD0C0324DE0657007E8D27 /* MessageView.xib */,
-				15BD0C0624DED9E8007E8D27 /* MessageCVCell.xib */,
 			);
 			path = XIBs;
 			sourceTree = "<group>";
@@ -282,7 +277,6 @@
 			children = (
 				15CEBC6024D71A0300D48C0E /* ProgressHUD.swift */,
 				15BD0C0124DE0631007E8D27 /* MessageView.swift */,
-				15BD0C0524DED9E8007E8D27 /* MessageCVCell.swift */,
 			);
 			path = "Reusable Components";
 			sourceTree = "<group>";
@@ -366,7 +360,6 @@
 				1181BBF42498060F00DB682E /* VocabularyCardsVC.xib in Resources */,
 				11284229248E7D5100A014E9 /* Home.storyboard in Resources */,
 				1158D30F24917B9B0087DC96 /* VocabularyTVCell.xib in Resources */,
-				15BD0C0824DED9E8007E8D27 /* MessageCVCell.xib in Resources */,
 				1158D31524917EC50087DC96 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -434,7 +427,6 @@
 				150FA46124D8B6E40083D653 /* Vocabulary.swift in Sources */,
 				118162EF24BFB08E0088C0E1 /* UserInfoTVC.swift in Sources */,
 				1128423F248E845900A014E9 /* User.swift in Sources */,
-				15BD0C0724DED9E8007E8D27 /* MessageCVCell.swift in Sources */,
 				11284235248E83C800A014E9 /* ProfileTVC.swift in Sources */,
 				11F32A5324AF46D00097BF39 /* VocabularyResultsTVC.swift in Sources */,
 				11621A2724C25EFA003087AB /* WKWebVC.swift in Sources */,
