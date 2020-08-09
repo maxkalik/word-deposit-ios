@@ -13,7 +13,10 @@ class VocabularyTVC: UITableViewController {
     /// Listeners
     var db: Firestore!
     var storage: Storage!
+    
+    /// References
     var wordsListener: ListenerRegistration!
+    var wordsRef: CollectionReference!
     
     /// Search controller to help us with filtering items in the table view
     var searchController: UISearchController!
@@ -23,6 +26,10 @@ class VocabularyTVC: UITableViewController {
     
     /// Restoration state for UISearchController
     var restoredState = SearchControllerRestorableState()
+    
+    /// Strings
+    var userId: String!
+    var vocabularyId: String?
     
     // MARK: - View Lifecycle
 
@@ -48,6 +55,14 @@ class VocabularyTVC: UITableViewController {
                 restoredState.wasFirstResponder = false
             }
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let defaults = UserDefaults.standard
+        vocabularyId = defaults.string(forKey: "vocabulary_id")
+        guard let selectedVocabularyId = vocabularyId else { return }
+        print(selectedVocabularyId)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -92,14 +107,13 @@ class VocabularyTVC: UITableViewController {
     
     func setWordsListener() {
         // shoud be rewrited
-        guard let authUser = Auth.auth().currentUser else { return }
-        let userRef = db.collection("users").document(authUser.uid)
-        
-        
-        
-//        let vocabularyRef = userRef.collection("vocabularies").document(vocabularyId)
-        let wordsRef = userRef.collection("words").order(by: "timestamp", descending: true)
-        wordsListener = wordsRef.addSnapshotListener({ (snapshot, error) in
+        guard let authUser = Auth.auth().currentUser, let selectedVocabularyId = vocabularyId else { return }
+        self.userId = authUser.uid
+        let userRef = db.collection("users").document(self.userId)
+        let vocabularyRef = userRef.collection("vocabularies").document(selectedVocabularyId)
+        self.wordsRef = vocabularyRef.collection("words")
+        let wordsRefOrdered = vocabularyRef.collection("words").order(by: "timestamp", descending: true)
+        wordsListener = wordsRefOrdered.addSnapshotListener({ (snapshot, error) in
             if let error = error {
                 debugPrint(error.localizedDescription)
                 return
@@ -208,18 +222,19 @@ extension VocabularyTVC {
                 selectedWord = resultsTableController.filteredWords[indexPath.row]
             }
 
-            // TODO: shoud be rewrited in the singleton if needed
-            guard let user = Auth.auth().currentUser else { return }
-            
-            db.collection("users").document(user.uid).collection("words").document(selectedWord.id).delete { (error) in
+            self.wordsRef.document(selectedWord.id).delete { (error) in
                 if let error = error {
                     self.simpleAlert(title: "Error", msg: error.localizedDescription)
                     debugPrint(error.localizedDescription)
                     return
                 }
 
+                // TODO: shoud be rewrited in the singleton if needed
+//                guard let user = Auth.auth().currentUser else { return }
+                
+                guard let userId = self.userId, let selectedVocabularyId = self.vocabularyId else { return }
                 if selectedWord.imgUrl.isNotEmpty {
-                    self.storage.reference().child("/\(user.uid)/\(selectedWord.id).jpg").delete { (error) in
+                    self.storage.reference().child("/\(userId)/\(selectedVocabularyId)/\(selectedWord.id).jpg").delete { (error) in
                         if let error = error {
                             self.simpleAlert(title: "Error", msg: error.localizedDescription)
                             debugPrint(error.localizedDescription)
