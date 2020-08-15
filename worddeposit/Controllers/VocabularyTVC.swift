@@ -219,6 +219,8 @@ extension VocabularyTVC {
         
         if words.count == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: ReusableIdentifiers.MessageView, for: indexPath)
+            cell.layer.borderColor = UIColor.black.cgColor
+            cell.layer.borderWidth = 1
             cell.contentView.addSubview(messageView)
             messageView.setTitles(messageTxt: "You have no words yet", buttonTitle: "Add words")
             messageView.onButtonTap {
@@ -226,8 +228,6 @@ extension VocabularyTVC {
                 self.tabBarController?.selectedIndex = 1
             }
             return cell
-
-            
         }
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: XIBs.VocabularyTVCell, for: indexPath) as? VocabularyTVCell {
@@ -238,6 +238,9 @@ extension VocabularyTVC {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if words.count == 0 {
+            return tableView.frame.size.height - tableView.safeAreaInsets.top - CGFloat(tabBarController?.tabBar.frame.size.height ?? 0)
+        }
         return 50
     }
 }

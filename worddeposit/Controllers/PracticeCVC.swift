@@ -179,12 +179,17 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         }
     }
 
+
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if words.count < minWordsAmount {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReusableIdentifiers.MessageView, for: indexPath)
+            cell.layer.borderColor = UIColor.black.cgColor
+            cell.layer.borderWidth = 1
             cell.contentView.addSubview(messageView)
+            cell.isUserInteractionEnabled = true
             messageView.setTitles(messageTxt: "You have insufficient words amount for practice.\nAdd at least \(minWordsAmount - words.count) words", buttonTitle: "Add more words")
+            
             messageView.onButtonTap {
                 print("pressed")
                 self.tabBarController?.selectedIndex = 1
@@ -205,13 +210,14 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let screenSize = UIScreen.main.bounds
-        /*
+        
         if words.count < minWordsAmount {
             let width = screenSize.width - 40
-            let height = screenSize.height / 2 + 40
+            let height = collectionView.frame.size.height / 2
+            
             return CGSize(width: width, height: height)
         }
-        */
+        
         return CGSize(width: screenSize.width - 40, height: 200)
     }
     

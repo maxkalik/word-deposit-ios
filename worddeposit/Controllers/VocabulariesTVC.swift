@@ -216,6 +216,9 @@ class VocabulariesTVC: UITableViewController {
                             debugPrint(error.localizedDescription)
                             return
                         }
+                        // remove words from vocabulary
+                        
+                        // remove folder with images
                     }
                 }))
                 alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))

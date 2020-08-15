@@ -37,6 +37,11 @@ class MessageView: UIView {
     func setTitles(messageTxt: String, buttonTitle: String) {
         label.text  = messageTxt
         button.setTitle(buttonTitle, for: .normal)
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+    }
+    
+    @objc func buttonTapped() {
+        print("on button tap")
     }
 
     func setupOnSuperView() {
