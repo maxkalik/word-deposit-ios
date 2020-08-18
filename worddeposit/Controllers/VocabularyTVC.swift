@@ -10,7 +10,6 @@ class VocabularyTVC: UITableViewController {
     /// Data model for the table view
     var words = [Word]()
     var messageView = MessageView()
-    var progressHUD = ProgressHUD()
     
     /// Listeners
     var db: Firestore!
@@ -46,16 +45,10 @@ class VocabularyTVC: UITableViewController {
      
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.view.addSubview(progressHUD)
         self.view.addSubview(messageView)
-        setVocabulariesListener()
+        setupMessageView()
         messageView.hide()
-    }
-    
-    func setupMessage() {
-        messageView.show()
-        messageView.setTitles(messageTxt: "You have no words yet", buttonTitle: "Add words")
-        messageView.onButtonTap { self.tabBarController?.selectedIndex = 1 }
+        setVocabulariesListener()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -82,6 +75,12 @@ class VocabularyTVC: UITableViewController {
     }
     
     // MARK: - View setups
+    
+    func setupMessageView() {
+        messageView.show()
+        messageView.setTitles(messageTxt: "You have no words yet", buttonTitle: "Add words")
+        messageView.onButtonTap { self.tabBarController?.selectedIndex = 1 }
+    }
     
     func setupTableView() {
         let nib = UINib(nibName: XIBs.VocabularyTVCell, bundle: nil)
@@ -147,21 +146,20 @@ class VocabularyTVC: UITableViewController {
         wordsListener = wordsRefOrdered.addSnapshotListener({ (snapshot, error) in
             if let error = error {
                 debugPrint(error.localizedDescription)
-                self.progressHUD.hide()
                 return
             } else {
                 
-                if snapshot!.documents.isEmpty {
+                guard let snap = snapshot else { return }
+                
+                if snap.documents.isEmpty {
                     DispatchQueue.main.async {
-                        self.setupMessage()
-                        self.progressHUD.hide()
+                        self.setupMessageView()
                     }
                 }
                 
-                snapshot?.documentChanges.forEach({ (docChange) in
+                snap.documentChanges.forEach({ (docChange) in
                     let data = docChange.document.data()
                     let word = Word.init(data: data)
-                    self.progressHUD.hide()
                     
                     switch docChange.type {
                     case .added:
@@ -228,32 +226,10 @@ extension VocabularyTVC {
 
 extension VocabularyTVC {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        /*
-        print(words.count)
-        if words.count == 0 {
-            return 1
-        } else {
-            return words.count
-        }
-        */
         return words.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        /*
-        if words.count == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: ReusableIdentifiers.MessageView, for: indexPath)
-            cell.layer.borderColor = UIColor.black.cgColor
-            cell.layer.borderWidth = 1
-            cell.contentView.addSubview(messageView)
-            messageView.setTitles(messageTxt: "You have no words yet", buttonTitle: "Add words")
-            messageView.onButtonTap {
-                print("pressed")
-                self.tabBarController?.selectedIndex = 1
-            }
-            return cell
-        }
-        */
         if let cell = tableView.dequeueReusableCell(withIdentifier: XIBs.VocabularyTVCell, for: indexPath) as? VocabularyTVCell {
             cell.configureCell(word: words[indexPath.row])
             return cell
@@ -262,11 +238,6 @@ extension VocabularyTVC {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        /*
-        if words.count == 0 {
-            return tableView.frame.size.height - tableView.safeAreaInsets.top - CGFloat(tabBarController?.tabBar.frame.size.height ?? 0)
-        }
-        */
         return 50
     }
 }

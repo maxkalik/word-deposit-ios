@@ -44,29 +44,47 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-        if let flowlayout = collectionViewLayout as? UICollectionViewFlowLayout {
-            flowlayout.minimumLineSpacing = 20
-        }
-        setCurrentUser()
-
+        setupCollectionView()
         self.view.addSubview(progressHUD)
+        messageView.hide()
+        setCurrentUser()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         auth.removeStateDidChangeListener(authHandle!)
         vocabulariesListener.remove()
-        
+        collectionView.reloadData()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    
+    
+    // MARK: - Setup Views
+    
+    func setupMessageView(wordsCount: Int) {
+        for subview in self.collectionView.subviews {
+            subview.removeFromSuperview()
+        }
+        self.collectionView.addSubview(messageView)
+        messageView.show()
+        messageView.setTitles(messageTxt: "You have insufficient words amount for practice.\nAdd at least \(minWordsAmount - wordsCount) words", buttonTitle: "Add more words")
+        messageView.onButtonTap { self.tabBarController?.selectedIndex = 1 }
 
     }
     
     
-    // MARK: - Methods
+    func setupCollectionView() {
+        if let flowlayout = collectionViewLayout as? UICollectionViewFlowLayout {
+            flowlayout.minimumLineSpacing = 20
+        }
+    }
+    
+    // MARK: - Listeners Methods
     
     private func setCurrentUser() {
         authHandle = auth.addStateDidChangeListener { (auth, user) in
@@ -141,7 +159,15 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
             guard let documents = snapshot?.documents else { return }
             
             if documents.isEmpty {
-                print("no words")
+                DispatchQueue.main.async {
+                    self.setupMessageView(wordsCount: minWordsAmount)
+                }
+            }
+            
+            if documents.count < minWordsAmount {
+                DispatchQueue.main.async {
+                    self.setupMessageView(wordsCount: documents.count)
+                }
             }
             
             for document in documents {
@@ -153,6 +179,8 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
             self.collectionView.isHidden = false
         }
     }
+    
+    // MARK: - Make Word Desk
     
     func makeWordDesk(size: Int, wordsData: [Word], _ result: [Word] = []) -> [Word] {
         var result = result
@@ -170,33 +198,22 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         }
         return makeWordDesk(size: tmpCount, wordsData: wordsData, result)
     }
+    
+    // MARK: - UICollectinView Delegates
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        /*
         if words.count > minWordsAmount {
             return trainers.count
         } else {
             return 1
         }
+        */
+        return trainers.count
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        if words.count < minWordsAmount {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReusableIdentifiers.MessageView, for: indexPath)
-            cell.layer.borderColor = UIColor.black.cgColor
-            cell.layer.borderWidth = 1
-            cell.contentView.addSubview(messageView)
-            cell.isUserInteractionEnabled = true
-            messageView.setTitles(messageTxt: "You have insufficient words amount for practice.\nAdd at least \(minWordsAmount - words.count) words", buttonTitle: "Add more words")
-            
-            messageView.onButtonTap {
-                print("pressed")
-                self.tabBarController?.selectedIndex = 1
-            }
-//            messageView.center = collectionView.center
-            return cell
-        }
         
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? PracticeCVCell {
             let trainer = trainers[indexPath.row]
@@ -211,21 +228,23 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let screenSize = UIScreen.main.bounds
         
+        /*
         if words.count < minWordsAmount {
             let width = screenSize.width - 40
             let height = collectionView.frame.size.height / 2
             
             return CGSize(width: width, height: height)
         }
+        */
         
         return CGSize(width: screenSize.width - 40, height: 200)
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if words.count > minWordsAmount {
+//        if words.count > minWordsAmount {
             let sender = trainers[indexPath.row]
             self.performSegue(withIdentifier: Segues.PracticeRead, sender: sender)
-        }
+//        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
