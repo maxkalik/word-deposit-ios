@@ -128,7 +128,6 @@ class VocabularyTVC: UITableViewController {
                     let vocabulary = Vocabulary.init(data: data)
                     let defaults = UserDefaults.standard
                     defaults.set(vocabulary.id, forKey: "vocabulary_id")
-                    
                     self.words.removeAll()
                     self.tableView.reloadData()
                     

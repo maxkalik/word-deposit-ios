@@ -1,6 +1,7 @@
 import UIKit
 import FirebaseAuth
 import FirebaseFirestore
+import FirebaseStorage
 
 class VocabulariesTVC: UITableViewController {
 
@@ -19,15 +20,19 @@ class VocabulariesTVC: UITableViewController {
     var messageView = MessageView()
     
     var db: Firestore!
+    var storage: Storage!
     var vocabulariesListener: ListenerRegistration!
     var userRef: DocumentReference!
     var vocabulariesRef: DocumentReference!
+    
+    var userId: String!
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         db = Firestore.firestore()
+        storage = Storage.storage()
         setupTableView()
     }
     
@@ -37,16 +42,15 @@ class VocabulariesTVC: UITableViewController {
         
         guard let authUser = Auth.auth().currentUser else { return }
         userRef = db.collection("users").document(authUser.uid)
-        
+        userId = authUser.uid
+        setupMessage()
         messageView.hide()
     }
     
     func setupMessage() {
-        messageView.show()
-        messageView.setTitles(messageTxt: "You have no any vocabularies yet. Please add them.", buttonTitle: "+ Add vocabulary")
+        messageView.setTitles(messageTxt: "You have no any vocabularies yet.\nPlease add them.", buttonTitle: "+ Add vocabulary")
         messageView.onButtonTap { [unowned self] in
             self.performSegue(withIdentifier: Segues.VocabularyDetails, sender: nil)
-            print("pressed")
         }
     }
     
@@ -76,6 +80,7 @@ class VocabulariesTVC: UITableViewController {
             DispatchQueue.main.async {
                 if snapshot!.documents.isEmpty {
                     self.setupMessage()
+                    self.messageView.show()
                     self.isModalInPresentation = true
                 } else {
                     self.isModalInPresentation = false
@@ -209,16 +214,45 @@ class VocabulariesTVC: UITableViewController {
                 
                 let alert = UIAlertController(title: title, message: "Are you sure?", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Remove", style: .default, handler: { (action) in
-                    self.userRef.collection("vocabularies").document(vocabulary.id).delete { (error) in
+                    
+                    let vocabularyRef = self.userRef.collection("vocabularies").document(vocabulary.id)
+                    
+                    // remove folder with images
+
+                    vocabularyRef.collection("words").order(by: "img_url").getDocuments { (snapshot, error) in
+                        if let error = error {
+                            debugPrint(error.localizedDescription)
+                            return
+                        }
+                        
+                        guard let snap = snapshot else { return }
+                        for document in snap.documents {
+                            let data = document.data()
+                            let word = Word.init(data: data)
+                            if word.imgUrl.isNotEmpty {
+                                guard let uid = self.userId else { return }
+                                self.storage.reference().child("/\(uid)/\(vocabulary.id)/\(word.id).jpg").delete { (error) in
+                                    if let error = error {
+                                        self.simpleAlert(title: "Error", msg: error.localizedDescription)
+                                        debugPrint(error.localizedDescription)
+                                        return
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    // finally delete vocabulary with words
+                    
+                    vocabularyRef.delete { (error) in
                         if let error = error {
                             self.simpleAlert(title: "Error", msg: error.localizedDescription)
                             debugPrint(error.localizedDescription)
                             return
                         }
-                        // remove words from vocabulary
-                        
-                        // remove folder with images
                     }
+                    
+                    
                 }))
                 alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
                 present(alert, animated: true, completion: nil)

@@ -100,7 +100,11 @@ class ProfileTVC: UITableViewController {
     }
     
     private func fetchWords(from: DocumentReference) {
-        let wordsRef = from.collection("words")
+        
+        let defaults = UserDefaults.standard
+        guard let selectedVocabularyId = defaults.string(forKey: "vocabulary_id") else { return }
+        
+        let wordsRef = from.collection("vocabularies").document(selectedVocabularyId).collection("words")
         
         wordsRef.getDocuments { (snapshot, error) in
             if let error = error {

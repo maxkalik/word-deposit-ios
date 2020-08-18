@@ -46,6 +46,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         super.viewWillAppear(animated)
         setupCollectionView()
         self.view.addSubview(progressHUD)
+        progressHUD.show()
         messageView.hide()
         setCurrentUser()
     }
@@ -67,10 +68,10 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     // MARK: - Setup Views
     
     func setupMessageView(wordsCount: Int) {
-        for subview in self.collectionView.subviews {
+        for subview in collectionView.subviews {
             subview.removeFromSuperview()
         }
-        self.collectionView.addSubview(messageView)
+        collectionView.addSubview(messageView)
         messageView.show()
         messageView.setTitles(messageTxt: "You have insufficient words amount for practice.\nAdd at least \(minWordsAmount - wordsCount) words", buttonTitle: "Add more words")
         messageView.onButtonTap { self.tabBarController?.selectedIndex = 1 }
@@ -82,6 +83,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         if let flowlayout = collectionViewLayout as? UICollectionViewFlowLayout {
             flowlayout.minimumLineSpacing = 20
         }
+        collectionView.isHidden = true
     }
     
     // MARK: - Listeners Methods
@@ -98,7 +100,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                 if let document = document, document.exists {
                     guard let data = document.data() else { return }
                     self.user = User.init(data: data)
-                    self.progressHUD.setTitle(title: "\(self.user.firstName) \(self.user.lastName)")
+                    self.progressHUD.setTitle(title: "Fetching words")
                     // user defaults
                     let defaults = UserDefaults.standard
                     defaults.set(self.user.nativeLanguage, forKey: "native_language")
@@ -128,7 +130,6 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                     if let popoverPresentationController = vc.popoverPresentationController {
                         popoverPresentationController.delegate = self
                     }
-                    self.collectionView.isHidden = false
                     self.present(vc, animated: true)
                 }
                 

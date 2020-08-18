@@ -23,7 +23,7 @@ struct Word {
     }
     
     init(data: [String: Any]) {
-        self.imgUrl = data["imgUrl"] as? String ?? ""
+        self.imgUrl = data["img_url"] as? String ?? ""
         self.example = data["example"] as? String ?? ""
         self.translation = data["translation"] as? String ?? ""
         self.id = data["id"] as? String ?? ""
@@ -32,7 +32,7 @@ struct Word {
     
     static func modelToData(word: Word) -> [String: Any] {
         let data: [String: Any] = [
-            "imgUrl": word.imgUrl,
+            "img_url": word.imgUrl,
             "example": word.example,
             "translation": word.translation,
             "id": word.id,

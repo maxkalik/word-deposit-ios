@@ -77,8 +77,8 @@ class AddWordVC: UIViewController {
     
     func textFieldValidation() {
         guard let wordExample = wordExampleTextField.text, let wordTranslation = wordTranslationTextField.text else { return }
-        addWordButton.isHidden = wordExample.isEmpty || wordTranslation.isEmpty
-        clearAllButton.isHidden = wordExample.isEmpty && wordTranslation.isEmpty
+        addWordButton.isEnabled = !(wordExample.isEmpty || wordTranslation.isEmpty)
+        clearAllButton.isEnabled = !(wordExample.isEmpty && wordTranslation.isEmpty)
     }
     
     private func setupUI() {
@@ -86,8 +86,8 @@ class AddWordVC: UIViewController {
         progressHUD.hide()
         wordExampleTextField.autocorrectionType = .no
         wordTranslationTextField.autocorrectionType = .no
-        addWordButton.isHidden = true
-        clearAllButton.isHidden = true
+        addWordButton.isEnabled = false
+        clearAllButton.isEnabled = false
     }
     
     func prepareForUpload() {
@@ -173,8 +173,8 @@ class AddWordVC: UIViewController {
         wordExampleTextField.text = ""
         wordTranslationTextField.text = ""
         isImageSet = false
-        addWordButton.isHidden = true
-        clearAllButton.isHidden = true
+        addWordButton.isEnabled = false
+        clearAllButton.isEnabled = false
     }
     
     // MARK: - IBActions

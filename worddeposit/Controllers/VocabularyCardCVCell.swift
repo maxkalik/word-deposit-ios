@@ -31,6 +31,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
     
     // MARK: - Variables
 
+    var vocabularyId: String!
     var word: Word!
     var wordRef: DocumentReference!
     var db = Firestore.firestore()
@@ -129,7 +130,8 @@ class VocabularyCardCVCell: UICollectionViewCell {
         }
     }
     
-    func configureCell(word: Word, delegate: VocabularyCardCVCellDelegate) {
+    func configureCell(vocabularyId: String, word: Word, delegate: VocabularyCardCVCellDelegate) {
+        self.vocabularyId = vocabularyId
         self.word = word
         self.delegate = delegate
         setupWord(word)
@@ -186,8 +188,9 @@ class VocabularyCardCVCell: UICollectionViewCell {
         }
         
         // TODO: shoud be rewrited in the singleton
-        guard let user = Auth.auth().currentUser else { return }
-        wordRef = db.collection("users").document(user.uid).collection("words").document(word.id)
+        guard let user = Auth.auth().currentUser, let vocabularyId = self.vocabularyId else { return }
+        let vocabularyRef = db.collection("users").document(user.uid).collection("vocabularies").document(vocabularyId)
+        wordRef = vocabularyRef.collection("words").document(word.id)
         
         // Making a copy of the word
         var updatedWord = word!
@@ -206,15 +209,17 @@ class VocabularyCardCVCell: UICollectionViewCell {
     // check
     func uploadImage(userId: String, updatedWord: Word) {
         
-        guard let image = wordImageButton.imageView?.image else {
+        guard let image = wordImageButton.imageView?.image, let vocabularyId = self.vocabularyId else {
             self.delegate?.showAlert(title: "Error", message: "Fields cannot be empty")
             loader.isHidden = true
             return
         }
         
+        let imgRef = "/\(userId)/\(vocabularyId)/"
+        
         // remove image before uploading
         if word.imgUrl.isNotEmpty {
-            self.storage.reference().child("/\(userId)/\(word.id).jpg").delete { (error) in
+            self.storage.reference().child("\(imgRef)\(word.id).jpg").delete { (error) in
                 if let error = error {
                     self.delegate?.showAlert(title: "Error", message: error.localizedDescription)
                     debugPrint(error.localizedDescription)
@@ -228,7 +233,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
         let resizedImg = image.resized(toWidth: 400.0)
         guard let imageData = resizedImg?.jpegData(compressionQuality: 0.5) else { return }
         
-        let imageRef = Storage.storage().reference().child("/\(userId)/\(updatedWord.id).jpg")
+        let imageRef = Storage.storage().reference().child("/\(imgRef)/\(updatedWord.id).jpg")
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpg"
         
