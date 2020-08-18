@@ -131,7 +131,6 @@ class VocabulariesTVC: UITableViewController {
     }
 
     // MARK: - Table view data source
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return vocabularies.count
@@ -229,7 +228,6 @@ class VocabulariesTVC: UITableViewController {
 
 
     // MARK: - Navigation
-
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: Segues.VocabularyDetails, sender: indexPath.row)
     }

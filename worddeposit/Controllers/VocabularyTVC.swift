@@ -10,6 +10,7 @@ class VocabularyTVC: UITableViewController {
     /// Data model for the table view
     var words = [Word]()
     var messageView = MessageView()
+    var progressHUD = ProgressHUD()
     
     /// Listeners
     var db: Firestore!
@@ -42,7 +43,21 @@ class VocabularyTVC: UITableViewController {
         setupTableView()
         setupResultsTableController()
     }
-        
+     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.view.addSubview(progressHUD)
+        self.view.addSubview(messageView)
+        setVocabulariesListener()
+        messageView.hide()
+    }
+    
+    func setupMessage() {
+        messageView.show()
+        messageView.setTitles(messageTxt: "You have no words yet", buttonTitle: "Add words")
+        messageView.onButtonTap { self.tabBarController?.selectedIndex = 1 }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
@@ -56,11 +71,6 @@ class VocabularyTVC: UITableViewController {
                 restoredState.wasFirstResponder = false
             }
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setVocabulariesListener()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -137,22 +147,32 @@ class VocabularyTVC: UITableViewController {
         wordsListener = wordsRefOrdered.addSnapshotListener({ (snapshot, error) in
             if let error = error {
                 debugPrint(error.localizedDescription)
+                self.progressHUD.hide()
                 return
-            }
-            
-            snapshot?.documentChanges.forEach({ (docChange) in
-                let data = docChange.document.data()
-                let word = Word.init(data: data)
-
-                switch docChange.type {
-                case .added:
-                    self.onDocumentAdded(change: docChange, word: word)
-                case .modified:
-                    self.onDocumentModified(change: docChange, word: word)
-                case .removed:
-                    self.onDocumentRemoved(change: docChange)
+            } else {
+                
+                if snapshot!.documents.isEmpty {
+                    DispatchQueue.main.async {
+                        self.setupMessage()
+                        self.progressHUD.hide()
+                    }
                 }
-            })
+                
+                snapshot?.documentChanges.forEach({ (docChange) in
+                    let data = docChange.document.data()
+                    let word = Word.init(data: data)
+                    self.progressHUD.hide()
+                    
+                    switch docChange.type {
+                    case .added:
+                        self.onDocumentAdded(change: docChange, word: word)
+                    case .modified:
+                        self.onDocumentModified(change: docChange, word: word)
+                    case .removed:
+                        self.onDocumentRemoved(change: docChange)
+                    }
+                })
+            }
         })
     }
     
@@ -208,15 +228,19 @@ extension VocabularyTVC {
 
 extension VocabularyTVC {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if words.count > 0 {
-            return words.count
-        } else {
+        /*
+        print(words.count)
+        if words.count == 0 {
             return 1
+        } else {
+            return words.count
         }
+        */
+        return words.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+        /*
         if words.count == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: ReusableIdentifiers.MessageView, for: indexPath)
             cell.layer.borderColor = UIColor.black.cgColor
@@ -229,7 +253,7 @@ extension VocabularyTVC {
             }
             return cell
         }
-        
+        */
         if let cell = tableView.dequeueReusableCell(withIdentifier: XIBs.VocabularyTVCell, for: indexPath) as? VocabularyTVCell {
             cell.configureCell(word: words[indexPath.row])
             return cell
@@ -238,9 +262,11 @@ extension VocabularyTVC {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        /*
         if words.count == 0 {
             return tableView.frame.size.height - tableView.safeAreaInsets.top - CGFloat(tabBarController?.tabBar.frame.size.height ?? 0)
         }
+        */
         return 50
     }
 }

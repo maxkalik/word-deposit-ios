@@ -24,7 +24,6 @@ class VocabulariesTVCell: UITableViewCell {
                 containerView.layer.borderWidth = 2
                 containerView.layer.borderColor = CGColor(srgbRed: 0, green: 0, blue: 0, alpha: 1)
             }
-
         }
     }
     
