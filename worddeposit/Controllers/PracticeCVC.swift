@@ -33,20 +33,20 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
 
         // Register cell classes
         let nib = UINib(nibName: XIBs.PracticeCVCell, bundle: nil)
-        self.collectionView!.register(nib, forCellWithReuseIdentifier: reuseIdentifier)
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: ReusableIdentifiers.MessageView)
+        collectionView!.register(nib, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: ReusableIdentifiers.MessageView)
         
-        self.collectionView!.isPrefetchingEnabled = false
-        self.view.backgroundColor = UIColor.white
-        self.collectionView.isHidden = true
+        collectionView!.isPrefetchingEnabled = false
+        view.backgroundColor = UIColor.systemBackground
+        
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupCollectionView()
         self.view.addSubview(progressHUD)
         progressHUD.show()
+        setupCollectionView()
         messageView.hide()
         setCurrentUser()
     }
@@ -61,6 +61,9 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         auth.removeStateDidChangeListener(authHandle!)
         vocabulariesListener.remove()
         collectionView.reloadData()
+        for subview in collectionView.subviews {
+            subview.removeFromSuperview()
+        }
     }
     
     
@@ -83,7 +86,11 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         if let flowlayout = collectionViewLayout as? UICollectionViewFlowLayout {
             flowlayout.minimumLineSpacing = 20
         }
-        collectionView.isHidden = true
+        /*
+        DispatchQueue.main.async {
+            self.collectionView.isHidden = true
+        }
+        */
     }
     
     // MARK: - Listeners Methods

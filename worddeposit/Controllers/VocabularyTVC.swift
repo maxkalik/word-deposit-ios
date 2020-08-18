@@ -46,8 +46,8 @@ class VocabularyTVC: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.view.addSubview(messageView)
-        setupMessageView()
         messageView.hide()
+        setupMessageView()
         setVocabulariesListener()
     }
     
@@ -77,7 +77,6 @@ class VocabularyTVC: UITableViewController {
     // MARK: - View setups
     
     func setupMessageView() {
-        messageView.show()
         messageView.setTitles(messageTxt: "You have no words yet", buttonTitle: "Add words")
         messageView.onButtonTap { self.tabBarController?.selectedIndex = 1 }
     }
@@ -128,6 +127,7 @@ class VocabularyTVC: UITableViewController {
                     let vocabulary = Vocabulary.init(data: data)
                     let defaults = UserDefaults.standard
                     defaults.set(vocabulary.id, forKey: "vocabulary_id")
+                    
                     self.words.removeAll()
                     self.tableView.reloadData()
                     
@@ -150,9 +150,11 @@ class VocabularyTVC: UITableViewController {
                 
                 guard let snap = snapshot else { return }
                 
-                if snap.documents.isEmpty {
-                    DispatchQueue.main.async {
-                        self.setupMessageView()
+                DispatchQueue.main.async {
+                    if snap.documents.isEmpty {
+                        self.messageView.show()
+                    } else {
+                        self.messageView.hide()
                     }
                 }
                 

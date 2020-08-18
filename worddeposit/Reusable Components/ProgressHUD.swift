@@ -82,6 +82,9 @@ class ProgressHUD: UIVisualEffectView {
     }
     
     func show() {
+        if let superview = self.superview {
+            superview.isUserInteractionEnabled = false
+        }
         self.isHidden = false
     }
     
