@@ -6,6 +6,7 @@ class VocabulariesTVCell: UITableViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var languageLabel: UILabel!
+    @IBOutlet weak var wordsAmountActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var wordsAmountLabel: UILabel!
     @IBOutlet weak var selectionSwitch: UISwitch!
     @IBOutlet weak var containerView: UIView!
@@ -14,6 +15,8 @@ class VocabulariesTVCell: UITableViewCell {
     
     var wordsAmount: Int! {
         didSet {
+            wordsAmountActivityIndicator.stopAnimating()
+            wordsAmountLabel.isHidden = false
             wordsAmountLabel.text = String(wordsAmount)
         }
     }
@@ -32,12 +35,9 @@ class VocabulariesTVCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         selectionSwitch.isOn = false
-        wordsAmountLabel.text = "0"
-    }
-    
-    override class func awakeFromNib() {
-        super.awakeFromNib()
-        
+        wordsAmountLabel.text = "0" // TODO: Bug
+        wordsAmountLabel.isHidden = true
+        wordsAmountActivityIndicator.startAnimating()
     }
     
     // MARK: - Own Methods
@@ -58,14 +58,17 @@ class VocabulariesTVCell: UITableViewCell {
     func configureCell(vocabulary: Vocabulary, userRef: DocumentReference) {
         titleLabel.text = vocabulary.title
         languageLabel.text = vocabulary.language
-        
+        wordsAmountActivityIndicator.startAnimating()
+        wordsAmountLabel.isHidden = true
         let ref = userRef.collection("vocabularies").document(vocabulary.id).collection("words")
         ref.getDocuments { (snapshot, error) in
             if let error = error {
                 print(error.localizedDescription)
             } else  {
                 guard let snap = snapshot else { return }
+                self.wordsAmountActivityIndicator.stopAnimating()
                 self.wordsAmount = snap.count
+                
             }
         }
         

@@ -22,6 +22,7 @@ class RegistrationVC: UIViewController {
         auth = Auth.auth()
         db = Firestore.firestore()
         self.view.addSubview(progressHUD)
+        progressHUD.hide()
     }
     
     // MARK: - Methods
@@ -33,12 +34,13 @@ class RegistrationVC: UIViewController {
         newUserRef.setData(data) { (error) in
             if let error = error {
                 self.showError(error)
+                self.progressHUD.hide()
             } else {
+                self.progressHUD.hide()
                 let storyboard = UIStoryboard(name: "Home", bundle: nil)
                 let homeViewController = storyboard.instantiateViewController(identifier: Storyboards.Home) as? UITabBarController
                 self.view.window?.rootViewController = homeViewController
             }
-            self.progressHUD.hide()
         }
     }
     

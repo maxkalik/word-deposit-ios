@@ -8,6 +8,7 @@ class MessageView: UIView {
     var contentView: UIView!
     var action: (() -> Void)?
     
+
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var button: RoundedButton!
     
@@ -46,13 +47,7 @@ class MessageView: UIView {
 
     func setupOnSuperView() {
         if let superview = self.superview {
-            self.center = superview.center
-            
-            self.frame = CGRect(x: 0,
-                                y: 0,
-                                width: superview.frame.width,
-                                height: UIScreen.main.bounds.height / 2 - 40)
-            contentView.frame = self.bounds
+            self.frame = superview.bounds
         }
     }
     
@@ -74,6 +69,7 @@ class MessageView: UIView {
     }
     
     func show() {
+        print("message shown")
         self.isHidden = false
     }
 }

@@ -28,32 +28,19 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         super.viewDidLoad()
         auth = Auth.auth()
         db = Firestore.firestore()
-        
         trainers = PracticeTrainers().data
-
-        // Register cell classes
-        let nib = UINib(nibName: XIBs.PracticeCVCell, bundle: nil)
-        collectionView!.register(nib, forCellWithReuseIdentifier: reuseIdentifier)
-        collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: ReusableIdentifiers.MessageView)
-        
-        collectionView!.isPrefetchingEnabled = false
-        view.backgroundColor = UIColor.systemBackground
-        
+        registerViews()
     }
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.view.addSubview(progressHUD)
-        progressHUD.show()
-        setupCollectionView()
-        messageView.hide()
+        setupUI()
         setCurrentUser()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        messageView.frame.origin.y = collectionView.contentOffset.y
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -61,36 +48,37 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         auth.removeStateDidChangeListener(authHandle!)
         vocabulariesListener.remove()
         collectionView.reloadData()
-        for subview in collectionView.subviews {
-            subview.removeFromSuperview()
-        }
     }
-    
-    
     
     // MARK: - Setup Views
     
-    func setupMessageView(wordsCount: Int) {
-        for subview in collectionView.subviews {
-            subview.removeFromSuperview()
-        }
+    func setupUI() {
+        self.view.addSubview(progressHUD)
+        progressHUD.show()
+        setupCollectionView()
         collectionView.addSubview(messageView)
-        messageView.show()
-        messageView.setTitles(messageTxt: "You have insufficient words amount for practice.\nAdd at least \(minWordsAmount - wordsCount) words", buttonTitle: "Add more words")
-        messageView.onButtonTap { self.tabBarController?.selectedIndex = 1 }
-
+        messageView.hide()
+        setupMessage(wordsCount: words.count)
     }
     
+    func setupMessage(wordsCount: Int) {
+        messageView.setTitles(messageTxt: "You have insufficient words amount for practice.\nAdd at least \(minWordsAmount - wordsCount) words", buttonTitle: "Add more words")
+        messageView.onButtonTap { self.tabBarController?.selectedIndex = 1 }
+    }
+    
+    func registerViews() {
+        // Register cell classes
+        let nib = UINib(nibName: XIBs.PracticeCVCell, bundle: nil)
+        collectionView!.register(nib, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: ReusableIdentifiers.MessageView)
+    }
     
     func setupCollectionView() {
         if let flowlayout = collectionViewLayout as? UICollectionViewFlowLayout {
             flowlayout.minimumLineSpacing = 20
         }
-        /*
-        DispatchQueue.main.async {
-            self.collectionView.isHidden = true
-        }
-        */
+        collectionView!.isPrefetchingEnabled = false
+        view.backgroundColor = UIColor.systemBackground
     }
     
     // MARK: - Listeners Methods
@@ -166,15 +154,12 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
             self.progressHUD.hide()
             guard let documents = snapshot?.documents else { return }
             
-            if documents.isEmpty {
-                DispatchQueue.main.async {
-                    self.setupMessageView(wordsCount: minWordsAmount)
-                }
-            }
-            
-            if documents.count < minWordsAmount {
-                DispatchQueue.main.async {
-                    self.setupMessageView(wordsCount: documents.count)
+            DispatchQueue.main.async {
+                if documents.count < minWordsAmount {
+                    self.setupMessage(wordsCount: documents.count)
+                    self.messageView.show()
+                } else {
+                    self.messageView.hide()
                 }
             }
             
@@ -185,6 +170,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
             }
             self.collectionView.reloadData()
             self.collectionView.isHidden = false
+            
         }
     }
     
@@ -210,13 +196,6 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     // MARK: - UICollectinView Delegates
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        /*
-        if words.count > minWordsAmount {
-            return trainers.count
-        } else {
-            return 1
-        }
-        */
         return trainers.count
     }
 
@@ -235,24 +214,12 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let screenSize = UIScreen.main.bounds
-        
-        /*
-        if words.count < minWordsAmount {
-            let width = screenSize.width - 40
-            let height = collectionView.frame.size.height / 2
-            
-            return CGSize(width: width, height: height)
-        }
-        */
-        
         return CGSize(width: screenSize.width - 40, height: 200)
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        if words.count > minWordsAmount {
-            let sender = trainers[indexPath.row]
-            self.performSegue(withIdentifier: Segues.PracticeRead, sender: sender)
-//        }
+        let sender = trainers[indexPath.row]
+        self.performSegue(withIdentifier: Segues.PracticeRead, sender: sender)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

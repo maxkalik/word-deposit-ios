@@ -22,7 +22,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <view key="backgroundView" contentMode="scaleToFill" id="kyP-zW-Sva">
-                            <rect key="frame" x="0.0" y="-140" width="414" height="896"/>
+                            <rect key="frame" x="0.0" y="-88" width="414" height="896"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             <viewLayoutGuide key="safeArea" id="ejz-Jy-Tzo"/>
@@ -1037,8 +1037,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="cIB-pM-tsi"/>
-        <segue reference="L4V-Nc-46o"/>
+        <segue reference="khA-EK-dTJ"/>
+        <segue reference="JpH-Z0-vxD"/>
         <segue reference="cT5-yM-GyM"/>
         <segue reference="wQV-jD-p7z"/>
         <segue reference="FgU-uN-MIW"/>

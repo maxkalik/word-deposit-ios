@@ -43,21 +43,15 @@ class VocabulariesTVC: UITableViewController {
         guard let authUser = Auth.auth().currentUser else { return }
         userRef = db.collection("users").document(authUser.uid)
         userId = authUser.uid
+
         setupMessage()
         messageView.hide()
     }
     
-    func setupMessage() {
-        messageView.setTitles(messageTxt: "You have no any vocabularies yet.\nPlease add them.", buttonTitle: "+ Add vocabulary")
-        messageView.onButtonTap { [unowned self] in
-            self.performSegue(withIdentifier: Segues.VocabularyDetails, sender: nil)
-        }
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        messageView.frame.origin.y = tableView.contentOffset.y
         setVocabularyListener()
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -68,6 +62,13 @@ class VocabulariesTVC: UITableViewController {
     }
     
     // MARK: - Methods
+    
+    func setupMessage() {
+        messageView.setTitles(messageTxt: "You have no any vocabularies yet.\nPlease add them.", buttonTitle: "+ Add vocabulary")
+        messageView.onButtonTap { [unowned self] in
+            self.performSegue(withIdentifier: Segues.VocabularyDetails, sender: nil)
+        }
+    }
     
     func setVocabularyListener() {
         let vocabulariesRef = userRef.collection("vocabularies").order(by: "timestamp", descending: true)

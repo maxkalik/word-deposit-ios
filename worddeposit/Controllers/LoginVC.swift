@@ -46,6 +46,8 @@ class LoginVC: UIViewController {
         auth.signIn(withEmail: email, password: password) { [weak self] authResult, error in
             if let error = error {
                 self?.simpleAlert(title: "Error", msg: error.localizedDescription)
+                //TODO: - Check infinite loading
+                self?.progressHUD.hide()
                 return
             }
             self?.progressHUD.hide()

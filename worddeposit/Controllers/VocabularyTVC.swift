@@ -40,6 +40,7 @@ class VocabularyTVC: UITableViewController {
         db = Firestore.firestore()
         storage = Storage.storage()
         setupTableView()
+        setupMessage()
         setupResultsTableController()
     }
      
@@ -47,13 +48,13 @@ class VocabularyTVC: UITableViewController {
         super.viewWillAppear(animated)
         self.view.addSubview(messageView)
         messageView.hide()
-        setupMessageView()
         setVocabulariesListener()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
+        messageView.frame.origin.y = tableView.contentOffset.y
+        
         // Restore the searchController's active state.
         if restoredState.wasActive {
             searchController.isActive = restoredState.wasActive
@@ -76,7 +77,7 @@ class VocabularyTVC: UITableViewController {
     
     // MARK: - View setups
     
-    func setupMessageView() {
+    func setupMessage() {
         messageView.setTitles(messageTxt: "You have no words yet", buttonTitle: "Add words")
         messageView.onButtonTap { self.tabBarController?.selectedIndex = 1 }
     }
