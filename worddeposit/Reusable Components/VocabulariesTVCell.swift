@@ -13,13 +13,6 @@ class VocabulariesTVCell: UITableViewCell {
     
     // MARK: - Istances
     
-    var wordsAmount: Int! {
-        didSet {
-            wordsAmountActivityIndicator.stopAnimating()
-            wordsAmountLabel.isHidden = false
-            wordsAmountLabel.text = String(wordsAmount)
-        }
-    }
     var isSelectedVocabulary: Bool! {
         didSet {
             selectionSwitch.isOn = isSelectedVocabulary
@@ -35,9 +28,6 @@ class VocabulariesTVCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         selectionSwitch.isOn = false
-        wordsAmountLabel.text = "0" // TODO: Bug
-        wordsAmountLabel.isHidden = true
-        wordsAmountActivityIndicator.startAnimating()
     }
     
     // MARK: - Own Methods
@@ -58,20 +48,7 @@ class VocabulariesTVCell: UITableViewCell {
     func configureCell(vocabulary: Vocabulary, userRef: DocumentReference) {
         titleLabel.text = vocabulary.title
         languageLabel.text = vocabulary.language
-        wordsAmountActivityIndicator.startAnimating()
-        wordsAmountLabel.isHidden = true
-        let ref = userRef.collection("vocabularies").document(vocabulary.id).collection("words")
-        ref.getDocuments { (snapshot, error) in
-            if let error = error {
-                print(error.localizedDescription)
-            } else  {
-                guard let snap = snapshot else { return }
-                self.wordsAmountActivityIndicator.stopAnimating()
-                self.wordsAmount = snap.count
-                
-            }
-        }
-        
+        wordsAmountLabel.text = String(vocabulary.wordsAmount)
         containerView.layer.cornerRadius = 8
         containerView.layer.borderWidth = 0
         containerView.layer.backgroundColor = CGColor(srgbRed: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 0.5)

@@ -170,7 +170,6 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
             }
             self.collectionView.reloadData()
             self.collectionView.isHidden = false
-            
         }
     }
     

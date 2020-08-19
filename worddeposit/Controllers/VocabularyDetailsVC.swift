@@ -74,7 +74,7 @@ class VocabularyDetailsVC: UIViewController {
         
         if vocabulary == nil {
             let vocabularyRef = userRef.collection("vocabularies").document()
-            vocabulary = Vocabulary.init(id: "", title: title, language: language, isSelected: isFirstSelected, timestamp: Timestamp())
+            vocabulary = Vocabulary.init(id: "", title: title, language: language, wordsAmount: 0, isSelected: isFirstSelected, timestamp: Timestamp())
             vocabulary!.id = vocabularyRef.documentID
             setVocabulary(vocabulary!)
         } else {

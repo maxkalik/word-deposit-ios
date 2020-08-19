@@ -118,8 +118,8 @@ class VocabulariesTVC: UITableViewController {
     }
     
     func setVocabularyListener() {
-        let vocabulariesRef = userRef.collection("vocabularies").order(by: "timestamp", descending: true)
-        vocabulariesListener = vocabulariesRef.addSnapshotListener({ (snapshot, error) in
+        let vocabularyQuery = userRef.collection("vocabularies").order(by: "timestamp", descending: true)
+        vocabulariesListener = vocabularyQuery.addSnapshotListener({ (snapshot, error) in
             if let error = error {
                 debugPrint(error.localizedDescription)
                 self.progressHUD.hide()
@@ -138,15 +138,26 @@ class VocabulariesTVC: UITableViewController {
             
             snapshot?.documentChanges.forEach({ (docChange) in
                 let data = docChange.document.data()
-                let vocabulary = Vocabulary.init(data: data)
-
-                switch docChange.type {
-                case .added:
-                    self.onDocumentAdded(change: docChange, vocabulary: vocabulary)
-                case .modified:
-                    self.onDocumentModified(change: docChange, vocabulary: vocabulary)
-                case .removed:
-                    self.onDocumentRemoved(change: docChange)
+                var vocabulary = Vocabulary.init(data: data)
+                
+                let wordsRef = self.userRef.collection("vocabularies").document(vocabulary.id).collection("words")
+                
+                wordsRef.getDocuments { (snapshot, error) in
+                    if let error = error {
+                        print(error.localizedDescription)
+                    } else  {
+                        guard let snap = snapshot else { return }
+                        vocabulary.wordsAmount = snap.count
+                        print(vocabulary)
+                        switch docChange.type {
+                        case .added:
+                            self.onDocumentAdded(change: docChange, vocabulary: vocabulary)
+                        case .modified:
+                            self.onDocumentModified(change: docChange, vocabulary: vocabulary)
+                        case .removed:
+                            self.onDocumentRemoved(change: docChange)
+                        }
+                    }
                 }
             })
         })
@@ -208,8 +219,6 @@ class VocabulariesTVC: UITableViewController {
     @objc func switchChaged(sender: UISwitch) {
         if sender.tag != selectedVocabularyIndex {
             
-            print("sender ---> ", sender.tag)
-            print("old one --> ", selectedVocabularyIndex)
             // update old one
             let oldIndex = selectedVocabularyIndex
             vocabularies[oldIndex].isSelected = false
@@ -217,7 +226,6 @@ class VocabulariesTVC: UITableViewController {
             
             // update new one
             selectedVocabularyIndex = sender.tag
-            print("changed --> ", selectedVocabularyIndex)
             var vocabulary = vocabularies[selectedVocabularyIndex]
             vocabulary.isSelected = true
             updateVocabulary(vocabulary)
