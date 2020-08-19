@@ -14,6 +14,7 @@ class PracticeReadVC: UIViewController {
         didSet {
             guard let word = trainedWord else { return }
             if let url = URL(string: word.imgUrl) {
+                wordImage.isHidden = false
                 wordImage.kf.indicatorType = .activity
                 let options: KingfisherOptionsInfo = [KingfisherOptionsInfoItem.transition(.fade(0.2))]
                 let imgRecourse = ImageResource(downloadURL: url, cacheKey: word.imgUrl)

@@ -12,6 +12,9 @@ class ProfileTVC: UITableViewController {
     @IBOutlet weak var wordsAmount: UILabel!
     @IBOutlet weak var nativeLanguage: UILabel!
     @IBOutlet weak var notificationsSwitch: UISwitch!
+    @IBOutlet weak var answersPrecentage: UILabel!
+    @IBOutlet weak var answersPrecentageLoading: UIActivityIndicatorView!
+    @IBOutlet weak var wordsAmountLoading: UIActivityIndicatorView!
     
     // MARK: - Instances
     
@@ -50,6 +53,12 @@ class ProfileTVC: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getCurrentUser()
+        
+        wordsAmount.isHidden = true
+        answersPrecentage.isHidden = true
+        
+        wordsAmountLoading.startAnimating()
+        answersPrecentageLoading.startAnimating()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -113,6 +122,11 @@ class ProfileTVC: UITableViewController {
             }
             guard let documents = snapshot?.documents else { return }
             self.wordsAmount.text = String(documents.count)
+            self.wordsAmount.isHidden = false
+            self.answersPrecentage.isHidden = false
+            
+            self.wordsAmountLoading.stopAnimating()
+            self.answersPrecentageLoading.stopAnimating()
         }
     }
     
