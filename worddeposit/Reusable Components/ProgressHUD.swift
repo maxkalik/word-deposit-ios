@@ -43,14 +43,14 @@ class ProgressHUD: UIVisualEffectView {
     }
     
     private func setupTitle() {
+        self.layer.cornerRadius = 8.0
+        self.clipsToBounds = true
         if title != nil {
             let activityIndicatorSize = activityIndictor.frame.size.width
             activityIndictor.frame = CGRect(x: (width - activityIndicatorSize) / 2,
                                             y: 26,
                                             width: activityIndicatorSize,
                                             height: activityIndicatorSize)
-            
-            layer.cornerRadius = 8.0
             layer.masksToBounds = true
             label.text = title
             label.textAlignment = NSTextAlignment.center

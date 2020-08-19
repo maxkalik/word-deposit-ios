@@ -79,7 +79,7 @@ class VocabularyTVC: UITableViewController {
     
     func setupMessage() {
         messageView.setTitles(messageTxt: "You have no words yet", buttonTitle: "Add words")
-        messageView.onButtonTap { self.tabBarController?.selectedIndex = 1 }
+        messageView.onPrimaryButtonTap { self.tabBarController?.selectedIndex = 1 }
     }
     
     func setupTableView() {

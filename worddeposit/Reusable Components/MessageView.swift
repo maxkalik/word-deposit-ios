@@ -7,10 +7,12 @@ class MessageView: UIView {
     
     var contentView: UIView!
     var action: (() -> Void)?
+    var secondaryAction: (() -> Void)?
     
 
     @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var button: RoundedButton!
+    @IBOutlet weak var primaryButton: RoundedButton!
+    @IBOutlet weak var secondaryButton: UIButton!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,8 +27,12 @@ class MessageView: UIView {
     func commonInit() {
         guard let view = loadViewFromNib() else { return }
         view.frame = self.bounds
-        button.contentEdgeInsets.left = 20
-        button.contentEdgeInsets.right = 20
+        
+        primaryButton.contentEdgeInsets.left = 20
+        primaryButton.contentEdgeInsets.right = 20
+        
+        secondaryButton.isHidden = true
+        
         self.addSubview(view)
         contentView = view
     }
@@ -35,16 +41,21 @@ class MessageView: UIView {
         setupOnSuperView()
     }
     
-    func setTitles(messageTxt: String, buttonTitle: String) {
+    func setTitles(messageTxt: String, buttonTitle: String, secondaryButtonTitle: String? = nil) {
         label.text  = messageTxt
-        button.setTitle(buttonTitle, for: .normal)
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        primaryButton.setTitle(buttonTitle, for: .normal)
+        // primaryButton.addTarget(self, action: #selector(secondaryButtonTapped), for: .touchUpInside)
+        
+        secondaryButton.setTitle(secondaryButtonTitle, for: .normal)
+        
     }
     
-    @objc func buttonTapped() {
+    /*
+    @objc func secondaryButtonTapped() {
         print("on button tap")
     }
-
+    */
+    
     func setupOnSuperView() {
         if let superview = self.superview {
             self.frame = superview.bounds
@@ -56,11 +67,20 @@ class MessageView: UIView {
         return nib.instantiate(withOwner: self, options: nil).first as? UIView
     }
     
-    func onButtonTap(action: @escaping () -> Void) {
+    func onPrimaryButtonTap(action: @escaping () -> Void) {
         self.action = action
     }
     
-    @IBAction func buttonTap(_ sender: UIButton) {
+    func onSecondaryButtonTap(secondaryAction: @escaping () -> Void) {
+        self.secondaryAction = secondaryAction
+    }
+    
+    @IBAction func secondaryButtonTap(_ sender: UIButton) {
+        secondaryAction?()
+    }
+    
+    
+    @IBAction func primaryButtonTap(_ sender: UIButton) {
         action?()
     }
     
@@ -69,7 +89,12 @@ class MessageView: UIView {
     }
     
     func show() {
-        print("message shown")
         self.isHidden = false
+    }
+    
+    func showSecondaryButton() {
+        secondaryButton.isHidden = false
+        secondaryButton.contentEdgeInsets.left = 20
+        secondaryButton.contentEdgeInsets.right = 20
     }
 }

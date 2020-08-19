@@ -96,7 +96,7 @@
 		1181BBF22498060F00DB682E /* VocabularyCardsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VocabularyCardsVC.xib; sourceTree = "<group>"; };
 		1192354F24BFB66C00E76403 /* TextFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFields.swift; sourceTree = "<group>"; };
 		119DBF5624ACCFBF009124B7 /* Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
-		11B20D6824C8DF2E00C1CB4E /* PracticeAnswerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PracticeAnswerItem.swift; path = worddeposit/Controllers/PracticeAnswerItem.swift; sourceTree = SOURCE_ROOT; };
+		11B20D6824C8DF2E00C1CB4E /* PracticeAnswerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PracticeAnswerItem.swift; path = "worddeposit/Reusable Components/PracticeAnswerItem.swift"; sourceTree = SOURCE_ROOT; };
 		11B20D6924C8DF2E00C1CB4E /* PracticeAnswerItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = PracticeAnswerItem.xib; path = worddeposit/XIBs/PracticeAnswerItem.xib; sourceTree = SOURCE_ROOT; };
 		11B20D6C24C8E00800C1CB4E /* PracticeReadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PracticeReadVC.swift; path = worddeposit/Controllers/PracticeReadVC.swift; sourceTree = SOURCE_ROOT; };
 		11D879B12494170B00FF7BA3 /* worddeposit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = worddeposit.entitlements; sourceTree = "<group>"; };
@@ -174,23 +174,18 @@
 				11284238248E83E000A014E9 /* RegistrationVC.swift */,
 				1128423A248E83ED00A014E9 /* ForgotPasswordVC.swift */,
 				11F0326F24C8272700BD6350 /* PracticeCVC.swift */,
-				11F0326B24C8267E00BD6350 /* PracticeCVCell.swift */,
 				11B20D6C24C8E00800C1CB4E /* PracticeReadVC.swift */,
-				11B20D6824C8DF2E00C1CB4E /* PracticeAnswerItem.swift */,
 				1128422E248E839D00A014E9 /* AddWordVC.swift */,
 				11284232248E83BB00A014E9 /* VocabularyTVC.swift */,
 				11F32A5224AF46D00097BF39 /* VocabularyResultsTVC.swift */,
 				11F32A5424AF49C30097BF39 /* VocabularyTVC+Restore.swift */,
 				11F32A5824AF49DB0097BF39 /* VocabularyTVC+Updating.swift */,
-				1158D30C24917B9B0087DC96 /* VocabularyTVCell.swift */,
 				1181BBF12498060F00DB682E /* VocabularyCardsVC.swift */,
-				1171E70424981CDD00805D35 /* VocabularyCardCVCell.swift */,
 				11284234248E83C800A014E9 /* ProfileTVC.swift */,
-				118162EE24BFB08E0088C0E1 /* UserInfoTVC.swift */,
 				11621A2424C24819003087AB /* ProfileTVCCheckmark.swift */,
+				118162EE24BFB08E0088C0E1 /* UserInfoTVC.swift */,
 				11621A2624C25EFA003087AB /* WKWebVC.swift */,
 				11ECE4B324EB0FA100B7884B /* VocabulariesTVC.swift */,
-				15A7E04724D8B322006804FD /* VocabulariesTVCell.swift */,
 				156C80B624D8D27E0077905D /* VocabularyDetailsVC.swift */,
 			);
 			path = Controllers;
@@ -231,13 +226,13 @@
 		1158D30B2491720C0087DC96 /* XIBs */ = {
 			isa = PBXGroup;
 			children = (
+				15BD0C0324DE0657007E8D27 /* MessageView.xib */,
 				11F0326C24C8267E00BD6350 /* PracticeCVCell.xib */,
 				11B20D6924C8DF2E00C1CB4E /* PracticeAnswerItem.xib */,
 				1158D30D24917B9B0087DC96 /* VocabularyTVCell.xib */,
 				1181BBF22498060F00DB682E /* VocabularyCardsVC.xib */,
 				1171E70524981CDD00805D35 /* VocabularyCardCVCell.xib */,
 				15A7E04824D8B322006804FD /* VocabulariesTVCell.xib */,
-				15BD0C0324DE0657007E8D27 /* MessageView.xib */,
 			);
 			path = XIBs;
 			sourceTree = "<group>";
@@ -277,6 +272,11 @@
 			children = (
 				15CEBC6024D71A0300D48C0E /* ProgressHUD.swift */,
 				15BD0C0124DE0631007E8D27 /* MessageView.swift */,
+				11F0326B24C8267E00BD6350 /* PracticeCVCell.swift */,
+				1158D30C24917B9B0087DC96 /* VocabularyTVCell.swift */,
+				1171E70424981CDD00805D35 /* VocabularyCardCVCell.swift */,
+				15A7E04724D8B322006804FD /* VocabulariesTVCell.swift */,
+				11B20D6824C8DF2E00C1CB4E /* PracticeAnswerItem.swift */,
 			);
 			path = "Reusable Components";
 			sourceTree = "<group>";

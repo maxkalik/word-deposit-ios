@@ -9,8 +9,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MessageView" customModule="worddeposit" customModuleProvider="target">
             <connections>
-                <outlet property="button" destination="RvO-2T-0iS" id="rA5-gC-Fte"/>
                 <outlet property="label" destination="4o4-GO-EKh" id="YH2-G4-WD6"/>
+                <outlet property="primaryButton" destination="RvO-2T-0iS" id="rA5-gC-Fte"/>
+                <outlet property="secondaryButton" destination="GfA-36-noY" id="bfa-8t-35k"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -19,7 +20,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="YGD-q7-13Q">
-                    <rect key="frame" x="20" y="31" width="280" height="95.5"/>
+                    <rect key="frame" x="20" y="1" width="280" height="155.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4o4-GO-EKh">
                             <rect key="frame" x="120" y="0.0" width="40" height="25.5"/>
@@ -38,7 +39,20 @@
                                 <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                             <connections>
-                                <action selector="buttonTap:" destination="-1" eventType="touchUpInside" id="C7Y-F2-Hg6"/>
+                                <action selector="primaryButtonTap:" destination="-1" eventType="touchUpInside" id="C7Y-F2-Hg6"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GfA-36-noY">
+                            <rect key="frame" x="113" y="115.5" width="54" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="frT-eE-51W"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <state key="normal" title="Logout">
+                                <color key="titleColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="secondaryButtonTap:" destination="-1" eventType="touchUpInside" id="anp-8p-y22"/>
                             </connections>
                         </button>
                     </subviews>

@@ -18,7 +18,9 @@ class VocabulariesTVC: UITableViewController {
     }
     
     var messageView = MessageView()
+    var progressHUD = ProgressHUD()
     
+    var auth: Auth!
     var db: Firestore!
     var storage: Storage!
     var vocabulariesListener: ListenerRegistration!
@@ -31,6 +33,7 @@ class VocabulariesTVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        auth = Auth.auth()
         db = Firestore.firestore()
         storage = Storage.storage()
         setupTableView()
@@ -38,9 +41,12 @@ class VocabulariesTVC: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.view.addSubview(messageView)
+        view.addSubview(messageView)
+        view.superview?.addSubview(progressHUD)
+        progressHUD.show()
         
-        guard let authUser = Auth.auth().currentUser else { return }
+        
+        guard let authUser = auth.currentUser else { return }
         userRef = db.collection("users").document(authUser.uid)
         userId = authUser.uid
 
@@ -64,10 +70,51 @@ class VocabulariesTVC: UITableViewController {
     // MARK: - Methods
     
     func setupMessage() {
-        messageView.setTitles(messageTxt: "You have no any vocabularies yet.\nPlease add them.", buttonTitle: "+ Add vocabulary")
-        messageView.onButtonTap { [unowned self] in
+        messageView.setTitles(
+            messageTxt: "You have no any vocabularies yet.\nPlease add them.",
+            buttonTitle: "+ Add vocabulary",
+            secondaryButtonTitle: "Logout"
+        )
+        messageView.showSecondaryButton()
+        messageView.onPrimaryButtonTap { [unowned self] in
             self.performSegue(withIdentifier: Segues.VocabularyDetails, sender: nil)
         }
+        messageView.onSecondaryButtonTap {
+            self.progressHUD.show()
+            self.logout()
+        }
+    }
+    
+    func logout() {
+        do {
+            try auth.signOut()
+            // clear all listeners and ui
+            progressHUD.hide()
+            self.showLoginVC()
+        } catch let error as NSError {
+            simpleAlert(title: "Error", msg: error.localizedDescription)
+            progressHUD.hide()
+            debugPrint(error.localizedDescription)
+        }
+    }
+    
+    private func showLoginVC() {
+       let storyboard = UIStoryboard(name: "Main", bundle: nil)
+       let loginVC = storyboard.instantiateViewController(identifier: Storyboards.Login)
+        
+        guard let window = self.view.window else {
+            self.view.window?.rootViewController = loginVC
+            self.view.window?.makeKeyAndVisible()
+            return
+        }
+        
+        window.rootViewController = loginVC
+        window.makeKeyAndVisible()
+
+        let options: UIView.AnimationOptions = .transitionCrossDissolve
+        let duration: TimeInterval = 0.3
+        
+        UIView.transition(with: window, duration: duration, options: options, animations: nil, completion: nil)
     }
     
     func setVocabularyListener() {
@@ -75,9 +122,10 @@ class VocabulariesTVC: UITableViewController {
         vocabulariesListener = vocabulariesRef.addSnapshotListener({ (snapshot, error) in
             if let error = error {
                 debugPrint(error.localizedDescription)
+                self.progressHUD.hide()
                 return
             }
-            
+            self.progressHUD.hide()
             DispatchQueue.main.async {
                 if snapshot!.documents.isEmpty {
                     self.setupMessage()
