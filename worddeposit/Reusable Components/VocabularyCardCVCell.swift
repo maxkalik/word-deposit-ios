@@ -27,8 +27,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
     @IBOutlet weak var wordTranslationTextField: UITextField!
     @IBOutlet weak var saveChangingButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
-    @IBOutlet weak var loader: RoundedView!
-    
+    @IBOutlet weak var loader: UIActivityIndicatorView!
     // MARK: - Variables
 
     var vocabularyId: String!
@@ -50,11 +49,12 @@ class VocabularyCardCVCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         wordImageButton.setImage(UIImage(named: Placeholders.Logo), for: .normal)
+        saveChangingButton.setTitle("Save Changing", for: .normal)
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        loader.isHidden = true
+//        loader.isHidden = true
         saveChangingButton.isHidden = true
         cancelButton.isHidden = true
         
@@ -79,7 +79,6 @@ class VocabularyCardCVCell: UICollectionViewCell {
     
     @objc func keyboardWillShow(sender: UIResponder) {
         // self.view.frame.origin.y -= 150
-//        self.frame.origin.y -= 150
         delegate?.disableEnableScroll(isKeyboardShow: true)
         print("keyboard show")
         
@@ -169,7 +168,9 @@ class VocabularyCardCVCell: UICollectionViewCell {
     }
 
     @IBAction func onSaveChangingTouched(_ sender: UIButton) {
-        self.loader.isHidden = false
+//        self.loader.isHidden = false
+        saveChangingButton.setTitle("", for: .normal)
+        loader.startAnimating()
         prepareForUpload()
     }
     
@@ -211,7 +212,8 @@ class VocabularyCardCVCell: UICollectionViewCell {
         
         guard let image = wordImageButton.imageView?.image, let vocabularyId = self.vocabularyId else {
             self.delegate?.showAlert(title: "Error", message: "Fields cannot be empty")
-            loader.isHidden = true
+            loader.stopAnimating()
+            saveChangingButton.setTitle("Save Changing", for: .normal)
             return
         }
         
@@ -271,7 +273,8 @@ class VocabularyCardCVCell: UICollectionViewCell {
                 self.hideAllButtons(true)
                 self.delegate?.showAlert(title: "Success", message: "Word has been updated")
             }
-            self.loader.isHidden = true
+            self.loader.stopAnimating()
+            self.saveChangingButton.setTitle("Save Changing", for: .normal)
             self.isImageSet = false
         }
     }

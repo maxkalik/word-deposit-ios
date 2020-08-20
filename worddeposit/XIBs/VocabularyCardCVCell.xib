@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -78,6 +78,9 @@
                                             <action selector="wordImageButtonTouched:" destination="gTV-IL-0wX" eventType="touchUpInside" id="2Uo-Ey-b62"/>
                                         </connections>
                                     </button>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="eLD-MA-D1N">
+                                        <rect key="frame" x="114.5" y="410" width="20" height="20"/>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
@@ -87,6 +90,8 @@
                                     <constraint firstAttribute="trailing" secondItem="qEf-66-3td" secondAttribute="trailing" id="Ukz-dA-qRS"/>
                                     <constraint firstAttribute="trailing" secondItem="dby-dI-Ln7" secondAttribute="trailing" id="eMA-nT-z6s"/>
                                     <constraint firstItem="dby-dI-Ln7" firstAttribute="top" secondItem="qEf-66-3td" secondAttribute="bottom" constant="30" id="kZo-F1-Opp"/>
+                                    <constraint firstItem="eLD-MA-D1N" firstAttribute="centerX" secondItem="k3D-Vv-Z1G" secondAttribute="centerX" id="rPy-JC-9Wh"/>
+                                    <constraint firstItem="eLD-MA-D1N" firstAttribute="centerY" secondItem="k3D-Vv-Z1G" secondAttribute="centerY" id="uWG-Po-O6D"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -99,28 +104,11 @@
                             <constraint firstItem="NG3-UZ-tdL" firstAttribute="centerX" secondItem="YMn-75-jd0" secondAttribute="centerX" id="oOp-pv-GNs"/>
                         </constraints>
                     </scrollView>
-                    <view alpha="0.69999998807907104" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vMz-nY-pBv" customClass="RoundedView" customModule="worddeposit" customModuleProvider="target">
-                        <rect key="frame" x="84.5" y="210" width="100" height="100"/>
-                        <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="eCn-tW-0fh">
-                                <rect key="frame" x="31.5" y="31.5" width="37" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </activityIndicatorView>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="100" id="fYW-OM-M8X"/>
-                            <constraint firstAttribute="height" constant="100" id="iF2-R6-SKq"/>
-                        </constraints>
-                    </view>
                 </subviews>
             </view>
             <constraints>
                 <constraint firstItem="YMn-75-jd0" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="7gs-Di-Zvi"/>
-                <constraint firstItem="vMz-nY-pBv" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="8nY-8R-g2g"/>
                 <constraint firstAttribute="trailing" secondItem="YMn-75-jd0" secondAttribute="trailing" id="CFO-3B-3PB"/>
-                <constraint firstItem="vMz-nY-pBv" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="JeY-x2-OYe"/>
                 <constraint firstItem="YMn-75-jd0" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="QTr-2r-OFQ"/>
                 <constraint firstAttribute="bottom" secondItem="YMn-75-jd0" secondAttribute="bottom" id="rGP-if-4Ge"/>
                 <constraint firstItem="YMn-75-jd0" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="z1L-Lg-vuo"/>
@@ -129,7 +117,7 @@
             <size key="customSize" width="269" height="520"/>
             <connections>
                 <outlet property="cancelButton" destination="CyV-qI-Uyf" id="RM4-V9-6Ol"/>
-                <outlet property="loader" destination="vMz-nY-pBv" id="Jut-35-B4m"/>
+                <outlet property="loader" destination="eLD-MA-D1N" id="HDc-me-rmj"/>
                 <outlet property="saveChangingButton" destination="k3D-Vv-Z1G" id="Cl2-bV-P2x"/>
                 <outlet property="wordExampleTextField" destination="bYr-Ab-Q6M" id="gCz-JX-ORL"/>
                 <outlet property="wordImageButton" destination="qEf-66-3td" id="PO7-Vx-shA"/>
