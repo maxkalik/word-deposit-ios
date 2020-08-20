@@ -20,21 +20,23 @@ class AddWordVC: UIViewController {
         didSet {
             wordImagePickerBtn.imageView?.contentMode = .scaleAspectFill
         }
-        
     }
     
     @IBOutlet weak var addWordButton: RoundedButton!
     @IBOutlet weak var clearAllButton: UIButton!
     @IBOutlet weak var wordExampleTextField: UITextField!
     @IBOutlet weak var wordTranslationTextField: UITextField!
-    @IBOutlet weak var loader: RoundedView!
+    
     
     // MARK: - Instances
     
+    var progressHUD = ProgressHUD(title: "Saving")
     var db: Firestore!
     var storage: Storage!
     var wordRef: DocumentReference!
     var isImageSet = false
+    
+//    var vocabulary: Vocabulary!
     
     // MARK: - Lifecycle
     
@@ -42,8 +44,15 @@ class AddWordVC: UIViewController {
         super.viewDidLoad()
         db = Firestore.firestore()
         storage = Storage.storage()
-
         setupUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // user defaults vocabulary id
+        let defaults = UserDefaults.standard
+        guard let selectedVocabularyId = defaults.string(forKey: "vocabulary_id") else { return }
+        print(selectedVocabularyId)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -68,44 +77,50 @@ class AddWordVC: UIViewController {
     
     func textFieldValidation() {
         guard let wordExample = wordExampleTextField.text, let wordTranslation = wordTranslationTextField.text else { return }
-        addWordButton.isHidden = wordExample.isEmpty || wordTranslation.isEmpty
-        clearAllButton.isHidden = wordExample.isEmpty && wordTranslation.isEmpty
+        addWordButton.isEnabled = !(wordExample.isEmpty || wordTranslation.isEmpty)
+        clearAllButton.isEnabled = !(wordExample.isEmpty && wordTranslation.isEmpty)
     }
     
     private func setupUI() {
-        loader.isHidden = true
+        view.addSubview(progressHUD)
+        progressHUD.hide()
         wordExampleTextField.autocorrectionType = .no
         wordTranslationTextField.autocorrectionType = .no
-        addWordButton.isHidden = true
-        clearAllButton.isHidden = true
+        addWordButton.isEnabled = false
+        clearAllButton.isEnabled = false
     }
     
     func prepareForUpload() {
         guard let example = wordExampleTextField.text, example.isNotEmpty,
             let translation = wordTranslationTextField.text, example.isNotEmpty else {
                 simpleAlert(title: "Error", msg: "Fill all fields")
-                loader.isHidden = true
+                progressHUD.hide()
                 return
         }
         
         // TODO: shoud be rewrited in the singleton
         guard let user = Auth.auth().currentUser else { return }
         
-        wordRef = db.collection("users").document(user.uid).collection("words").document()
-        var word = Word.init(imgUrl: "", example: example, translation: translation, id: "", timestamp: Timestamp())
-        word.id = wordRef.documentID
+        let defaults = UserDefaults.standard
+        guard let selectedVocabularyId = defaults.string(forKey: "vocabulary_id") else { return }
+        print(selectedVocabularyId)
         
-        if isImageSet {
-            uploadImage(userId: user.uid, word: word)
+        let vocabularyRef = db.collection("users").document(user.uid).collection("vocabularies").document(selectedVocabularyId)
+        self.wordRef = vocabularyRef.collection("words").document()
+        var word = Word.init(imgUrl: "", example: example, translation: translation, id: "", timestamp: Timestamp())
+        word.id = self.wordRef.documentID
+        
+        if self.isImageSet {
+            self.uploadImage(userId: user.uid, vocabularyId: selectedVocabularyId, word: word)
         } else {
-            uploadWord(word: word)
+            self.uploadWord(word: word)
         }
     }
     
-    func uploadImage(userId: String, word: Word) {
+    func uploadImage(userId: String, vocabularyId: String, word: Word) {
         guard let image = wordImagePickerBtn.imageView?.image else {
             simpleAlert(title: "Error", msg: "Fill all fields")
-            loader.isHidden = true
+            progressHUD.hide()
             return
         }
         
@@ -114,7 +129,7 @@ class AddWordVC: UIViewController {
         let resizedImg = image.resized(toWidth: 400.0)
         guard let imageData = resizedImg?.jpegData(compressionQuality: 0.5) else { return }
         
-        let imageRef = Storage.storage().reference().child("/\(userId)/\(word.id).jpg")
+        let imageRef = Storage.storage().reference().child("/\(userId)/\(vocabularyId)/\(word.id).jpg")
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpg"
         
@@ -128,7 +143,7 @@ class AddWordVC: UIViewController {
             imageRef.downloadURL { (url, error) in
                 if let error = error {
                     self.simpleAlert(title: "Error", msg: "Unable to upload image")
-                    self.loader.isHidden = true
+                    self.progressHUD.hide()
                     debugPrint(error.localizedDescription)
                     return
                 }
@@ -144,12 +159,12 @@ class AddWordVC: UIViewController {
         wordRef.setData(data, merge: true) { (error) in
             if let error = error {
                 self.simpleAlert(title: "error", msg: error.localizedDescription)
-                self.loader.isHidden = true
+                self.progressHUD.hide()
                 return
             }
             // success message here
             self.updateUI()
-            self.loader.isHidden = true
+            self.progressHUD.hide()
         }
     }
     
@@ -158,8 +173,8 @@ class AddWordVC: UIViewController {
         wordExampleTextField.text = ""
         wordTranslationTextField.text = ""
         isImageSet = false
-        addWordButton.isHidden = true
-        clearAllButton.isHidden = true
+        addWordButton.isEnabled = false
+        clearAllButton.isEnabled = false
     }
     
     // MARK: - IBActions
@@ -181,7 +196,7 @@ class AddWordVC: UIViewController {
     }
     
     @IBAction func onAddWordBtnPress(_ sender: Any) {
-        loader.isHidden = false
+        progressHUD.show()
         prepareForUpload()
     }
     

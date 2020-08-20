@@ -12,6 +12,9 @@ class ProfileTVC: UITableViewController {
     @IBOutlet weak var wordsAmount: UILabel!
     @IBOutlet weak var nativeLanguage: UILabel!
     @IBOutlet weak var notificationsSwitch: UISwitch!
+    @IBOutlet weak var answersPrecentage: UILabel!
+    @IBOutlet weak var answersPrecentageLoading: UIActivityIndicatorView!
+    @IBOutlet weak var wordsAmountLoading: UIActivityIndicatorView!
     
     // MARK: - Instances
     
@@ -50,6 +53,12 @@ class ProfileTVC: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getCurrentUser()
+        
+        wordsAmount.isHidden = true
+        answersPrecentage.isHidden = true
+        
+        wordsAmountLoading.startAnimating()
+        answersPrecentageLoading.startAnimating()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -100,7 +109,11 @@ class ProfileTVC: UITableViewController {
     }
     
     private func fetchWords(from: DocumentReference) {
-        let wordsRef = from.collection("words")
+        
+        let defaults = UserDefaults.standard
+        guard let selectedVocabularyId = defaults.string(forKey: "vocabulary_id") else { return }
+        
+        let wordsRef = from.collection("vocabularies").document(selectedVocabularyId).collection("words")
         
         wordsRef.getDocuments { (snapshot, error) in
             if let error = error {
@@ -109,6 +122,11 @@ class ProfileTVC: UITableViewController {
             }
             guard let documents = snapshot?.documents else { return }
             self.wordsAmount.text = String(documents.count)
+            self.wordsAmount.isHidden = false
+            self.answersPrecentage.isHidden = false
+            
+            self.wordsAmountLoading.stopAnimating()
+            self.answersPrecentageLoading.stopAnimating()
         }
     }
     
@@ -218,11 +236,11 @@ class ProfileTVC: UITableViewController {
 //            webvc.modalPresentationStyle = .overFullScreen
             switch segue.identifier {
             case Segues.PrivacyAndSecurity:
-                webvc.link = "https://www.worddeposit.com"
+                webvc.link = "https://www.worddeposit.com/privacy-policy"
             case Segues.FAQ:
                 webvc.link = "https://www.worddeposit.com"
             case Segues.About:
-                webvc.link = "https://www.worddeposit.com"
+                webvc.link = "https://www.worddeposit.com/about"
             default:
                 webvc.link = "https://www.worddeposit.com"
             }

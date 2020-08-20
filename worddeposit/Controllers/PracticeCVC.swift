@@ -3,19 +3,24 @@ import Firebase
 import FirebaseFirestore
 
 private let reuseIdentifier = XIBs.PracticeCVCell
-
-class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+private let minWordsAmount = 10
+class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIPopoverPresentationControllerDelegate {
 
     // MARK: - Instances
     
     var user = User()
     var words = [Word]()
+    private var trainers = [PracticeTrainer]()
+    
+    var practiceReadVC: PracticeReadVC?
+    var progressHUD = ProgressHUD(title: "Welcome")
+    var messageView = MessageView()
+    
+    /// Listeners
     var auth: Auth!
     var db: Firestore!
-    var handle: AuthStateDidChangeListenerHandle?
-    var practiceReadVC: PracticeReadVC?
-    
-    private var trainers = [PracticeTrainer]()
+    var authHandle: AuthStateDidChangeListenerHandle?
+    var vocabulariesListener: ListenerRegistration!
     
     // MARK: - Lifecycle
     
@@ -23,37 +28,63 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         super.viewDidLoad()
         auth = Auth.auth()
         db = Firestore.firestore()
-        
         trainers = PracticeTrainers().data
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-        let nib = UINib(nibName: XIBs.PracticeCVCell, bundle: nil)
-        self.collectionView!.register(nib, forCellWithReuseIdentifier: reuseIdentifier)
-        self.collectionView!.isPrefetchingEnabled = false
+        registerViews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-        if let flowlayout = collectionViewLayout as? UICollectionViewFlowLayout {
-            flowlayout.minimumLineSpacing = 20
-        }
-
-        getCurrentUser()
+        setupUI()
+        setCurrentUser()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        messageView.frame.origin.y = collectionView.contentOffset.y
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        auth.removeStateDidChangeListener(handle!)
+        auth.removeStateDidChangeListener(authHandle!)
+        vocabulariesListener.remove()
+        collectionView.reloadData()
     }
     
-    // MARK: - Methods
+    // MARK: - Setup Views
     
-    private func getCurrentUser() {
-        handle = auth.addStateDidChangeListener { (auth, user) in
+    func setupUI() {
+        self.view.addSubview(progressHUD)
+        progressHUD.show()
+        setupCollectionView()
+        collectionView.addSubview(messageView)
+        messageView.hide()
+        setupMessage(wordsCount: words.count)
+    }
+    
+    func setupMessage(wordsCount: Int) {
+        messageView.setTitles(messageTxt: "You have insufficient words amount for practice.\nAdd at least \(minWordsAmount - wordsCount) words", buttonTitle: "Add more words")
+        messageView.onPrimaryButtonTap { self.tabBarController?.selectedIndex = 1 }
+    }
+    
+    func registerViews() {
+        // Register cell classes
+        let nib = UINib(nibName: XIBs.PracticeCVCell, bundle: nil)
+        collectionView!.register(nib, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: ReusableIdentifiers.MessageView)
+    }
+    
+    func setupCollectionView() {
+        if let flowlayout = collectionViewLayout as? UICollectionViewFlowLayout {
+            flowlayout.minimumLineSpacing = 20
+        }
+        collectionView!.isPrefetchingEnabled = false
+        view.backgroundColor = UIColor.systemBackground
+    }
+    
+    // MARK: - Listeners Methods
+    
+    private func setCurrentUser() {
+        authHandle = auth.addStateDidChangeListener { (auth, user) in
             guard let currentUser = auth.currentUser else { return }
             let userRef = self.db.collection("users").document(currentUser.uid)
             userRef.getDocument { (document, error) in
@@ -64,18 +95,48 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                 if let document = document, document.exists {
                     guard let data = document.data() else { return }
                     self.user = User.init(data: data)
-                    // self.welcomeLbl.text = self.user.email
-                    // self.welcomeLbl.isHidden = false
-                    
+                    self.progressHUD.setTitle(title: "Fetching words")
                     // user defaults
                     let defaults = UserDefaults.standard
                     defaults.set(self.user.nativeLanguage, forKey: "native_language")
                     defaults.set(self.user.notifications, forKey: "notifications")
                     defaults.set(Date(), forKey: "last_run")
                     
-                    self.fetchWords(from: userRef)
+                    self.setVocabulariesListener(from: userRef)
+                    
                 } else {
                     print("Document does not exist")
+                }
+            }
+        }
+    }
+    
+    private func setVocabulariesListener(from: DocumentReference) {
+        let vocabularyRef = from.collection("vocabularies")
+        vocabulariesListener = vocabularyRef.whereField("is_selected", isEqualTo: true).addSnapshotListener() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+                return
+            } else {
+                if querySnapshot!.documents.isEmpty {
+                    let storyboard = UIStoryboard(name: "Home", bundle: Bundle.main)
+                    let vc = storyboard.instantiateViewController(withIdentifier: "Vocabularies")
+                    vc.modalPresentationStyle = .popover
+                    if let popoverPresentationController = vc.popoverPresentationController {
+                        popoverPresentationController.delegate = self
+                    }
+                    self.present(vc, animated: true)
+                }
+                
+                for document in querySnapshot!.documents {
+                    let data = document.data()
+                    let vocabulary = Vocabulary.init(data: data)
+                    let defaults = UserDefaults.standard
+                    defaults.set(vocabulary.id, forKey: "vocabulary_id")
+                    
+                    // fetch words from current vocabulary
+                    print("From practices", vocabulary.id)
+                    self.fetchWords(from: vocabularyRef.document(vocabulary.id))
                 }
             }
         }
@@ -90,14 +151,29 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                 return
             }
             self.words.removeAll()
+            self.progressHUD.hide()
             guard let documents = snapshot?.documents else { return }
+            
+            DispatchQueue.main.async {
+                if documents.count < minWordsAmount {
+                    self.setupMessage(wordsCount: documents.count)
+                    self.messageView.show()
+                } else {
+                    self.messageView.hide()
+                }
+            }
+            
             for document in documents {
                 let data = document.data()
                 let word = Word.init(data: data)
                 self.words.append(word)
             }
+            self.collectionView.reloadData()
+            self.collectionView.isHidden = false
         }
     }
+    
+    // MARK: - Make Word Desk
     
     func makeWordDesk(size: Int, wordsData: [Word], _ result: [Word] = []) -> [Word] {
         var result = result
@@ -115,19 +191,23 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         }
         return makeWordDesk(size: tmpCount, wordsData: wordsData, result)
     }
+    
+    // MARK: - UICollectinView Delegates
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
         return trainers.count
     }
 
+
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? PracticeCVCell {
             let trainer = trainers[indexPath.row]
             cell.backgroundColor = trainer.backgroundColor
             cell.configureCell(cover: trainer.coverImageSource, title: trainer.title)
             return cell
         }
+        
         return PracticeCVCell()
     }
 
@@ -138,7 +218,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let sender = trainers[indexPath.row]
-        performSegue(withIdentifier: Segues.PracticeRead, sender: sender)
+        self.performSegue(withIdentifier: Segues.PracticeRead, sender: sender)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -9,11 +9,16 @@ class VocabularyTVC: UITableViewController {
     
     /// Data model for the table view
     var words = [Word]()
+    var messageView = MessageView()
     
     /// Listeners
     var db: Firestore!
     var storage: Storage!
     var wordsListener: ListenerRegistration!
+    var vocabulariesListener: ListenerRegistration!
+    
+    /// References
+    var wordsRef: CollectionReference!
     
     /// Search controller to help us with filtering items in the table view
     var searchController: UISearchController!
@@ -24,6 +29,10 @@ class VocabularyTVC: UITableViewController {
     /// Restoration state for UISearchController
     var restoredState = SearchControllerRestorableState()
     
+    /// Strings
+    var userId: String!
+    var vocabularyId: String?
+    
     // MARK: - View Lifecycle
 
     override func viewDidLoad() {
@@ -31,12 +40,20 @@ class VocabularyTVC: UITableViewController {
         db = Firestore.firestore()
         storage = Storage.storage()
         setupTableView()
+        setupMessage()
         setupResultsTableController()
     }
-        
+     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.view.addSubview(messageView)
+        messageView.hide()
+        setVocabulariesListener()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        setWordsListener() // It's good place for network fetch
+        messageView.frame.origin.y = tableView.contentOffset.y
         
         // Restore the searchController's active state.
         if restoredState.wasActive {
@@ -52,6 +69,7 @@ class VocabularyTVC: UITableViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        vocabulariesListener.remove()
         wordsListener.remove()
         words.removeAll()
         tableView.reloadData()
@@ -59,9 +77,15 @@ class VocabularyTVC: UITableViewController {
     
     // MARK: - View setups
     
+    func setupMessage() {
+        messageView.setTitles(messageTxt: "You have no words yet", buttonTitle: "Add words")
+        messageView.onPrimaryButtonTap { self.tabBarController?.selectedIndex = 1 }
+    }
+    
     func setupTableView() {
         let nib = UINib(nibName: XIBs.VocabularyTVCell, bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: XIBs.VocabularyTVCell)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: ReusableIdentifiers.MessageView)
     }
     
     func setupResultsTableController() {
@@ -85,35 +109,70 @@ class VocabularyTVC: UITableViewController {
 
         // Make the search bar always visible
         navigationItem.hidesSearchBarWhenScrolling = false
-        
     }
     
-    // MARK: - Word Listeners for updating Table View
+    // MARK: - Listeners for updating Table View
     
-    func setWordsListener() {
-        // shoud be rewrited
+    private func setVocabulariesListener() {
         guard let authUser = Auth.auth().currentUser else { return }
-        let userRef = db.collection("users").document(authUser.uid)
-        let wordsRef = userRef.collection("words").order(by: "timestamp", descending: true)
-        wordsListener = wordsRef.addSnapshotListener({ (snapshot, error) in
+        self.userId = authUser.uid
+        let userRef = db.collection("users").document(self.userId)
+        let vocabulariesRef = userRef.collection("vocabularies")
+        vocabulariesListener = vocabulariesRef.whereField("is_selected", isEqualTo: true).addSnapshotListener() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+                return
+            } else {
+                for document in querySnapshot!.documents {
+                    let data = document.data()
+                    let vocabulary = Vocabulary.init(data: data)
+                    let defaults = UserDefaults.standard
+                    defaults.set(vocabulary.id, forKey: "vocabulary_id")
+                    
+                    self.words.removeAll()
+                    self.tableView.reloadData()
+                    
+                    // fetch words from current vocabulary
+                    self.setWordsListener(vocabularyRef: vocabulariesRef.document(vocabulary.id))
+                }
+            }
+        }
+    }
+    
+    func setWordsListener(vocabularyRef: DocumentReference) {
+        
+        self.wordsRef = vocabularyRef.collection("words")
+        let wordsRefOrdered = vocabularyRef.collection("words").order(by: "timestamp", descending: true)
+        wordsListener = wordsRefOrdered.addSnapshotListener({ (snapshot, error) in
             if let error = error {
                 debugPrint(error.localizedDescription)
                 return
-            }
-            
-            snapshot?.documentChanges.forEach({ (docChange) in
-                let data = docChange.document.data()
-                let word = Word.init(data: data)
-
-                switch docChange.type {
-                case .added:
-                    self.onDocumentAdded(change: docChange, word: word)
-                case .modified:
-                    self.onDocumentModified(change: docChange, word: word)
-                case .removed:
-                    self.onDocumentRemoved(change: docChange)
+            } else {
+                
+                guard let snap = snapshot else { return }
+                
+                DispatchQueue.main.async {
+                    if snap.documents.isEmpty {
+                        self.messageView.show()
+                    } else {
+                        self.messageView.hide()
+                    }
                 }
-            })
+                
+                snap.documentChanges.forEach({ (docChange) in
+                    let data = docChange.document.data()
+                    let word = Word.init(data: data)
+                    
+                    switch docChange.type {
+                    case .added:
+                        self.onDocumentAdded(change: docChange, word: word)
+                    case .modified:
+                        self.onDocumentModified(change: docChange, word: word)
+                    case .removed:
+                        self.onDocumentRemoved(change: docChange)
+                    }
+                })
+            }
         })
     }
     
@@ -174,7 +233,6 @@ extension VocabularyTVC {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: XIBs.VocabularyTVCell, for: indexPath) as? VocabularyTVCell {
-            // cell is reusable so before calling it we have to nil an image because it can show an image from previous usage
             cell.configureCell(word: words[indexPath.row])
             return cell
         }
@@ -204,18 +262,16 @@ extension VocabularyTVC {
                 selectedWord = resultsTableController.filteredWords[indexPath.row]
             }
 
-            // TODO: shoud be rewrited in the singleton if needed
-            guard let user = Auth.auth().currentUser else { return }
-            
-            db.collection("users").document(user.uid).collection("words").document(selectedWord.id).delete { (error) in
+            self.wordsRef.document(selectedWord.id).delete { (error) in
                 if let error = error {
                     self.simpleAlert(title: "Error", msg: error.localizedDescription)
                     debugPrint(error.localizedDescription)
                     return
                 }
-
+                
+                guard let userId = self.userId, let selectedVocabularyId = self.vocabularyId else { return }
                 if selectedWord.imgUrl.isNotEmpty {
-                    self.storage.reference().child("/\(user.uid)/\(selectedWord.id).jpg").delete { (error) in
+                    self.storage.reference().child("/\(userId)/\(selectedVocabularyId)/\(selectedWord.id).jpg").delete { (error) in
                         if let error = error {
                             self.simpleAlert(title: "Error", msg: error.localizedDescription)
                             debugPrint(error.localizedDescription)

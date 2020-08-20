@@ -27,10 +27,10 @@ class VocabularyCardCVCell: UICollectionViewCell {
     @IBOutlet weak var wordTranslationTextField: UITextField!
     @IBOutlet weak var saveChangingButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
-    @IBOutlet weak var loader: RoundedView!
-    
+    @IBOutlet weak var loader: UIActivityIndicatorView!
     // MARK: - Variables
 
+    var vocabularyId: String!
     var word: Word!
     var wordRef: DocumentReference!
     var db = Firestore.firestore()
@@ -49,11 +49,12 @@ class VocabularyCardCVCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         wordImageButton.setImage(UIImage(named: Placeholders.Logo), for: .normal)
+        saveChangingButton.setTitle("Save Changing", for: .normal)
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        loader.isHidden = true
+//        loader.isHidden = true
         saveChangingButton.isHidden = true
         cancelButton.isHidden = true
         
@@ -78,7 +79,6 @@ class VocabularyCardCVCell: UICollectionViewCell {
     
     @objc func keyboardWillShow(sender: UIResponder) {
         // self.view.frame.origin.y -= 150
-//        self.frame.origin.y -= 150
         delegate?.disableEnableScroll(isKeyboardShow: true)
         print("keyboard show")
         
@@ -129,7 +129,8 @@ class VocabularyCardCVCell: UICollectionViewCell {
         }
     }
     
-    func configureCell(word: Word, delegate: VocabularyCardCVCellDelegate) {
+    func configureCell(vocabularyId: String, word: Word, delegate: VocabularyCardCVCellDelegate) {
+        self.vocabularyId = vocabularyId
         self.word = word
         self.delegate = delegate
         setupWord(word)
@@ -167,7 +168,9 @@ class VocabularyCardCVCell: UICollectionViewCell {
     }
 
     @IBAction func onSaveChangingTouched(_ sender: UIButton) {
-        self.loader.isHidden = false
+//        self.loader.isHidden = false
+        saveChangingButton.setTitle("", for: .normal)
+        loader.startAnimating()
         prepareForUpload()
     }
     
@@ -186,8 +189,9 @@ class VocabularyCardCVCell: UICollectionViewCell {
         }
         
         // TODO: shoud be rewrited in the singleton
-        guard let user = Auth.auth().currentUser else { return }
-        wordRef = db.collection("users").document(user.uid).collection("words").document(word.id)
+        guard let user = Auth.auth().currentUser, let vocabularyId = self.vocabularyId else { return }
+        let vocabularyRef = db.collection("users").document(user.uid).collection("vocabularies").document(vocabularyId)
+        wordRef = vocabularyRef.collection("words").document(word.id)
         
         // Making a copy of the word
         var updatedWord = word!
@@ -206,15 +210,18 @@ class VocabularyCardCVCell: UICollectionViewCell {
     // check
     func uploadImage(userId: String, updatedWord: Word) {
         
-        guard let image = wordImageButton.imageView?.image else {
+        guard let image = wordImageButton.imageView?.image, let vocabularyId = self.vocabularyId else {
             self.delegate?.showAlert(title: "Error", message: "Fields cannot be empty")
-            loader.isHidden = true
+            loader.stopAnimating()
+            saveChangingButton.setTitle("Save Changing", for: .normal)
             return
         }
         
+        let imgRef = "/\(userId)/\(vocabularyId)/"
+        
         // remove image before uploading
         if word.imgUrl.isNotEmpty {
-            self.storage.reference().child("/\(userId)/\(word.id).jpg").delete { (error) in
+            self.storage.reference().child("\(imgRef)\(word.id).jpg").delete { (error) in
                 if let error = error {
                     self.delegate?.showAlert(title: "Error", message: error.localizedDescription)
                     debugPrint(error.localizedDescription)
@@ -228,7 +235,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
         let resizedImg = image.resized(toWidth: 400.0)
         guard let imageData = resizedImg?.jpegData(compressionQuality: 0.5) else { return }
         
-        let imageRef = Storage.storage().reference().child("/\(userId)/\(updatedWord.id).jpg")
+        let imageRef = Storage.storage().reference().child("/\(imgRef)/\(updatedWord.id).jpg")
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpg"
         
@@ -266,7 +273,8 @@ class VocabularyCardCVCell: UICollectionViewCell {
                 self.hideAllButtons(true)
                 self.delegate?.showAlert(title: "Success", message: "Word has been updated")
             }
-            self.loader.isHidden = true
+            self.loader.stopAnimating()
+            self.saveChangingButton.setTitle("Save Changing", for: .normal)
             self.isImageSet = false
         }
     }

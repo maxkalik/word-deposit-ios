@@ -8,7 +8,7 @@ class RegistrationVC: UIViewController {
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var loading: RoundedView!
+    var progressHUD = ProgressHUD()
 
     // MARK: - Instances
     
@@ -21,7 +21,8 @@ class RegistrationVC: UIViewController {
         super.viewDidLoad()
         auth = Auth.auth()
         db = Firestore.firestore()
-        loading.isHidden = true
+        self.view.addSubview(progressHUD)
+        progressHUD.hide()
     }
     
     // MARK: - Methods
@@ -33,31 +34,32 @@ class RegistrationVC: UIViewController {
         newUserRef.setData(data) { (error) in
             if let error = error {
                 self.showError(error)
+                self.progressHUD.hide()
             } else {
+                self.progressHUD.hide()
                 let storyboard = UIStoryboard(name: "Home", bundle: nil)
                 let homeViewController = storyboard.instantiateViewController(identifier: Storyboards.Home) as? UITabBarController
                 self.view.window?.rootViewController = homeViewController
             }
-            self.loading.isHidden = true
         }
     }
     
     func showError(_ error: Error) {
         self.simpleAlert(title: "Error", msg: error.localizedDescription)
-        self.loading.isHidden = true
+        self.progressHUD.hide()
         return
     }
     
     // MARK: - IBActions
     
-    @IBAction func onSignUpBtnPress(_ sender: Any) {
+    @IBAction func onSignUpBtnPress(_ sender: UIButton) {
 
         guard let email = emailTextField.text, email.isNotEmpty,
             let password = passwordTextField.text, password.isNotEmpty else {
                 simpleAlert(title: "Error", msg: "Please fill out all fields.")
                 return
         }
-        loading.isHidden = false
+        self.progressHUD.show()
         
         auth.createUser(withEmail: email, password: password) { (authResult, error) in
             if let error = error { self.showError(error) }
@@ -69,7 +71,7 @@ class RegistrationVC: UIViewController {
     }
     
     
-    @IBAction func onHaveAccountBtnPress(_ sender: Any) {
+    @IBAction func onHaveAccountBtnPress(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
     }
 }

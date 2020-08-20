@@ -5,11 +5,11 @@ class ForgotPasswordVC: UIViewController {
 
     // MARK: - IBOutlets
     @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var loading: RoundedView!
+    var progressHUD = ProgressHUD()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loading.isHidden = true
+        progressHUD.hide()
     }
     
     // MARK: - IBActions
@@ -18,15 +18,15 @@ class ForgotPasswordVC: UIViewController {
             simpleAlert(title: "Error", msg: "Fill email field out")
             return
         }
-        loading.isHidden = false
+        progressHUD.show()
         Auth.auth().sendPasswordReset(withEmail: email) { (error) in
             if let error = error {
-                self.loading.isHidden = true
+                self.progressHUD.hide()
                 self.simpleAlert(title: "Error", msg: error.localizedDescription)
                 return
             }
             self.navigationController?.popViewController(animated: true)
-            self.loading.isHidden = true
+            self.progressHUD.hide()
         }
     }
     

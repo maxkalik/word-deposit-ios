@@ -15,7 +15,7 @@ class VocabularyTVCell: UITableViewCell {
     /// dequeueReusableCell(withIdentifier:) . For performance reasons, you should only reset attributes of the cell that are not related to content
     override func prepareForReuse() {
         super.prepareForReuse()
-        preview.image = UIImage(named: Placeholders.Logo)
+        preview.image = .none
     }
     
     override func awakeFromNib() {

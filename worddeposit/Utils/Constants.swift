@@ -14,13 +14,17 @@ struct Controllers {
 }
 
 struct XIBs {
+    static let VocabulariesTVCell = "VocabulariesTVCell"
     static let VocabularyTVCell = "VocabularyTVCell"
     static let VocabularyCardCVCell = "VocabularyCardCVCell"
     static let PracticeCVCell = "PracticeCVCell"
     static let PracticeAnswerItem = "PracticeAnswerItem"
+    static let MessageCVCell = "MessageCVCell"
 }
 
 struct Segues {
+    static let Vocabularies = "Vocabularies"
+    static let VocabularyDetails = "VocabularyDetails"
     static let UserInfo = "UserInfo"
     static let NativeLanguage = "NativeLanguage"
     static let AccountType = "AccountType"
@@ -33,6 +37,7 @@ struct Segues {
 
 struct ReusableIdentifiers {
     static let CheckedCell = "CheckedCell"
+    static let MessageView = "MessageView"
 }
 
 struct Colors {
