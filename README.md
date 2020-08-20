@@ -15,3 +15,5 @@ You can add to your vocabulary as many words as you wish, also delete them, and 
 Add to vocabulary as many words as you wish and memories them using the Trainers just for a few minutes a day.  The app has also a dark mode that you will like.
 
 I will be very thankful for your feedback and suggestions to improve the app and make it more attractive.
+
+<a href="https://www.producthunt.com/posts/worddeposit-app?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-worddeposit-app" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=220527&theme=light" alt="WordDeposit App - A pocket vocabulary for any language you want to learn. | Product Hunt Embed" style="width: 250px; height: 54px;" width="250px" height="54px" /></a>
