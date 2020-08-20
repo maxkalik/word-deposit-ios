@@ -21,7 +21,7 @@ I will be very thankful for your feedback and suggestions to improve the app and
 ## Current version 1.0 (React Native)
 
 <br>
-<div style="display: flex; flex-flow: row; justify-content: center">
+<div style="display: flex; flex-flow: row; justify-content: center; border: 1px solid black">
 <a href="https://apps.apple.com/lv/app/word-deposit/id1513427605">
   <img style="height: 54px; width: auto;" height="54px" src="https://www.worddeposit.com/images/Download_on_the_App_Store_Badge_US-UK_RGB_blk.svg" alt="Download Word Deposit from App Store">
 </a>
