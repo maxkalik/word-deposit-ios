@@ -21,7 +21,7 @@ I will be very thankful for your feedback and suggestions to improve the app and
 ## Current version 1.0 (React Native)
 
 <br>
-
+<div style="display: flex; flex-flow: row; align-items: center">
 <a href="https://apps.apple.com/lv/app/word-deposit/id1513427605">
   <img style="height: 54px; width: auto;" height="54px" src="https://www.worddeposit.com/images/Download_on_the_App_Store_Badge_US-UK_RGB_blk.svg" alt="Download Word Deposit from App Store">
 </a>
@@ -29,5 +29,5 @@ I will be very thankful for your feedback and suggestions to improve the app and
 <a href="https://play.google.com/store/apps/details?id=com.worddeposit&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
   <img style="height: 84px; width: auto;" height="84px" alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png">
 </a>
-
+</div>
 <a href="https://www.producthunt.com/posts/worddeposit-app?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-worddeposit-app" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=220527&theme=light" alt="WordDeposit App - A pocket vocabulary for any language you want to learn. | Product Hunt Embed" style="width: 250px; height: 54px;" width="250px" height="54px" /></a>
