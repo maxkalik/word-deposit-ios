@@ -20,19 +20,5 @@ I will be very thankful for your feedback and suggestions to improve the app and
 
 ## Current version 1.0 (React Native)
 
-<table style="border-collapse: collapse; border: none;">
-  <tbody>
-    <tr>
-      <td style="border: none;">
-        <a href="https://apps.apple.com/lv/app/word-deposit/id1513427605">
-          <img style="height: 54px; width: auto; padding: 10px" height="54px" src="https://www.worddeposit.com/images/Download_on_the_App_Store_Badge_US-UK_RGB_blk.svg" alt="Download Word Deposit from App Store">
-        </a>
-      </td>
-      <td style="border: none;">
-        <a href="https://www.producthunt.com/posts/worddeposit-app?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-worddeposit-app" target="_blank">
-          <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=220527&theme=light" alt="WordDeposit App - A pocket vocabulary for any language you want to learn. | Product Hunt Embed" style="width: 250px; height: 54px;" width="250px" height="54px">
-        </a>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<a href="https://apps.apple.com/lv/app/word-deposit/id1513427605"><img style="height: 54px; width: auto; padding: 10px" height="54px" src="https://www.worddeposit.com/images/Download_on_the_App_Store_Badge_US-UK_RGB_blk.svg" alt="Download Word Deposit from App Store"></a> <a href="https://www.producthunt.com/posts/worddeposit-app?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-worddeposit-app" target="_blank"> <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=220527&theme=light" alt="WordDeposit App - A pocket vocabulary for any language you want to learn. | Product Hunt Embed" style="width: 250px; height: 54px;" width="250px" height="54px"></a>
+
