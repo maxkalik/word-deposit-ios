@@ -1,4 +1,6 @@
-# Word Deposit App (iOS)
+![Word Deposit logo](logo.png)
+
+# Word Deposit App 2.0 (iOS)
 
 My name is Max Kalik and I got an experience living in a new country with a new language. I had a lot of trouble learning new languages especially if this language not so popular in the world. I was learning a language which’s native speakers are less than 1.1 million in the world and I could not find any app which would help me to learn the language and allow me to memorize new words.
 
@@ -16,4 +18,21 @@ Add to vocabulary as many words as you wish and memories them using the Trainers
 
 I will be very thankful for your feedback and suggestions to improve the app and make it more attractive.
 
-<a href="https://www.producthunt.com/posts/worddeposit-app?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-worddeposit-app" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=220527&theme=light" alt="WordDeposit App - A pocket vocabulary for any language you want to learn. | Product Hunt Embed" style="width: 250px; height: 54px;" width="250px" height="54px" /></a>
+## Current version 1.0 (React Native)
+
+<table style="border-collapse: collapse; border: none;">
+  <tbody>
+    <tr>
+      <td style="border: none;">
+        <a href="https://apps.apple.com/lv/app/word-deposit/id1513427605">
+          <img style="height: 54px; width: auto; padding: 10px" height="54px" src="https://www.worddeposit.com/images/Download_on_the_App_Store_Badge_US-UK_RGB_blk.svg" alt="Download Word Deposit from App Store">
+        </a>
+      </td>
+      <td style="border: none;">
+        <a href="https://www.producthunt.com/posts/worddeposit-app?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-worddeposit-app" target="_blank">
+          <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=220527&theme=light" alt="WordDeposit App - A pocket vocabulary for any language you want to learn. | Product Hunt Embed" style="width: 250px; height: 54px;" width="250px" height="54px">
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
