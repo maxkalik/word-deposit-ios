@@ -20,7 +20,7 @@ I will be very thankful for your feedback and suggestions to improve the app and
 
 ## Current version 1.0 (React Native)
 
-<table>
+<table style="border: 0">
   <tbody>
     <tr>
       <td>
