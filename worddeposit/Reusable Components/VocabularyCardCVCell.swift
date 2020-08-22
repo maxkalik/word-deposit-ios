@@ -25,6 +25,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
     }
     @IBOutlet weak var wordExampleTextField: UITextField!
     @IBOutlet weak var wordTranslationTextField: UITextField!
+    @IBOutlet weak var wordDescriptionTextField: UITextField!
     @IBOutlet weak var saveChangingButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var loader: UIActivityIndicatorView!
@@ -60,6 +61,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
         
         wordExampleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         wordTranslationTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        wordDescriptionTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingDidEnd)
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -69,6 +71,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
         NotificationCenter.default.removeObserver(self)
         wordExampleTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         wordTranslationTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        wordDescriptionTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
     // MARK: - @objc methods
@@ -116,9 +119,14 @@ class VocabularyCardCVCell: UICollectionViewCell {
     }
     
     func textFieldValidation() {
-        guard let wordExample = wordExampleTextField.text, let wordTranslation = wordTranslationTextField.text else { return }
+        guard let wordExample = wordExampleTextField.text,
+            let wordTranslation = wordTranslationTextField.text,
+            let wordDescription = wordDescriptionTextField.text else { return }
         
-        if wordExample != word.example || wordTranslation != word.translation || isImageSet {
+        if wordExample != word.example
+            || wordTranslation != word.translation
+            || wordDescription != word.description
+            || isImageSet {
             hideAllButtons(false)
             if wordExample.isEmpty || wordTranslation.isEmpty {
                 saveChangingButton.isHidden = true
@@ -145,6 +153,9 @@ class VocabularyCardCVCell: UICollectionViewCell {
         }
         wordExampleTextField.text = word.example
         wordTranslationTextField.text = word.translation
+        if word.description.isNotEmpty {
+            wordDescriptionTextField.text = word.description
+        }
     }
     
     // MARK: - IBActions
@@ -168,7 +179,6 @@ class VocabularyCardCVCell: UICollectionViewCell {
     }
 
     @IBAction func onSaveChangingTouched(_ sender: UIButton) {
-//        self.loader.isHidden = false
         saveChangingButton.setTitle("", for: .normal)
         loader.startAnimating()
         prepareForUpload()
@@ -188,6 +198,8 @@ class VocabularyCardCVCell: UICollectionViewCell {
                 return
         }
         
+        guard let description = wordDescriptionTextField.text else { return }
+        
         // TODO: shoud be rewrited in the singleton
         guard let user = Auth.auth().currentUser, let vocabularyId = self.vocabularyId else { return }
         let vocabularyRef = db.collection("users").document(user.uid).collection("vocabularies").document(vocabularyId)
@@ -197,6 +209,9 @@ class VocabularyCardCVCell: UICollectionViewCell {
         var updatedWord = word!
         updatedWord.example = example
         updatedWord.translation = translation
+        if description.isNotEmpty {
+            updatedWord.description = description
+        }
         
         if isImageSet {
             // if only image has been changed?

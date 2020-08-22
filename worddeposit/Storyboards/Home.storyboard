@@ -361,7 +361,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="GMM-oe-XGe">
-                                                <rect key="frame" x="30" y="444" width="354" height="210"/>
+                                                <rect key="frame" x="30" y="444" width="354" height="270"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Example" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IsX-s0-gXE">
                                                         <rect key="frame" x="0.0" y="0.0" width="354" height="50"/>
@@ -379,8 +379,16 @@
                                                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EN0-4t-0qf" customClass="RoundedButton" customModule="worddeposit" customModuleProvider="target">
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="[description]" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="b71-bp-t3y">
                                                         <rect key="frame" x="0.0" y="120" width="354" height="50"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="50" id="VZP-07-lY7"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EN0-4t-0qf" customClass="RoundedButton" customModule="worddeposit" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="180" width="354" height="50"/>
                                                         <color key="backgroundColor" systemColor="systemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="50" id="yXk-it-0iX"/>
@@ -394,7 +402,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bhh-6m-fMG">
-                                                        <rect key="frame" x="0.0" y="180" width="354" height="30"/>
+                                                        <rect key="frame" x="0.0" y="240" width="354" height="30"/>
                                                         <state key="normal" title="Clear All"/>
                                                         <connections>
                                                             <action selector="onClearAllBtnPress:" destination="8x7-ml-O9y" eventType="touchUpInside" id="5bg-bz-J3L"/>
@@ -449,6 +457,7 @@
                         <outlet property="addWordButton" destination="EN0-4t-0qf" id="2eV-4O-u62"/>
                         <outlet property="clearAllButton" destination="bhh-6m-fMG" id="UqK-cM-eJE"/>
                         <outlet property="scrollView" destination="u8a-OR-7Ws" id="XI3-e4-p1B"/>
+                        <outlet property="wordDescriptionTextField" destination="b71-bp-t3y" id="U3G-8J-EzF"/>
                         <outlet property="wordExampleTextField" destination="IsX-s0-gXE" id="kwC-MM-99R"/>
                         <outlet property="wordImagePickerBtn" destination="YLl-Up-aaC" id="aCd-hC-Kwt"/>
                         <outlet property="wordTranslationTextField" destination="VKL-sr-heo" id="23k-Ay-zfU"/>
@@ -1070,8 +1079,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="khA-EK-dTJ"/>
-        <segue reference="JpH-Z0-vxD"/>
+        <segue reference="cIB-pM-tsi"/>
+        <segue reference="L4V-Nc-46o"/>
         <segue reference="cT5-yM-GyM"/>
         <segue reference="wQV-jD-p7z"/>
         <segue reference="FgU-uN-MIW"/>

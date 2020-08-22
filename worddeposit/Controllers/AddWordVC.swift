@@ -26,6 +26,7 @@ class AddWordVC: UIViewController {
     @IBOutlet weak var clearAllButton: UIButton!
     @IBOutlet weak var wordExampleTextField: UITextField!
     @IBOutlet weak var wordTranslationTextField: UITextField!
+    @IBOutlet weak var wordDescriptionTextField: UITextField!
     
     
     // MARK: - Instances
@@ -76,7 +77,8 @@ class AddWordVC: UIViewController {
     // MARK: - Support Methods
     
     func textFieldValidation() {
-        guard let wordExample = wordExampleTextField.text, let wordTranslation = wordTranslationTextField.text else { return }
+        guard let wordExample = wordExampleTextField.text,
+              let wordTranslation = wordTranslationTextField.text else { return }
         addWordButton.isEnabled = !(wordExample.isEmpty || wordTranslation.isEmpty)
         clearAllButton.isEnabled = !(wordExample.isEmpty && wordTranslation.isEmpty)
     }
@@ -86,6 +88,7 @@ class AddWordVC: UIViewController {
         progressHUD.hide()
         wordExampleTextField.autocorrectionType = .no
         wordTranslationTextField.autocorrectionType = .no
+        wordDescriptionTextField.autocorrectionType = .no
         addWordButton.isEnabled = false
         clearAllButton.isEnabled = false
     }
@@ -97,6 +100,7 @@ class AddWordVC: UIViewController {
                 progressHUD.hide()
                 return
         }
+        guard let description = wordDescriptionTextField.text else { return }
         
         // TODO: shoud be rewrited in the singleton
         guard let user = Auth.auth().currentUser else { return }
@@ -107,7 +111,7 @@ class AddWordVC: UIViewController {
         
         let vocabularyRef = db.collection("users").document(user.uid).collection("vocabularies").document(selectedVocabularyId)
         self.wordRef = vocabularyRef.collection("words").document()
-        var word = Word.init(imgUrl: "", example: example, translation: translation, id: "", timestamp: Timestamp())
+        var word = Word.init(imgUrl: "", example: example, translation: translation, description: description, id: "", rightAnswers: 0, wrongAnswers: 0, timestamp: Timestamp())
         word.id = self.wordRef.documentID
         
         if self.isImageSet {

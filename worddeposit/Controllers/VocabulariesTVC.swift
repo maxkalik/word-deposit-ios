@@ -56,6 +56,7 @@ class VocabulariesTVC: UITableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        print(vocabularies)
         messageView.frame.origin.y = tableView.contentOffset.y
         setVocabularyListener()
     }
@@ -126,14 +127,13 @@ class VocabulariesTVC: UITableViewController {
                 return
             }
             self.progressHUD.hide()
-            DispatchQueue.main.async {
-                if snapshot!.documents.isEmpty {
-                    self.setupMessage()
-                    self.messageView.show()
-                    self.isModalInPresentation = true
-                } else {
-                    self.isModalInPresentation = false
-                }
+            
+            if snapshot!.documents.isEmpty {
+                self.setupMessage()
+                self.messageView.show()
+                self.isModalInPresentation = true
+            } else {
+                self.isModalInPresentation = false
             }
             
             snapshot?.documentChanges.forEach({ (docChange) in
@@ -148,7 +148,6 @@ class VocabulariesTVC: UITableViewController {
                     } else  {
                         guard let snap = snapshot else { return }
                         vocabulary.wordsAmount = snap.count
-                        print(vocabulary)
                         switch docChange.type {
                         case .added:
                             self.onDocumentAdded(change: docChange, vocabulary: vocabulary)
