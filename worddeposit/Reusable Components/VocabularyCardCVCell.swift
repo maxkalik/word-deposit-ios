@@ -30,6 +30,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
     @IBOutlet weak var saveChangingButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var loader: UIActivityIndicatorView!
+    
     // MARK: - Variables
 
     var vocabularyId: String!
@@ -64,7 +65,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
         
         wordExampleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         wordTranslationTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        wordDescriptionTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingDidEnd)
+        wordDescriptionTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -150,9 +151,9 @@ class VocabularyCardCVCell: UICollectionViewCell {
             let wordDescription = wordDescriptionTextField.text else { return }
         
         if wordExample != word.example
-            || wordTranslation != word.translation
-            || wordDescription != word.description
-            || isImageSet {
+        || wordTranslation != word.translation
+        || wordDescription != word.description
+        || isImageSet {
             hideAllButtons(false)
             if wordExample.isEmpty || wordTranslation.isEmpty {
                 saveChangingButton.isHidden = true
@@ -179,9 +180,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
         }
         wordExampleTextField.text = word.example
         wordTranslationTextField.text = word.translation
-        if word.description.isNotEmpty {
-            wordDescriptionTextField.text = word.description
-        }
+        wordDescriptionTextField.text = word.description
     }
     
     // MARK: - IBActions
