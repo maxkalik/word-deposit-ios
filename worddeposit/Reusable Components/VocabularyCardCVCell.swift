@@ -94,15 +94,18 @@ class VocabularyCardCVCell: UICollectionViewCell {
             let keyboardHeight = keyboardRectangle.height
             
             // self.frame.size.height += (cancelButton.frame.height + 20)
-            self.frame.size.height += 60
-            self.frame.origin.y -= keyboardHeight + 60
+            // self.frame.size.height += 60
+            self.frame.origin.y -= keyboardHeight
             print(keyboardHeight)
             
             let bottomOffset = CGPoint(x: 0, y: scrollView.contentSize.height - scrollView.bounds.size.height)
             scrollView.setContentOffset(bottomOffset, animated: true)
         }
-
-        // wordImageButton.isHidden = true
+        
+        UIView.animate(withDuration: 0.3) {
+            self.wordImageButton.alpha = 0
+        }
+        
         delegate?.disableEnableScroll(isKeyboardShow: true)
     }
     
@@ -111,13 +114,15 @@ class VocabularyCardCVCell: UICollectionViewCell {
         if !self.isKeyboardShowing { return }
         self.isKeyboardShowing = false
         
-        self.frame.size.height -= 60
+        // self.frame.size.height -= 60
         self.frame.origin.y = 0
         
         scrollView.contentInset = .zero
         scrollView.scrollIndicatorInsets = scrollView.contentInset
         
-        // wordImageButton.isHidden = false
+        UIView.animate(withDuration: 0.3) {
+            self.wordImageButton.alpha = 1
+        }
         delegate?.disableEnableScroll(isKeyboardShow: false)
     }
     
