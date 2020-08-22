@@ -23,6 +23,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
             wordImageButton.imageView?.contentMode = .scaleAspectFill
         }
     }
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var wordExampleTextField: UITextField!
     @IBOutlet weak var wordTranslationTextField: UITextField!
     @IBOutlet weak var wordDescriptionTextField: UITextField!
@@ -42,6 +43,8 @@ class VocabularyCardCVCell: UICollectionViewCell {
             setNeedsDisplay()
         }
     }
+    
+    private var isKeyboardShowing = false
     
     weak var delegate: VocabularyCardCVCellDelegate?
     
@@ -80,17 +83,40 @@ class VocabularyCardCVCell: UICollectionViewCell {
         textFieldValidation()
     }
     
-    @objc func keyboardWillShow(sender: UIResponder) {
-        // self.view.frame.origin.y -= 150
-        delegate?.disableEnableScroll(isKeyboardShow: true)
-        print("keyboard show")
+    @objc func keyboardWillShow(_ notification: NSNotification) {
         
-        print(frame.size.width, UIScreen.main.bounds.width)
-        print(frame.size.height, UIScreen.main.bounds.height)
+        if self.isKeyboardShowing { return }
+        self.isKeyboardShowing = true
+        
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            
+            // self.frame.size.height += (cancelButton.frame.height + 20)
+            self.frame.size.height += 60
+            self.frame.origin.y -= keyboardHeight + 60
+            print(keyboardHeight)
+            
+            let bottomOffset = CGPoint(x: 0, y: scrollView.contentSize.height - scrollView.bounds.size.height)
+            scrollView.setContentOffset(bottomOffset, animated: true)
+        }
+
+        // wordImageButton.isHidden = true
+        delegate?.disableEnableScroll(isKeyboardShow: true)
     }
     
-    @objc func keyboardWillHide(sender: UIResponder) {
-        print("keyboard hide")
+    @objc func keyboardWillHide(_ notification: NSNotification) {
+        
+        if !self.isKeyboardShowing { return }
+        self.isKeyboardShowing = false
+        
+        self.frame.size.height -= 60
+        self.frame.origin.y = 0
+        
+        scrollView.contentInset = .zero
+        scrollView.scrollIndicatorInsets = scrollView.contentInset
+        
+        // wordImageButton.isHidden = false
         delegate?.disableEnableScroll(isKeyboardShow: false)
     }
     

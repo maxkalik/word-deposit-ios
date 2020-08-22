@@ -206,14 +206,12 @@ class VocabulariesTVC: UITableViewController {
             let oldIndex = selectedVocabularyIndex
             vocabularies[oldIndex].isSelected = false
             updateVocabulary(vocabularies[oldIndex])
-            // tableView.reloadRows(at: [IndexPath(item: oldIndex, section: 0)], with: .none)
             
             // update new one
             selectedVocabularyIndex = sender.tag
             var vocabulary = vocabularies[selectedVocabularyIndex]
             vocabulary.isSelected = true
             updateVocabulary(vocabulary)
-            // tableView.reloadRows(at: [IndexPath(item: selectedVocabularyIndex, section: 0)], with: .none)
             
         } else {
             sender.isOn = true
