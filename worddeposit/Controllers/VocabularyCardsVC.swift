@@ -37,7 +37,7 @@ class VocabularyCardsVC: UIViewController {
         self.vocabularyId = vocabularyId
         print("vocabulary id from card", vocabularyId)
         
-        
+        hideKeyboardWhenTappedAround()
     }
     
     override func viewDidLayoutSubviews() {

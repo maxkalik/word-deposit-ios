@@ -60,9 +60,6 @@ class VocabularyCardCVCell: UICollectionViewCell {
         hideAllButtons()
         disableAllButtons()
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
-        addGestureRecognizer(tap)
-        
         wordExampleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         wordTranslationTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         wordDescriptionTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
@@ -79,10 +76,6 @@ class VocabularyCardCVCell: UICollectionViewCell {
     }
     
     // MARK: - @objc methods
-    
-    @objc func dismissKeyboard() {
-        endEditing(true)
-    }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         textFieldValidation()
@@ -318,7 +311,8 @@ class VocabularyCardCVCell: UICollectionViewCell {
             } else {
                 self.word = updatedWord
                 self.hideAllButtons()
-                self.dismissKeyboard()
+                // self.dismissKeyboard()
+                self.endEditing(true)
                 self.delegate?.showAlert(title: "Success", message: "Word has been updated")
             }
             self.wordLoader.stopAnimating()

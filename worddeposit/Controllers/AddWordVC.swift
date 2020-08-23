@@ -49,6 +49,7 @@ class AddWordVC: UIViewController {
         db = Firestore.firestore()
         storage = Storage.storage()
         setupUI()
+        hideKeyboardWhenTappedAround()
     }
     
     override func viewWillAppear(_ animated: Bool) {
