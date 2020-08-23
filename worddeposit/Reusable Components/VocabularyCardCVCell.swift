@@ -23,7 +23,8 @@ class VocabularyCardCVCell: UICollectionViewCell {
             wordImageButton.imageView?.contentMode = .scaleAspectFill
         }
     }
-    @IBOutlet weak var scrollView: UIScrollView!
+//    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var wordExampleTextField: UITextField!
     @IBOutlet weak var wordTranslationTextField: UITextField!
     @IBOutlet weak var wordDescriptionTextField: UITextField!
@@ -59,9 +60,13 @@ class VocabularyCardCVCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+
 //        loader.isHidden = true
         saveChangingButton.isHidden = true
         cancelButton.isHidden = true
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+        addGestureRecognizer(tap)
         
         wordExampleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         wordTranslationTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
@@ -80,6 +85,10 @@ class VocabularyCardCVCell: UICollectionViewCell {
     
     // MARK: - @objc methods
     
+    @objc func dismissKeyboard() {
+        endEditing(true)
+    }
+    
     @objc func textFieldDidChange(_ textField: UITextField) {
         textFieldValidation()
     }
@@ -90,16 +99,41 @@ class VocabularyCardCVCell: UICollectionViewCell {
         self.isKeyboardShowing = true
         
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            
+            // guard let lastButton = cancelButton.window else { return }
+            // print(lastButton.frame.maxY - scrollView.frame.height)
+            // print("SCROLL VIEW HEIGHT", scrollView.frame.size.height)
+            // print("CANCEL BUTTON Y", cancelButton.frame.origin.y)
+            
             let keyboardRectangle = keyboardFrame.cgRectValue
             let keyboardHeight = keyboardRectangle.height
             
-            // self.frame.size.height += (cancelButton.frame.height + 20)
-            // self.frame.size.height += 60
-            self.frame.origin.y -= keyboardHeight
-            print(keyboardHeight)
+            print("KEYBOARD HEIGHT", keyboardHeight)
+            print("Area from the top to keyboard", frame.size.height - keyboardHeight)
             
-            let bottomOffset = CGPoint(x: 0, y: scrollView.contentSize.height - scrollView.bounds.size.height)
-            scrollView.setContentOffset(bottomOffset, animated: true)
+            cancelButton.isHidden = false
+            cancelButton.isEnabled = false
+            
+            saveChangingButton.isHidden = false
+            saveChangingButton.isEnabled = false
+            
+            // print(keyboardHeight - cancelButton.frame.origin.y)
+            // self.frame.size.height += (cancelButton.frame.height + 20)
+            
+            // self.frame.size.height += (lastButton.frame.maxY - scrollView.frame.height)
+            // self.frame.origin.y -= keyboardHeight + (lastButton.frame.maxY - scrollView.frame.height)
+            
+            // iPhone X case
+            self.frame.origin.y -= keyboardHeight
+            // self.frame.size.height -= 50
+            // stackView.frame.size.height = scrollView.frame.size.height - keyboardHeight
+            
+            
+            // iPhone X - it doesnot work
+            // let bottomOffset = CGPoint(x: 0, y: scrollView.contentSize.height - scrollView.bounds.size.height)
+            // scrollView.setContentOffset(bottomOffset, animated: true)
+            
+            
         }
         
         UIView.animate(withDuration: 0.3) {
@@ -114,11 +148,14 @@ class VocabularyCardCVCell: UICollectionViewCell {
         if !self.isKeyboardShowing { return }
         self.isKeyboardShowing = false
         
-        // self.frame.size.height -= 60
+        // self.frame.size.height = superview!.safeAreaLayoutGuide.layoutFrame.size.height
         self.frame.origin.y = 0
         
-        scrollView.contentInset = .zero
-        scrollView.scrollIndicatorInsets = scrollView.contentInset
+        // iPhone X case
+        // scrollView.contentInset = .zero
+        // scrollView.scrollIndicatorInsets = scrollView.contentInset
+        
+        hideAllButtons(true)
         
         UIView.animate(withDuration: 0.3) {
             self.wordImageButton.alpha = 1
@@ -159,13 +196,16 @@ class VocabularyCardCVCell: UICollectionViewCell {
         || wordTranslation != word.translation
         || wordDescription != word.description
         || isImageSet {
-            hideAllButtons(false)
+            cancelButton.isEnabled = true
+            saveChangingButton.isEnabled = true
             if wordExample.isEmpty || wordTranslation.isEmpty {
-                saveChangingButton.isHidden = true
-                cancelButton.isHidden = false
+                cancelButton.isEnabled = true
+                saveChangingButton.isEnabled = false
             }
         } else {
-            hideAllButtons(true)
+            // hideAllButtons(true)
+            cancelButton.isEnabled = false
+            saveChangingButton.isEnabled = false
         }
     }
     
@@ -216,7 +256,9 @@ class VocabularyCardCVCell: UICollectionViewCell {
     
     @IBAction func onCancelTouched(_ sender: UIButton) {
         self.setupWord(word)
-        hideAllButtons(true)
+        // hideAllButtons(true)
+        cancelButton.isEnabled = false
+        saveChangingButton.isEnabled = false
         isImageSet = false
     }
     
@@ -316,6 +358,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
             } else {
                 self.word = word
                 self.hideAllButtons(true)
+                self.dismissKeyboard()
                 self.delegate?.showAlert(title: "Success", message: "Word has been updated")
             }
             self.loader.stopAnimating()
