@@ -16,31 +16,27 @@ class VocabularyCardCVCell: UICollectionViewCell {
 
     // MARK: - Outlets
 
-    @IBOutlet weak var wordImageButton: UIButton! {
-        didSet {
-            let pinch = UIPinchGestureRecognizer(target: self, action: #selector(adjustImageButtonScale(byHandlingGestureRecognizedBy:)))
-            wordImageButton.addGestureRecognizer(pinch)
-            wordImageButton.imageView?.contentMode = .scaleAspectFill
-        }
-    }
+    @IBOutlet weak var wordPictureButton: UIButton!
+    @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var wordExampleTextField: UITextField!
     @IBOutlet weak var wordTranslationTextField: UITextField!
+    @IBOutlet weak var wordDescriptionTextField: UITextField!
     @IBOutlet weak var saveChangingButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
-    @IBOutlet weak var loader: UIActivityIndicatorView!
+    @IBOutlet weak var wordLoader: UIActivityIndicatorView!
+    @IBOutlet weak var pictureLoader: UIActivityIndicatorView!
+    @IBOutlet weak var removePictureButton: UIButton!
+    
     // MARK: - Variables
 
     var vocabularyId: String!
     var word: Word!
     var wordRef: DocumentReference!
+    var auth = Auth.auth()
     var db = Firestore.firestore()
     var storage = Storage.storage()
-    private var isImageSet = false
-    var wordImageButtonScale: CGFloat = 1.0 {
-        didSet {
-            setNeedsDisplay()
-        }
-    }
+    lazy var currentUser = auth.currentUser
+    private var isKeyboardShowing = false
     
     weak var delegate: VocabularyCardCVCellDelegate?
     
@@ -48,18 +44,28 @@ class VocabularyCardCVCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        wordImageButton.setImage(UIImage(named: Placeholders.Logo), for: .normal)
-        saveChangingButton.setTitle("Save Changing", for: .normal)
+        wordPictureButton.setImage(UIImage(named: Placeholders.Logo), for: .normal)
+        
+        hideAllButtons()
+        disableAllButtons()
+        
+        removePictureButton.isHidden = true
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-//        loader.isHidden = true
-        saveChangingButton.isHidden = true
-        cancelButton.isHidden = true
+
+        frame.size.height -= 40
+        
+        hideAllButtons()
+        disableAllButtons()
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+        addGestureRecognizer(tap)
         
         wordExampleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         wordTranslationTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        wordDescriptionTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -69,63 +75,69 @@ class VocabularyCardCVCell: UICollectionViewCell {
         NotificationCenter.default.removeObserver(self)
         wordExampleTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         wordTranslationTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        wordDescriptionTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
     // MARK: - @objc methods
+    
+    @objc func dismissKeyboard() {
+        endEditing(true)
+    }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         textFieldValidation()
     }
     
-    @objc func keyboardWillShow(sender: UIResponder) {
-        // self.view.frame.origin.y -= 150
-        delegate?.disableEnableScroll(isKeyboardShow: true)
-        print("keyboard show")
+    @objc func keyboardWillShow(_ notification: NSNotification) {
         
-        print(frame.size.width, UIScreen.main.bounds.width)
-        print(frame.size.height, UIScreen.main.bounds.height)
-    }
-    
-    @objc func keyboardWillHide(sender: UIResponder) {
-        print("keyboard hide")
-        delegate?.disableEnableScroll(isKeyboardShow: false)
-    }
-    
-    @objc func adjustImageButtonScale(byHandlingGestureRecognizedBy recoginzer: UIPinchGestureRecognizer) {
-        switch recoginzer.state {
-        case .changed:
-            wordImageButtonScale *= recoginzer.scale
-            recoginzer.scale = 1.0
-        case .ended:
-            wordImageButtonScale = 1.0
-        default: break
+        if isKeyboardShowing { return }
+        isKeyboardShowing = true
+        
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardHeight: CGFloat = keyboardFrame.cgRectValue.height
+            showAllButtons()
+            frame.origin.y -= keyboardHeight
         }
+        
+        UIView.animate(withDuration: 0.3) {
+            self.wordPictureButton.alpha = 0
+        }
+        
+        delegate?.disableEnableScroll(isKeyboardShow: true)
     }
     
-    // MARK: - Override methods
-    
-    override func draw(_ rect: CGRect) {
-        wordImageButton.transform = CGAffineTransform(scaleX: wordImageButtonScale, y: wordImageButtonScale)
+    @objc func keyboardWillHide(_ notification: NSNotification) {
+        
+        if !isKeyboardShowing { return }
+        isKeyboardShowing = false
+        frame.origin.y = 0
+        hideAllButtons()
+        
+        UIView.animate(withDuration: 0.3) {
+            self.wordPictureButton.alpha = 1
+        }
+        
+        delegate?.disableEnableScroll(isKeyboardShow: false)
     }
     
     // MARK: - Other methods
     
-    func hideAllButtons(_ isShow: Bool) {
-        saveChangingButton.isHidden = isShow
-        cancelButton.isHidden = isShow
-    }
-    
     func textFieldValidation() {
-        guard let wordExample = wordExampleTextField.text, let wordTranslation = wordTranslationTextField.text else { return }
+        guard let wordExample = wordExampleTextField.text,
+            let wordTranslation = wordTranslationTextField.text,
+            let wordDescription = wordDescriptionTextField.text else { return }
         
-        if wordExample != word.example || wordTranslation != word.translation || isImageSet {
-            hideAllButtons(false)
+        if wordExample != word.example
+            || wordTranslation != word.translation
+            || wordDescription != word.description
+        {
+            enableAllButtons()
             if wordExample.isEmpty || wordTranslation.isEmpty {
-                saveChangingButton.isHidden = true
-                cancelButton.isHidden = false
+                cancelButton.isEnabled = true
+                saveChangingButton.isEnabled = false
             }
         } else {
-            hideAllButtons(true)
+            disableAllButtons()
         }
     }
     
@@ -134,114 +146,132 @@ class VocabularyCardCVCell: UICollectionViewCell {
         self.word = word
         self.delegate = delegate
         setupWord(word)
+        
+        removePictureButton.isHidden = word.imgUrl.isEmpty
     }
     
     func setupWord(_ word: Word) {
         if let url = URL(string: word.imgUrl) {
-            wordImageButton.imageView?.kf.indicatorType = .activity
+            wordPictureButton.imageView?.kf.indicatorType = .activity
             let options: KingfisherOptionsInfo = [KingfisherOptionsInfoItem.transition(.fade(0.2))]
             let imgRecourse = ImageResource(downloadURL: url, cacheKey: word.imgUrl)
-            wordImageButton.kf.setImage(with: imgRecourse, for: .normal, options: options)
+            wordPictureButton.kf.setImage(with: imgRecourse, for: .normal, options: options)
         }
         wordExampleTextField.text = word.example
         wordTranslationTextField.text = word.translation
+        wordDescriptionTextField.text = word.description
     }
     
     // MARK: - IBActions
     
-    @IBAction func wordImageButtonTouched(_ sender: UIButton) {
+    @IBAction func wordPictureButtonTouched(_ sender: UIButton) {
         let ypConfig = YPImagePickerConfig()
         let picker = YPImagePicker(configuration: ypConfig.defaultConfig())
-
+        
         picker.didFinishPicking { [unowned picker] items, _ in
             if let photo = items.singlePhoto {
-                self.isImageSet = true
-                self.wordImageButton.setImage(photo.image, for: .normal)
-                
-                self.textFieldValidation()
-                
+                self.wordPictureButton.setImage(photo.image, for: .normal)
+                self.uploadImage()
             }
             picker.dismiss(animated: true, completion: nil)
         }
         self.delegate?.presentVC(picker)
-        
     }
 
     @IBAction func onSaveChangingTouched(_ sender: UIButton) {
-//        self.loader.isHidden = false
-        saveChangingButton.setTitle("", for: .normal)
-        loader.startAnimating()
-        prepareForUpload()
+        wordLoader.startAnimating()
+        uploadWord()
+        disableAllButtons()
     }
     
     @IBAction func onCancelTouched(_ sender: UIButton) {
         self.setupWord(word)
-        hideAllButtons(true)
-        isImageSet = false
+        disableAllButtons()
     }
+    
+    @IBAction func removePictureTouched(_ sender: UIButton) {
+        pictureLoader.startAnimating()
+        removePicture()
+    }
+    
+    // MARK: - Uploading Methods
     
     func prepareForUpload() {
-        guard let example = wordExampleTextField.text, example.isNotEmpty,
-            let translation = wordTranslationTextField.text, translation.isNotEmpty
-            else {
-                self.delegate?.showAlert(title: "Error", message: "Fields cannot be empty")
-                return
-        }
-        
+
         // TODO: shoud be rewrited in the singleton
-        guard let user = Auth.auth().currentUser, let vocabularyId = self.vocabularyId else { return }
-        let vocabularyRef = db.collection("users").document(user.uid).collection("vocabularies").document(vocabularyId)
+        guard let user = currentUser, let vocabularyId = self.vocabularyId else { return }
+        let vocabularyRef: DocumentReference = db.collection("users").document(user.uid).collection("vocabularies").document(vocabularyId)
         wordRef = vocabularyRef.collection("words").document(word.id)
-        
-        // Making a copy of the word
-        var updatedWord = word!
-        updatedWord.example = example
-        updatedWord.translation = translation
-        
-        if isImageSet {
-            // if only image has been changed?
-            uploadImage(userId: user.uid, updatedWord: word)
-        } else {
-            uploadWord(updatedWord)
-        }
+
     }
     
-    /* ********* */
-    // check
-    func uploadImage(userId: String, updatedWord: Word) {
-        
-        guard let image = wordImageButton.imageView?.image, let vocabularyId = self.vocabularyId else {
-            self.delegate?.showAlert(title: "Error", message: "Fields cannot be empty")
-            loader.stopAnimating()
-            saveChangingButton.setTitle("Save Changing", for: .normal)
+    func removePicture(forUpdating: Bool? = nil) {
+        guard let user = currentUser, let vocabularyId = self.vocabularyId else {
+            pictureLoader.stopAnimating()
             return
         }
+        let imgRef = "/\(user.uid)/\(vocabularyId)/"
         
-        let imgRef = "/\(userId)/\(vocabularyId)/"
-        
-        // remove image before uploading
-        if word.imgUrl.isNotEmpty {
-            self.storage.reference().child("\(imgRef)\(word.id).jpg").delete { (error) in
-                if let error = error {
-                    self.delegate?.showAlert(title: "Error", message: error.localizedDescription)
-                    debugPrint(error.localizedDescription)
-                    return
+        storage.reference().child("\(imgRef)\(word.id).jpg").delete { (error) in
+            if let error = error {
+                self.delegate?.showAlert(title: "Error", message: error.localizedDescription)
+                self.pictureLoader.stopAnimating()
+                debugPrint(error.localizedDescription)
+                return
+            } else {
+                if forUpdating == nil {
+                    self.updatePictureUrl()
                 }
             }
         }
+    }
+    
+    func updatePictureUrl(_ imgUrl: String? = nil) {
+        self.prepareForUpload()
         
-        var updatedWord = updatedWord // convert let to var
+        self.wordRef.updateData(["img_url" : imgUrl ?? ""]) { error in
+            if let error = error {
+                self.delegate?.showAlert(title: "Error", message: error.localizedDescription)
+            } else {
+                if imgUrl == nil {
+                    self.wordPictureButton.setImage(UIImage(named: Placeholders.Logo), for: .normal)
+                    self.word.imgUrl = ""
+                } else {
+                    guard let url = imgUrl else { return }
+                    self.word.imgUrl = url
+                }
+                self.delegate?.showAlert(title: "Success", message: "Pitcure has been updated")
+            }
+            self.pictureLoader.stopAnimating()
+        }
+    }
+    
+    func uploadImage() {
+        pictureLoader.startAnimating()
+        guard let user = currentUser, let image = wordPictureButton.imageView?.image, let vocabularyId = self.vocabularyId else {
+            self.delegate?.showAlert(title: "Error", message: "Cannot upload your picture, Something went wrong")
+            pictureLoader.stopAnimating()
+            return
+        }
+        
+        let imgRef = "/\(user.uid)/\(vocabularyId)/"
+        
+        // remove previous image before uploading is an object have it
+        if word.imgUrl.isNotEmpty {
+            removePicture(forUpdating: true)
+        }
         
         let resizedImg = image.resized(toWidth: 400.0)
         guard let imageData = resizedImg?.jpegData(compressionQuality: 0.5) else { return }
         
-        let imageRef = Storage.storage().reference().child("/\(imgRef)/\(updatedWord.id).jpg")
+        let imageRef = Storage.storage().reference().child("/\(imgRef)/\(word.id).jpg")
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpg"
         
         imageRef.putData(imageData, metadata: metadata) { (storageMetadata, error) in
             if let error = error {
                 self.delegate?.showAlert(title: "Error", message: "Unable to upload image")
+                self.pictureLoader.stopAnimating()
                 debugPrint(error.localizedDescription)
                 return
             }
@@ -249,33 +279,71 @@ class VocabularyCardCVCell: UICollectionViewCell {
             imageRef.downloadURL { (url, error) in
                 if let error = error {
                     self.delegate?.showAlert(title: "Error", message: "Unable to upload image")
+                    self.pictureLoader.stopAnimating()
                     debugPrint(error.localizedDescription)
                     return
                 }
                 guard let url = url else { return }
-                updatedWord.imgUrl = url.absoluteString
-                
-                // updating wordUrl
-                // TODO - should have to own func to update just url may be
-                self.uploadWord(updatedWord)
+                self.updatePictureUrl(url.absoluteString)
             }
         }
     }
     
-    func uploadWord(_ word: Word) {
-        let data = Word.modelToData(word: word)
+    func uploadWord() {
+        
+        guard let example = wordExampleTextField.text, example.isNotEmpty,
+            let translation = wordTranslationTextField.text, translation.isNotEmpty
+            else {
+                self.delegate?.showAlert(title: "Error", message: "Fields cannot be empty")
+                return
+        }
+        
+        guard let description = wordDescriptionTextField.text else { return }
+        
+        // Making a copy of the word
+        var updatedWord = word!
+        updatedWord.example = example
+        updatedWord.translation = translation
+        if description.isNotEmpty {
+            updatedWord.description = description
+        }
+        
+        let data = Word.modelToData(word: updatedWord)
 
+        self.prepareForUpload()
+        
         wordRef.updateData(data) { error in
             if let error = error {
                 self.delegate?.showAlert(title: "Error", message: error.localizedDescription)
             } else {
-                self.word = word
-                self.hideAllButtons(true)
+                self.word = updatedWord
+                self.hideAllButtons()
+                self.dismissKeyboard()
                 self.delegate?.showAlert(title: "Success", message: "Word has been updated")
             }
-            self.loader.stopAnimating()
-            self.saveChangingButton.setTitle("Save Changing", for: .normal)
-            self.isImageSet = false
+            self.wordLoader.stopAnimating()
         }
+    }
+}
+
+extension VocabularyCardCVCell {
+    func hideAllButtons() {
+        saveChangingButton.isHidden = true
+        cancelButton.isHidden = true
+    }
+    
+    func showAllButtons() {
+        saveChangingButton.isHidden = false
+        cancelButton.isHidden = false
+    }
+    
+    func enableAllButtons() {
+        cancelButton.isEnabled = true
+        saveChangingButton.isEnabled = true
+    }
+    
+    func disableAllButtons() {
+        cancelButton.isEnabled = false
+        saveChangingButton.isEnabled = false
     }
 }

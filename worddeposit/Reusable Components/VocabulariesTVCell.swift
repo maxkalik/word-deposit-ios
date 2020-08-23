@@ -23,6 +23,14 @@ class VocabulariesTVCell: UITableViewCell {
         }
     }
     
+    var wordsAmount: Int! {
+        didSet {
+            wordsAmountActivityIndicator.stopAnimating()
+            wordsAmountLabel.isHidden = false
+            wordsAmountLabel.text = String(wordsAmount)
+        }
+    }
+    
     // MARK: - Lifecycle
     
     override func prepareForReuse() {
@@ -45,10 +53,35 @@ class VocabulariesTVCell: UITableViewCell {
         }
     }
     
+    private func updateWordsAmount(vocabulary: Vocabulary, userRef: DocumentReference) {
+        let vocabularyRef = userRef.collection("vocabularies").document(vocabulary.id)
+        let wordsRef = vocabularyRef.collection("words")
+        wordsRef.getDocuments { (snapshot, error) in
+            if let error = error {
+                print(error.localizedDescription)
+                self.wordsAmountActivityIndicator.stopAnimating()
+            } else  {
+                guard let snap = snapshot else { return }
+                if snap.count != self.wordsAmount {
+                    self.wordsAmount = snap.count
+                    vocabularyRef.updateData(["words_amount" : snap.count]) { (error) in
+                        if let error = error {
+                            debugPrint(error.localizedDescription)
+                        }
+                    }
+                }
+                self.wordsAmountActivityIndicator.stopAnimating()
+            }
+        }
+    }
+    
     func configureCell(vocabulary: Vocabulary, userRef: DocumentReference) {
         titleLabel.text = vocabulary.title
         languageLabel.text = vocabulary.language
         wordsAmountLabel.text = String(vocabulary.wordsAmount)
+        
+        updateWordsAmount(vocabulary: vocabulary, userRef: userRef)
+        
         containerView.layer.cornerRadius = 8
         containerView.layer.borderWidth = 0
         containerView.layer.backgroundColor = CGColor(srgbRed: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 0.5)

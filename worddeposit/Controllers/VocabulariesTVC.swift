@@ -126,42 +126,31 @@ class VocabulariesTVC: UITableViewController {
                 return
             }
             self.progressHUD.hide()
-            DispatchQueue.main.async {
-                if snapshot!.documents.isEmpty {
-                    self.setupMessage()
-                    self.messageView.show()
-                    self.isModalInPresentation = true
-                } else {
-                    self.isModalInPresentation = false
-                }
+
+            if snapshot!.documents.isEmpty {
+                self.setupMessage()
+                self.messageView.show()
+                self.isModalInPresentation = true
+            } else {
+                self.isModalInPresentation = false
             }
             
             snapshot?.documentChanges.forEach({ (docChange) in
                 let data = docChange.document.data()
-                var vocabulary = Vocabulary.init(data: data)
-                
-                let wordsRef = self.userRef.collection("vocabularies").document(vocabulary.id).collection("words")
-                
-                wordsRef.getDocuments { (snapshot, error) in
-                    if let error = error {
-                        print(error.localizedDescription)
-                    } else  {
-                        guard let snap = snapshot else { return }
-                        vocabulary.wordsAmount = snap.count
-                        print(vocabulary)
-                        switch docChange.type {
-                        case .added:
-                            self.onDocumentAdded(change: docChange, vocabulary: vocabulary)
-                        case .modified:
-                            self.onDocumentModified(change: docChange, vocabulary: vocabulary)
-                        case .removed:
-                            self.onDocumentRemoved(change: docChange)
-                        }
-                    }
+                let vocabulary = Vocabulary.init(data: data)
+                switch docChange.type {
+                case .added:
+                    self.onDocumentAdded(change: docChange, vocabulary: vocabulary)
+                case .modified:
+                    self.onDocumentModified(change: docChange, vocabulary: vocabulary)
+                case .removed:
+                    self.onDocumentRemoved(change: docChange)
                 }
             })
         })
     }
+    
+
     
     func onDocumentAdded(change: DocumentChange, vocabulary: Vocabulary) {
         let newIndex = Int(change.newIndex)
@@ -194,25 +183,19 @@ class VocabulariesTVC: UITableViewController {
         tableView.register(nib, forCellReuseIdentifier: XIBs.VocabulariesTVCell)
         tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
     }
-
-    // MARK: - Table view data source
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return vocabularies.count
-    }
-
+    
     func updateVocabulary(_ vocabulary: Vocabulary) {
         // TODO: - Refactoring
-        guard let user = Auth.auth().currentUser else { return }
+        guard let user = auth.currentUser else { return }
         vocabulariesRef = db.collection("users").document(user.uid).collection("vocabularies").document(vocabulary.id)
-        print(vocabulary)
+        // print(vocabulary)
         let data = Vocabulary.modelToData(vocabulary: vocabulary)
         vocabulariesRef.updateData(data) { (error) in
             if let error = error {
                 self.simpleAlert(title: "Error", msg: error.localizedDescription)
             }
             // success
-            print("success")
+            // print("success")
         }
     }
     
@@ -229,11 +212,16 @@ class VocabulariesTVC: UITableViewController {
             var vocabulary = vocabularies[selectedVocabularyIndex]
             vocabulary.isSelected = true
             updateVocabulary(vocabulary)
-
-            tableView.reloadData()
+            
         } else {
             sender.isOn = true
         }
+    }
+
+    // MARK: - Table view data source
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return vocabularies.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

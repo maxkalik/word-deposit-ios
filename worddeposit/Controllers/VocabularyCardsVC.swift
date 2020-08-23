@@ -75,7 +75,8 @@ extension VocabularyCardsVC: UICollectionViewDelegate, UICollectionViewDataSourc
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: view.safeAreaLayoutGuide.layoutFrame.size.height)
+        // return CGSize(width: view.frame.width, height: view.safeAreaLayoutGuide.layoutFrame.size.height)
+        return view.frame.size
     }
 }
 
