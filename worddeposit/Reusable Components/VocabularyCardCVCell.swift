@@ -16,14 +16,16 @@ class VocabularyCardCVCell: UICollectionViewCell {
 
     // MARK: - Outlets
 
-    @IBOutlet weak var wordImageButton: UIButton!
+    @IBOutlet weak var wordPictureButton: UIButton!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var wordExampleTextField: UITextField!
     @IBOutlet weak var wordTranslationTextField: UITextField!
     @IBOutlet weak var wordDescriptionTextField: UITextField!
     @IBOutlet weak var saveChangingButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
-    @IBOutlet weak var loader: UIActivityIndicatorView!
+    @IBOutlet weak var wordLoader: UIActivityIndicatorView!
+    @IBOutlet weak var pictureLoader: UIActivityIndicatorView!
+    @IBOutlet weak var removePictureButton: UIButton!
     
     // MARK: - Variables
 
@@ -34,7 +36,6 @@ class VocabularyCardCVCell: UICollectionViewCell {
     var db = Firestore.firestore()
     var storage = Storage.storage()
     lazy var currentUser = auth.currentUser
-    // private var isImageSet = false
     private var isKeyboardShowing = false
     
     weak var delegate: VocabularyCardCVCellDelegate?
@@ -43,10 +44,12 @@ class VocabularyCardCVCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        wordImageButton.setImage(UIImage(named: Placeholders.Logo), for: .normal)
+        wordPictureButton.setImage(UIImage(named: Placeholders.Logo), for: .normal)
         
         hideAllButtons()
         disableAllButtons()
+        
+        removePictureButton.isHidden = true
     }
     
     override func awakeFromNib() {
@@ -97,7 +100,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
         }
         
         UIView.animate(withDuration: 0.3) {
-            self.wordImageButton.alpha = 0
+            self.wordPictureButton.alpha = 0
         }
         
         delegate?.disableEnableScroll(isKeyboardShow: true)
@@ -111,7 +114,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
         hideAllButtons()
         
         UIView.animate(withDuration: 0.3) {
-            self.wordImageButton.alpha = 1
+            self.wordPictureButton.alpha = 1
         }
         
         delegate?.disableEnableScroll(isKeyboardShow: false)
@@ -143,14 +146,16 @@ class VocabularyCardCVCell: UICollectionViewCell {
         self.word = word
         self.delegate = delegate
         setupWord(word)
+        
+        removePictureButton.isHidden = word.imgUrl.isEmpty
     }
     
     func setupWord(_ word: Word) {
         if let url = URL(string: word.imgUrl) {
-            wordImageButton.imageView?.kf.indicatorType = .activity
+            wordPictureButton.imageView?.kf.indicatorType = .activity
             let options: KingfisherOptionsInfo = [KingfisherOptionsInfoItem.transition(.fade(0.2))]
             let imgRecourse = ImageResource(downloadURL: url, cacheKey: word.imgUrl)
-            wordImageButton.kf.setImage(with: imgRecourse, for: .normal, options: options)
+            wordPictureButton.kf.setImage(with: imgRecourse, for: .normal, options: options)
         }
         wordExampleTextField.text = word.example
         wordTranslationTextField.text = word.translation
@@ -159,26 +164,22 @@ class VocabularyCardCVCell: UICollectionViewCell {
     
     // MARK: - IBActions
     
-    @IBAction func wordImageButtonTouched(_ sender: UIButton) {
+    @IBAction func wordPictureButtonTouched(_ sender: UIButton) {
         let ypConfig = YPImagePickerConfig()
         let picker = YPImagePicker(configuration: ypConfig.defaultConfig())
-
+        
         picker.didFinishPicking { [unowned picker] items, _ in
             if let photo = items.singlePhoto {
-                // self.isImageSet = true
-                self.wordImageButton.setImage(photo.image, for: .normal)
-                // self.textFieldValidation()
-                
+                self.wordPictureButton.setImage(photo.image, for: .normal)
                 self.uploadImage()
             }
             picker.dismiss(animated: true, completion: nil)
         }
         self.delegate?.presentVC(picker)
-        
     }
 
     @IBAction func onSaveChangingTouched(_ sender: UIButton) {
-        loader.startAnimating()
+        wordLoader.startAnimating()
         uploadWord()
         disableAllButtons()
     }
@@ -186,8 +187,14 @@ class VocabularyCardCVCell: UICollectionViewCell {
     @IBAction func onCancelTouched(_ sender: UIButton) {
         self.setupWord(word)
         disableAllButtons()
-        // isImageSet = false
     }
+    
+    @IBAction func removePictureTouched(_ sender: UIButton) {
+        pictureLoader.startAnimating()
+        removePicture()
+    }
+    
+    // MARK: - Uploading Methods
     
     func prepareForUpload() {
 
@@ -198,11 +205,52 @@ class VocabularyCardCVCell: UICollectionViewCell {
 
     }
     
+    func removePicture(forUpdating: Bool? = nil) {
+        guard let user = currentUser, let vocabularyId = self.vocabularyId else {
+            pictureLoader.stopAnimating()
+            return
+        }
+        let imgRef = "/\(user.uid)/\(vocabularyId)/"
+        
+        storage.reference().child("\(imgRef)\(word.id).jpg").delete { (error) in
+            if let error = error {
+                self.delegate?.showAlert(title: "Error", message: error.localizedDescription)
+                self.pictureLoader.stopAnimating()
+                debugPrint(error.localizedDescription)
+                return
+            } else {
+                if forUpdating == nil {
+                    self.updatePictureUrl()
+                }
+            }
+        }
+    }
+    
+    func updatePictureUrl(_ imgUrl: String? = nil) {
+        self.prepareForUpload()
+        
+        self.wordRef.updateData(["img_url" : imgUrl ?? ""]) { error in
+            if let error = error {
+                self.delegate?.showAlert(title: "Error", message: error.localizedDescription)
+            } else {
+                if imgUrl == nil {
+                    self.wordPictureButton.setImage(UIImage(named: Placeholders.Logo), for: .normal)
+                    self.word.imgUrl = ""
+                } else {
+                    guard let url = imgUrl else { return }
+                    self.word.imgUrl = url
+                }
+                self.delegate?.showAlert(title: "Success", message: "Pitcure has been updated")
+            }
+            self.pictureLoader.stopAnimating()
+        }
+    }
+    
     func uploadImage() {
-
-        guard let user = currentUser, let image = wordImageButton.imageView?.image, let vocabularyId = self.vocabularyId else {
-            self.delegate?.showAlert(title: "Error", message: "Fields cannot be empty")
-            loader.stopAnimating()
+        pictureLoader.startAnimating()
+        guard let user = currentUser, let image = wordPictureButton.imageView?.image, let vocabularyId = self.vocabularyId else {
+            self.delegate?.showAlert(title: "Error", message: "Cannot upload your picture, Something went wrong")
+            pictureLoader.stopAnimating()
             return
         }
         
@@ -210,13 +258,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
         
         // remove previous image before uploading is an object have it
         if word.imgUrl.isNotEmpty {
-            self.storage.reference().child("\(imgRef)\(word.id).jpg").delete { (error) in
-                if let error = error {
-                    self.delegate?.showAlert(title: "Error", message: error.localizedDescription)
-                    debugPrint(error.localizedDescription)
-                    return
-                }
-            }
+            removePicture(forUpdating: true)
         }
         
         let resizedImg = image.resized(toWidth: 400.0)
@@ -229,6 +271,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
         imageRef.putData(imageData, metadata: metadata) { (storageMetadata, error) in
             if let error = error {
                 self.delegate?.showAlert(title: "Error", message: "Unable to upload image")
+                self.pictureLoader.stopAnimating()
                 debugPrint(error.localizedDescription)
                 return
             }
@@ -236,23 +279,12 @@ class VocabularyCardCVCell: UICollectionViewCell {
             imageRef.downloadURL { (url, error) in
                 if let error = error {
                     self.delegate?.showAlert(title: "Error", message: "Unable to upload image")
+                    self.pictureLoader.stopAnimating()
                     debugPrint(error.localizedDescription)
                     return
                 }
                 guard let url = url else { return }
-                let imgUrl = url.absoluteString
-                
-                self.prepareForUpload()
-                
-                self.wordRef.updateData(["img_url" : imgUrl]) { error in
-                    if let error = error {
-                        self.delegate?.showAlert(title: "Error", message: error.localizedDescription)
-                    } else {
-                        self.word.imgUrl = imgUrl
-                        self.delegate?.showAlert(title: "Success", message: "Pitcure has been updated")
-                    }
-                    self.loader.stopAnimating()
-                }
+                self.updatePictureUrl(url.absoluteString)
             }
         }
     }
@@ -289,7 +321,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
                 self.dismissKeyboard()
                 self.delegate?.showAlert(title: "Success", message: "Word has been updated")
             }
-            self.loader.stopAnimating()
+            self.wordLoader.stopAnimating()
         }
     }
 }
