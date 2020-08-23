@@ -55,7 +55,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        frame.size.height -= 40
+        // frame.size.height -= 40
         
         hideAllButtons()
         disableAllButtons()

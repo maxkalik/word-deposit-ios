@@ -16,13 +16,15 @@ class AddWordVC: UIViewController {
         }
     }
     
+    @IBOutlet weak var inputsView: UIView!
+    
     @IBOutlet weak var wordImagePickerBtn: UIButton! {
         didSet {
             wordImagePickerBtn.imageView?.contentMode = .scaleAspectFill
         }
     }
     
-    @IBOutlet weak var addWordButton: RoundedButton!
+    @IBOutlet weak var wordSaveButton: RoundedButton!
     @IBOutlet weak var clearAllButton: UIButton!
     @IBOutlet weak var wordExampleTextField: UITextField!
     @IBOutlet weak var wordTranslationTextField: UITextField!
@@ -35,7 +37,8 @@ class AddWordVC: UIViewController {
     var db: Firestore!
     var storage: Storage!
     var wordRef: DocumentReference!
-    var isImageSet = false
+    private var isImageSet = false
+    private var isKeyboardShowing = false
     
 //    var vocabulary: Vocabulary!
     
@@ -58,17 +61,65 @@ class AddWordVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         wordExampleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         wordTranslationTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
         wordExampleTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         wordTranslationTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
     // MARK: - @objc Methods
+    
+    @objc func keyboardWillShow(_ notification: NSNotification) {
+        
+        if isKeyboardShowing { return }
+        isKeyboardShowing = true
+
+        
+        
+        let topSafeArea: CGFloat = view.safeAreaInsets.top
+            
+        inputsView.frame.origin.y = topSafeArea + 20
+        scrollView.isScrollEnabled = false
+        
+        
+        // if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            // let keyboardHeight: CGFloat = keyboardFrame.cgRectValue.height
+            // let bottomOffset = CGPoint(x: 0, y: keyboardHeight)
+            
+            // DispatchQueue.main.async {
+                // self.scrollView.contentSize.height -= keyboardHeight
+                // self.scrollView.frame.size.height -= keyboardHeight
+                // self.scrollView.frame.origin.y -= keyboardHeight
+                // self.scrollView.frame.origin.y = 0
+            // }
+        // }
+        
+        UIView.animate(withDuration: 0.3) {
+            self.wordImagePickerBtn.alpha = 0
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: NSNotification) {
+        
+        if !isKeyboardShowing { return }
+        isKeyboardShowing = false
+        
+        inputsView.frame.origin.y = 375
+        scrollView.isScrollEnabled = true
+
+        UIView.animate(withDuration: 0.3) {
+            self.wordImagePickerBtn.alpha = 1
+        }
+    }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         textFieldValidation()
@@ -79,7 +130,7 @@ class AddWordVC: UIViewController {
     func textFieldValidation() {
         guard let wordExample = wordExampleTextField.text,
               let wordTranslation = wordTranslationTextField.text else { return }
-        addWordButton.isEnabled = !(wordExample.isEmpty || wordTranslation.isEmpty)
+        wordSaveButton.isEnabled = !(wordExample.isEmpty || wordTranslation.isEmpty)
         clearAllButton.isEnabled = !(wordExample.isEmpty && wordTranslation.isEmpty)
     }
     
@@ -89,7 +140,7 @@ class AddWordVC: UIViewController {
         wordExampleTextField.autocorrectionType = .no
         wordTranslationTextField.autocorrectionType = .no
         wordDescriptionTextField.autocorrectionType = .no
-        addWordButton.isEnabled = false
+        wordSaveButton.isEnabled = false
         clearAllButton.isEnabled = false
     }
     
@@ -177,7 +228,7 @@ class AddWordVC: UIViewController {
         wordExampleTextField.text = ""
         wordTranslationTextField.text = ""
         isImageSet = false
-        addWordButton.isEnabled = false
+        wordSaveButton.isEnabled = false
         clearAllButton.isEnabled = false
     }
     
