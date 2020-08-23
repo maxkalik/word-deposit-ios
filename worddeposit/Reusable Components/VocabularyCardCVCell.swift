@@ -16,14 +16,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
 
     // MARK: - Outlets
 
-    @IBOutlet weak var wordImageButton: UIButton! {
-        didSet {
-            let pinch = UIPinchGestureRecognizer(target: self, action: #selector(adjustImageButtonScale(byHandlingGestureRecognizedBy:)))
-            wordImageButton.addGestureRecognizer(pinch)
-            wordImageButton.imageView?.contentMode = .scaleAspectFill
-        }
-    }
-//    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var wordImageButton: UIButton!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var wordExampleTextField: UITextField!
     @IBOutlet weak var wordTranslationTextField: UITextField!
@@ -37,15 +30,11 @@ class VocabularyCardCVCell: UICollectionViewCell {
     var vocabularyId: String!
     var word: Word!
     var wordRef: DocumentReference!
+    var auth = Auth.auth()
     var db = Firestore.firestore()
     var storage = Storage.storage()
-    private var isImageSet = false
-    var wordImageButtonScale: CGFloat = 1.0 {
-        didSet {
-            setNeedsDisplay()
-        }
-    }
-    
+    lazy var currentUser = auth.currentUser
+    // private var isImageSet = false
     private var isKeyboardShowing = false
     
     weak var delegate: VocabularyCardCVCellDelegate?
@@ -55,15 +44,18 @@ class VocabularyCardCVCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         wordImageButton.setImage(UIImage(named: Placeholders.Logo), for: .normal)
-        saveChangingButton.setTitle("Save Changing", for: .normal)
+        
+        hideAllButtons()
+        disableAllButtons()
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
 
-//        loader.isHidden = true
-        saveChangingButton.isHidden = true
-        cancelButton.isHidden = true
+        frame.size.height -= 40
+        
+        hideAllButtons()
+        disableAllButtons()
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
         addGestureRecognizer(tap)
@@ -95,45 +87,13 @@ class VocabularyCardCVCell: UICollectionViewCell {
     
     @objc func keyboardWillShow(_ notification: NSNotification) {
         
-        if self.isKeyboardShowing { return }
-        self.isKeyboardShowing = true
+        if isKeyboardShowing { return }
+        isKeyboardShowing = true
         
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            
-            // guard let lastButton = cancelButton.window else { return }
-            // print(lastButton.frame.maxY - scrollView.frame.height)
-            // print("SCROLL VIEW HEIGHT", scrollView.frame.size.height)
-            // print("CANCEL BUTTON Y", cancelButton.frame.origin.y)
-            
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            let keyboardHeight = keyboardRectangle.height
-            
-            print("KEYBOARD HEIGHT", keyboardHeight)
-            print("Area from the top to keyboard", frame.size.height - keyboardHeight)
-            
-            cancelButton.isHidden = false
-            cancelButton.isEnabled = false
-            
-            saveChangingButton.isHidden = false
-            saveChangingButton.isEnabled = false
-            
-            // print(keyboardHeight - cancelButton.frame.origin.y)
-            // self.frame.size.height += (cancelButton.frame.height + 20)
-            
-            // self.frame.size.height += (lastButton.frame.maxY - scrollView.frame.height)
-            // self.frame.origin.y -= keyboardHeight + (lastButton.frame.maxY - scrollView.frame.height)
-            
-            // iPhone X case
-            self.frame.origin.y -= keyboardHeight
-            // self.frame.size.height -= 50
-            // stackView.frame.size.height = scrollView.frame.size.height - keyboardHeight
-            
-            
-            // iPhone X - it doesnot work
-            // let bottomOffset = CGPoint(x: 0, y: scrollView.contentSize.height - scrollView.bounds.size.height)
-            // scrollView.setContentOffset(bottomOffset, animated: true)
-            
-            
+            let keyboardHeight: CGFloat = keyboardFrame.cgRectValue.height
+            showAllButtons()
+            frame.origin.y -= keyboardHeight
         }
         
         UIView.animate(withDuration: 0.3) {
@@ -145,47 +105,19 @@ class VocabularyCardCVCell: UICollectionViewCell {
     
     @objc func keyboardWillHide(_ notification: NSNotification) {
         
-        if !self.isKeyboardShowing { return }
-        self.isKeyboardShowing = false
-        
-        // self.frame.size.height = superview!.safeAreaLayoutGuide.layoutFrame.size.height
-        self.frame.origin.y = 0
-        
-        // iPhone X case
-        // scrollView.contentInset = .zero
-        // scrollView.scrollIndicatorInsets = scrollView.contentInset
-        
-        hideAllButtons(true)
+        if !isKeyboardShowing { return }
+        isKeyboardShowing = false
+        frame.origin.y = 0
+        hideAllButtons()
         
         UIView.animate(withDuration: 0.3) {
             self.wordImageButton.alpha = 1
         }
+        
         delegate?.disableEnableScroll(isKeyboardShow: false)
     }
     
-    @objc func adjustImageButtonScale(byHandlingGestureRecognizedBy recoginzer: UIPinchGestureRecognizer) {
-        switch recoginzer.state {
-        case .changed:
-            wordImageButtonScale *= recoginzer.scale
-            recoginzer.scale = 1.0
-        case .ended:
-            wordImageButtonScale = 1.0
-        default: break
-        }
-    }
-    
-    // MARK: - Override methods
-    
-    override func draw(_ rect: CGRect) {
-        wordImageButton.transform = CGAffineTransform(scaleX: wordImageButtonScale, y: wordImageButtonScale)
-    }
-    
     // MARK: - Other methods
-    
-    func hideAllButtons(_ isShow: Bool) {
-        saveChangingButton.isHidden = isShow
-        cancelButton.isHidden = isShow
-    }
     
     func textFieldValidation() {
         guard let wordExample = wordExampleTextField.text,
@@ -193,19 +125,16 @@ class VocabularyCardCVCell: UICollectionViewCell {
             let wordDescription = wordDescriptionTextField.text else { return }
         
         if wordExample != word.example
-        || wordTranslation != word.translation
-        || wordDescription != word.description
-        || isImageSet {
-            cancelButton.isEnabled = true
-            saveChangingButton.isEnabled = true
+            || wordTranslation != word.translation
+            || wordDescription != word.description
+        {
+            enableAllButtons()
             if wordExample.isEmpty || wordTranslation.isEmpty {
                 cancelButton.isEnabled = true
                 saveChangingButton.isEnabled = false
             }
         } else {
-            // hideAllButtons(true)
-            cancelButton.isEnabled = false
-            saveChangingButton.isEnabled = false
+            disableAllButtons()
         }
     }
     
@@ -236,11 +165,11 @@ class VocabularyCardCVCell: UICollectionViewCell {
 
         picker.didFinishPicking { [unowned picker] items, _ in
             if let photo = items.singlePhoto {
-                self.isImageSet = true
+                // self.isImageSet = true
                 self.wordImageButton.setImage(photo.image, for: .normal)
+                // self.textFieldValidation()
                 
-                self.textFieldValidation()
-                
+                self.uploadImage()
             }
             picker.dismiss(animated: true, completion: nil)
         }
@@ -249,64 +178,37 @@ class VocabularyCardCVCell: UICollectionViewCell {
     }
 
     @IBAction func onSaveChangingTouched(_ sender: UIButton) {
-        saveChangingButton.setTitle("", for: .normal)
         loader.startAnimating()
-        prepareForUpload()
+        uploadWord()
+        disableAllButtons()
     }
     
     @IBAction func onCancelTouched(_ sender: UIButton) {
         self.setupWord(word)
-        // hideAllButtons(true)
-        cancelButton.isEnabled = false
-        saveChangingButton.isEnabled = false
-        isImageSet = false
+        disableAllButtons()
+        // isImageSet = false
     }
     
     func prepareForUpload() {
-        guard let example = wordExampleTextField.text, example.isNotEmpty,
-            let translation = wordTranslationTextField.text, translation.isNotEmpty
-            else {
-                self.delegate?.showAlert(title: "Error", message: "Fields cannot be empty")
-                return
-        }
-        
-        guard let description = wordDescriptionTextField.text else { return }
-        
+
         // TODO: shoud be rewrited in the singleton
-        guard let user = Auth.auth().currentUser, let vocabularyId = self.vocabularyId else { return }
-        let vocabularyRef = db.collection("users").document(user.uid).collection("vocabularies").document(vocabularyId)
+        guard let user = currentUser, let vocabularyId = self.vocabularyId else { return }
+        let vocabularyRef: DocumentReference = db.collection("users").document(user.uid).collection("vocabularies").document(vocabularyId)
         wordRef = vocabularyRef.collection("words").document(word.id)
-        
-        // Making a copy of the word
-        var updatedWord = word!
-        updatedWord.example = example
-        updatedWord.translation = translation
-        if description.isNotEmpty {
-            updatedWord.description = description
-        }
-        
-        if isImageSet {
-            // if only image has been changed?
-            uploadImage(userId: user.uid, updatedWord: word)
-        } else {
-            uploadWord(updatedWord)
-        }
+
     }
     
-    /* ********* */
-    // check
-    func uploadImage(userId: String, updatedWord: Word) {
-        
-        guard let image = wordImageButton.imageView?.image, let vocabularyId = self.vocabularyId else {
+    func uploadImage() {
+
+        guard let user = currentUser, let image = wordImageButton.imageView?.image, let vocabularyId = self.vocabularyId else {
             self.delegate?.showAlert(title: "Error", message: "Fields cannot be empty")
             loader.stopAnimating()
-            saveChangingButton.setTitle("Save Changing", for: .normal)
             return
         }
         
-        let imgRef = "/\(userId)/\(vocabularyId)/"
+        let imgRef = "/\(user.uid)/\(vocabularyId)/"
         
-        // remove image before uploading
+        // remove previous image before uploading is an object have it
         if word.imgUrl.isNotEmpty {
             self.storage.reference().child("\(imgRef)\(word.id).jpg").delete { (error) in
                 if let error = error {
@@ -317,12 +219,10 @@ class VocabularyCardCVCell: UICollectionViewCell {
             }
         }
         
-        var updatedWord = updatedWord // convert let to var
-        
         let resizedImg = image.resized(toWidth: 400.0)
         guard let imageData = resizedImg?.jpegData(compressionQuality: 0.5) else { return }
         
-        let imageRef = Storage.storage().reference().child("/\(imgRef)/\(updatedWord.id).jpg")
+        let imageRef = Storage.storage().reference().child("/\(imgRef)/\(word.id).jpg")
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpg"
         
@@ -340,30 +240,78 @@ class VocabularyCardCVCell: UICollectionViewCell {
                     return
                 }
                 guard let url = url else { return }
-                updatedWord.imgUrl = url.absoluteString
+                let imgUrl = url.absoluteString
                 
-                // updating wordUrl
-                // TODO - should have to own func to update just url may be
-                self.uploadWord(updatedWord)
+                self.prepareForUpload()
+                
+                self.wordRef.updateData(["img_url" : imgUrl]) { error in
+                    if let error = error {
+                        self.delegate?.showAlert(title: "Error", message: error.localizedDescription)
+                    } else {
+                        self.word.imgUrl = imgUrl
+                        self.delegate?.showAlert(title: "Success", message: "Pitcure has been updated")
+                    }
+                    self.loader.stopAnimating()
+                }
             }
         }
     }
     
-    func uploadWord(_ word: Word) {
-        let data = Word.modelToData(word: word)
+    func uploadWord() {
+        
+        guard let example = wordExampleTextField.text, example.isNotEmpty,
+            let translation = wordTranslationTextField.text, translation.isNotEmpty
+            else {
+                self.delegate?.showAlert(title: "Error", message: "Fields cannot be empty")
+                return
+        }
+        
+        guard let description = wordDescriptionTextField.text else { return }
+        
+        // Making a copy of the word
+        var updatedWord = word!
+        updatedWord.example = example
+        updatedWord.translation = translation
+        if description.isNotEmpty {
+            updatedWord.description = description
+        }
+        
+        let data = Word.modelToData(word: updatedWord)
 
+        self.prepareForUpload()
+        
         wordRef.updateData(data) { error in
             if let error = error {
                 self.delegate?.showAlert(title: "Error", message: error.localizedDescription)
             } else {
-                self.word = word
-                self.hideAllButtons(true)
+                self.word = updatedWord
+                self.hideAllButtons()
                 self.dismissKeyboard()
                 self.delegate?.showAlert(title: "Success", message: "Word has been updated")
             }
             self.loader.stopAnimating()
-            self.saveChangingButton.setTitle("Save Changing", for: .normal)
-            self.isImageSet = false
         }
+    }
+}
+
+extension VocabularyCardCVCell {
+    func hideAllButtons() {
+        saveChangingButton.isHidden = true
+        cancelButton.isHidden = true
+    }
+    
+    func showAllButtons() {
+        saveChangingButton.isHidden = false
+        cancelButton.isHidden = false
+    }
+    
+    func enableAllButtons() {
+        cancelButton.isEnabled = true
+        saveChangingButton.isEnabled = true
+    }
+    
+    func disableAllButtons() {
+        cancelButton.isEnabled = false
+        saveChangingButton.isEnabled = false
     }
 }

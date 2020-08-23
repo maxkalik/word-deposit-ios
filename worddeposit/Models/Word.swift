@@ -1,7 +1,7 @@
 import Foundation
 import FirebaseFirestore
 
-struct Word {
+struct Word: Equatable {
     var imgUrl: String
     var example: String
     var translation: String
@@ -54,5 +54,16 @@ struct Word {
             "timestamp": word.timestamp
         ]
         return data
+    }
+    
+    static func == (lhs: Word, rhs: Word) -> Bool {
+        return
+                lhs.imgUrl == rhs.imgUrl &&
+                lhs.example == rhs.example &&
+                lhs.translation == rhs.translation &&
+                lhs.description == rhs.description &&
+                lhs.rightAnswers == rhs.rightAnswers &&
+                lhs.wrongAnswers == rhs.wrongAnswers &&
+                lhs.id == rhs.id
     }
 }
