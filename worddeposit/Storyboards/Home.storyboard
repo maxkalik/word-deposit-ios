@@ -22,7 +22,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <view key="backgroundView" contentMode="scaleToFill" id="kyP-zW-Sva">
-                            <rect key="frame" x="0.0" y="-140" width="414" height="896"/>
+                            <rect key="frame" x="0.0" y="-88" width="414" height="896"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             <viewLayoutGuide key="safeArea" id="ejz-Jy-Tzo"/>
@@ -358,58 +358,70 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CAr-Nn-7oU">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="734"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="GMM-oe-XGe">
-                                                <rect key="frame" x="30" y="444" width="354" height="270"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DkP-3p-CNm">
+                                                <rect key="frame" x="0.0" y="414" width="414" height="320"/>
                                                 <subviews>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Example" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IsX-s0-gXE">
-                                                        <rect key="frame" x="0.0" y="0.0" width="354" height="50"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="50" id="11o-kO-kIf"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                                        <textInputTraits key="textInputTraits"/>
-                                                    </textField>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Translation" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VKL-sr-heo">
-                                                        <rect key="frame" x="0.0" y="60" width="354" height="50"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="50" id="wYH-fG-ATm"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                                        <textInputTraits key="textInputTraits"/>
-                                                    </textField>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="[description]" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="b71-bp-t3y">
-                                                        <rect key="frame" x="0.0" y="120" width="354" height="50"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="50" id="VZP-07-lY7"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                                        <textInputTraits key="textInputTraits"/>
-                                                    </textField>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EN0-4t-0qf" customClass="RoundedButton" customModule="worddeposit" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="180" width="354" height="50"/>
-                                                        <color key="backgroundColor" systemColor="systemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="50" id="yXk-it-0iX"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                                        <state key="normal" title="Add word">
-                                                            <color key="titleColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="onAddWordBtnPress:" destination="8x7-ml-O9y" eventType="touchUpInside" id="jOe-SD-Yh1"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bhh-6m-fMG">
-                                                        <rect key="frame" x="0.0" y="240" width="354" height="30"/>
-                                                        <state key="normal" title="Clear All"/>
-                                                        <connections>
-                                                            <action selector="onClearAllBtnPress:" destination="8x7-ml-O9y" eventType="touchUpInside" id="5bg-bz-J3L"/>
-                                                        </connections>
-                                                    </button>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="GMM-oe-XGe">
+                                                        <rect key="frame" x="20" y="20" width="374" height="270"/>
+                                                        <subviews>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Example" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IsX-s0-gXE">
+                                                                <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="50" id="11o-kO-kIf"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                                                <textInputTraits key="textInputTraits"/>
+                                                            </textField>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Translation" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VKL-sr-heo">
+                                                                <rect key="frame" x="0.0" y="60" width="374" height="50"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="50" id="wYH-fG-ATm"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                                <textInputTraits key="textInputTraits"/>
+                                                            </textField>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="[description]" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="b71-bp-t3y">
+                                                                <rect key="frame" x="0.0" y="120" width="374" height="50"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="50" id="VZP-07-lY7"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                                <textInputTraits key="textInputTraits"/>
+                                                            </textField>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EN0-4t-0qf" customClass="RoundedButton" customModule="worddeposit" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="180" width="374" height="50"/>
+                                                                <color key="backgroundColor" systemColor="systemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="50" id="yXk-it-0iX"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                                <state key="normal" title="Add word">
+                                                                    <color key="titleColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                </state>
+                                                                <connections>
+                                                                    <action selector="onAddWordBtnPress:" destination="8x7-ml-O9y" eventType="touchUpInside" id="jOe-SD-Yh1"/>
+                                                                </connections>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bhh-6m-fMG">
+                                                                <rect key="frame" x="0.0" y="240" width="374" height="30"/>
+                                                                <state key="normal" title="Clear All"/>
+                                                                <connections>
+                                                                    <action selector="onClearAllBtnPress:" destination="8x7-ml-O9y" eventType="touchUpInside" id="5bg-bz-J3L"/>
+                                                                </connections>
+                                                            </button>
+                                                        </subviews>
+                                                    </stackView>
                                                 </subviews>
-                                            </stackView>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="320" id="71p-hr-Z0T"/>
+                                                    <constraint firstItem="GMM-oe-XGe" firstAttribute="top" secondItem="DkP-3p-CNm" secondAttribute="top" constant="20" id="SNy-if-s0o"/>
+                                                    <constraint firstAttribute="trailing" secondItem="GMM-oe-XGe" secondAttribute="trailing" constant="20" id="cud-2U-QLW"/>
+                                                    <constraint firstItem="GMM-oe-XGe" firstAttribute="leading" secondItem="DkP-3p-CNm" secondAttribute="leading" constant="20" id="rSQ-ir-a0F"/>
+                                                </constraints>
+                                            </view>
                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YLl-Up-aaC">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="414"/>
                                                 <color key="backgroundColor" white="0.92711900680000003" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -424,12 +436,13 @@
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="GMM-oe-XGe" secondAttribute="trailing" constant="30" id="9k0-kx-Dg4"/>
                                             <constraint firstItem="YLl-Up-aaC" firstAttribute="top" secondItem="CAr-Nn-7oU" secondAttribute="top" id="Ati-AZ-BTc"/>
-                                            <constraint firstItem="GMM-oe-XGe" firstAttribute="top" secondItem="YLl-Up-aaC" secondAttribute="bottom" constant="30" id="NzU-dJ-Tkm"/>
+                                            <constraint firstAttribute="bottom" secondItem="DkP-3p-CNm" secondAttribute="bottom" id="Cd2-D3-s1D"/>
+                                            <constraint firstItem="DkP-3p-CNm" firstAttribute="leading" secondItem="CAr-Nn-7oU" secondAttribute="leading" id="M2U-Gy-pRE"/>
                                             <constraint firstItem="YLl-Up-aaC" firstAttribute="leading" secondItem="CAr-Nn-7oU" secondAttribute="leading" id="SZQ-vH-BN3"/>
-                                            <constraint firstItem="GMM-oe-XGe" firstAttribute="leading" secondItem="CAr-Nn-7oU" secondAttribute="leading" constant="30" id="i0Z-xX-D5c"/>
+                                            <constraint firstItem="DkP-3p-CNm" firstAttribute="top" secondItem="YLl-Up-aaC" secondAttribute="bottom" id="U1f-Qh-b4B"/>
                                             <constraint firstAttribute="trailing" secondItem="YLl-Up-aaC" secondAttribute="trailing" id="ukv-5H-8Mv"/>
+                                            <constraint firstAttribute="trailing" secondItem="DkP-3p-CNm" secondAttribute="trailing" id="wtd-Kn-06O"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -454,18 +467,19 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Add Word" image="plus" catalog="system" id="Mmj-xg-myp"/>
                     <connections>
-                        <outlet property="addWordButton" destination="EN0-4t-0qf" id="2eV-4O-u62"/>
                         <outlet property="clearAllButton" destination="bhh-6m-fMG" id="UqK-cM-eJE"/>
+                        <outlet property="inputsView" destination="DkP-3p-CNm" id="uP8-Bm-DfH"/>
                         <outlet property="scrollView" destination="u8a-OR-7Ws" id="XI3-e4-p1B"/>
                         <outlet property="wordDescriptionTextField" destination="b71-bp-t3y" id="U3G-8J-EzF"/>
                         <outlet property="wordExampleTextField" destination="IsX-s0-gXE" id="kwC-MM-99R"/>
                         <outlet property="wordImagePickerBtn" destination="YLl-Up-aaC" id="aCd-hC-Kwt"/>
+                        <outlet property="wordSaveButton" destination="EN0-4t-0qf" id="Cu6-ut-dLW"/>
                         <outlet property="wordTranslationTextField" destination="VKL-sr-heo" id="23k-Ay-zfU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cnt-8P-Lg8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1699" y="-380"/>
+            <point key="canvasLocation" x="1698.5507246376812" y="-380.35714285714283"/>
         </scene>
         <!--Profile-->
         <scene sceneID="ndH-gp-fxE">
