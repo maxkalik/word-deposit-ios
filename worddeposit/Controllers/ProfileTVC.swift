@@ -38,6 +38,7 @@ class ProfileTVC: UITableViewController {
     var profileRef: DocumentReference!
     var handle: AuthStateDidChangeListenerHandle?
     var languages: [String] = []
+    var words = [Word]()
     
     // MARK: - Lifecycle
     
@@ -123,6 +124,21 @@ class ProfileTVC: UITableViewController {
             guard let documents = snapshot?.documents else { return }
             self.wordsAmount.text = String(documents.count)
             self.wordsAmount.isHidden = false
+            
+            var rightAnswers = 0;
+            var wrongAnswers = 0;
+            
+            for document in documents {
+                let data = document.data()
+                let word = Word.init(data: data)
+                rightAnswers += word.rightAnswers
+                wrongAnswers += word.wrongAnswers
+                self.words.append(word)
+            }
+            
+            print("right answers:", rightAnswers, "wrong answers:", wrongAnswers)
+            
+            self.answersPrecentage.text = "30%"
             self.answersPrecentage.isHidden = false
             
             self.wordsAmountLoading.stopAnimating()

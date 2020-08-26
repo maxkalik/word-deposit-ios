@@ -228,6 +228,7 @@ class AddWordVC: UIViewController {
         self.wordImagePickerBtn.setImage(UIImage(named: Placeholders.Logo), for: .normal)
         wordExampleTextField.text = ""
         wordTranslationTextField.text = ""
+        wordDescriptionTextField.text = ""
         isImageSet = false
         wordSaveButton.isEnabled = false
         clearAllButton.isEnabled = false
