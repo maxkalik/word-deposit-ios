@@ -3,6 +3,7 @@ import Kingfisher
 
 protocol PracticeReadVCDelegate: AnyObject {
     func updatePracticeVC()
+    func trackAnswerOf(word: Word?)
 }
 
 class PracticeReadVC: UIViewController {
@@ -110,7 +111,6 @@ class PracticeReadVC: UIViewController {
     
 }
 
-
 extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     // MARK: - UICollectionViewDataSource
@@ -134,9 +134,14 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
             if selectedIndex == indexPath.row {
                 if wordsDesk[selectedIndex!].id == trainedWord?.id {
                     cell.backgroundColor = UIColor.green
+                    self.trainedWord?.rightAnswers += 1
+                    self.delegate?.trackAnswerOf(word: trainedWord)
                 } else {
                     cell.backgroundColor = UIColor.red
+                    self.trainedWord?.wrongAnswers += 1
+                    self.delegate?.trackAnswerOf(word: trainedWord)
                 }
+                
             } else {
                 if isSelected {
                     cell.backgroundColor = UIColor.white
@@ -159,8 +164,14 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             // TODO: - check main queue
             self.updateUI()
+            
+            // track answer for the trained word
+            // guard let word = self.trainedWord else { return }
+            
             self.spinner.stopAnimating()
         }
         self.collectionView.reloadData()
+        
+        
     }
 }

@@ -262,9 +262,16 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
 }
 
 extension PracticeCVC: PracticeReadVCDelegate {
+    func trackAnswerOf(word: Word?) {
+        guard let trainedWord = word else { return }
+        let wordsForUpdate = self.words.map({ return $0.id == trainedWord.id ? trainedWord : $0 })
+        self.words = wordsForUpdate
+        print(self.words)
+    }
+    
     func updatePracticeVC() {
         let wordsDesk = makeWordDesk(size: 5, wordsData: words)
-//        practiceReadVC?.trainedWord = wordsDesk.randomElement()
         practiceReadVC?.wordsDesk = wordsDesk
     }
+    
 }
