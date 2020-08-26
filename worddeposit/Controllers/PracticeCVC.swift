@@ -23,6 +23,9 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     var authHandle: AuthStateDidChangeListenerHandle?
     var vocabulariesListener: ListenerRegistration!
     
+    /// References
+    var wordsRef: CollectionReference!
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -145,7 +148,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     }
     
     private func fetchWords(from: DocumentReference) {
-        let wordsRef = from.collection("words")
+        wordsRef = from.collection("words")
         
         wordsRef.getDocuments { (snapshot, error) in
             if let error = error {
@@ -279,13 +282,20 @@ extension PracticeCVC: PracticeReadVCDelegate {
         for word in words {
             rightAnswers += word.rightAnswers
             wrongAnswers += word.wrongAnswers
-            let wordsForUpdate = self.words.map({ return $0.id == word.id ? word : $0 })
-            self.words = wordsForUpdate
+            
+            wordsRef.document(word.id).updateData(["right_answers" : word.rightAnswers, "wrong_answers" : word.wrongAnswers]) { error in
+                if let error = error {
+                    self.simpleAlert(title: "Error", msg: error.localizedDescription)
+                } else {
+                    let wordsForUpdate = self.words.map({ return $0.id == word.id ? word : $0 })
+                    self.words = wordsForUpdate
+                }
+            }
+            
         }
-        print("You trained \(words.count) with right: \(rightAnswers) / wrong: \(wrongAnswers) answers")
-        print(self.words)
         
-        // self.messageView.setTitles(messageTxt: "You trained \(words.count) words\n Correct: \(rightAnswers) / Wrong: \(wrongAnswers) answers", buttonTitle: "Continue")
-        // self.messageView.onPrimaryButtonTap { self.messageView.hide() }
+        // print("You trained \(words.count) with right: \(rightAnswers) / wrong: \(wrongAnswers) answers")
+        // print(self.words)
+
     }
 }

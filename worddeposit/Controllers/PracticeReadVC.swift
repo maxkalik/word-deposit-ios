@@ -156,6 +156,7 @@ class PracticeReadVC: UIViewController {
     // MARK: - IBActions
     
     @IBAction func skip(_ sender: UIBarButtonItem) {
+        result(trainedWord!, answer: false)
         updateUI()
     }
     
