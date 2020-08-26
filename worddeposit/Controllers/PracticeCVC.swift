@@ -259,19 +259,29 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
             }
         }
     }
+    
+    
 }
 
 extension PracticeCVC: PracticeReadVCDelegate {
-    func trackAnswerOf(word: Word?) {
-        guard let trainedWord = word else { return }
-        let wordsForUpdate = self.words.map({ return $0.id == trainedWord.id ? trainedWord : $0 })
-        self.words = wordsForUpdate
-        print(self.words)
-    }
     
     func updatePracticeVC() {
         let wordsDesk = makeWordDesk(size: 5, wordsData: words)
         practiceReadVC?.wordsDesk = wordsDesk
     }
     
+    func onFinishTrainer(with words: [Word]) {
+        var rightAnswers = 0;
+        var wrongAnswers = 0;
+        
+        for word in words {
+            rightAnswers += word.rightAnswers
+            wrongAnswers += word.wrongAnswers
+            let wordsForUpdate = self.words.map({ return $0.id == word.id ? word : $0 })
+            self.words = wordsForUpdate
+        }
+        print("You trained \(words.count) with right: \(rightAnswers) / wrong: \(wrongAnswers) answers")
+        print(self.words)
+    }
+
 }

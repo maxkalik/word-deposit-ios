@@ -3,7 +3,7 @@ import Kingfisher
 
 protocol PracticeReadVCDelegate: AnyObject {
     func updatePracticeVC()
-    func trackAnswerOf(word: Word?)
+    func onFinishTrainer(with words: [Word])
 }
 
 class PracticeReadVC: UIViewController {
@@ -26,6 +26,7 @@ class PracticeReadVC: UIViewController {
         }
     }
     var wordsDesk = [Word]()
+    var trainedWords = [Word]()
 
     var selectedIndex: Int?
     var isSelected = false
@@ -41,8 +42,6 @@ class PracticeReadVC: UIViewController {
         didSet {
             collectionView.delegate = self
             collectionView.dataSource = self
-//            collectionView.layer.borderColor = CGColor(srgbRed: 0, green: 0, blue: 0, alpha: 1)
-//            collectionView.layer.borderWidth = 1
             collectionView.allowsMultipleSelection = false
         }
     }
@@ -68,12 +67,15 @@ class PracticeReadVC: UIViewController {
         setupTrainedWord()
     }
     
-    // MARK: - Methods
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBar.tintColor = UIColor.systemBlue
+        self.delegate?.onFinishTrainer(with: trainedWords)
     }
+    
+    
+    // MARK: - Methods
+    
     
     private func setupCollectionView() {
         let nib = UINib(nibName: XIBs.PracticeAnswerItem, bundle: nil)
@@ -113,6 +115,25 @@ class PracticeReadVC: UIViewController {
 
 extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    
+    func result(_ trainedWord: Word, answer: Bool) {
+        if let i = trainedWords.firstIndex(where: { $0.id == trainedWord.id }) {
+            if answer == true {
+                self.trainedWords[i].rightAnswers += 1
+            } else {
+                self.trainedWords[i].wrongAnswers += 1
+            }
+        } else {
+            var word = trainedWord
+            if answer == true {
+                word.rightAnswers = 1
+            } else {
+                word.wrongAnswers = 1
+            }
+            self.trainedWords.append(word)
+        }
+    }
+    
     // MARK: - UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -132,14 +153,12 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
             }
 
             if selectedIndex == indexPath.row {
-                if wordsDesk[selectedIndex!].id == trainedWord?.id {
+                if wordsDesk[selectedIndex!].id == trainedWord!.id {
                     cell.backgroundColor = UIColor.green
-                    self.trainedWord?.rightAnswers += 1
-                    self.delegate?.trackAnswerOf(word: trainedWord)
+                    result(self.trainedWord!, answer: true)
                 } else {
                     cell.backgroundColor = UIColor.red
-                    self.trainedWord?.wrongAnswers += 1
-                    self.delegate?.trackAnswerOf(word: trainedWord)
+                    result(self.trainedWord!, answer: false)
                 }
                 
             } else {
@@ -164,14 +183,8 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             // TODO: - check main queue
             self.updateUI()
-            
-            // track answer for the trained word
-            // guard let word = self.trainedWord else { return }
-            
             self.spinner.stopAnimating()
         }
         self.collectionView.reloadData()
-        
-        
     }
 }
