@@ -4,6 +4,7 @@ import FirebaseFirestore
 
 private let reuseIdentifier = XIBs.PracticeCVCell
 private let minWordsAmount = 10
+
 class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIPopoverPresentationControllerDelegate {
 
     // MARK: - Instances
@@ -34,6 +35,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        print("view will appear")
         setupUI()
         setCurrentUser()
     }
@@ -282,6 +284,8 @@ extension PracticeCVC: PracticeReadVCDelegate {
         }
         print("You trained \(words.count) with right: \(rightAnswers) / wrong: \(wrongAnswers) answers")
         print(self.words)
+        
+        // self.messageView.setTitles(messageTxt: "You trained \(words.count) words\n Correct: \(rightAnswers) / Wrong: \(wrongAnswers) answers", buttonTitle: "Continue")
+        // self.messageView.onPrimaryButtonTap { self.messageView.hide() }
     }
-
 }

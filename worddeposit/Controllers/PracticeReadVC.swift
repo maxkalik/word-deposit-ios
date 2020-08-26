@@ -26,10 +26,10 @@ class PracticeReadVC: UIViewController {
         }
     }
     var wordsDesk = [Word]()
-    var trainedWords = [Word]()
-
-    var selectedIndex: Int?
-    var isSelected = false
+    
+    private var trainedWords = [Word]()
+    private var selectedIndex: Int?
+    private var isSelected = false
     
     weak var delegate: PracticeReadVCDelegate?
     
@@ -55,27 +55,75 @@ class PracticeReadVC: UIViewController {
         let layout = UICollectionViewCenterLayout()
         layout.estimatedItemSize = CGSize(width: layout.itemSize.width, height: 40)
         collectionView.collectionViewLayout = layout
+        
+        // back button preparing for action
+        self.navigationItem.hidesBackButton = true
+        let newBackButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backAction))
+        self.navigationItem.leftBarButtonItem = newBackButton
+    }
+    
+    @objc func backAction() {
+        onFinishingTrainer()
+        // _ = navigationController?.popViewController(animated: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         spinner.stopAnimating()
-        print(practiceType ?? "nil")
-        if wordsDesk.isEmpty {
-            print("BUG! word desk is empty")
-        }
         setupTrainedWord()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBar.tintColor = UIColor.systemBlue
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         self.delegate?.onFinishTrainer(with: trainedWords)
     }
     
     
     // MARK: - Methods
     
+    private func result(_ trainedWord: Word, answer: Bool) {
+        if let i = trainedWords.firstIndex(where: { $0.id == trainedWord.id }) {
+            if answer == true {
+                self.trainedWords[i].rightAnswers += 1
+            } else {
+                self.trainedWords[i].wrongAnswers += 1
+            }
+        } else {
+            var word = trainedWord
+            if answer == true {
+                word.rightAnswers = 1
+            } else {
+                word.wrongAnswers = 1
+            }
+            self.trainedWords.append(word)
+        }
+    }
+    
+    private func onFinishingTrainer() {
+        var rightAnswers = 0;
+        var wrongAnswers = 0;
+        
+        for word in trainedWords {
+            rightAnswers += word.rightAnswers
+            wrongAnswers += word.wrongAnswers
+        }
+
+        let successMessage = SuccessMessageVC()
+        successMessage.delegate = self
+        
+        successMessage.titleTxt = "Great!"
+        successMessage.descriptionTxt = "You trained \(trainedWords.count) words\n Correct: \(rightAnswers) / Wrong: \(wrongAnswers)"
+        
+        successMessage.modalTransitionStyle = .crossDissolve
+        successMessage.modalPresentationStyle = .popover
+        
+        present(successMessage, animated: true, completion: nil)
+    }
     
     private func setupCollectionView() {
         let nib = UINib(nibName: XIBs.PracticeAnswerItem, bundle: nil)
@@ -114,25 +162,6 @@ class PracticeReadVC: UIViewController {
 }
 
 extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
-    
-    func result(_ trainedWord: Word, answer: Bool) {
-        if let i = trainedWords.firstIndex(where: { $0.id == trainedWord.id }) {
-            if answer == true {
-                self.trainedWords[i].rightAnswers += 1
-            } else {
-                self.trainedWords[i].wrongAnswers += 1
-            }
-        } else {
-            var word = trainedWord
-            if answer == true {
-                word.rightAnswers = 1
-            } else {
-                word.wrongAnswers = 1
-            }
-            self.trainedWords.append(word)
-        }
-    }
     
     // MARK: - UICollectionViewDataSource
     
@@ -186,5 +215,14 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
             self.spinner.stopAnimating()
         }
         self.collectionView.reloadData()
+    }
+}
+
+// MARK: - SuccessMessageVCDelegate
+
+extension PracticeReadVC: SuccessMessageVCDelegate {
+    func onSuccessMessageButtonTap() {
+        print("pressed")
+        _ = navigationController?.popViewController(animated: true)
     }
 }
