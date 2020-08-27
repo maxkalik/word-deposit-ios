@@ -287,9 +287,5 @@ extension PracticeCVC: PracticeReadVCDelegate {
             }
             
         }
-        
-        // print("You trained \(words.count) with right: \(rightAnswers) / wrong: \(wrongAnswers) answers")
-        // print(self.words)
-
     }
 }

@@ -66,8 +66,11 @@ class PracticeReadVC: UIViewController {
     }
     
     @objc func backAction() {
-        onFinishingTrainer()
-        // _ = navigationController?.popViewController(animated: true)
+        if trainedWords.count == 0 {
+            _ = navigationController?.popViewController(animated: true)
+        } else {
+            prepareForQuit()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -83,7 +86,6 @@ class PracticeReadVC: UIViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        self.delegate?.onFinishTrainer(with: trainedWords)
     }
     
     
@@ -111,14 +113,10 @@ class PracticeReadVC: UIViewController {
         }
     }
     
-    private func onFinishingTrainer() {
+    private func prepareForQuit() {
         print(trainedWords)
         print(trainedWords.count)
         print("right: \(sessionRightAnswersSum), wrong: \(sessionWrongAnswersSum)")
-    
-        if trainedWords.count == 0 {
-            _ = navigationController?.popViewController(animated: true)
-        }
         
         let successMessage = SuccessMessageVC()
         successMessage.delegate = self
@@ -129,8 +127,8 @@ class PracticeReadVC: UIViewController {
         successMessage.modalTransitionStyle = .crossDissolve
         successMessage.modalPresentationStyle = .popover
         
+        self.delegate?.onFinishTrainer(with: trainedWords)
         present(successMessage, animated: true, completion: nil)
-        
     }
     
     private func setupCollectionView() {

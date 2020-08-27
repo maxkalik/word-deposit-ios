@@ -11,8 +11,9 @@ class SuccessMessageVC: UIViewController {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var button: UIButton!
     
-    var titleTxt: String = ""
-    var descriptionTxt: String = ""
+    var titleTxt: String!
+    var descriptionTxt: String!
+    var titleBtn: String = "Finish"
     
     weak var delegate: SuccessMessageVCDelegate?
     
@@ -20,6 +21,7 @@ class SuccessMessageVC: UIViewController {
         super.viewDidLoad()
         titleLabel.text = titleTxt
         descriptionLabel.text = descriptionTxt
+        button.setTitle(titleBtn, for: .normal)
     }
         
     @IBAction func buttonTap(_ sender: UIButton) {
