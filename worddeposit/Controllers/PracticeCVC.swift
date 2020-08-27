@@ -4,6 +4,7 @@ import FirebaseFirestore
 
 private let reuseIdentifier = XIBs.PracticeCVCell
 private let minWordsAmount = 10
+
 class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIPopoverPresentationControllerDelegate {
 
     // MARK: - Instances
@@ -22,6 +23,9 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     var authHandle: AuthStateDidChangeListenerHandle?
     var vocabulariesListener: ListenerRegistration!
     
+    /// References
+    var wordsRef: CollectionReference!
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -34,6 +38,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        print("view will appear")
         setupUI()
         setCurrentUser()
     }
@@ -143,7 +148,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     }
     
     private func fetchWords(from: DocumentReference) {
-        let wordsRef = from.collection("words")
+        wordsRef = from.collection("words")
         
         wordsRef.getDocuments { (snapshot, error) in
             if let error = error {
@@ -259,12 +264,28 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
             }
         }
     }
+    
+    
 }
 
 extension PracticeCVC: PracticeReadVCDelegate {
+    
     func updatePracticeVC() {
         let wordsDesk = makeWordDesk(size: 5, wordsData: words)
-//        practiceReadVC?.trainedWord = wordsDesk.randomElement()
         practiceReadVC?.wordsDesk = wordsDesk
+    }
+    
+    func onFinishTrainer(with words: [Word]) {
+        for word in words {
+            wordsRef.document(word.id).updateData(["right_answers" : word.rightAnswers, "wrong_answers" : word.wrongAnswers]) { error in
+                if let error = error {
+                    self.simpleAlert(title: "Error", msg: error.localizedDescription)
+                } else {
+                    let wordsForUpdate = self.words.map({ return $0.id == word.id ? word : $0 })
+                    self.words = wordsForUpdate
+                }
+            }
+            
+        }
     }
 }

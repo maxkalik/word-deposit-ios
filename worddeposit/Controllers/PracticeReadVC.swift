@@ -3,6 +3,7 @@ import Kingfisher
 
 protocol PracticeReadVCDelegate: AnyObject {
     func updatePracticeVC()
+    func onFinishTrainer(with words: [Word])
 }
 
 class PracticeReadVC: UIViewController {
@@ -25,9 +26,13 @@ class PracticeReadVC: UIViewController {
         }
     }
     var wordsDesk = [Word]()
-
-    var selectedIndex: Int?
-    var isSelected = false
+    
+    private var trainedWords = [Word]()
+    private var selectedIndex: Int?
+    private var isSelected = false
+    
+    private var sessionRightAnswersSum = 0
+    private var sessionWrongAnswersSum = 0
     
     weak var delegate: PracticeReadVCDelegate?
     
@@ -40,8 +45,6 @@ class PracticeReadVC: UIViewController {
         didSet {
             collectionView.delegate = self
             collectionView.dataSource = self
-//            collectionView.layer.borderColor = CGColor(srgbRed: 0, green: 0, blue: 0, alpha: 1)
-//            collectionView.layer.borderWidth = 1
             collectionView.allowsMultipleSelection = false
         }
     }
@@ -55,23 +58,77 @@ class PracticeReadVC: UIViewController {
         let layout = UICollectionViewCenterLayout()
         layout.estimatedItemSize = CGSize(width: layout.itemSize.width, height: 40)
         collectionView.collectionViewLayout = layout
+        
+        // back button preparing for action
+        self.navigationItem.hidesBackButton = true
+        let newBackButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backAction))
+        self.navigationItem.leftBarButtonItem = newBackButton
+    }
+    
+    @objc func backAction() {
+        if trainedWords.count == 0 {
+            _ = navigationController?.popViewController(animated: true)
+        } else {
+            prepareForQuit()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         spinner.stopAnimating()
-        print(practiceType ?? "nil")
-        if wordsDesk.isEmpty {
-            print("BUG! word desk is empty")
-        }
         setupTrainedWord()
     }
-    
-    // MARK: - Methods
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBar.tintColor = UIColor.systemBlue
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+    }
+    
+    
+    // MARK: - Methods
+    
+    private func result(_ trainedWord: Word, answer: Bool) {
+        if let i = trainedWords.firstIndex(where: { $0.id == trainedWord.id }) {
+            if answer == true {
+                sessionRightAnswersSum += 1
+                self.trainedWords[i].rightAnswers += 1
+            } else {
+                sessionWrongAnswersSum += 1
+                self.trainedWords[i].wrongAnswers += 1
+            }
+        } else {
+            var word = trainedWord
+            if answer == true {
+                sessionRightAnswersSum += 1
+                word.rightAnswers += 1
+            } else {
+                sessionWrongAnswersSum += 1
+                word.wrongAnswers += 1
+            }
+            self.trainedWords.append(word)
+        }
+    }
+    
+    private func prepareForQuit() {
+        print(trainedWords)
+        print(trainedWords.count)
+        print("right: \(sessionRightAnswersSum), wrong: \(sessionWrongAnswersSum)")
+        
+        let successMessage = SuccessMessageVC()
+        successMessage.delegate = self
+        
+        successMessage.titleTxt = "Great!"
+        successMessage.descriptionTxt = "You trained \(trainedWords.count) words\n Correct: \(sessionRightAnswersSum) / Wrong: \(sessionWrongAnswersSum)"
+        
+        successMessage.modalTransitionStyle = .crossDissolve
+        successMessage.modalPresentationStyle = .popover
+        
+        self.delegate?.onFinishTrainer(with: trainedWords)
+        present(successMessage, animated: true, completion: nil)
     }
     
     private func setupCollectionView() {
@@ -105,11 +162,11 @@ class PracticeReadVC: UIViewController {
     // MARK: - IBActions
     
     @IBAction func skip(_ sender: UIBarButtonItem) {
+        result(trainedWord!, answer: false)
         updateUI()
     }
     
 }
-
 
 extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -132,11 +189,14 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
             }
 
             if selectedIndex == indexPath.row {
-                if wordsDesk[selectedIndex!].id == trainedWord?.id {
+                if wordsDesk[selectedIndex!].id == trainedWord!.id {
                     cell.backgroundColor = UIColor.green
+                    result(self.trainedWord!, answer: true)
                 } else {
                     cell.backgroundColor = UIColor.red
+                    result(self.trainedWord!, answer: false)
                 }
+                
             } else {
                 if isSelected {
                     cell.backgroundColor = UIColor.white
@@ -162,5 +222,13 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
             self.spinner.stopAnimating()
         }
         self.collectionView.reloadData()
+    }
+}
+
+// MARK: - SuccessMessageVCDelegate
+
+extension PracticeReadVC: SuccessMessageVCDelegate {
+    func onSuccessMessageButtonTap() {
+        _ = navigationController?.popViewController(animated: true)
     }
 }

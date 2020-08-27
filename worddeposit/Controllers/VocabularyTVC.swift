@@ -185,7 +185,7 @@ class VocabularyTVC: UITableViewController {
     func onDocumentModified(change: DocumentChange, word: Word) {
         if change.newIndex == change.oldIndex {
             let index = Int(change.newIndex)
-            words[index] = word
+            words[index] = word // TODO: - out of range
             tableView.reloadRows(at: [IndexPath(item: index, section: 0)], with: .none)
         } else {
             let oldIndex = Int(change.oldIndex)

@@ -24,6 +24,8 @@
 		11284241248E846000A014E9 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284240248E846000A014E9 /* Word.swift */; };
 		112EA43324C83B7200FA55E3 /* PracticeTrainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112EA43224C83B7200FA55E3 /* PracticeTrainer.swift */; };
 		112EA43524C84A2900FA55E3 /* PracticeTrainers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112EA43424C84A2900FA55E3 /* PracticeTrainers.swift */; };
+		112F9C7524F6F201007E92D8 /* SuccessMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112F9C7324F6F201007E92D8 /* SuccessMessageVC.swift */; };
+		112F9C7624F6F201007E92D8 /* SuccessMessageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 112F9C7424F6F201007E92D8 /* SuccessMessageVC.xib */; };
 		1158D30E24917B9B0087DC96 /* VocabularyTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1158D30C24917B9B0087DC96 /* VocabularyTVCell.swift */; };
 		1158D30F24917B9B0087DC96 /* VocabularyTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1158D30D24917B9B0087DC96 /* VocabularyTVCell.xib */; };
 		1158D31524917EC50087DC96 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1158D31424917EC50087DC96 /* GoogleService-Info.plist */; };
@@ -80,6 +82,8 @@
 		11284240248E846000A014E9 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		112EA43224C83B7200FA55E3 /* PracticeTrainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeTrainer.swift; sourceTree = "<group>"; };
 		112EA43424C84A2900FA55E3 /* PracticeTrainers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeTrainers.swift; sourceTree = "<group>"; };
+		112F9C7324F6F201007E92D8 /* SuccessMessageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessMessageVC.swift; sourceTree = "<group>"; };
+		112F9C7424F6F201007E92D8 /* SuccessMessageVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SuccessMessageVC.xib; sourceTree = "<group>"; };
 		1158D30C24917B9B0087DC96 /* VocabularyTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyTVCell.swift; sourceTree = "<group>"; };
 		1158D30D24917B9B0087DC96 /* VocabularyTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VocabularyTVCell.xib; sourceTree = "<group>"; };
 		1158D31424917EC50087DC96 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -233,6 +237,7 @@
 				1181BBF22498060F00DB682E /* VocabularyCardsVC.xib */,
 				1171E70524981CDD00805D35 /* VocabularyCardCVCell.xib */,
 				15A7E04824D8B322006804FD /* VocabulariesTVCell.xib */,
+				112F9C7424F6F201007E92D8 /* SuccessMessageVC.xib */,
 			);
 			path = XIBs;
 			sourceTree = "<group>";
@@ -277,6 +282,7 @@
 				1171E70424981CDD00805D35 /* VocabularyCardCVCell.swift */,
 				15A7E04724D8B322006804FD /* VocabulariesTVCell.swift */,
 				11B20D6824C8DF2E00C1CB4E /* PracticeAnswerItem.swift */,
+				112F9C7324F6F201007E92D8 /* SuccessMessageVC.swift */,
 			);
 			path = "Reusable Components";
 			sourceTree = "<group>";
@@ -351,6 +357,7 @@
 			files = (
 				15BD0C0424DE0657007E8D27 /* MessageView.xib in Resources */,
 				1128421D248E7C5800A014E9 /* LaunchScreen.storyboard in Resources */,
+				112F9C7624F6F201007E92D8 /* SuccessMessageVC.xib in Resources */,
 				11B20D6B24C8DF2E00C1CB4E /* PracticeAnswerItem.xib in Resources */,
 				11F0326E24C8267E00BD6350 /* PracticeCVCell.xib in Resources */,
 				15A7E04A24D8B322006804FD /* VocabulariesTVCell.xib in Resources */,
@@ -451,6 +458,7 @@
 				11284233248E83BB00A014E9 /* VocabularyTVC.swift in Sources */,
 				11284213248E7C5700A014E9 /* SceneDelegate.swift in Sources */,
 				117FA4CC24CEEC350043024D /* PracticeDeskItemButton.swift in Sources */,
+				112F9C7524F6F201007E92D8 /* SuccessMessageVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

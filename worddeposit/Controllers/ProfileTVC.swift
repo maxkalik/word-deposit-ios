@@ -138,7 +138,11 @@ class ProfileTVC: UITableViewController {
             
             print("right answers:", rightAnswers, "wrong answers:", wrongAnswers)
             
-            self.answersPrecentage.text = "30%"
+            let answersSum = rightAnswers + wrongAnswers
+            let precentageOfCorrectAnswers = (rightAnswers * 100) / answersSum
+            // print((rightAnswers * 100) / answersSum)
+            
+            self.answersPrecentage.text = "\(precentageOfCorrectAnswers)%"
             self.answersPrecentage.isHidden = false
             
             self.wordsAmountLoading.stopAnimating()

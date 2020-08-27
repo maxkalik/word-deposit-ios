@@ -36,7 +36,6 @@ class VocabularyCardsVC: UIViewController {
         guard let vocabularyId = defaults.string(forKey: "vocabulary_id") else { return }
         self.vocabularyId = vocabularyId
         print("vocabulary id from card", vocabularyId)
-        
         hideKeyboardWhenTappedAround()
     }
     
