@@ -29,8 +29,24 @@ class VocabularyDetailsVC: UIViewController {
         
         hideKeyboardWhenTappedAround()
         
+        // Keyboard observers
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        // TextField observers
+        titleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        languageTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if vocabulary != nil {
+            titleTextField.borderStyle = .none
+            languageTextField.borderStyle = .none
+            saveButton.layer.opacity = 0
+        }
+        saveButton.isEnabled = false
     }
     
     // MARK: - objc Methods
@@ -43,6 +59,8 @@ class VocabularyDetailsVC: UIViewController {
             keyboardHeight = keyboardFrame.cgRectValue.height
             stackView.frame.origin.y -= keyboardHeight - stackView.frame.size.height
         }
+        
+        saveButton.layer.opacity = 1
     }
     
     @objc func keyboardWillHide(_ notification: NSNotification) {
@@ -50,6 +68,13 @@ class VocabularyDetailsVC: UIViewController {
         isKeyboardShowing = false
         
         stackView.frame.origin.y += keyboardHeight - stackView.frame.size.height
+        
+        if vocabulary != nil {
+            saveButton.layer.opacity = 0
+        }
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
         
     }
     
