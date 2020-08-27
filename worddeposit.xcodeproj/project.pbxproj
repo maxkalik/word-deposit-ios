@@ -190,7 +190,6 @@
 				118162EE24BFB08E0088C0E1 /* UserInfoTVC.swift */,
 				11621A2624C25EFA003087AB /* WKWebVC.swift */,
 				11ECE4B324EB0FA100B7884B /* VocabulariesTVC.swift */,
-				156C80B624D8D27E0077905D /* VocabularyDetailsVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -283,6 +282,7 @@
 				15A7E04724D8B322006804FD /* VocabulariesTVCell.swift */,
 				11B20D6824C8DF2E00C1CB4E /* PracticeAnswerItem.swift */,
 				112F9C7324F6F201007E92D8 /* SuccessMessageVC.swift */,
+				156C80B624D8D27E0077905D /* VocabularyDetailsVC.swift */,
 			);
 			path = "Reusable Components";
 			sourceTree = "<group>";

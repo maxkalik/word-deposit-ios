@@ -4,11 +4,7 @@ import FirebaseFirestore
 
 class VocabularyDetailsVC: UIViewController {
     
-    @IBOutlet weak var scrollView: UIScrollView! {
-        didSet {
-            scrollView.contentInsetAdjustmentBehavior = .never
-        }
-    }
+    @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var languageTextField: UITextField!
     @IBOutlet weak var saveButton: UIButton!
@@ -20,13 +16,41 @@ class VocabularyDetailsVC: UIViewController {
     var db: Firestore!
     var userRef: DocumentReference!
     
+    private var isKeyboardShowing = false
+    private var keyboardHeight: CGFloat!
+    
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         db = Firestore.firestore()
         setupUI()
-        print(isFirstSelected)
+        
+        hideKeyboardWhenTappedAround()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    // MARK: - objc Methods
+    
+    @objc func keyboardWillShow(_ notification: NSNotification) {
+        if isKeyboardShowing { return }
+        isKeyboardShowing = true
+        
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            keyboardHeight = keyboardFrame.cgRectValue.height
+            stackView.frame.origin.y -= keyboardHeight - stackView.frame.size.height
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: NSNotification) {
+        if !isKeyboardShowing { return }
+        isKeyboardShowing = false
+        
+        stackView.frame.origin.y += keyboardHeight - stackView.frame.size.height
+        
     }
     
     // MARK: - Methods
