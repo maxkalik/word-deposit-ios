@@ -276,13 +276,7 @@ extension PracticeCVC: PracticeReadVCDelegate {
     }
     
     func onFinishTrainer(with words: [Word]) {
-        var rightAnswers = 0;
-        var wrongAnswers = 0;
-        
         for word in words {
-            rightAnswers += word.rightAnswers
-            wrongAnswers += word.wrongAnswers
-            
             wordsRef.document(word.id).updateData(["right_answers" : word.rightAnswers, "wrong_answers" : word.wrongAnswers]) { error in
                 if let error = error {
                     self.simpleAlert(title: "Error", msg: error.localizedDescription)

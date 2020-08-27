@@ -31,6 +31,9 @@ class PracticeReadVC: UIViewController {
     private var selectedIndex: Int?
     private var isSelected = false
     
+    private var sessionRightAnswersSum = 0
+    private var sessionWrongAnswersSum = 0
+    
     weak var delegate: PracticeReadVCDelegate?
     
     // MARK: - IBOutlets
@@ -89,40 +92,45 @@ class PracticeReadVC: UIViewController {
     private func result(_ trainedWord: Word, answer: Bool) {
         if let i = trainedWords.firstIndex(where: { $0.id == trainedWord.id }) {
             if answer == true {
+                sessionRightAnswersSum += 1
                 self.trainedWords[i].rightAnswers += 1
             } else {
+                sessionWrongAnswersSum += 1
                 self.trainedWords[i].wrongAnswers += 1
             }
         } else {
             var word = trainedWord
             if answer == true {
-                word.rightAnswers = 1
+                sessionRightAnswersSum += 1
+                word.rightAnswers += 1
             } else {
-                word.wrongAnswers = 1
+                sessionWrongAnswersSum += 1
+                word.wrongAnswers += 1
             }
             self.trainedWords.append(word)
         }
     }
     
     private func onFinishingTrainer() {
-        var rightAnswers = 0;
-        var wrongAnswers = 0;
-        
-        for word in trainedWords {
-            rightAnswers += word.rightAnswers
-            wrongAnswers += word.wrongAnswers
+        print(trainedWords)
+        print(trainedWords.count)
+        print("right: \(sessionRightAnswersSum), wrong: \(sessionWrongAnswersSum)")
+    
+        if trainedWords.count == 0 {
+            _ = navigationController?.popViewController(animated: true)
         }
-
+        
         let successMessage = SuccessMessageVC()
         successMessage.delegate = self
         
         successMessage.titleTxt = "Great!"
-        successMessage.descriptionTxt = "You trained \(trainedWords.count) words\n Correct: \(rightAnswers) / Wrong: \(wrongAnswers)"
+        successMessage.descriptionTxt = "You trained \(trainedWords.count) words\n Correct: \(sessionRightAnswersSum) / Wrong: \(sessionWrongAnswersSum)"
         
         successMessage.modalTransitionStyle = .crossDissolve
         successMessage.modalPresentationStyle = .popover
         
         present(successMessage, animated: true, completion: nil)
+        
     }
     
     private func setupCollectionView() {
@@ -223,7 +231,6 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
 
 extension PracticeReadVC: SuccessMessageVCDelegate {
     func onSuccessMessageButtonTap() {
-        print("pressed")
         _ = navigationController?.popViewController(animated: true)
     }
 }
