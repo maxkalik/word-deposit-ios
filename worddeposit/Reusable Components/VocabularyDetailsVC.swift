@@ -2,8 +2,14 @@ import UIKit
 import Firebase
 import FirebaseFirestore
 
-class VocabularyDetailsVC: UIViewController {
+class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     
+    @IBOutlet weak var scrollView: UIScrollView! {
+        didSet {
+            scrollView.delegate = self
+            scrollView.contentInsetAdjustmentBehavior = .never
+        }
+    }
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var languageTextField: UITextField!
@@ -36,6 +42,9 @@ class VocabularyDetailsVC: UIViewController {
         // TextField observers
         titleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         languageTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        
+        // navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -189,35 +189,60 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="27" translatesAutoresizingMaskIntoConstraints="NO" id="DNU-r9-0JB">
-                                <rect key="frame" x="30" y="368.5" width="354" height="159.5"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zaF-mX-DqQ">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZD9-di-RMR">
-                                        <rect key="frame" x="0.0" y="0.0" width="354" height="38.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Language" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4fs-rZ-Sqq">
-                                        <rect key="frame" x="0.0" y="65.5" width="354" height="34"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dxh-uR-aQh">
-                                        <rect key="frame" x="0.0" y="126.5" width="354" height="33"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <state key="normal" title="Save"/>
-                                        <connections>
-                                            <action selector="savePressed:" destination="qvX-RP-zC0" eventType="touchUpInside" id="5p3-Al-Kc1"/>
-                                        </connections>
-                                    </button>
+                                    <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fp2-x3-BaQ">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="31" translatesAutoresizingMaskIntoConstraints="NO" id="DNU-r9-0JB">
+                                                <rect key="frame" x="20" y="364.5" width="374" height="167.5"/>
+                                                <subviews>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZD9-di-RMR">
+                                                        <rect key="frame" x="0.0" y="0.0" width="374" height="38.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Language" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4fs-rZ-Sqq">
+                                                        <rect key="frame" x="0.0" y="69.5" width="374" height="34"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dxh-uR-aQh">
+                                                        <rect key="frame" x="0.0" y="134.5" width="374" height="33"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <state key="normal" title="Save"/>
+                                                        <connections>
+                                                            <action selector="savePressed:" destination="qvX-RP-zC0" eventType="touchUpInside" id="5p3-Al-Kc1"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstItem="DNU-r9-0JB" firstAttribute="leading" secondItem="fp2-x3-BaQ" secondAttribute="leading" constant="20" id="7dh-n4-XRt"/>
+                                            <constraint firstItem="DNU-r9-0JB" firstAttribute="centerY" secondItem="fp2-x3-BaQ" secondAttribute="centerY" id="8Qd-L7-HMz"/>
+                                            <constraint firstAttribute="trailing" secondItem="DNU-r9-0JB" secondAttribute="trailing" constant="20" id="TBx-Ze-XVo"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
-                            </stackView>
+                                <constraints>
+                                    <constraint firstItem="fp2-x3-BaQ" firstAttribute="top" secondItem="zaF-mX-DqQ" secondAttribute="top" id="CUy-c8-3nS"/>
+                                    <constraint firstAttribute="bottom" secondItem="fp2-x3-BaQ" secondAttribute="bottom" id="Z6d-VG-sXI"/>
+                                    <constraint firstItem="fp2-x3-BaQ" firstAttribute="leading" secondItem="zaF-mX-DqQ" secondAttribute="leading" id="fk9-tE-Cud"/>
+                                    <constraint firstItem="fp2-x3-BaQ" firstAttribute="width" secondItem="zaF-mX-DqQ" secondAttribute="width" id="kRg-Na-lt9"/>
+                                    <constraint firstAttribute="trailing" secondItem="fp2-x3-BaQ" secondAttribute="trailing" id="lpm-ef-xyz"/>
+                                    <constraint firstItem="fp2-x3-BaQ" firstAttribute="height" secondItem="zaF-mX-DqQ" secondAttribute="height" priority="250" id="p41-Vi-Oao"/>
+                                </constraints>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="DNU-r9-0JB" firstAttribute="centerY" secondItem="0kk-qy-1AH" secondAttribute="centerY" id="UEZ-au-yUA"/>
-                            <constraint firstItem="a8m-m2-oJL" firstAttribute="trailing" secondItem="DNU-r9-0JB" secondAttribute="trailing" constant="30" id="V0q-4U-X6I"/>
-                            <constraint firstItem="DNU-r9-0JB" firstAttribute="leading" secondItem="a8m-m2-oJL" secondAttribute="leading" constant="30" id="bUC-dt-z0R"/>
+                            <constraint firstItem="zaF-mX-DqQ" firstAttribute="leading" secondItem="0kk-qy-1AH" secondAttribute="leading" id="BZk-1G-4ni"/>
+                            <constraint firstAttribute="bottom" secondItem="zaF-mX-DqQ" secondAttribute="bottom" id="OBY-Fv-Ypm"/>
+                            <constraint firstItem="zaF-mX-DqQ" firstAttribute="trailing" secondItem="0kk-qy-1AH" secondAttribute="trailing" id="TZC-da-501"/>
+                            <constraint firstItem="zaF-mX-DqQ" firstAttribute="top" secondItem="0kk-qy-1AH" secondAttribute="top" id="wq0-qb-ROt"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="a8m-m2-oJL"/>
                     </view>
@@ -225,6 +250,7 @@
                     <connections>
                         <outlet property="languageTextField" destination="4fs-rZ-Sqq" id="Maz-Y3-2FE"/>
                         <outlet property="saveButton" destination="dxh-uR-aQh" id="Rhb-Xh-HlL"/>
+                        <outlet property="scrollView" destination="zaF-mX-DqQ" id="6eQ-fv-ooi"/>
                         <outlet property="stackView" destination="DNU-r9-0JB" id="5I5-zJ-82n"/>
                         <outlet property="titleTextField" destination="ZD9-di-RMR" id="QZj-QT-BQH"/>
                     </connections>
