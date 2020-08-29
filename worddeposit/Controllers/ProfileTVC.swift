@@ -49,6 +49,7 @@ class ProfileTVC: UITableViewController {
         db = Firestore.firestore()
         getAllLanguages()
         getDefaults()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -121,32 +122,39 @@ class ProfileTVC: UITableViewController {
                 debugPrint(error.localizedDescription)
                 return
             }
-            guard let documents = snapshot?.documents else { return }
-            self.wordsAmount.text = String(documents.count)
-            self.wordsAmount.isHidden = false
-            
-            var rightAnswers = 0;
-            var wrongAnswers = 0;
-            
-            for document in documents {
-                let data = document.data()
-                let word = Word.init(data: data)
-                rightAnswers += word.rightAnswers
-                wrongAnswers += word.wrongAnswers
-                self.words.append(word)
-            }
-            
-            print("right answers:", rightAnswers, "wrong answers:", wrongAnswers)
-            
-            let answersSum = rightAnswers + wrongAnswers
-            let precentageOfCorrectAnswers = (rightAnswers * 100) / answersSum
-            // print((rightAnswers * 100) / answersSum)
-            
-            self.answersPrecentage.text = "\(precentageOfCorrectAnswers)%"
-            self.answersPrecentage.isHidden = false
             
             self.wordsAmountLoading.stopAnimating()
             self.answersPrecentageLoading.stopAnimating()
+            
+            guard let documents = snapshot?.documents else { return }
+            
+            if documents.isEmpty {
+                self.wordsAmount.isHidden = false
+                self.answersPrecentage.isHidden = false
+                self.wordsAmount.text = "0"
+                self.answersPrecentage.text = "0%"
+                
+            } else {
+                self.wordsAmount.text = String(documents.count)
+                self.wordsAmount.isHidden = false
+                
+                var rightAnswers = 0;
+                var wrongAnswers = 0;
+                
+                for document in documents {
+                    let data = document.data()
+                    let word = Word.init(data: data)
+                    rightAnswers += word.rightAnswers
+                    wrongAnswers += word.wrongAnswers
+                    self.words.append(word)
+                }
+                
+                let answersSum = rightAnswers + wrongAnswers
+                let precentageOfCorrectAnswers = (rightAnswers * 100) / answersSum
+                
+                self.answersPrecentage.text = "\(precentageOfCorrectAnswers)%"
+                self.answersPrecentage.isHidden = false
+            }   
         }
     }
     
@@ -230,11 +238,12 @@ class ProfileTVC: UITableViewController {
             switch segue.identifier {
             case Segues.NativeLanguage:
                 
+                
                 let currentLanguageCode = NSLocale.current.languageCode ?? "en"
                 let defaultLanguage = NSLocale(localeIdentifier: currentLanguageCode).displayName(forKey: NSLocale.Key.identifier, value: currentLanguageCode) ?? "English"
-                let currentLanguage = defaultLanguage != user.nativeLanguage ? user.nativeLanguage : defaultLanguage
-                guard let selected = languages.firstIndex(of: currentLanguage) else { return }
                 
+                let currentLanguage = user.nativeLanguage.isNotEmpty ? user.nativeLanguage : defaultLanguage
+                guard let selected = languages.firstIndex(of: currentLanguage) else { return }
                 
                 tvc.data = languages
                 tvc.selected = selected
