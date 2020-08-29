@@ -30,10 +30,11 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         db = Firestore.firestore()
+        
+        // Primary setting up UI
         setupUI()
-        
-        hideKeyboardWhenTappedAround()
-        
+
+        // all observers here because it is the last item in the array of controller
         // Keyboard observers
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -41,7 +42,6 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         // TextField observers
         titleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         languageTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,8 +56,13 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         } else {
             cancelButton.setTitle("Clear", for: .normal)
         }
-        
-        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
+        titleTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        languageTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
     // MARK: - objc Methods
@@ -122,11 +127,13 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     // MARK: - Methods
     
     private func setupUI() {
+        hideKeyboardWhenTappedAround()
+        
+        // spinner
         view.addSubview(progressHUD)
         progressHUD.hide()
         titleTextField?.autocorrectionType = .no
         languageTextField?.autocorrectionType = .no
-//        saveButton.isEnabled = false
         
         guard let title = vocabulary?.title, let language = vocabulary?.language else { return }
         if title.isNotEmpty && language.isNotEmpty {
