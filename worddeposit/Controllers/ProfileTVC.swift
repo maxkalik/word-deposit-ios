@@ -160,12 +160,16 @@ class ProfileTVC: UITableViewController {
     
     private func updateProfile(user: User) {
         profileRef = db.collection("users").document(user.id)
+        
         let data = User.modelToData(user: user)
         profileRef.updateData(data) { error in
             if let error = error {
                 debugPrint(error)
             } else {
                 print("success")
+                let defaults = UserDefaults.standard
+                defaults.set(self.user.nativeLanguage, forKey: "native_language")
+                defaults.set(self.user.notifications, forKey: "notifications")
             }
         }
     }
