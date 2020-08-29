@@ -221,6 +221,7 @@ class AddWordVC: UIViewController {
             // success message here
             self.updateUI()
             self.progressHUD.hide()
+            self.simpleAlert(title: "Success", msg: "Word has been added")
         }
     }
     
