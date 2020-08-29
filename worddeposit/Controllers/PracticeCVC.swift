@@ -38,7 +38,6 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("view will appear")
         setupUI()
         setCurrentUser()
     }
@@ -57,7 +56,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     
     // MARK: - Setup Views
     
-    func setupUI() {
+    private func setupUI() {
         self.view.addSubview(progressHUD)
         progressHUD.show()
         setupCollectionView()
@@ -66,19 +65,19 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         setupMessage(wordsCount: words.count)
     }
     
-    func setupMessage(wordsCount: Int) {
+    private func setupMessage(wordsCount: Int) {
         messageView.setTitles(messageTxt: "You have insufficient words amount for practice.\nAdd at least \(minWordsAmount - wordsCount) words", buttonTitle: "Add more words")
         messageView.onPrimaryButtonTap { self.tabBarController?.selectedIndex = 1 }
     }
     
-    func registerViews() {
+    private func registerViews() {
         // Register cell classes
         let nib = UINib(nibName: XIBs.PracticeCVCell, bundle: nil)
         collectionView!.register(nib, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: ReusableIdentifiers.MessageView)
     }
     
-    func setupCollectionView() {
+    private func setupCollectionView() {
         if let flowlayout = collectionViewLayout as? UICollectionViewFlowLayout {
             flowlayout.minimumLineSpacing = 20
         }
@@ -101,6 +100,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                     guard let data = document.data() else { return }
                     self.user = User.init(data: data)
                     self.progressHUD.setTitle(title: "Fetching words")
+                    
                     // user defaults
                     let defaults = UserDefaults.standard
                     defaults.set(self.user.nativeLanguage, forKey: "native_language")
