@@ -24,7 +24,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="FPu-eK-7w6">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="FPu-eK-7w6">
                                         <rect key="frame" x="0.0" y="50" width="374" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="9b3-sw-HMp"/>
@@ -80,8 +80,14 @@
                     </view>
                     <navigationItem key="navigationItem" id="la2-PH-7Ys"/>
                     <connections>
+                        <outlet property="createAccountButton" destination="a4c-sX-kdq" id="C6k-9h-WGb"/>
                         <outlet property="emailTextField" destination="FPu-eK-7w6" id="HjB-Q8-d7i"/>
+                        <outlet property="forgotPasswordButton" destination="rdf-CM-1lM" id="3Mz-gc-DB2"/>
+                        <outlet property="loginButton" destination="k1B-my-CoV" id="Ho4-ZA-bjz"/>
                         <outlet property="passwordTextField" destination="Z9B-Rr-O8r" id="rHY-Wp-VUB"/>
+                        <outlet property="stackView" destination="01T-X9-a2a" id="i87-od-FvZ"/>
+                        <outlet property="stackViewCenterY" destination="10Z-Qm-xmm" id="REB-rX-MUH"/>
+                        <outlet property="titleLabel" destination="e07-Zq-yaq" id="XXN-4t-db5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -155,7 +161,11 @@
                     <navigationItem key="navigationItem" id="LnZ-Da-IKe"/>
                     <connections>
                         <outlet property="emailTextField" destination="kb4-ry-iGt" id="BVd-cG-4Sr"/>
+                        <outlet property="loginButton" destination="tqS-aX-VeA" id="PgO-Fc-uLN"/>
                         <outlet property="passwordTextField" destination="Z8D-Xl-CGP" id="Fu9-zO-Xkc"/>
+                        <outlet property="stackView" destination="k1A-ET-bVF" id="HyI-bA-lXy"/>
+                        <outlet property="stackViewCenterY" destination="7NS-pr-Dv8" id="mkG-nq-hqe"/>
+                        <outlet property="titleLabel" destination="BFm-ed-JJO" id="hG7-wJ-4T5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2W8-Xd-Tjg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -238,7 +248,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="IpH-DI-s4X"/>
                     <connections>
+                        <outlet property="cancelButton" destination="lqG-MK-qsD" id="c9C-xQ-Fjx"/>
                         <outlet property="emailTextField" destination="5B0-YN-bqy" id="CH0-jo-46z"/>
+                        <outlet property="stackView" destination="23h-Uc-ftl" id="ZRg-fZ-fRi"/>
+                        <outlet property="stackViewCenterY" destination="r3b-8Z-Wf0" id="IKB-Fc-SyW"/>
+                        <outlet property="titleLabel" destination="YZL-ml-heO" id="Fqj-sb-1y1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XrS-3u-x54" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

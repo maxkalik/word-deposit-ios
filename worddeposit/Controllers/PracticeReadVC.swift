@@ -61,7 +61,7 @@ class PracticeReadVC: UIViewController {
         
         // back button preparing for action
         self.navigationItem.hidesBackButton = true
-        let newBackButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backAction))
+        let newBackButton = UIBarButtonItem(title: "🏁", style: .plain, target: self, action: #selector(backAction))
         self.navigationItem.leftBarButtonItem = newBackButton
     }
     
