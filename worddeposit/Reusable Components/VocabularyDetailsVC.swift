@@ -6,8 +6,12 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var stackViewCenterY: NSLayoutConstraint!
     @IBOutlet weak var stackView: UIStackView!
+    
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var languageTextField: UITextField!
+    
+    @IBOutlet weak var buttonsStackView: UIStackView!
+    @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
     
     var progressHUD = ProgressHUD(title: "Saving")
@@ -38,20 +42,22 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         titleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         languageTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         
-        // navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        disableAllButtons()
+        
         if vocabulary != nil {
             titleTextField.borderStyle = .none
             languageTextField.borderStyle = .none
-            saveButton.layer.opacity = 0
+            buttonsStackView.alpha = 0
+        } else {
+            cancelButton.setTitle("Clear", for: .normal)
         }
         
-        saveButton.isEnabled = false
+        
     }
     
     // MARK: - objc Methods
@@ -71,7 +77,8 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
             }
         }
         
-        saveButton.layer.opacity = 1
+        // saveButton.layer.opacity = 1
+        buttonsStackView.alpha = 1
     }
     
     @objc func keyboardWillHide(_ notification: NSNotification) {
@@ -84,12 +91,32 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         }
         
         if vocabulary != nil {
-            saveButton.layer.opacity = 0
+            // saveButton.layer.opacity = 0
+            buttonsStackView.alpha = 0
         }
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
-        
+        guard let title = titleTextField.text, let language = languageTextField.text else { return }
+
+        // if vocabulary is creating new
+        guard let vocabulary = self.vocabulary else {
+            if title.isNotEmpty && language.isNotEmpty {
+                enableAllButtons()
+            }
+            return
+        }
+       
+        // if vocabulary is editing
+        if title != vocabulary.title || language != vocabulary.language {
+            enableAllButtons()
+            if title.isEmpty || language.isEmpty {
+                saveButton.isEnabled = false
+                cancelButton.isEnabled = true
+            }
+        } else {
+           disableAllButtons()
+       }
     }
     
     // MARK: - Methods
@@ -124,7 +151,20 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     
     // MARK: - IBActions
     
-    @IBAction func savePressed(_ sender: UIButton) {
+    @IBAction func cancelTapped(_ sender: UIButton) {
+        guard let vocabulary = self.vocabulary else {
+            titleTextField.text = ""
+            languageTextField.text = ""
+            disableAllButtons()
+            return
+        }
+        
+        titleTextField.text = vocabulary.title
+        languageTextField.text = vocabulary.language
+        disableAllButtons()
+    }
+    
+    @IBAction func saveTapped(_ sender: UIButton) {
         progressHUD.show()
         guard let title = titleTextField.text, title.isNotEmpty, let language = languageTextField.text, language.isNotEmpty else {
             simpleAlert(title: "Error", msg: "Fill all fields")
@@ -146,5 +186,17 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
             existingVocabulary.language = language
             setVocabulary(existingVocabulary)
         }
+    }
+}
+
+extension VocabularyDetailsVC {
+    private func enableAllButtons() {
+        cancelButton.isEnabled = true
+        saveButton.isEnabled = true
+    }
+    
+    private func disableAllButtons() {
+        cancelButton.isEnabled = false
+        saveButton.isEnabled = false
     }
 }
