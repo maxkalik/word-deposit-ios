@@ -10,6 +10,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
             scrollView.contentInsetAdjustmentBehavior = .never
         }
     }
+    @IBOutlet weak var stackViewCenterY: NSLayoutConstraint!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var languageTextField: UITextField!
@@ -66,7 +67,11 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             keyboardHeight = keyboardFrame.cgRectValue.height
-            stackView.frame.origin.y -= keyboardHeight - stackView.frame.size.height
+            
+            UIView.animate(withDuration: 0.3) {
+                self.stackViewCenterY.constant -= self.keyboardHeight - self.stackView.frame.size.height
+                self.view.layoutIfNeeded()
+            }
         }
         
         saveButton.layer.opacity = 1
@@ -76,7 +81,10 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         if !isKeyboardShowing { return }
         isKeyboardShowing = false
         
-        stackView.frame.origin.y += keyboardHeight - stackView.frame.size.height
+        UIView.animate(withDuration: 0.3) {
+            self.stackViewCenterY.constant += self.keyboardHeight - self.stackView.frame.size.height
+            self.view.layoutIfNeeded()
+        }
         
         if vocabulary != nil {
             saveButton.layer.opacity = 0
