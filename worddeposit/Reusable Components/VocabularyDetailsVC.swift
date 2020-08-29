@@ -4,12 +4,6 @@ import FirebaseFirestore
 
 class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     
-    @IBOutlet weak var scrollView: UIScrollView! {
-        didSet {
-            scrollView.delegate = self
-            scrollView.contentInsetAdjustmentBehavior = .never
-        }
-    }
     @IBOutlet weak var stackViewCenterY: NSLayoutConstraint!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var titleTextField: UITextField!
@@ -56,6 +50,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
             languageTextField.borderStyle = .none
             saveButton.layer.opacity = 0
         }
+        
         saveButton.isEnabled = false
     }
     
@@ -67,7 +62,9 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             keyboardHeight = keyboardFrame.cgRectValue.height
-            
+                        
+            // Using centerY constrains and changing it allow to save the position of the stackview at the center
+            // even if we accidently touch (and drag) uiViewController.
             UIView.animate(withDuration: 0.3) {
                 self.stackViewCenterY.constant -= self.keyboardHeight - self.stackView.frame.size.height
                 self.view.layoutIfNeeded()
