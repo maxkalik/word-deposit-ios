@@ -10,6 +10,8 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     // MARK: - Instances
     
     var user = User()
+    var testUser = User()
+    
     var words = [Word]()
     private var trainers = [PracticeTrainer]()
     
@@ -40,6 +42,11 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         super.viewWillAppear(animated)
         setupUI()
         setCurrentUser()
+        
+        UserService.shared.getCurrentUser { user in
+            print(user)
+        }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {

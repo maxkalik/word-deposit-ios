@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		110F5E3724FD673D00C463A4 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110F5E3624FD673D00C463A4 /* UserService.swift */; };
 		11284211248E7C5700A014E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284210248E7C5700A014E9 /* AppDelegate.swift */; };
 		11284213248E7C5700A014E9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284212248E7C5700A014E9 /* SceneDelegate.swift */; };
 		11284218248E7C5700A014E9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11284216248E7C5700A014E9 /* Main.storyboard */; };
@@ -63,6 +64,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		110F5E3624FD673D00C463A4 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		1128420D248E7C5700A014E9 /* worddeposit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = worddeposit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11284210248E7C5700A014E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		11284212248E7C5700A014E9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -135,6 +137,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		110F5E3524FD670500C463A4 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				110F5E3624FD673D00C463A4 /* UserService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		11284204248E7C5700A014E9 = {
 			isa = PBXGroup;
 			children = (
@@ -156,6 +166,7 @@
 		1128420F248E7C5700A014E9 /* worddeposit */ = {
 			isa = PBXGroup;
 			children = (
+				110F5E3524FD670500C463A4 /* Services */,
 				11D879B12494170B00FF7BA3 /* worddeposit.entitlements */,
 				156C80BA24DDFEB10077905D /* Reusable Components */,
 				116BC94A249182A500968DA6 /* Utils */,
@@ -456,6 +467,7 @@
 				1158D30E24917B9B0087DC96 /* VocabularyTVCell.swift in Sources */,
 				156C80B724D8D27E0077905D /* VocabularyDetailsVC.swift in Sources */,
 				11284233248E83BB00A014E9 /* VocabularyTVC.swift in Sources */,
+				110F5E3724FD673D00C463A4 /* UserService.swift in Sources */,
 				11284213248E7C5700A014E9 /* SceneDelegate.swift in Sources */,
 				117FA4CC24CEEC350043024D /* PracticeDeskItemButton.swift in Sources */,
 				112F9C7524F6F201007E92D8 /* SuccessMessageVC.swift in Sources */,

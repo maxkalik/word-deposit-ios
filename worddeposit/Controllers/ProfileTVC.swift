@@ -61,6 +61,9 @@ class ProfileTVC: UITableViewController {
         
         wordsAmountLoading.startAnimating()
         answersPrecentageLoading.startAnimating()
+        
+        print(UserService.shared.user)
+        
     }
 
     override func viewWillDisappear(_ animated: Bool) {
