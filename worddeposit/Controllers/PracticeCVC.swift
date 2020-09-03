@@ -43,8 +43,16 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         setupUI()
         setCurrentUser()
         
-        UserService.shared.getCurrentUser { user in
-            print(user)
+        UserService.shared.fetchCurrentUser { user in
+            UserService.shared.fetchVocabularies { vocabularies in
+                print(vocabularies)
+                UserService.shared.getCurrentVocabulary()
+                guard let vocabularyId = UserService.shared.currentVocabularyId else { return }
+                print(vocabularyId)
+                UserService.shared.fetchWords { words in
+                    print(words)
+                }
+            }
         }
         
     }

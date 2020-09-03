@@ -15,7 +15,8 @@ final class UserService {
     
     // References
     private var userRef: DocumentReference!
-    private var vocabulariewsRef: CollectionReference!
+    private var vocabulariesRef: CollectionReference!
+    private var vocabularyRef: DocumentReference!
     private var wordsRef: CollectionReference!
     
     // Listeners
@@ -24,10 +25,11 @@ final class UserService {
     
     private init() {} // original singleton pattern difinition
     
-    func getCurrentUser(complition: @escaping (User) -> Void) {
+    // MARK: - Methods
+    
+    func fetchCurrentUser(complition: @escaping (User) -> Void) {
         guard let currentUser = auth.currentUser else { return }
-        let userRef = self.db.collection("users").document(currentUser.uid)
-        
+        userRef = self.db.collection("users").document(currentUser.uid)
         
         userRef.getDocument { (document, error) in
             if let error = error {
@@ -44,22 +46,24 @@ final class UserService {
         }
     }
     
-    func getVocabularies(complition: @escaping ([Vocabulary]) -> Void) {
+    func fetchVocabularies(complition: @escaping ([Vocabulary]) -> Void) {
         if user.id.isEmpty {
             print("user id is empty")
         }
-        vocabulariewsRef = userRef.collection("vocabularies")
-        vocabulariewsRef.getDocuments { (snapshot, error) in
+        vocabulariesRef = userRef.collection("vocabularies")
+        vocabulariesRef.getDocuments { (snapshot, error) in
             if let error = error {
                 print("Error getting vocabularies: \(error)")
                 return
             } else {
-                for document in snapshot!.documents {
+                self.vocabularies.removeAll()
+                guard let documents = snapshot?.documents else { return }
+                for document in documents {
                     let data = document.data()
                     let vocabulary = Vocabulary.init(data: data)
                     self.vocabularies.append(vocabulary)
-                    complition(self.vocabularies)
                 }
+                complition(self.vocabularies)
             }
         }
     }
@@ -69,6 +73,28 @@ final class UserService {
             return vocabulary.isSelected
         }
         guard let i = index else { return }
-        self.currentVocabularyId = self.vocabularies[i].id
+        let curVocabularyId = self.vocabularies[i].id
+        self.currentVocabularyId = curVocabularyId
+        self.vocabularyRef = self.vocabulariesRef.document(curVocabularyId)
+    }
+    
+    func fetchWords(vocabularyId: String? = nil, complition: @escaping ([Word]) -> Void) {
+        self.wordsRef = vocabularyRef.collection("words")
+        if vocabularyId != nil || ((self.currentVocabularyId?.isNotEmpty) != nil) {
+            self.wordsRef.getDocuments { (snapshot, error) in
+                if let error = error {
+                    debugPrint(error.localizedDescription)
+                    return
+                }
+                self.words.removeAll()
+                guard let documents = snapshot?.documents else { return }
+                for document in documents {
+                    let data = document.data()
+                    let word = Word.init(data: data)
+                    self.words.append(word)
+                }
+                complition(self.words)
+            }
+        }
     }
 }
