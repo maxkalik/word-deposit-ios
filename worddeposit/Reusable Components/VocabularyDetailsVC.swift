@@ -70,6 +70,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         languageTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
+    
     // MARK: - objc Methods
     
     @objc func keyboardWillShow(_ notification: NSNotification) {
@@ -192,12 +193,14 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
             self.vocabulary = Vocabulary.init(id: "", title: title, language: language, wordsAmount: 0, isSelected: isFirstSelected, timestamp: Timestamp())
 //             vocabulary!.id = vocabularyRef.documentID
             // setVocabulary(vocabulary!)
-            UserService.shared.setVocabulary(vocabulary!) {
+            UserService.shared.setVocabulary(vocabulary!) { id in
                 // complition
                 // delegation with updating table view from user service global data [Vocabulary]
                 self.progressHUD.hide()
-                self.delegate?.vocabularyDidCreate(self.vocabulary!)
                 self.navigationController?.popViewController(animated: true)
+                
+                self.vocabulary!.id = id
+                self.delegate?.vocabularyDidCreate(self.vocabulary!)
             }
         } else {
             guard var vocabulary = self.vocabulary else { return }

@@ -45,6 +45,8 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         print("view did load")
         // fetching content and add it to the view
         prepareContent()
+        
+       
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,7 +54,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         view.addSubview(messageView)
         view.superview?.addSubview(progressHUD)
         progressHUD.show()
-
+        
         setupMessage()
         messageView.hide()
     }
@@ -86,9 +88,11 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     }
     
     func vocabularyDidCreate(_ vocabulary: Vocabulary) {
-        print("vocabularyDidCreate")
-        vocabularies.append(vocabulary)
-        tableView.insertRows(at: [IndexPath(item: vocabularies.count, section: 0)], with: .fade)
+        // print(vocabulary)
+        
+        vocabularies.insert(vocabulary, at: 0)
+
+         tableView.insertRows(at: [IndexPath(item: 0, section: 0)], with: .fade)
     }
     
     
@@ -305,9 +309,9 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vocabularyDetailsVC = segue.destination as? VocabularyDetailsVC {
+            vocabularyDetailsVC.delegate = self
             if let index = sender as? Int {
                 vocabularyDetailsVC.vocabulary = vocabularies[index]
-                vocabularyDetailsVC.delegate = self
             }
             // we need to set very first created vocabulary is selected = true
             if vocabularies.count > 0 {

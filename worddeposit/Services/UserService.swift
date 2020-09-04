@@ -100,7 +100,7 @@ final class UserService {
     
     // MARK: - Methods - SET
     
-    func setVocabulary(_ vocabulary: Vocabulary, complition: @escaping () -> Void) {
+    func setVocabulary(_ vocabulary: Vocabulary, complition: @escaping (String) -> Void) {
         // creating new id
         var vocabulary = vocabulary
         let ref = vocabulariesRef.document()
@@ -113,7 +113,7 @@ final class UserService {
                 return
             }
             self.vocabularies.append(vocabulary)
-            complition()
+            complition(vocabulary.id)
         }
     }
     

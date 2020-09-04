@@ -36,6 +36,10 @@ class VocabulariesTVCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         selectionSwitch.isOn = false
+        titleLabel.text = ""
+        languageLabel.text = ""
+        wordsAmountLabel.text = "0"
+        selectionSwitch.isOn = false
     }
     
     // MARK: - Own Methods
