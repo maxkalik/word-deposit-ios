@@ -10,7 +10,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     // MARK: - Instances
     
     var user = User()
-    var testUser = User()
+    // var testUser = User()
     
     var words = [Word]()
     private var trainers = [PracticeTrainer]()
@@ -28,6 +28,8 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     /// References
     var wordsRef: CollectionReference!
     
+    var userService = UserService.shared
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -43,13 +45,14 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         setupUI()
         setCurrentUser()
         
-        UserService.shared.fetchCurrentUser { user in
-            UserService.shared.fetchVocabularies { vocabularies in
+        
+        userService.fetchCurrentUser { user in
+            self.userService.fetchVocabularies { vocabularies in
                 print(vocabularies)
-                UserService.shared.getCurrentVocabulary()
-                guard let vocabularyId = UserService.shared.currentVocabularyId else { return }
+                self.userService.getCurrentVocabulary()
+                guard let vocabularyId = self.userService.currentVocabulary else { return }
                 print(vocabularyId)
-                UserService.shared.fetchWords { words in
+                self.userService.fetchWords { words in
                     print(words)
                 }
             }
