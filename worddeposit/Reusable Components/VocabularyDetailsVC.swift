@@ -2,6 +2,10 @@ import UIKit
 import Firebase
 import FirebaseFirestore
 
+protocol VocabularyDetailsVCDelegate: VocabulariesTVC {
+    func vocabularyDidCreate(_ vocabulary: Vocabulary)
+}
+
 class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var stackViewCenterY: NSLayoutConstraint!
@@ -24,6 +28,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     private var isKeyboardShowing = false
     private var keyboardHeight: CGFloat!
     
+    weak var delegate: VocabularyDetailsVCDelegate?
     
     // MARK: - Lifecycle
     
@@ -183,15 +188,26 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         userRef = db.collection("users").document(user.uid)
         
         if vocabulary == nil {
-            let vocabularyRef = userRef.collection("vocabularies").document()
-            vocabulary = Vocabulary.init(id: "", title: title, language: language, wordsAmount: 0, isSelected: isFirstSelected, timestamp: Timestamp())
-            vocabulary!.id = vocabularyRef.documentID
-            setVocabulary(vocabulary!)
+//            let vocabularyRef = userRef.collection("vocabularies").document()
+            self.vocabulary = Vocabulary.init(id: "", title: title, language: language, wordsAmount: 0, isSelected: isFirstSelected, timestamp: Timestamp())
+//             vocabulary!.id = vocabularyRef.documentID
+            // setVocabulary(vocabulary!)
+            UserService.shared.setVocabulary(vocabulary!) {
+                // complition
+                // delegation with updating table view from user service global data [Vocabulary]
+                self.progressHUD.hide()
+                self.delegate?.vocabularyDidCreate(self.vocabulary!)
+                self.navigationController?.popViewController(animated: true)
+            }
         } else {
-            guard var existingVocabulary = vocabulary else { return }
-            existingVocabulary.title = title
-            existingVocabulary.language = language
-            setVocabulary(existingVocabulary)
+            guard var vocabulary = self.vocabulary else { return }
+            vocabulary.title = title
+            vocabulary.language = language
+            // setVocabulary(existingVocabulary)
+            UserService.shared.updateVocabulary(vocabulary) {
+                self.progressHUD.hide()
+                self.navigationController?.popViewController(animated: true)
+            }
         }
     }
 }

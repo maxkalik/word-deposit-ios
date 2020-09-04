@@ -57,14 +57,27 @@ class VocabulariesTVC: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         messageView.frame.origin.y = tableView.contentOffset.y
-        setVocabularyListener()
+        // setVocabularyListener()
+        
+        UserService.shared.fetchVocabularies { vocabularies in
+            
+            // self.tableView.reloadData() // we can use updating like on listener
+            
+            // Add a vocabulary
+            for index in 0..<vocabularies.count {
+                self.vocabularies.append(vocabularies[index])
+                self.tableView.insertRows(at: [IndexPath(item: index, section: 0)], with: .fade)
+            }
+            
+            self.progressHUD.hide()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        vocabulariesListener.remove()
+        // vocabulariesListener.remove()
         vocabularies.removeAll()
-        tableView.reloadData()
+         tableView.reloadData()
     }
     
     // MARK: - Methods
@@ -116,6 +129,7 @@ class VocabulariesTVC: UITableViewController {
         
         UIView.transition(with: window, duration: duration, options: options, animations: nil, completion: nil)
     }
+    
     
     func setVocabularyListener() {
         let vocabularyQuery = userRef.collection("vocabularies").order(by: "timestamp", descending: true)
@@ -246,7 +260,7 @@ class VocabulariesTVC: UITableViewController {
         return true
     }
 
-
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
@@ -259,45 +273,10 @@ class VocabulariesTVC: UITableViewController {
                 
                 let alert = UIAlertController(title: title, message: "Are you sure?", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Remove", style: .default, handler: { (action) in
-                    
-                    let vocabularyRef = self.userRef.collection("vocabularies").document(vocabulary.id)
-                    
-                    // remove folder with images
-
-                    vocabularyRef.collection("words").order(by: "img_url").getDocuments { (snapshot, error) in
-                        if let error = error {
-                            debugPrint(error.localizedDescription)
-                            return
-                        }
-                        
-                        guard let snap = snapshot else { return }
-                        for document in snap.documents {
-                            let data = document.data()
-                            let word = Word.init(data: data)
-                            if word.imgUrl.isNotEmpty {
-                                guard let uid = self.userId else { return }
-                                self.storage.reference().child("/\(uid)/\(vocabulary.id)/\(word.id).jpg").delete { (error) in
-                                    if let error = error {
-                                        self.simpleAlert(title: "Error", msg: error.localizedDescription)
-                                        debugPrint(error.localizedDescription)
-                                        return
-                                    }
-                                }
-                            }
-                        }
+                    UserService.shared.removeVocabulary(vocabulary) {
+                        self.vocabularies.remove(at: indexPath.row)
+                        self.tableView.deleteRows(at: [IndexPath(item: indexPath.row, section: 0)], with: .fade)
                     }
-                    
-                    // finally delete vocabulary with words
-                    
-                    vocabularyRef.delete { (error) in
-                        if let error = error {
-                            self.simpleAlert(title: "Error", msg: error.localizedDescription)
-                            debugPrint(error.localizedDescription)
-                            return
-                        }
-                    }
-                    
-                    
                 }))
                 alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
                 present(alert, animated: true, completion: nil)
@@ -317,7 +296,7 @@ class VocabulariesTVC: UITableViewController {
             if let index = sender as? Int {
                 vocabularyDetailsVC.vocabulary = vocabularies[index]
             }
-            // we need to set very first vocabulary is selected = true
+            // we need to set very first created vocabulary is selected = true
             if vocabularies.count > 0 {
                 vocabularyDetailsVC.isFirstSelected = false
             }

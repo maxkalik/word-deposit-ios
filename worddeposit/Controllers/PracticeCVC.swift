@@ -48,12 +48,12 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         
         userService.fetchCurrentUser { user in
             self.userService.fetchVocabularies { vocabularies in
-                print(vocabularies)
+                // print(vocabularies)
                 self.userService.getCurrentVocabulary()
-                guard let vocabularyId = self.userService.currentVocabulary else { return }
-                print(vocabularyId)
+                // guard let vocabularyId = self.userService.currentVocabulary else { return }
+                // print(vocabularyId)
                 self.userService.fetchWords { words in
-                    print(words)
+                    // print(words)
                 }
             }
         }

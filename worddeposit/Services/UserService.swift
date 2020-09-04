@@ -50,11 +50,9 @@ final class UserService {
     }
     
     func fetchVocabularies(complition: @escaping ([Vocabulary]) -> Void) {
-        if user.id.isEmpty {
-            print("user id is empty")
-        }
+        // what if userid is empty?
         vocabulariesRef = userRef.collection("vocabularies")
-        vocabulariesRef.getDocuments { (snapshot, error) in
+        vocabulariesRef.order(by: "timestamp", descending: true).getDocuments { (snapshot, error) in
             if let error = error {
                 print("Error getting vocabularies: \(error)")
                 return
@@ -100,9 +98,24 @@ final class UserService {
         }
     }
     
-    // MARK: - Methods - ADD
+    // MARK: - Methods - SET
     
-    
+    func setVocabulary(_ vocabulary: Vocabulary, complition: @escaping () -> Void) {
+        // creating new id
+        var vocabulary = vocabulary
+        let ref = vocabulariesRef.document()
+        vocabulary.id = ref.documentID
+        
+        let data = Vocabulary.modelToData(vocabulary: vocabulary)
+        ref.setData(data) { (error) in
+            if let error = error {
+                debugPrint(error.localizedDescription)
+                return
+            }
+            self.vocabularies.append(vocabulary)
+            complition()
+        }
+    }
     
     // MARK: - Methods - UPDATE
     
@@ -116,7 +129,12 @@ final class UserService {
                 debugPrint(error.localizedDescription)
                 return
             }
-            complition()
+            if let index: Int = self.vocabularies.firstIndex(matching: vocabulary) {
+                if !self.vocabularies[index].isSelected {
+                    self.vocabularies[index] = vocabulary
+                    complition()
+                }
+            }
         }
     }
     
