@@ -3,7 +3,7 @@ import FirebaseAuth
 import FirebaseFirestore
 import FirebaseStorage
 
-class VocabulariesTVC: UITableViewController {
+class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
 
     // MARK: - Instances
     
@@ -37,6 +37,14 @@ class VocabulariesTVC: UITableViewController {
         db = Firestore.firestore()
         storage = Storage.storage()
         setupTableView()
+        
+        guard let authUser = auth.currentUser else { return }
+        userRef = db.collection("users").document(authUser.uid)
+        userId = authUser.uid
+        
+        print("view did load")
+        // fetching content and add it to the view
+        prepareContent()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,11 +52,6 @@ class VocabulariesTVC: UITableViewController {
         view.addSubview(messageView)
         view.superview?.addSubview(progressHUD)
         progressHUD.show()
-        
-        
-        guard let authUser = auth.currentUser else { return }
-        userRef = db.collection("users").document(authUser.uid)
-        userId = authUser.uid
 
         setupMessage()
         messageView.hide()
@@ -57,10 +60,13 @@ class VocabulariesTVC: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         messageView.frame.origin.y = tableView.contentOffset.y
-        // setVocabularyListener()
-        
+    }
+    
+    // MARK: - Methods
+    
+    // fetching content and add it to the view
+    func prepareContent() {
         UserService.shared.fetchVocabularies { vocabularies in
-            
             // self.tableView.reloadData() // we can use updating like on listener
             
             // Add a vocabulary
@@ -73,14 +79,20 @@ class VocabulariesTVC: UITableViewController {
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        // vocabulariesListener.remove()
+    // clean up all content
+    func cleanUpTableView() {
         vocabularies.removeAll()
-         tableView.reloadData()
+        tableView.reloadData()
     }
     
-    // MARK: - Methods
+    func vocabularyDidCreate(_ vocabulary: Vocabulary) {
+        print("vocabularyDidCreate")
+        vocabularies.append(vocabulary)
+        tableView.insertRows(at: [IndexPath(item: vocabularies.count, section: 0)], with: .fade)
+    }
+    
+    
+    
     
     func setupMessage() {
         messageView.setTitles(
@@ -295,6 +307,7 @@ class VocabulariesTVC: UITableViewController {
         if let vocabularyDetailsVC = segue.destination as? VocabularyDetailsVC {
             if let index = sender as? Int {
                 vocabularyDetailsVC.vocabulary = vocabularies[index]
+                vocabularyDetailsVC.delegate = self
             }
             // we need to set very first created vocabulary is selected = true
             if vocabularies.count > 0 {

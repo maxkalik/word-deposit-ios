@@ -2,7 +2,7 @@ import UIKit
 import Firebase
 import FirebaseFirestore
 
-protocol VocabularyDetailsVCDelegate: VocabulariesTVC {
+protocol VocabularyDetailsVCDelegate: AnyObject {
     func vocabularyDidCreate(_ vocabulary: Vocabulary)
 }
 
