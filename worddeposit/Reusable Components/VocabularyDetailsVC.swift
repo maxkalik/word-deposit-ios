@@ -4,6 +4,7 @@ import FirebaseFirestore
 
 protocol VocabularyDetailsVCDelegate: AnyObject {
     func vocabularyDidCreate(_ vocabulary: Vocabulary)
+    func vocabularyDidUpdate(_ vocabulary: Vocabulary, index: Int)
 }
 
 class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
@@ -189,16 +190,10 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         userRef = db.collection("users").document(user.uid)
         
         if vocabulary == nil {
-//            let vocabularyRef = userRef.collection("vocabularies").document()
             self.vocabulary = Vocabulary.init(id: "", title: title, language: language, wordsAmount: 0, isSelected: isFirstSelected, timestamp: Timestamp())
-//             vocabulary!.id = vocabularyRef.documentID
-            // setVocabulary(vocabulary!)
             UserService.shared.setVocabulary(vocabulary!) { id in
-                // complition
-                // delegation with updating table view from user service global data [Vocabulary]
                 self.progressHUD.hide()
                 self.navigationController?.popViewController(animated: true)
-                
                 self.vocabulary!.id = id
                 self.delegate?.vocabularyDidCreate(self.vocabulary!)
             }
@@ -207,9 +202,10 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
             vocabulary.title = title
             vocabulary.language = language
             // setVocabulary(existingVocabulary)
-            UserService.shared.updateVocabulary(vocabulary) {
+            UserService.shared.updateVocabulary(vocabulary) { index in
                 self.progressHUD.hide()
                 self.navigationController?.popViewController(animated: true)
+                self.delegate?.vocabularyDidUpdate(vocabulary,  index: index)
             }
         }
     }

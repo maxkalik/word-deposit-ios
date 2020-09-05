@@ -8,11 +8,21 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     // MARK: - Instances
     
     var vocabularies = [Vocabulary]()
-    var selectedVocabularyIndex = 0 {
-        didSet {
-            let defaults = UserDefaults.standard
+    var selectedVocabularyIndex: Int? {
+        
+        get {
             if vocabularies.count > 0 {
-                defaults.set(vocabularies[selectedVocabularyIndex].id, forKey: "vocabulary_id")
+                let index = vocabularies.firstIndex { vocabulary in
+                    return vocabulary.isSelected
+                }
+                return index
+            }
+            return nil
+        }
+        
+        set {
+            for index in vocabularies.indices {
+                vocabularies[index].isSelected = index == newValue
             }
         }
     }
@@ -20,41 +30,23 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     var messageView = MessageView()
     var progressHUD = ProgressHUD()
     
-    var auth: Auth!
-    var db: Firestore!
-    var storage: Storage!
-    var vocabulariesListener: ListenerRegistration!
-    var userRef: DocumentReference!
-    var vocabulariesRef: DocumentReference!
-    
-    var userId: String!
-    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        auth = Auth.auth()
-        db = Firestore.firestore()
-        storage = Storage.storage()
+        
         setupTableView()
         
-        guard let authUser = auth.currentUser else { return }
-        userRef = db.collection("users").document(authUser.uid)
-        userId = authUser.uid
-        
-        print("view did load")
-        // fetching content and add it to the view
+        view.addSubview(messageView)
+        view.superview?.addSubview(progressHUD)
+        progressHUD.show()
         prepareContent()
-        
-       
+
+        print("vocabularies tvc did load")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        view.addSubview(messageView)
-        view.superview?.addSubview(progressHUD)
-        progressHUD.show()
-        
         setupMessage()
         messageView.hide()
     }
@@ -81,20 +73,15 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         }
     }
     
-    // clean up all content
-    func cleanUpTableView() {
-        vocabularies.removeAll()
-        tableView.reloadData()
-    }
-    
     func vocabularyDidCreate(_ vocabulary: Vocabulary) {
-        // print(vocabulary)
-        
         vocabularies.insert(vocabulary, at: 0)
-
-         tableView.insertRows(at: [IndexPath(item: 0, section: 0)], with: .fade)
+        tableView.insertRows(at: [IndexPath(item: 0, section: 0)], with: .fade)
     }
     
+    func vocabularyDidUpdate(_ vocabulary: Vocabulary, index: Int) {
+        self.vocabularies[index] = vocabulary
+        tableView.reloadRows(at: [IndexPath(item: index, section: 0)], with: .fade)
+    }
     
     
     
@@ -110,20 +97,10 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         }
         messageView.onSecondaryButtonTap {
             self.progressHUD.show()
-            self.logout()
-        }
-    }
-    
-    func logout() {
-        do {
-            try auth.signOut()
-            // clear all listeners and ui
-            progressHUD.hide()
-            self.showLoginVC()
-        } catch let error as NSError {
-            simpleAlert(title: "Error", msg: error.localizedDescription)
-            progressHUD.hide()
-            debugPrint(error.localizedDescription)
+            UserService.shared.logout {
+                self.progressHUD.hide()
+                self.showLoginVC()
+            }
         }
     }
     
@@ -146,103 +123,24 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         UIView.transition(with: window, duration: duration, options: options, animations: nil, completion: nil)
     }
     
-    
-    func setVocabularyListener() {
-        let vocabularyQuery = userRef.collection("vocabularies").order(by: "timestamp", descending: true)
-        vocabulariesListener = vocabularyQuery.addSnapshotListener({ (snapshot, error) in
-            if let error = error {
-                debugPrint(error.localizedDescription)
-                self.progressHUD.hide()
-                return
-            }
-            self.progressHUD.hide()
-
-            if snapshot!.documents.isEmpty {
-                self.setupMessage()
-                self.messageView.show()
-                self.isModalInPresentation = true
-            } else {
-                self.isModalInPresentation = false
-            }
-            
-            snapshot?.documentChanges.forEach({ (docChange) in
-                let data = docChange.document.data()
-                let vocabulary = Vocabulary.init(data: data)
-                switch docChange.type {
-                case .added:
-                    self.onDocumentAdded(change: docChange, vocabulary: vocabulary)
-                case .modified:
-                    self.onDocumentModified(change: docChange, vocabulary: vocabulary)
-                case .removed:
-                    self.onDocumentRemoved(change: docChange)
-                }
-            })
-        })
-    }
-    
-
-    
-    func onDocumentAdded(change: DocumentChange, vocabulary: Vocabulary) {
-        let newIndex = Int(change.newIndex)
-        vocabularies.insert(vocabulary, at: newIndex)
-        tableView.insertRows(at: [IndexPath(item: newIndex, section: 0)], with: .fade)
-    }
-    
-    func onDocumentModified(change: DocumentChange, vocabulary: Vocabulary) {
-        if change.newIndex == change.oldIndex {
-            let index = Int(change.newIndex)
-            vocabularies[index] = vocabulary
-            tableView.reloadRows(at: [IndexPath(item: index, section: 0)], with: .none)
-        } else {
-            let oldIndex = Int(change.oldIndex)
-            let newIndex = Int(change.newIndex)
-            vocabularies.remove(at: oldIndex)
-            vocabularies.insert(vocabulary, at: newIndex)
-            tableView.moveRow(at: IndexPath(item: oldIndex, section: 0), to: IndexPath(item: newIndex, section: 0))
-        }
-    }
-    
-    func onDocumentRemoved(change: DocumentChange) {
-        let oldIndex = Int(change.oldIndex)
-        vocabularies.remove(at: oldIndex)
-        tableView.deleteRows(at: [IndexPath(item: oldIndex, section: 0)], with: .fade)
-    }
-    
     func setupTableView() {
         let nib = UINib(nibName: XIBs.VocabulariesTVCell, bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: XIBs.VocabulariesTVCell)
         tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
     }
     
-    func updateVocabulary(_ vocabulary: Vocabulary) {
-        // TODO: - Refactoring
-        guard let user = auth.currentUser else { return }
-        vocabulariesRef = db.collection("users").document(user.uid).collection("vocabularies").document(vocabulary.id)
-        // print(vocabulary)
-        let data = Vocabulary.modelToData(vocabulary: vocabulary)
-        vocabulariesRef.updateData(data) { (error) in
-            if let error = error {
-                self.simpleAlert(title: "Error", msg: error.localizedDescription)
-            }
-            // success
-            // print("success")
-        }
-    }
-    
     @objc func switchChaged(sender: UISwitch) {
-        if sender.tag != selectedVocabularyIndex {
+        let newSelectedVocabularyIndex = sender.tag
+        if newSelectedVocabularyIndex != selectedVocabularyIndex {
+            guard let oldIndex = selectedVocabularyIndex else { return }
+            selectedVocabularyIndex = newSelectedVocabularyIndex
+            tableView.reloadRows(at: [IndexPath(item: oldIndex, section: 0), IndexPath(item: newSelectedVocabularyIndex, section: 0)], with: .fade)
             
-            // update old one
-            let oldIndex = selectedVocabularyIndex
-            vocabularies[oldIndex].isSelected = false
-            updateVocabulary(vocabularies[oldIndex])
-            
-            // update new one
-            selectedVocabularyIndex = sender.tag
-            var vocabulary = vocabularies[selectedVocabularyIndex]
-            vocabulary.isSelected = true
-            updateVocabulary(vocabulary)
-            
+            // update vocabularies
+            UserService.shared.updateVocabularies([vocabularies[oldIndex], vocabularies[newSelectedVocabularyIndex]]) {
+                print(self.vocabularies)
+                
+            }
         } else {
             sender.isOn = true
         }
@@ -257,7 +155,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: XIBs.VocabulariesTVCell, for: indexPath) as? VocabulariesTVCell {
             let vocabulary = vocabularies[indexPath.row]
-            cell.configureCell(vocabulary: vocabulary, userRef: userRef)
+            cell.configureCell(vocabulary: vocabulary)
             cell.isSelectedVocabulary = false
             if vocabulary.isSelected == true {
                 cell.isSelectedVocabulary = true
@@ -272,7 +170,6 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     }
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
         return true
     }
 
@@ -302,6 +199,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
 
 
     // MARK: - Navigation
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: Segues.VocabularyDetails, sender: indexPath.row)
     }

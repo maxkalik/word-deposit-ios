@@ -23,6 +23,14 @@ class VocabulariesTVCell: UITableViewCell {
         }
     }
     
+    var vocabulary: Vocabulary! {
+        didSet {
+            titleLabel.text = vocabulary.title
+            languageLabel.text = vocabulary.language
+            wordsAmountLabel.text = String(vocabulary.wordsAmount)
+        }
+    }
+    
     var wordsAmount: Int! {
         didSet {
             wordsAmountActivityIndicator.stopAnimating()
@@ -35,10 +43,6 @@ class VocabulariesTVCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        selectionSwitch.isOn = false
-        titleLabel.text = ""
-        languageLabel.text = ""
-        wordsAmountLabel.text = "0"
         selectionSwitch.isOn = false
     }
     
@@ -57,34 +61,18 @@ class VocabulariesTVCell: UITableViewCell {
         }
     }
     
-    private func updateWordsAmount(vocabulary: Vocabulary, userRef: DocumentReference) {
-        let vocabularyRef = userRef.collection("vocabularies").document(vocabulary.id)
-        let wordsRef = vocabularyRef.collection("words")
-        wordsRef.getDocuments { (snapshot, error) in
-            if let error = error {
-                print(error.localizedDescription)
-                self.wordsAmountActivityIndicator.stopAnimating()
-            } else  {
-                guard let snap = snapshot else { return }
-                if snap.count != self.wordsAmount {
-                    self.wordsAmount = snap.count
-                    vocabularyRef.updateData(["words_amount" : snap.count]) { (error) in
-                        if let error = error {
-                            debugPrint(error.localizedDescription)
-                        }
-                    }
-                }
-                self.wordsAmountActivityIndicator.stopAnimating()
+    private func setupWordsAmount() {
+        UserService.shared.getAmountOfWordsFrom(vocabulary: vocabulary) { count in
+            if self.vocabulary.wordsAmount != count {
+                self.wordsAmount = count
             }
         }
     }
     
-    func configureCell(vocabulary: Vocabulary, userRef: DocumentReference) {
-        titleLabel.text = vocabulary.title
-        languageLabel.text = vocabulary.language
-        wordsAmountLabel.text = String(vocabulary.wordsAmount)
+    func configureCell(vocabulary: Vocabulary) {
+        self.vocabulary = vocabulary
         
-        updateWordsAmount(vocabulary: vocabulary, userRef: userRef)
+        setupWordsAmount()
         
         containerView.layer.cornerRadius = 8
         containerView.layer.borderWidth = 0

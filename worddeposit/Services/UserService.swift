@@ -28,6 +28,16 @@ final class UserService {
     
     // MARK: - Methods - AUTH
     
+    func logout(complition: @escaping () -> Void) {
+        do {
+            try auth.signOut()
+            complition()
+        } catch let error as NSError {
+            debugPrint(error.localizedDescription)
+            return
+        }
+    }
+    
     // MARK: - Methods - GET
     
     func fetchCurrentUser(complition: @escaping (User) -> Void) {
@@ -65,6 +75,32 @@ final class UserService {
                     self.vocabularies.append(vocabulary)
                 }
                 complition(self.vocabularies)
+            }
+        }
+    }
+    
+    func getAmountOfWordsFrom(vocabulary: Vocabulary, complition: @escaping (Int) -> Void) {
+        let ref = vocabulariesRef.document(vocabulary.id)
+        let wordsRef = ref.collection("words")
+        wordsRef.getDocuments { (snapshot, error) in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            } else {
+                guard let snap = snapshot else { return }
+                
+                // update vocabulary words amount
+                if vocabulary.wordsAmount != snap.count {
+                    ref.updateData(["words_amount": snap.count]) { error in
+                        if let error = error {
+                            debugPrint(error.localizedDescription)
+                            return
+                        }
+                        complition(snap.count)
+                    }
+                } else {
+                    complition(snap.count)
+                }
             }
         }
     }
@@ -119,7 +155,15 @@ final class UserService {
     
     // MARK: - Methods - UPDATE
     
-    func updateVocabulary(_ vocabulary: Vocabulary, complition: @escaping () -> Void) {
+    func updateVocabularies(_ vocabularies: [Vocabulary], complition: @escaping () -> Void) {
+        vocabularies.forEach { vocabulary in
+            self.updateVocabulary(vocabulary) { index in
+                self.vocabularies[index] = vocabulary
+            }
+        }
+    }
+    
+    func updateVocabulary(_ vocabulary: Vocabulary, complition: @escaping (Int) -> Void) {
         // what if vocabulariesRef is nil?
         // what if we can pass an array with what we want update particularly?
         let ref: DocumentReference = vocabulariesRef.document(vocabulary.id)
@@ -129,10 +173,11 @@ final class UserService {
                 debugPrint(error.localizedDescription)
                 return
             }
+            // probably we can get this index from the didSelectRow
             if let index: Int = self.vocabularies.firstIndex(matching: vocabulary) {
                 if !self.vocabularies[index].isSelected {
                     self.vocabularies[index] = vocabulary
-                    complition()
+                    complition(index)
                 }
             }
         }
