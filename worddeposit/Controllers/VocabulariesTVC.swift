@@ -3,6 +3,10 @@ import FirebaseAuth
 import FirebaseFirestore
 import FirebaseStorage
 
+protocol VocabulariesTVCDelegation: AnyObject {
+    func selectedVocabularyDidChange()
+}
+
 class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
 
     // MARK: - Instances
@@ -29,6 +33,8 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     
     var messageView = MessageView()
     var progressHUD = ProgressHUD()
+    
+    weak var delegate: VocabulariesTVCDelegation?
     
     // MARK: - Lifecycle
     
@@ -139,7 +145,8 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
             // update vocabularies
             UserService.shared.updateVocabularies([vocabularies[oldIndex], vocabularies[newSelectedVocabularyIndex]]) {
                 print(self.vocabularies)
-                
+                // delegation
+                self.delegate?.selectedVocabularyDidChange()
             }
         } else {
             sender.isOn = true

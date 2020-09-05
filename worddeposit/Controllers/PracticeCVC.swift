@@ -23,13 +23,12 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
 
         trainers = PracticeTrainers().data
         registerViews()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setupUI()
         
         let userService = UserService.shared
+        
+        let vc = VocabulariesTVC()
+        vc.delegate = self
+        
         
         userService.fetchCurrentUser { user in
             userService.fetchVocabularies { vocabularies in
@@ -56,6 +55,11 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                 }
             }
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupUI()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -99,8 +103,6 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         view.backgroundColor = UIColor.systemBackground
     }
     
-    // MARK: - Listeners Methods
-    
     private func presentVocabulariesVC() {
         let storyboard = UIStoryboard(name: "Home", bundle: Bundle.main)
         let vc = storyboard.instantiateViewController(withIdentifier: "Vocabularies")
@@ -110,6 +112,13 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         }
         self.present(vc, animated: true)
     }
+    
+    // MARK: -
+    
+    @IBAction func vocabulariesBarButtonPressed(_ sender: Any) {
+        print("vocabularies tapped")
+    }
+    
     
     // MARK: - Make Word Desk
     
@@ -220,5 +229,11 @@ extension PracticeCVC: PracticeReadVCDelegate {
             }
         }
         */
+    }
+}
+
+extension PracticeCVC: VocabulariesTVCDelegation {
+    func selectedVocabularyDidChange() {
+        print("selectedVocabularyDidChange")
     }
 }
