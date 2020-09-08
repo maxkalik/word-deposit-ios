@@ -205,7 +205,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
             UserService.shared.updateVocabulary(vocabulary) { index in
                 self.progressHUD.hide()
                 self.navigationController?.popViewController(animated: true)
-                self.delegate?.vocabularyDidUpdate(vocabulary,  index: index)
+                self.delegate?.vocabularyDidUpdate(vocabulary, index: index)
             }
         }
     }

@@ -25,29 +25,13 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         registerViews()
         
         let userService = UserService.shared
-        
         userService.fetchCurrentUser { user in
             userService.fetchVocabularies { vocabularies in
                 if vocabularies.isEmpty {
                     self.presentVocabulariesVC()
                 } else {
                     userService.getCurrentVocabulary()
-                    userService.fetchWords { words in
-                        self.words.removeAll()
-                        self.progressHUD.hide()
-                        
-                        DispatchQueue.main.async {
-                            if words.count < minWordsAmount {
-                                self.setupMessage(wordsCount: words.count)
-                                self.messageView.show()
-                            } else {
-                                self.messageView.hide()
-                            }
-                        }
-                        self.words = words
-                        self.collectionView.reloadData()
-                        self.collectionView.isHidden = false
-                    }
+                    self.setupWords()
                 }
             }
         }
@@ -66,6 +50,26 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         collectionView.reloadData()
+    }
+    
+    // MARK: - User Service Methods
+    
+    func setupWords() {
+        UserService.shared.fetchWords { words in
+            self.words.removeAll()
+            self.progressHUD.hide()
+            
+            if words.count < minWordsAmount {
+                self.setupMessage(wordsCount: words.count)
+                self.messageView.show()
+            } else {
+                self.messageView.hide()
+            }
+            
+            self.words = words
+            self.collectionView.reloadData()
+            self.collectionView.isHidden = false
+        }
     }
     
     // MARK: - Setup Views
@@ -236,6 +240,8 @@ extension PracticeCVC: PracticeReadVCDelegate {
 
 extension PracticeCVC: VocabulariesTVCDelegation {
     func selectedVocabularyDidChange() {
-        print("selectedVocabularyDidChange")
+        print("---- selected vocabulary did change")
+        setupWords()
+        // collectionView.reloadData()
     }
 }

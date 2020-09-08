@@ -144,10 +144,10 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
             
             // update vocabularies
             UserService.shared.updateVocabularies([vocabularies[oldIndex], vocabularies[newSelectedVocabularyIndex]]) {
-                print(self.vocabularies)
                 // delegation
+                UserService.shared.getCurrentVocabulary()
+                self.delegate?.selectedVocabularyDidChange()
             }
-            self.delegate?.selectedVocabularyDidChange()
         } else {
             sender.isOn = true
         }

@@ -106,6 +106,7 @@ final class UserService {
     }
     
     func getCurrentVocabulary() {
+        // here should be checking if array is not empty then check if any vocabulary is Selected if not turn on and update
         let index = self.vocabularies.firstIndex { vocabulary -> Bool in
             return vocabulary.isSelected
         }
@@ -156,14 +157,24 @@ final class UserService {
     // MARK: - Methods - UPDATE
     
     func updateVocabularies(_ vocabularies: [Vocabulary], complition: @escaping () -> Void) {
-        vocabularies.forEach { vocabulary in
-            self.updateVocabulary(vocabulary) { index in
-                self.vocabularies[index] = vocabulary
+        let batch = db.batch()
+        
+        // let lhVocabularyRef = db.collection("users").document(user.id).collection("vocabularies")
+        let lhVocabularyRef = vocabulariesRef.document(vocabularies[0].id)
+        batch.updateData(["is_selected" : false], forDocument: lhVocabularyRef)
+        let rhVocabularyRef = vocabulariesRef.document(vocabularies[1].id)
+        batch.updateData(["is_selected" : true], forDocument: rhVocabularyRef)
+        batch.commit() { error in
+            if let error = error {
+                debugPrint(error.localizedDescription)
+                return
+            } else {
+                complition()
             }
         }
     }
     
-    func updateVocabulary(_ vocabulary: Vocabulary, complition: @escaping (Int) -> Void) {
+    func updateVocabulary(_ vocabulary: Vocabulary, complition: ((Int) -> Void)? = nil) {
         // what if vocabulariesRef is nil?
         // what if we can pass an array with what we want update particularly?
         let ref: DocumentReference = vocabulariesRef.document(vocabulary.id)
@@ -177,7 +188,7 @@ final class UserService {
             if let index: Int = self.vocabularies.firstIndex(matching: vocabulary) {
                 if !self.vocabularies[index].isSelected {
                     self.vocabularies[index] = vocabulary
-                    complition(index)
+                    complition?(index)
                 }
             }
         }
