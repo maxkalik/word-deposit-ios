@@ -37,7 +37,7 @@
                         <barButtonItem key="leftBarButtonItem" image="tray.2.fill" catalog="system" id="Bmx-e7-52X">
                             <connections>
                                 <action selector="vocabulariesBarButtonPressed:" destination="cyQ-JK-l0X" id="bkS-g5-n7P"/>
-                                <segue destination="12l-q6-uD8" kind="show" id="khA-EK-dTJ"/>
+                                <segue destination="12l-q6-uD8" kind="show" identifier="Vocabularies" id="khA-EK-dTJ"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="rectangle.stack.person.crop.fill" catalog="system" id="Y9D-hn-rYG">

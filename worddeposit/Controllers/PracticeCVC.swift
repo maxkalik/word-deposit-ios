@@ -26,10 +26,6 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         
         let userService = UserService.shared
         
-        let vc = VocabulariesTVC()
-        vc.delegate = self
-        
-        
         userService.fetchCurrentUser { user in
             userService.fetchVocabularies { vocabularies in
                 if vocabularies.isEmpty {
@@ -168,6 +164,12 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Segues.Vocabularies {
+            if let vc = segue.destination as? UINavigationController {
+                let tvc = vc.viewControllers.first as! VocabulariesTVC
+                tvc.delegate = self
+            }
+        }
         if segue.identifier == Segues.PracticeRead {
             self.practiceReadVC = segue.destination as? PracticeReadVC
             if let sender = (sender as? PracticeTrainer) {
