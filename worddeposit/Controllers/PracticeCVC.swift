@@ -59,6 +59,8 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
             self.words.removeAll()
             self.progressHUD.hide()
             
+            print(words.count)
+            
             if words.count < minWordsAmount {
                 self.setupMessage(wordsCount: words.count)
                 self.messageView.show()
@@ -241,6 +243,7 @@ extension PracticeCVC: PracticeReadVCDelegate {
 extension PracticeCVC: VocabulariesTVCDelegation {
     func selectedVocabularyDidChange() {
         print("---- selected vocabulary did change")
+        // UserService.shared.getCurrentVocabulary()
         setupWords()
         // collectionView.reloadData()
     }

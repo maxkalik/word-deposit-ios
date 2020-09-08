@@ -113,6 +113,7 @@ final class UserService {
         guard let i = index else { return }
         self.currentVocabulary = self.vocabularies[i]
         self.vocabularyRef = self.vocabulariesRef.document(self.vocabularies[i].id)
+        print("Get Current Vocabulary Method")
     }
     
     func fetchWords(vocabularyId: String? = nil, complition: @escaping ([Word]) -> Void) {
@@ -159,6 +160,8 @@ final class UserService {
     func updateVocabularies(_ vocabularies: [Vocabulary], complition: @escaping () -> Void) {
         let batch = db.batch()
         
+        // TODO: - should be rewrite
+        
         // let lhVocabularyRef = db.collection("users").document(user.id).collection("vocabularies")
         let lhVocabularyRef = vocabulariesRef.document(vocabularies[0].id)
         batch.updateData(["is_selected" : false], forDocument: lhVocabularyRef)
@@ -169,6 +172,7 @@ final class UserService {
                 debugPrint(error.localizedDescription)
                 return
             } else {
+                self.updateLocalVocabularies(vocabularies)
                 complition()
             }
         }
@@ -190,6 +194,14 @@ final class UserService {
                     self.vocabularies[index] = vocabulary
                     complition?(index)
                 }
+            }
+        }
+    }
+    
+    private func updateLocalVocabularies(_ vocabularies: [Vocabulary]) {
+        for index in 0..<vocabularies.count {
+            if self.vocabularies[index].id != vocabularies[index].id {
+                self.vocabularies[index] = vocabularies[index]
             }
         }
     }
