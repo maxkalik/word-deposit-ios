@@ -157,6 +157,8 @@ final class UserService {
     
     // MARK: - Methods - UPDATE
     
+    // Updating Vocabularies
+    
     func switchSelectedVocabulary(from: Vocabulary, to: Vocabulary, complition: @escaping () -> Void) {
         let batch = db.batch()
         
@@ -174,7 +176,7 @@ final class UserService {
                 debugPrint(error.localizedDescription)
                 return
             } else {
-                self.updateLocalVocabularies([from, to])
+                self.updateLocal(vocabularies: [from, to])
                 complition()
             }
         }
@@ -200,13 +202,80 @@ final class UserService {
         }
     }
     
-    private func updateLocalVocabularies(_ updatedVocabularies: [Vocabulary]) {
+    func updateVocabularies(_ vocabularies: [Vocabulary], complition: @escaping () -> Void) {
+        let batch = db.batch()
+        // var updatedVocabularyRef: DocumentReference
+        vocabularies.forEach { vocabulary in
+            let ref = vocabulariesRef.document(vocabulary.id)
+            let data = Vocabulary.modelToData(vocabulary: vocabulary)
+            batch.updateData(data, forDocument: ref)
+        }
+        batch.commit() { error in
+            if let error = error {
+                debugPrint(error.localizedDescription)
+                return
+            } else {
+                self.updateLocal(vocabularies: vocabularies)
+                complition()
+            }
+        }
+    }
+    
+    private func updateLocal(vocabularies: [Vocabulary]) {
         // TODO: - try to find algorithm to check difference and update array of vocabularies
-        updatedVocabularies.forEach { updatedVocabulary in
+        vocabularies.forEach { updatedVocabulary in
             for i in 0..<self.vocabularies.count {
                 if self.vocabularies[i].id == updatedVocabulary.id {
                     self.vocabularies[i] = updatedVocabulary
                 }
+            }
+        }
+    }
+    
+    private func updateLocal(words: [Word]) {
+        words.forEach { updatedWord in
+            for i in 0..<self.words.count {
+                if self.words[i].id == updatedWord.id {
+                    self.words[i] = updatedWord
+                }
+            }
+        }
+    }
+    
+    // Updating Words
+    
+    func updateWords(_ words: [Word], complition: @escaping () -> Void) {
+        let batch = db.batch()
+        words.forEach { word in
+            let ref = wordsRef.document(word.id)
+            let data = Word.modelToData(word: word)
+            batch.updateData(data, forDocument: ref)
+        }
+        batch.commit() { error in
+            if let error = error {
+                debugPrint(error.localizedDescription)
+                return
+            } else {
+                self.updateLocal(words: words)
+                complition()
+            }
+        }
+    }
+    
+    
+    
+    func updateWord(_ word: Word, complition: ((Int) -> Void)? = nil) {
+        let ref = wordsRef.document(word.id)
+        let data = Word.modelToData(word: word)
+        ref.updateData(data) { error in
+            if let error = error {
+                debugPrint(error.localizedDescription)
+                return
+            }
+            
+            if let index: Int = self.words.firstIndex(matching: word) {
+                self.words[index] = word
+                complition?(index)
             }
         }
     }

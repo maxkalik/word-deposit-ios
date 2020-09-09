@@ -23,6 +23,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
 
         trainers = PracticeTrainers().data
         registerViews()
+        setupUI()
         
         let userService = UserService.shared
         userService.fetchCurrentUser { user in
@@ -39,7 +40,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupUI()
+        // setupUI()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -225,6 +226,9 @@ extension PracticeCVC: PracticeReadVCDelegate {
     }
     
     func onFinishTrainer(with words: [Word]) {
+        UserService.shared.updateWords(words) {
+            print(UserService.shared.words)
+        }
         /*
         for word in words {
             wordsRef.document(word.id).updateData(["right_answers" : word.rightAnswers, "wrong_answers" : word.wrongAnswers]) { error in
