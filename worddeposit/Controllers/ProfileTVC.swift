@@ -9,12 +9,10 @@ class ProfileTVC: UITableViewController {
     
     @IBOutlet weak var userFullName: UILabel!
     @IBOutlet weak var userEmail: UILabel!
-    @IBOutlet weak var wordsAmount: UILabel!
     @IBOutlet weak var nativeLanguage: UILabel!
     @IBOutlet weak var notificationsSwitch: UISwitch!
-    @IBOutlet weak var answersPrecentage: UILabel!
-    @IBOutlet weak var answersPrecentageLoading: UIActivityIndicatorView!
-    @IBOutlet weak var wordsAmountLoading: UIActivityIndicatorView!
+    @IBOutlet weak var wordsAmountLabel: UILabel!
+    @IBOutlet weak var correctAnswersLabel: UILabel!
     
     // MARK: - Instances
     
@@ -22,7 +20,7 @@ class ProfileTVC: UITableViewController {
         didSet {
             guard let user = user else { return }
             
-            if user.firstName != "", user.lastName != "" {
+            if user.firstName.isNotEmpty, user.lastName.isNotEmpty {
                 userFullName.text = "\(user.firstName) \(user.lastName)"
             }
             userEmail.text = user.email
@@ -33,10 +31,7 @@ class ProfileTVC: UITableViewController {
             }
         }
     }
-    var auth: Auth!
-    var db: Firestore!
-    var profileRef: DocumentReference!
-    var handle: AuthStateDidChangeListenerHandle?
+
     var languages: [String] = []
     var words = [Word]()
     
@@ -44,43 +39,20 @@ class ProfileTVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        user = User()
-        auth = Auth.auth()
-        db = Firestore.firestore()
-        getAllLanguages()
-        getDefaults()
         
+        user = UserService.shared.user
+        words = UserService.shared.words
+        
+        getAllLanguages()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        getCurrentUser()
         
-        wordsAmount.isHidden = true
-        answersPrecentage.isHidden = true
-        
-        wordsAmountLoading.startAnimating()
-        answersPrecentageLoading.startAnimating()
-        
-        print(UserService.shared.user)
-        
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        auth.removeStateDidChangeListener(handle!)
+        setupStatistics()
     }
     
     // MARK: - Methods
-    
-    private func getDefaults() {
-        let defaults = UserDefaults.standard
-        // print(defaults.string(forKey: "native_language"))
-        guard let defaultNativeLanguage = defaults.string(forKey: "native_language") else { return }
-        let defaultNotifications = defaults.bool(forKey: "notifications")
-        user.nativeLanguage = defaultNativeLanguage
-        user.notifications = defaultNotifications
-    }
     
     private func getAllLanguages() {
         for code in NSLocale.isoLanguageCodes  {
@@ -93,87 +65,26 @@ class ProfileTVC: UITableViewController {
         languages.sort()
     }
     
-    private func getCurrentUser() {
-        handle = auth.addStateDidChangeListener { (auth, user) in
-            guard let currentUser = auth.currentUser else { return }
-            let userRef = self.db.collection("users").document(currentUser.uid)
-            userRef.getDocument { (document, error) in
-                if let error = error {
-                    debugPrint(error.localizedDescription)
-                    return
-                }
-                if let document = document, document.exists {
-                    guard let data = document.data() else { return }
-                    self.user = User.init(data: data)
-                    self.fetchWords(from: userRef)
-                } else {
-                    print("Document does not exist")
-                }
-            }
-        }
-    }
-    
-    private func fetchWords(from: DocumentReference) {
-        
-        let defaults = UserDefaults.standard
-        guard let selectedVocabularyId = defaults.string(forKey: "vocabulary_id") else { return }
-        
-        let wordsRef = from.collection("vocabularies").document(selectedVocabularyId).collection("words")
-        
-        wordsRef.getDocuments { (snapshot, error) in
-            if let error = error {
-                debugPrint(error.localizedDescription)
-                return
+    private func setupStatistics() {
+        if words.isEmpty {
+            self.wordsAmountLabel.text = "0"
+            self.correctAnswersLabel.text = "0%"
+        } else {
+            self.wordsAmountLabel.text = String(words.count)
+            
+            var rightAnswers = 0;
+            var wrongAnswers = 0;
+            
+            for word in words {
+                rightAnswers += word.rightAnswers
+                wrongAnswers += word.wrongAnswers
+                self.words.append(word)
             }
             
-            self.wordsAmountLoading.stopAnimating()
-            self.answersPrecentageLoading.stopAnimating()
+            let answersSum = rightAnswers + wrongAnswers
+            let precentageOfCorrectAnswers = (rightAnswers * 100) / answersSum
             
-            guard let documents = snapshot?.documents else { return }
-            
-            if documents.isEmpty {
-                self.wordsAmount.isHidden = false
-                self.answersPrecentage.isHidden = false
-                self.wordsAmount.text = "0"
-                self.answersPrecentage.text = "0%"
-                
-            } else {
-                self.wordsAmount.text = String(documents.count)
-                self.wordsAmount.isHidden = false
-                
-                var rightAnswers = 0;
-                var wrongAnswers = 0;
-                
-                for document in documents {
-                    let data = document.data()
-                    let word = Word.init(data: data)
-                    rightAnswers += word.rightAnswers
-                    wrongAnswers += word.wrongAnswers
-                    self.words.append(word)
-                }
-                
-                let answersSum = rightAnswers + wrongAnswers
-                let precentageOfCorrectAnswers = (rightAnswers * 100) / answersSum
-                
-                self.answersPrecentage.text = "\(precentageOfCorrectAnswers)%"
-                self.answersPrecentage.isHidden = false
-            }   
-        }
-    }
-    
-    private func updateProfile(user: User) {
-        profileRef = db.collection("users").document(user.id)
-        
-        let data = User.modelToData(user: user)
-        profileRef.updateData(data) { error in
-            if let error = error {
-                debugPrint(error)
-            } else {
-                print("success")
-                let defaults = UserDefaults.standard
-                defaults.set(self.user.nativeLanguage, forKey: "native_language")
-                defaults.set(self.user.notifications, forKey: "notifications")
-            }
+            self.correctAnswersLabel.text = "\(precentageOfCorrectAnswers)%"
         }
     }
     
@@ -213,19 +124,14 @@ class ProfileTVC: UITableViewController {
     // MARK: - IBActions
     
     @IBAction func logOut(_ sender: UIButton) {
-       do {
-            try auth.signOut()
-            // clear all listeners and ui
-            showLoginVC()
-        } catch let error as NSError {
-            simpleAlert(title: "Error", msg: error.localizedDescription)
-            debugPrint(error.localizedDescription)
+        UserService.shared.logout {
+            self.showLoginVC()
         }
     }
     
     @IBAction func notificationSwitched(_ sender: UISwitch) {
         user.notifications = sender.isOn
-        updateProfile(user: user)
+        UserService.shared.updateUser(user)
     }
     
     // MARK: - Segue
@@ -244,7 +150,6 @@ class ProfileTVC: UITableViewController {
             tvc.segueId = segue.identifier
             switch segue.identifier {
             case Segues.NativeLanguage:
-                
                 
                 let currentLanguageCode = NSLocale.current.languageCode ?? "en"
                 let defaultLanguage = NSLocale(localeIdentifier: currentLanguageCode).displayName(forKey: NSLocale.Key.identifier, value: currentLanguageCode) ?? "English"
@@ -269,7 +174,6 @@ class ProfileTVC: UITableViewController {
         }
         
         if let webvc = segue.destination as? WKWebVC {
-//            webvc.modalPresentationStyle = .overFullScreen
             switch segue.identifier {
             case Segues.PrivacyAndSecurity:
                 webvc.link = "https://www.worddeposit.com/privacy-policy"
@@ -290,17 +194,16 @@ extension ProfileTVC: UserInfoTVCDelegate {
     func updateUserInfo(firstName: String, lastName: String) {
         user.firstName = firstName
         user.lastName = lastName
-        updateProfile(user: user)
+        UserService.shared.updateUser(user)
     }
 }
 
 extension ProfileTVC: ProfileTVCCheckmarkDelegate {
     func getCheckmared(checkmarked: Int, segueId: String) {
-        print(languages[checkmarked], segueId)
         switch segueId {
         case Segues.NativeLanguage:
             user.nativeLanguage = languages[checkmarked]
-            updateProfile(user: user)
+            UserService.shared.updateUser(user)
         default:
             break
         }

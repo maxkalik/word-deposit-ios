@@ -157,6 +157,20 @@ final class UserService {
     
     // MARK: - Methods - UPDATE
     
+    // Updating Profile
+    
+    func updateUser(_ user: User, complition: (() -> Void)? = nil) {
+        let data = User.modelToData(user: user)
+        userRef.updateData(data) { error in
+            if let error = error {
+                debugPrint(error.localizedDescription)
+                return
+            }
+            self.user = user
+            complition?()
+        }
+    }
+    
     // Updating Vocabularies
     
     func switchSelectedVocabulary(from: Vocabulary, to: Vocabulary, complition: @escaping () -> Void) {

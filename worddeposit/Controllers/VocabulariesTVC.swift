@@ -82,8 +82,6 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         tableView.reloadRows(at: [IndexPath(item: index, section: 0)], with: .fade)
     }
     
-    
-    
     func setupMessage() {
         messageView.setTitles(
             messageTxt: "You have no any vocabularies yet.\nPlease add them.",
