@@ -143,7 +143,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
             tableView.reloadRows(at: [IndexPath(item: oldIndex, section: 0), IndexPath(item: newSelectedVocabularyIndex, section: 0)], with: .fade)
             
             // update vocabularies
-            UserService.shared.updateVocabularies([vocabularies[oldIndex], vocabularies[newSelectedVocabularyIndex]]) {
+            UserService.shared.switchSelectedVocabulary(from: vocabularies[oldIndex], to: vocabularies[newSelectedVocabularyIndex]) {
                 // delegation
                 UserService.shared.getCurrentVocabulary()
                 self.delegate?.selectedVocabularyDidChange()

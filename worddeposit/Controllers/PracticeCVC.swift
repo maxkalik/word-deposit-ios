@@ -242,9 +242,6 @@ extension PracticeCVC: PracticeReadVCDelegate {
 
 extension PracticeCVC: VocabulariesTVCDelegation {
     func selectedVocabularyDidChange() {
-        print("---- selected vocabulary did change")
-        // UserService.shared.getCurrentVocabulary()
         setupWords()
-        // collectionView.reloadData()
     }
 }

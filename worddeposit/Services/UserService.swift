@@ -113,12 +113,12 @@ final class UserService {
         guard let i = index else { return }
         self.currentVocabulary = self.vocabularies[i]
         self.vocabularyRef = self.vocabulariesRef.document(self.vocabularies[i].id)
-        print("Get Current Vocabulary Method")
+        print("Get Current Vocabulary Method ---->", self.vocabularies[i])
     }
     
     func fetchWords(vocabularyId: String? = nil, complition: @escaping ([Word]) -> Void) {
         self.wordsRef = vocabularyRef.collection("words")
-        if vocabularyId != nil || ((self.currentVocabulary?.id.isNotEmpty) != nil) {
+        if self.currentVocabulary != nil {
             self.wordsRef.getDocuments { (snapshot, error) in
                 if let error = error {
                     debugPrint(error.localizedDescription)
@@ -157,22 +157,24 @@ final class UserService {
     
     // MARK: - Methods - UPDATE
     
-    func updateVocabularies(_ vocabularies: [Vocabulary], complition: @escaping () -> Void) {
+    func switchSelectedVocabulary(from: Vocabulary, to: Vocabulary, complition: @escaping () -> Void) {
         let batch = db.batch()
         
         // TODO: - should be rewrite
         
         // let lhVocabularyRef = db.collection("users").document(user.id).collection("vocabularies")
-        let lhVocabularyRef = vocabulariesRef.document(vocabularies[0].id)
+        // update left hand vocabulary
+        let lhVocabularyRef = vocabulariesRef.document(from.id)
         batch.updateData(["is_selected" : false], forDocument: lhVocabularyRef)
-        let rhVocabularyRef = vocabulariesRef.document(vocabularies[1].id)
+        // update right hand vocabulary
+        let rhVocabularyRef = vocabulariesRef.document(to.id)
         batch.updateData(["is_selected" : true], forDocument: rhVocabularyRef)
         batch.commit() { error in
             if let error = error {
                 debugPrint(error.localizedDescription)
                 return
             } else {
-                self.updateLocalVocabularies(vocabularies)
+                self.updateLocalVocabularies([from, to])
                 complition()
             }
         }
@@ -198,10 +200,13 @@ final class UserService {
         }
     }
     
-    private func updateLocalVocabularies(_ vocabularies: [Vocabulary]) {
-        for index in 0..<vocabularies.count {
-            if self.vocabularies[index].id != vocabularies[index].id {
-                self.vocabularies[index] = vocabularies[index]
+    private func updateLocalVocabularies(_ updatedVocabularies: [Vocabulary]) {
+        // TODO: - try to find algorithm to check difference and update array of vocabularies
+        updatedVocabularies.forEach { updatedVocabulary in
+            for i in 0..<self.vocabularies.count {
+                if self.vocabularies[i].id == updatedVocabulary.id {
+                    self.vocabularies[i] = updatedVocabulary
+                }
             }
         }
     }
