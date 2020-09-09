@@ -1,8 +1,4 @@
 import UIKit
-import Firebase
-import FirebaseAuth
-import FirebaseStorage
-import FirebaseFirestore
 import Kingfisher
 import YPImagePicker
 
@@ -29,13 +25,9 @@ class VocabularyCardCVCell: UICollectionViewCell {
     
     // MARK: - Variables
 
-    var vocabularyId: String!
+    var user: User = UserService.shared.user
+    var vocabulary: Vocabulary!
     var word: Word!
-    var wordRef: DocumentReference!
-    var auth = Auth.auth()
-    var db = Firestore.firestore()
-    var storage = Storage.storage()
-    lazy var currentUser = auth.currentUser
     private var isKeyboardShowing = false
     
     weak var delegate: VocabularyCardCVCellDelegate?
@@ -55,6 +47,9 @@ class VocabularyCardCVCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        guard let vocabulary = UserService.shared.currentVocabulary else { return }
+        self.vocabulary = vocabulary
         
         hideAllButtons()
         disableAllButtons()
@@ -134,7 +129,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
     }
     
     func configureCell(vocabularyId: String, word: Word, delegate: VocabularyCardCVCellDelegate) {
-        self.vocabularyId = vocabularyId
+        self.vocabulary.id = vocabularyId
         self.word = word
         self.delegate = delegate
         setupWord(word)
@@ -183,101 +178,39 @@ class VocabularyCardCVCell: UICollectionViewCell {
     
     @IBAction func removePictureTouched(_ sender: UIButton) {
         pictureLoader.startAnimating()
+        self.word.imgUrl = ""
         removePicture()
     }
     
     // MARK: - Uploading Methods
     
-    func prepareForUpload() {
-
-        // TODO: shoud be rewrited in the singleton
-        guard let user = currentUser, let vocabularyId = self.vocabularyId else { return }
-        let vocabularyRef: DocumentReference = db.collection("users").document(user.uid).collection("vocabularies").document(vocabularyId)
-        wordRef = vocabularyRef.collection("words").document(word.id)
-
-    }
-    
-    func removePicture(forUpdating: Bool? = nil) {
-        guard let user = currentUser, let vocabularyId = self.vocabularyId else {
-            pictureLoader.stopAnimating()
-            return
-        }
-        let imgRef = "/\(user.uid)/\(vocabularyId)/"
-        
-        storage.reference().child("\(imgRef)\(word.id).jpg").delete { (error) in
-            if let error = error {
-                self.delegate?.showAlert(title: "Error", message: error.localizedDescription)
+    private func removePicture() {
+        UserService.shared.removeWordImageFrom(vocabularyId: vocabulary.id, wordId: word.id) {
+            UserService.shared.updateWordImageUrl(self.word) {
                 self.pictureLoader.stopAnimating()
-                debugPrint(error.localizedDescription)
-                return
-            } else {
-                if forUpdating == nil {
-                    self.updatePictureUrl()
-                }
+                self.wordPictureButton.setImage(UIImage(named: Placeholders.Logo), for: .normal)
             }
-        }
-    }
-    
-    func updatePictureUrl(_ imgUrl: String? = nil) {
-        self.prepareForUpload()
-        
-        self.wordRef.updateData(["img_url" : imgUrl ?? ""]) { error in
-            if let error = error {
-                self.delegate?.showAlert(title: "Error", message: error.localizedDescription)
-            } else {
-                if imgUrl == nil {
-                    self.wordPictureButton.setImage(UIImage(named: Placeholders.Logo), for: .normal)
-                    self.word.imgUrl = ""
-                } else {
-                    guard let url = imgUrl else { return }
-                    self.word.imgUrl = url
-                }
-                self.delegate?.showAlert(title: "Success", message: "Pitcure has been updated")
-            }
-            self.pictureLoader.stopAnimating()
         }
     }
     
     func uploadImage() {
         pictureLoader.startAnimating()
-        guard let user = currentUser, let image = wordPictureButton.imageView?.image, let vocabularyId = self.vocabularyId else {
+        guard let image = wordPictureButton.imageView?.image else {
             self.delegate?.showAlert(title: "Error", message: "Cannot upload your picture, Something went wrong")
             pictureLoader.stopAnimating()
             return
         }
         
-        let imgRef = "/\(user.uid)/\(vocabularyId)/"
-        
         // remove previous image before uploading is an object have it
         if word.imgUrl.isNotEmpty {
-            removePicture(forUpdating: true)
+            removePicture()
         }
         
         let resizedImg = image.resized(toWidth: 400.0)
-        guard let imageData = resizedImg?.jpegData(compressionQuality: 0.5) else { return }
+        guard let data = resizedImg?.jpegData(compressionQuality: 0.5) else { return }
         
-        let imageRef = Storage.storage().reference().child("/\(imgRef)/\(word.id).jpg")
-        let metadata = StorageMetadata()
-        metadata.contentType = "image/jpg"
-        
-        imageRef.putData(imageData, metadata: metadata) { (storageMetadata, error) in
-            if let error = error {
-                self.delegate?.showAlert(title: "Error", message: "Unable to upload image")
-                self.pictureLoader.stopAnimating()
-                debugPrint(error.localizedDescription)
-                return
-            }
-            
-            imageRef.downloadURL { (url, error) in
-                if let error = error {
-                    self.delegate?.showAlert(title: "Error", message: "Unable to upload image")
-                    self.pictureLoader.stopAnimating()
-                    debugPrint(error.localizedDescription)
-                    return
-                }
-                guard let url = url else { return }
-                self.updatePictureUrl(url.absoluteString)
-            }
+        UserService.shared.setWordImage(data: data, id: word.id) { url in
+            self.word.imgUrl = url.absoluteString
         }
     }
     
@@ -300,21 +233,14 @@ class VocabularyCardCVCell: UICollectionViewCell {
             updatedWord.description = description
         }
         
-        let data = Word.modelToData(word: updatedWord)
-
-        self.prepareForUpload()
-        
-        wordRef.updateData(data) { error in
-            if let error = error {
-                self.delegate?.showAlert(title: "Error", message: error.localizedDescription)
-            } else {
-                self.word = updatedWord
-                self.hideAllButtons()
-                // self.dismissKeyboard()
-                self.endEditing(true)
-                self.delegate?.showAlert(title: "Success", message: "Word has been updated")
-            }
+        UserService.shared.updateWord(updatedWord) { index in
+            // TODO: - delegate to vocabulary table
+            print(index)
+            self.word = updatedWord
             self.wordLoader.stopAnimating()
+            self.hideAllButtons()
+            self.endEditing(true)
+            self.delegate?.showAlert(title: "Success", message: "Word has been updated")
         }
     }
 }
