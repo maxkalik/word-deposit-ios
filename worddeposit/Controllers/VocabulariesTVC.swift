@@ -10,7 +10,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     
     var vocabularies = [Vocabulary]()
     var selectedVocabularyIndex: Int? {
-        
+        // get first vocabulary is selected
         get {
             if vocabularies.count > 0 {
                 let index = vocabularies.firstIndex { vocabulary in
@@ -20,7 +20,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
             }
             return nil
         }
-        
+        // set only one vocabulary selected
         set {
             for index in vocabularies.indices {
                 vocabularies[index].isSelected = index == newValue
