@@ -226,21 +226,9 @@ extension PracticeCVC: PracticeReadVCDelegate {
     }
     
     func onFinishTrainer(with words: [Word]) {
-        UserService.shared.updateWords(words) {
-            print(UserService.shared.words)
+        UserService.shared.updateAnswersScore(words) {
+            self.words = UserService.shared.words
         }
-        /*
-        for word in words {
-            wordsRef.document(word.id).updateData(["right_answers" : word.rightAnswers, "wrong_answers" : word.wrongAnswers]) { error in
-                if let error = error {
-                    self.simpleAlert(title: "Error", msg: error.localizedDescription)
-                } else {
-                    let wordsForUpdate = self.words.map({ return $0.id == word.id ? word : $0 })
-                    self.words = wordsForUpdate
-                }
-            }
-        }
-        */
     }
 }
 

@@ -262,7 +262,22 @@ final class UserService {
         }
     }
     
-    
+    func updateAnswersScore(_ words: [Word], complition: @escaping () -> Void) {
+        let batch = db.batch()
+        words.forEach { word in
+            let ref = wordsRef.document(word.id)
+            batch.updateData(["right_answers" : word.rightAnswers, "wrong_answers" : word.wrongAnswers], forDocument: ref)
+        }
+        batch.commit() { error in
+            if let error = error {
+                debugPrint(error.localizedDescription)
+                return
+            } else {
+                self.updateLocal(words: words)
+                complition()
+            }
+        }
+    }
     
     func updateWord(_ word: Word, complition: ((Int) -> Void)? = nil) {
         let ref = wordsRef.document(word.id)
