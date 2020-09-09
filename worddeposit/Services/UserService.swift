@@ -145,13 +145,82 @@ final class UserService {
         vocabulary.id = ref.documentID
         
         let data = Vocabulary.modelToData(vocabulary: vocabulary)
-        ref.setData(data) { (error) in
+        ref.setData(data) { error in
             if let error = error {
                 debugPrint(error.localizedDescription)
                 return
             }
             self.vocabularies.append(vocabulary)
             complition(vocabulary.id)
+        }
+    }
+    
+    func setWord(
+        imageData: Data? = nil,
+        example: String,
+        translation: String,
+        description: String? = nil,
+        complition: @escaping () -> Void
+    ) {
+        let ref = wordsRef.document()
+        
+        var word: Word = Word.init(
+            imgUrl: "",
+            example: example,
+            translation: translation,
+            description: description ?? "",
+            id: ref.documentID,
+            rightAnswers: 0,
+            wrongAnswers: 0,
+            timestamp: Timestamp()
+        )
+        
+        if imageData != nil {
+            setWordImage(data: imageData, id: word.id) { url in
+                word.imgUrl = url.absoluteString
+                self.setWordData(word, to: ref) {
+                    complition()
+                }
+            }
+        } else {
+            setWordData(word, to: ref) {
+                complition()
+            }
+        }
+    }
+    
+    private func setWordData(_ word: Word, to ref: DocumentReference, complition: @escaping () -> Void) {
+        let data = Word.modelToData(word: word)
+        ref.setData(data) { error in
+            if let error = error {
+                debugPrint(error.localizedDescription)
+                return
+            }
+            self.words.append(word)
+            complition()
+        }
+    }
+    
+    private func setWordImage(data: Data?, id: String, complition: @escaping (URL) -> Void) {
+        guard let vocabulary = currentVocabulary, let data = data else { return }
+        let ref: StorageReference = Storage.storage().reference().child("/\(user.id)/\(vocabulary.id)/\(id).jpg")
+        let metadata: StorageMetadata = StorageMetadata()
+        metadata.contentType = "image/jpg"
+        
+        ref.putData(data, metadata: metadata) { (storageMetadata, error) in
+            if let error = error {
+                debugPrint(error.localizedDescription)
+                return
+            }
+            
+            ref.downloadURL { (url, error) in
+                if let error = error {
+                    debugPrint(error.localizedDescription)
+                    return
+                }
+                guard let url = url else { return }
+                complition(url)
+            }
         }
     }
     

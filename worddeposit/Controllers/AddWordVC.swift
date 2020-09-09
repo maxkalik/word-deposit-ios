@@ -1,7 +1,4 @@
 import UIKit
-import Firebase
-import FirebaseStorage
-import FirebaseFirestore
 import YPImagePicker
 
 class AddWordVC: UIViewController {
@@ -30,34 +27,18 @@ class AddWordVC: UIViewController {
     @IBOutlet weak var wordTranslationTextField: UITextField!
     @IBOutlet weak var wordDescriptionTextField: UITextField!
     
-    
     // MARK: - Instances
     
     var progressHUD = ProgressHUD(title: "Saving")
-    var db: Firestore!
-    var storage: Storage!
-    var wordRef: DocumentReference!
     private var isImageSet = false
     private var isKeyboardShowing = false
-    
-//    var vocabulary: Vocabulary!
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        db = Firestore.firestore()
-        storage = Storage.storage()
         setupUI()
         hideKeyboardWhenTappedAround()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // user defaults vocabulary id
-        let defaults = UserDefaults.standard
-        guard let selectedVocabularyId = defaults.string(forKey: "vocabulary_id") else { return }
-        print(selectedVocabularyId)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -83,27 +64,12 @@ class AddWordVC: UIViewController {
         
         if isKeyboardShowing { return }
         isKeyboardShowing = true
-
-        
         
         let topSafeArea: CGFloat = view.safeAreaInsets.top
             
         inputsView.frame.origin.y = topSafeArea + 20
         scrollView.isScrollEnabled = false
-        
-        
-        // if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            // let keyboardHeight: CGFloat = keyboardFrame.cgRectValue.height
-            // let bottomOffset = CGPoint(x: 0, y: keyboardHeight)
-            
-            // DispatchQueue.main.async {
-                // self.scrollView.contentSize.height -= keyboardHeight
-                // self.scrollView.frame.size.height -= keyboardHeight
-                // self.scrollView.frame.origin.y -= keyboardHeight
-                // self.scrollView.frame.origin.y = 0
-            // }
-        // }
-        
+
         UIView.animate(withDuration: 0.3) {
             self.wordImagePickerBtn.alpha = 0
         }
@@ -154,76 +120,31 @@ class AddWordVC: UIViewController {
         }
         guard let description = wordDescriptionTextField.text else { return }
         
-        // TODO: shoud be rewrited in the singleton
-        guard let user = Auth.auth().currentUser else { return }
-        
-        let defaults = UserDefaults.standard
-        guard let selectedVocabularyId = defaults.string(forKey: "vocabulary_id") else { return }
-        print(selectedVocabularyId)
-        
-        let vocabularyRef = db.collection("users").document(user.uid).collection("vocabularies").document(selectedVocabularyId)
-        self.wordRef = vocabularyRef.collection("words").document()
-        var word = Word.init(imgUrl: "", example: example, translation: translation, description: description, id: "", rightAnswers: 0, wrongAnswers: 0, timestamp: Timestamp())
-        word.id = self.wordRef.documentID
-        
         if self.isImageSet {
-            self.uploadImage(userId: user.uid, vocabularyId: selectedVocabularyId, word: word)
-        } else {
-            self.uploadWord(word: word)
-        }
-    }
-    
-    func uploadImage(userId: String, vocabularyId: String, word: Word) {
-        guard let image = wordImagePickerBtn.imageView?.image else {
-            simpleAlert(title: "Error", msg: "Fill all fields")
-            progressHUD.hide()
-            return
-        }
-        
-        var word = word // convert let to var
-        
-        let resizedImg = image.resized(toWidth: 400.0)
-        guard let imageData = resizedImg?.jpegData(compressionQuality: 0.5) else { return }
-        
-        let imageRef = Storage.storage().reference().child("/\(userId)/\(vocabularyId)/\(word.id).jpg")
-        let metadata = StorageMetadata()
-        metadata.contentType = "image/jpg"
-        
-        imageRef.putData(imageData, metadata: metadata) { (storageMetadata, error) in
-            if let error = error {
-                self.simpleAlert(title: "Error", msg: "Unable to upload image")
-                debugPrint(error.localizedDescription)
+            
+            guard let image = wordImagePickerBtn.imageView?.image else {
+                simpleAlert(title: "Error", msg: "Fill all fields")
+                progressHUD.hide()
                 return
+            }
+            let resizedImg = image.resized(toWidth: 400.0)
+            guard let imageData = resizedImg?.jpegData(compressionQuality: 0.5) else { return }
+            
+            UserService.shared.setWord(imageData: imageData, example: example, translation: translation, description: description) {
+                self.updateUI()
+                self.progressHUD.hide()
+                self.simpleAlert(title: "Success", msg: "Word has been added with image")
             }
             
-            imageRef.downloadURL { (url, error) in
-                if let error = error {
-                    self.simpleAlert(title: "Error", msg: "Unable to upload image")
-                    self.progressHUD.hide()
-                    debugPrint(error.localizedDescription)
-                    return
-                }
-                guard let url = url else { return }
-                word.imgUrl = url.absoluteString
-                self.uploadWord(word: word)
+        } else {
+            UserService.shared.setWord(example: example, translation: translation, description: description) {
+                self.updateUI()
+                self.progressHUD.hide()
+                self.simpleAlert(title: "Success", msg: "Word has been added")
             }
         }
     }
     
-    func uploadWord(word: Word) {
-        let data = Word.modelToData(word: word)
-        wordRef.setData(data, merge: true) { (error) in
-            if let error = error {
-                self.simpleAlert(title: "error", msg: error.localizedDescription)
-                self.progressHUD.hide()
-                return
-            }
-            // success message here
-            self.updateUI()
-            self.progressHUD.hide()
-            self.simpleAlert(title: "Success", msg: "Word has been added")
-        }
-    }
     
     func updateUI() {
         self.wordImagePickerBtn.setImage(UIImage(named: Placeholders.Logo), for: .normal)
