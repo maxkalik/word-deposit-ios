@@ -38,19 +38,9 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // setupUI()
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         messageView.frame.origin.y = collectionView.contentOffset.y
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        collectionView.reloadData()
     }
     
     // MARK: - User Service Methods
@@ -78,9 +68,15 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     // MARK: - Setup Views
     
     private func setupUI() {
+        
+        // setup loading view
         self.view.addSubview(progressHUD)
         progressHUD.show()
+        
+        // setup collection view
         setupCollectionView()
+        
+        // setup message view
         collectionView.addSubview(messageView)
         messageView.hide()
         setupMessage(wordsCount: words.count)
@@ -120,26 +116,6 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     
     @IBAction func vocabulariesBarButtonPressed(_ sender: Any) {
         print("vocabularies tapped")
-    }
-    
-    
-    // MARK: - Make Word Desk
-    
-    func makeWordDesk(size: Int, wordsData: [Word], _ result: [Word] = []) -> [Word] {
-        var result = result
-        if wordsData.count < 5 {
-            return result
-        }
-        var tmpCount = size
-        if tmpCount <= 0 {
-            return result.shuffled()
-        }
-        let randomWord: Word = wordsData.randomElement() ?? wordsData[0]
-        if !result.contains(where: { $0.id == randomWord.id }) {
-            result.append(randomWord)
-            tmpCount -= 1
-        }
-        return makeWordDesk(size: tmpCount, wordsData: wordsData, result)
     }
     
     // MARK: - UICollectinView Delegates
@@ -214,8 +190,6 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
             }
         }
     }
-    
-    
 }
 
 extension PracticeCVC: PracticeReadVCDelegate {

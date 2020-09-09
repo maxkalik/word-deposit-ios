@@ -1,7 +1,4 @@
 import UIKit
-import FirebaseAuth
-import FirebaseFirestore
-import FirebaseStorage
 
 protocol VocabulariesTVCDelegation: AnyObject {
     func selectedVocabularyDidChange()
@@ -42,13 +39,10 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         super.viewDidLoad()
         
         setupTableView()
-        
         view.addSubview(messageView)
         view.superview?.addSubview(progressHUD)
         progressHUD.show()
         prepareContent()
-
-        print("vocabularies tvc did load")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -67,7 +61,6 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     // fetching content and add it to the view
     func prepareContent() {
         UserService.shared.fetchVocabularies { vocabularies in
-            // self.tableView.reloadData() // we can use updating like on listener
             
             // Add a vocabulary
             for index in 0..<vocabularies.count {
@@ -141,21 +134,12 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
             guard let oldIndex = selectedVocabularyIndex else { return }
             selectedVocabularyIndex = newSelectedVocabularyIndex
             tableView.reloadRows(at: [IndexPath(item: oldIndex, section: 0), IndexPath(item: newSelectedVocabularyIndex, section: 0)], with: .fade)
-            
-            // update vocabularies
-            
+            // update vocabularies request
             UserService.shared.switchSelectedVocabulary(from: vocabularies[oldIndex], to: vocabularies[newSelectedVocabularyIndex]) {
                 // delegation
                 UserService.shared.getCurrentVocabulary()
                 self.delegate?.selectedVocabularyDidChange()
             }
-            
-            /*
-            UserService.shared.updateVocabularies(vocabularies) {
-                UserService.shared.getCurrentVocabulary()
-                self.delegate?.selectedVocabularyDidChange()
-            }
-            */
         } else {
             sender.isOn = true
         }
@@ -195,10 +179,9 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
             
             let vocabulary = vocabularies[indexPath.row]
             
-            if vocabulary.isSelected == true {
+            if vocabulary.isSelected {
                 simpleAlert(title: "You cannot delete", msg: "Before removing vocabulary, please switch to another vocabulary")
             } else {
-                
                 let alert = UIAlertController(title: title, message: "Are you sure?", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Remove", style: .default, handler: { (action) in
                     UserService.shared.removeVocabulary(vocabulary) {

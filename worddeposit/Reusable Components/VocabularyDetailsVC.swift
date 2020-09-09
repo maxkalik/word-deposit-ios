@@ -1,5 +1,4 @@
 import UIKit
-import Firebase
 import FirebaseFirestore
 
 protocol VocabularyDetailsVCDelegate: AnyObject {
@@ -23,9 +22,6 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     var vocabulary: Vocabulary?
     var isFirstSelected = true
     
-    var db: Firestore!
-    var userRef: DocumentReference!
-    
     private var isKeyboardShowing = false
     private var keyboardHeight: CGFloat!
     
@@ -35,8 +31,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        db = Firestore.firestore()
-        
+
         // Primary setting up UI
         setupUI()
 
@@ -89,7 +84,6 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
             }
         }
         
-        // saveButton.layer.opacity = 1
         buttonsStackView.alpha = 1
     }
     
@@ -102,10 +96,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
             self.view.layoutIfNeeded()
         }
         
-        if vocabulary != nil {
-            // saveButton.layer.opacity = 0
-            buttonsStackView.alpha = 0
-        }
+        if vocabulary != nil { buttonsStackView.alpha = 0 }
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
@@ -149,20 +140,6 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    private func setVocabulary(_ vocabulary: Vocabulary) {
-        let ref = userRef.collection("vocabularies").document(vocabulary.id)
-        let data = Vocabulary.modelToData(vocabulary: vocabulary)
-        ref.setData(data, merge: true) { (error) in
-            if let error = error {
-                self.simpleAlert(title: "Error", msg: error.localizedDescription)
-                self.progressHUD.hide()
-            }
-            // success
-            self.progressHUD.hide()
-            self.navigationController?.popViewController(animated: true)
-        }
-    }
-    
     // MARK: - IBActions
     
     @IBAction func cancelTapped(_ sender: UIButton) {
@@ -186,22 +163,19 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
             return
         }
         
-        guard let user = Auth.auth().currentUser else { return }
-        userRef = db.collection("users").document(user.uid)
-        
         if vocabulary == nil {
             self.vocabulary = Vocabulary.init(id: "", title: title, language: language, wordsAmount: 0, isSelected: isFirstSelected, timestamp: Timestamp())
             UserService.shared.setVocabulary(vocabulary!) { id in
                 self.progressHUD.hide()
-                self.navigationController?.popViewController(animated: true)
                 self.vocabulary!.id = id
+                self.navigationController?.popViewController(animated: true)
                 self.delegate?.vocabularyDidCreate(self.vocabulary!)
             }
         } else {
             guard var vocabulary = self.vocabulary else { return }
             vocabulary.title = title
             vocabulary.language = language
-            // setVocabulary(existingVocabulary)
+
             UserService.shared.updateVocabulary(vocabulary) { index in
                 self.progressHUD.hide()
                 self.navigationController?.popViewController(animated: true)
