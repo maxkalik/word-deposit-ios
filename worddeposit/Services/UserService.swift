@@ -379,6 +379,7 @@ final class UserService {
     
     func updateWordImageUrl(_ word: Word, complition: @escaping () -> Void) {
         let ref = wordsRef.document(word.id)
+        print(word)
         ref.updateData(["img_url" : word.imgUrl]) { error in
             if let error = error {
                 debugPrint(error.localizedDescription)

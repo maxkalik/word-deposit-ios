@@ -179,19 +179,16 @@ class VocabularyCardCVCell: UICollectionViewCell {
     @IBAction func removePictureTouched(_ sender: UIButton) {
         pictureLoader.startAnimating()
         self.word.imgUrl = ""
-        removePicture()
-    }
-    
-    // MARK: - Uploading Methods
-    
-    private func removePicture() {
         UserService.shared.removeWordImageFrom(vocabularyId: vocabulary.id, wordId: word.id) {
             UserService.shared.updateWordImageUrl(self.word) {
                 self.pictureLoader.stopAnimating()
+                self.removePictureButton.isHidden = true
                 self.wordPictureButton.setImage(UIImage(named: Placeholders.Logo), for: .normal)
             }
         }
     }
+    
+    // MARK: - Uploading Methods
     
     func uploadImage() {
         pictureLoader.startAnimating()
@@ -203,7 +200,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
         
         // remove previous image before uploading is an object have it
         if word.imgUrl.isNotEmpty {
-            removePicture()
+            UserService.shared.removeWordImageFrom(vocabularyId: vocabulary.id, wordId: word.id)
         }
         
         let resizedImg = image.resized(toWidth: 400.0)
@@ -211,6 +208,9 @@ class VocabularyCardCVCell: UICollectionViewCell {
         
         UserService.shared.setWordImage(data: data, id: word.id) { url in
             self.word.imgUrl = url.absoluteString
+            UserService.shared.updateWordImageUrl(self.word) {
+                self.pictureLoader.stopAnimating()
+            }
         }
     }
     
