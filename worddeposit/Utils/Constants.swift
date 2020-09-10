@@ -11,6 +11,7 @@ struct Storyboards {
 struct Controllers {
     static let TrainerWordToTranslate = "TrainerWordToTranslate"
     static let TrainerTranslateToWord = "TrainerTranslateToWord"
+    static let Vocabularies = "Vocabularies"
 }
 
 struct XIBs {

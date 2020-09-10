@@ -60,6 +60,9 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     
     // fetching content and add it to the view
     func prepareContent() {
+        
+        // TODO: - we have to call this method only if something changes because we have already vocabularies
+        
         UserService.shared.fetchVocabularies { vocabularies in
             
             // Add a vocabulary
@@ -80,6 +83,11 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     func vocabularyDidUpdate(_ vocabulary: Vocabulary, index: Int) {
         self.vocabularies[index] = vocabulary
         tableView.reloadRows(at: [IndexPath(item: index, section: 0)], with: .fade)
+    }
+    
+    func vocabularyDidRemove(_ vocabulary: Vocabulary, index: Int) {
+        self.vocabularies.remove(at: index)
+        self.tableView.deleteRows(at: [IndexPath(item: index, section: 0)], with: .fade)
     }
     
     func setupMessage() {
@@ -183,8 +191,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
                 let alert = UIAlertController(title: title, message: "Are you sure?", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Remove", style: .default, handler: { (action) in
                     UserService.shared.removeVocabulary(vocabulary) {
-                        self.vocabularies.remove(at: indexPath.row)
-                        self.tableView.deleteRows(at: [IndexPath(item: indexPath.row, section: 0)], with: .fade)
+                        self.vocabularyDidRemove(vocabulary, index: indexPath.row)
                     }
                 }))
                 alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))

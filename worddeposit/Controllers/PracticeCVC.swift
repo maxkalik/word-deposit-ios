@@ -25,6 +25,9 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         registerViews()
         setupUI()
         
+        let vocabulariesTVC = VocabulariesTVC()
+        vocabulariesTVC.delegate = self
+
         let userService = UserService.shared
         userService.fetchCurrentUser { user in
             userService.fetchVocabularies { vocabularies in
@@ -36,6 +39,22 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                 }
             }
         }
+        
+        let storyboard = UIStoryboard(name: Storyboards.Home, bundle: nil)
+        if let vc = storyboard.instantiateViewController(withIdentifier: Controllers.Vocabularies) as? UINavigationController {
+            let tvc = vc.viewControllers.first as! VocabulariesTVC
+            tvc.delegate = self
+            tvc.view.backgroundColor = .black
+        }
+        
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -49,6 +68,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         UserService.shared.fetchWords { words in
             self.words.removeAll()
             self.progressHUD.hide()
+            self.words = words
             
             print(words.count)
             
@@ -59,7 +79,6 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                 self.messageView.hide()
             }
             
-            self.words = words
             self.collectionView.reloadData()
             self.collectionView.isHidden = false
         }
@@ -103,8 +122,8 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     }
     
     private func presentVocabulariesVC() {
-        let storyboard = UIStoryboard(name: "Home", bundle: Bundle.main)
-        let vc = storyboard.instantiateViewController(withIdentifier: "Vocabularies")
+        let storyboard = UIStoryboard(name: Storyboards.Home, bundle: .main)
+        let vc = storyboard.instantiateViewController(withIdentifier: Controllers.Vocabularies)
         vc.modalPresentationStyle = .popover
         if let popoverPresentationController = vc.popoverPresentationController {
             popoverPresentationController.delegate = self
@@ -147,12 +166,14 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        /*
         if segue.identifier == Segues.Vocabularies {
             if let vc = segue.destination as? UINavigationController {
                 let tvc = vc.viewControllers.first as! VocabulariesTVC
                 tvc.delegate = self
             }
         }
+        */
         if segue.identifier == Segues.PracticeRead {
             self.practiceReadVC = segue.destination as? PracticeReadVC
             if let sender = (sender as? PracticeTrainer) {
@@ -208,6 +229,7 @@ extension PracticeCVC: PracticeReadVCDelegate {
 
 extension PracticeCVC: VocabulariesTVCDelegation {
     func selectedVocabularyDidChange() {
+        print("selectedVocabularyDidChange from practices")
         setupWords()
     }
 }

@@ -81,7 +81,7 @@ final class UserService {
     
     func getAmountOfWordsFrom(vocabulary: Vocabulary, complition: @escaping (Int) -> Void) {
         let ref = vocabulariesRef.document(vocabulary.id)
-        let wordsRef = ref.collection("words")
+        let wordsRef = ref.collection("words").order(by: "timestamp", descending: true)
         wordsRef.getDocuments { (snapshot, error) in
             if let error = error {
                 print(error.localizedDescription)
@@ -159,7 +159,7 @@ final class UserService {
         example: String,
         translation: String,
         description: String? = nil,
-        complition: @escaping () -> Void
+        complition: @escaping (Word) -> Void
     ) {
         let ref = wordsRef.document()
         
@@ -178,12 +178,12 @@ final class UserService {
             setWordImage(data: imageData, id: word.id) { url in
                 word.imgUrl = url.absoluteString
                 self.setWordData(word, to: ref) {
-                    complition()
+                    complition(word)
                 }
             }
         } else {
             setWordData(word, to: ref) {
-                complition()
+                complition(word)
             }
         }
     }
@@ -394,14 +394,20 @@ final class UserService {
     
     // MARK: - Methods - REMOVE
     
-    func removeWordImageFrom(vocabularyId: String, wordId: String, complition: (() -> Void)? = nil ) {
-        let ref = self.storage.reference()
-        ref.child("/\(self.user.id)/\(vocabularyId)/\(wordId).jpg").delete { (error) in
+    func removeVocabulary(_ vocabulary: Vocabulary, complition: @escaping () -> Void) {
+        
+        let ref: DocumentReference = vocabulariesRef.document(vocabulary.id)
+        
+        // check vocabulary have image folder in store
+        self.removeAllWordImagesFrom(vocabulary: vocabulary)
+        
+        // remove vocabulary with words
+        ref.delete { (error) in
             if let error = error {
                 debugPrint(error.localizedDescription)
                 return
             }
-            complition?()
+            complition()
         }
     }
     
@@ -425,20 +431,35 @@ final class UserService {
         }
     }
     
-    func removeVocabulary(_ vocabulary: Vocabulary, complition: @escaping () -> Void) {
-        
-        let ref: DocumentReference = vocabulariesRef.document(vocabulary.id)
-        
-        // check vocabulary have image folder in store
-        self.removeAllWordImagesFrom(vocabulary: vocabulary)
-        
-        // remove vocabulary with words
-        ref.delete { (error) in
+    func removeWord(_ word: Word, complition: @escaping () -> Void) {
+        let ref: DocumentReference = wordsRef.document(word.id)
+        ref.delete { error in
             if let error = error {
                 debugPrint(error.localizedDescription)
                 return
             }
-            complition()
+            
+            guard let index = self.words.firstIndex(matching: word) else { return }
+            self.words.remove(at: index)
+            
+            if word.imgUrl.isNotEmpty {
+                self.removeWordImageFrom(vocabularyId: self.currentVocabulary!.id, wordId: word.id) {
+                    complition()
+                }
+            } else {
+                complition()
+            }
+        }
+    }
+    
+    func removeWordImageFrom(vocabularyId: String, wordId: String, complition: (() -> Void)? = nil ) {
+        let ref = self.storage.reference()
+        ref.child("/\(self.user.id)/\(vocabularyId)/\(wordId).jpg").delete { (error) in
+            if let error = error {
+                debugPrint(error.localizedDescription)
+                return
+            }
+            complition?()
         }
     }
 }

@@ -234,8 +234,9 @@ class VocabularyCardCVCell: UICollectionViewCell {
         }
         
         UserService.shared.updateWord(updatedWord) { index in
+            
             // TODO: - delegate to vocabulary table
-            print(index)
+            
             self.word = updatedWord
             self.wordLoader.stopAnimating()
             self.hideAllButtons()

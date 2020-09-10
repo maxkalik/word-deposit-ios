@@ -1,24 +1,12 @@
 import UIKit
-import FirebaseAuth
-import FirebaseFirestore
-import FirebaseStorage
 
-class VocabularyTVC: UITableViewController {
+class VocabularyTVC: UITableViewController, AddWordVCDelegate {
     
     // MARK: - Instances
     
     /// Data model for the table view
     var words = [Word]()
     var messageView = MessageView()
-    
-    /// Listeners
-    var db: Firestore!
-    var storage: Storage!
-    var wordsListener: ListenerRegistration!
-    var vocabulariesListener: ListenerRegistration!
-    
-    /// References
-    var wordsRef: CollectionReference!
     
     /// Search controller to help us with filtering items in the table view
     var searchController: UISearchController!
@@ -28,32 +16,41 @@ class VocabularyTVC: UITableViewController {
     
     /// Restoration state for UISearchController
     var restoredState = SearchControllerRestorableState()
-    
-    /// Strings
-    var userId: String!
-    var vocabularyId: String?
-    
-    // MARK: - View Lifecycle
 
+    var vocabulary: Vocabulary?
+
+    // MARK: - View Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        db = Firestore.firestore()
-        storage = Storage.storage()
+        
+        // Setup Table View
         setupTableView()
-        setupMessage()
-        setupResultsTableController()
+        // setupResultsTableController()
+        
+        // Setup message
+        self.view.addSubview(messageView)
+        
+        vocabulary = UserService.shared.currentVocabulary
     }
      
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.view.addSubview(messageView)
+        
+        setupMessage()
         messageView.hide()
-        setVocabulariesListener()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        prepareContent(words: UserService.shared.words)
+        
         messageView.frame.origin.y = tableView.contentOffset.y
+        
+        if let addWordVC = self.tabBarController?.viewControllers?[1] as? AddWordVC {
+            addWordVC.delegate = self
+        }
         
         // Restore the searchController's active state.
         if restoredState.wasActive {
@@ -67,10 +64,8 @@ class VocabularyTVC: UITableViewController {
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        vocabulariesListener.remove()
-        wordsListener.remove()
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         words.removeAll()
         tableView.reloadData()
     }
@@ -111,95 +106,45 @@ class VocabularyTVC: UITableViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
     }
     
-    // MARK: - Listeners for updating Table View
+    // MARK: - Content
     
-    private func setVocabulariesListener() {
-        guard let authUser = Auth.auth().currentUser else { return }
-        self.userId = authUser.uid
-        let userRef = db.collection("users").document(self.userId)
-        let vocabulariesRef = userRef.collection("vocabularies")
-        vocabulariesListener = vocabulariesRef.whereField("is_selected", isEqualTo: true).addSnapshotListener() { (querySnapshot, err) in
-            if let err = err {
-                print("Error getting documents: \(err)")
-                return
-            } else {
-                for document in querySnapshot!.documents {
-                    let data = document.data()
-                    let vocabulary = Vocabulary.init(data: data)
-                    let defaults = UserDefaults.standard
-                    defaults.set(vocabulary.id, forKey: "vocabulary_id")
-                    
-                    self.words.removeAll()
-                    self.tableView.reloadData()
-                    
-                    // fetch words from current vocabulary
-                    self.setWordsListener(vocabularyRef: vocabulariesRef.document(vocabulary.id))
-                }
-            }
-        }
-    }
-    
-    func setWordsListener(vocabularyRef: DocumentReference) {
-        
-        self.wordsRef = vocabularyRef.collection("words")
-        let wordsRefOrdered = vocabularyRef.collection("words").order(by: "timestamp", descending: true)
-        wordsListener = wordsRefOrdered.addSnapshotListener({ (snapshot, error) in
-            if let error = error {
-                debugPrint(error.localizedDescription)
-                return
-            } else {
-                
-                guard let snap = snapshot else { return }
-                
-                DispatchQueue.main.async {
-                    if snap.documents.isEmpty {
-                        self.messageView.show()
-                    } else {
-                        self.messageView.hide()
-                    }
-                }
-                
-                snap.documentChanges.forEach({ (docChange) in
-                    let data = docChange.document.data()
-                    let word = Word.init(data: data)
-                    
-                    switch docChange.type {
-                    case .added:
-                        self.onDocumentAdded(change: docChange, word: word)
-                    case .modified:
-                        self.onDocumentModified(change: docChange, word: word)
-                    case .removed:
-                        self.onDocumentRemoved(change: docChange)
-                    }
-                })
-            }
-        })
-    }
-    
-    func onDocumentAdded(change: DocumentChange, word: Word) {
-        let newIndex = Int(change.newIndex)
-        words.insert(word, at: newIndex)
-        tableView.insertRows(at: [IndexPath(item: newIndex, section: 0)], with: .fade)
-    }
-    
-    func onDocumentModified(change: DocumentChange, word: Word) {
-        if change.newIndex == change.oldIndex {
-            let index = Int(change.newIndex)
-            words[index] = word // TODO: - out of range
-            tableView.reloadRows(at: [IndexPath(item: index, section: 0)], with: .none)
+    private func prepareContent(words: [Word]) {
+        if words.isEmpty {
+            self.messageView.show()
         } else {
-            let oldIndex = Int(change.oldIndex)
-            let newIndex = Int(change.newIndex)
-            words.remove(at: oldIndex)
-            words.insert(word, at: newIndex)
-            tableView.moveRow(at: IndexPath(item: oldIndex, section: 0), to: IndexPath(item: newIndex, section: 0))
+            self.messageView.hide()
+            for index in 0..<words.count {
+                self.words.append(words[index])
+                self.tableView.insertRows(at: [IndexPath(item: index, section: 0)], with: .fade)
+            }
         }
     }
     
-    func onDocumentRemoved(change: DocumentChange) {
-        let oldIndex = Int(change.oldIndex)
-        words.remove(at: oldIndex)
-        tableView.deleteRows(at: [IndexPath(item: oldIndex, section: 0)], with: .fade)
+    
+    
+    func wordDidCreate(_ word: Word) {
+        words.insert(word, at: 0)
+        tableView.insertRows(at: [IndexPath(item: 0, section: 0)], with: .fade)
+    }
+    
+    func wordDidUpdate(_ word: Word, index: Int) {
+        self.words[index] = word
+        tableView.reloadRows(at: [IndexPath(item: index, section: 0)], with: .fade)
+    }
+    
+    func wordDidRemove(_ word: Word, index: Int) {
+        self.words.remove(at: index)
+        self.tableView.deleteRows(at: [IndexPath(item: index, section: 0)], with: .fade)
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Segues.Vocabularies {
+            if let vc = segue.destination as? UINavigationController {
+                let tvc = vc.viewControllers.first as! VocabulariesTVC
+                tvc.delegate = self
+            }
+        }
     }
 }
 
@@ -254,31 +199,12 @@ extension VocabularyTVC {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
             
-            let selectedWord: Word!
-            // Check to see which table view cell was selected
-            if tableView === self.tableView {
-                selectedWord = words[indexPath.row]
-            } else {
-                selectedWord = resultsTableController.filteredWords[indexPath.row]
-            }
-
-            self.wordsRef.document(selectedWord.id).delete { (error) in
-                if let error = error {
-                    self.simpleAlert(title: "Error", msg: error.localizedDescription)
-                    debugPrint(error.localizedDescription)
-                    return
-                }
-                
-                guard let userId = self.userId, let selectedVocabularyId = self.vocabularyId else { return }
-                if selectedWord.imgUrl.isNotEmpty {
-                    self.storage.reference().child("/\(userId)/\(selectedVocabularyId)/\(selectedWord.id).jpg").delete { (error) in
-                        if let error = error {
-                            self.simpleAlert(title: "Error", msg: error.localizedDescription)
-                            debugPrint(error.localizedDescription)
-                            return
-                        }
-                    }
-                }
+            // TODO: - not working when try to delete from searching state
+            
+            let word: Word! = tableView === self.tableView ? words[indexPath.row] : resultsTableController.filteredWords[indexPath.row]
+            
+            UserService.shared.removeWord(word) {
+                self.wordDidRemove(word, index: indexPath.row)
             }
         }
     }
@@ -321,5 +247,15 @@ extension VocabularyTVC: UISearchControllerDelegate {
     
     func didDismissSearchController(_ searchController: UISearchController) {
         //Swift.debugPrint("UISearchControllerDelegate invoked method: \(#function).")
+    }
+}
+
+extension VocabularyTVC: VocabulariesTVCDelegation {
+    func selectedVocabularyDidChange() {
+        UserService.shared.fetchWords { words in
+            self.words.removeAll()
+            self.tableView.reloadData()
+            self.prepareContent(words: words)
+        }
     }
 }

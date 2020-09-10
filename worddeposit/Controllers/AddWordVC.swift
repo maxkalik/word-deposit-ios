@@ -1,6 +1,10 @@
 import UIKit
 import YPImagePicker
 
+protocol AddWordVCDelegate: AnyObject {
+    func wordDidCreate(_ word: Word)
+}
+
 class AddWordVC: UIViewController {
     
     // MARK: - Outlets
@@ -32,6 +36,8 @@ class AddWordVC: UIViewController {
     var progressHUD = ProgressHUD(title: "Saving")
     private var isImageSet = false
     private var isKeyboardShowing = false
+    
+    weak var delegate: AddWordVCDelegate?
     
     // MARK: - Lifecycle
     
@@ -130,17 +136,18 @@ class AddWordVC: UIViewController {
             let resizedImg = image.resized(toWidth: 400.0)
             guard let imageData = resizedImg?.jpegData(compressionQuality: 0.5) else { return }
             
-            UserService.shared.setWord(imageData: imageData, example: example, translation: translation, description: description) {
+            UserService.shared.setWord(imageData: imageData, example: example, translation: translation, description: description) { word in
                 self.updateUI()
                 self.progressHUD.hide()
                 self.simpleAlert(title: "Success", msg: "Word has been added with image")
+                self.delegate?.wordDidCreate(word)
             }
-            
         } else {
-            UserService.shared.setWord(example: example, translation: translation, description: description) {
+            UserService.shared.setWord(example: example, translation: translation, description: description) { word in
                 self.updateUI()
                 self.progressHUD.hide()
                 self.simpleAlert(title: "Success", msg: "Word has been added")
+                self.delegate?.wordDidCreate(word)
             }
         }
     }
