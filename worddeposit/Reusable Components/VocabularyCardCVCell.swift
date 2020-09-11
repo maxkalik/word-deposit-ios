@@ -8,6 +8,10 @@ protocol VocabularyCardCVCellDelegate: AnyObject {
     func disableEnableScroll(isKeyboardShow: Bool)
 }
 
+//protocol VocabularyCardCVCellUpdating: AnyObject {
+//    func wordDidUpdate()
+//}
+
 class VocabularyCardCVCell: UICollectionViewCell {
 
     // MARK: - Outlets
@@ -30,6 +34,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
     private var isKeyboardShowing = false
     
     weak var delegate: VocabularyCardCVCellDelegate?
+    // weak var delegateUpdating: VocabularyCardCVCellUpdating?
     
     // MARK: - View Life Cycle
     
@@ -54,8 +59,10 @@ class VocabularyCardCVCell: UICollectionViewCell {
         wordTranslationTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         wordDescriptionTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        let nc = NotificationCenter.default
+        
+        nc.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        nc.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     deinit {

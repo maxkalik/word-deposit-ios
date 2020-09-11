@@ -34,7 +34,8 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(rawValue: vocabulariesSwitchNotificationKey), object: nil)
+        let nc = NotificationCenter.default
+        nc.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(rawValue: vocabulariesSwitchNotificationKey), object: nil)
         
         setupTableView()
         view.addSubview(messageView)
