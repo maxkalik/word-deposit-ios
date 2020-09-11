@@ -95,7 +95,6 @@ extension VocabularyCardsVC: VocabularyCardCVCellDelegate {
     
     func wordDidUpdate(word: Word, index: Int) {
         words[index] = word
-        wordsCollectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
         delegate?.wordCardDidUpdate(word: word, index: index)
     }
 }
