@@ -155,12 +155,13 @@ extension VocabularyTVC {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = VocabularyCardsVC()
         vc.delegate = self
+        vc.wordIndexPath = indexPath.row
+        
         if tableView === self.tableView {
             vc.words = words
         } else {
             vc.words = resultsTableController.filteredWords
         }
-        vc.wordIndexPath = indexPath.row
         
         DispatchQueue.main.async {
             self.present(vc, animated: true, completion: nil)
@@ -199,8 +200,6 @@ extension VocabularyTVC {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
-            
-            // TODO: - not working when try to delete from searching state
             
             let word: Word! = tableView === self.tableView ? words[indexPath.row] : resultsTableController.filteredWords[indexPath.row]
             
