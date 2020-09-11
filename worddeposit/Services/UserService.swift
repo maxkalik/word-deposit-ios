@@ -150,7 +150,7 @@ final class UserService {
                 debugPrint(error.localizedDescription)
                 return
             }
-            self.vocabularies.append(vocabulary)
+            self.vocabularies.insert(vocabulary, at: 0)
             complition(vocabulary.id)
         }
     }

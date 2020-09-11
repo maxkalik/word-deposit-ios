@@ -86,7 +86,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     }
     
     func vocabularyDidUpdate(_ vocabulary: Vocabulary, index: Int) {
-        self.vocabularies[index] = vocabulary
+        self.vocabularies[index] = vocabulary // index out of range
         tableView.reloadRows(at: [IndexPath(item: index, section: 0)], with: .fade)
     }
     
