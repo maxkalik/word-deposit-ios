@@ -81,7 +81,7 @@ final class UserService {
     
     func getAmountOfWordsFrom(vocabulary: Vocabulary, complition: @escaping (Int) -> Void) {
         let ref = vocabulariesRef.document(vocabulary.id)
-        let wordsRef = ref.collection("words").order(by: "timestamp", descending: true)
+        let wordsRef = ref.collection("words")
         wordsRef.getDocuments { (snapshot, error) in
             if let error = error {
                 print(error.localizedDescription)
@@ -117,8 +117,9 @@ final class UserService {
     
     func fetchWords(vocabularyId: String? = nil, complition: @escaping ([Word]) -> Void) {
         self.wordsRef = vocabularyRef.collection("words")
+        let ref = wordsRef.order(by: "timestamp", descending: true)
         if self.currentVocabulary != nil {
-            self.wordsRef.getDocuments { (snapshot, error) in
+            ref.getDocuments { (snapshot, error) in
                 if let error = error {
                     debugPrint(error.localizedDescription)
                     return
@@ -195,7 +196,7 @@ final class UserService {
                 debugPrint(error.localizedDescription)
                 return
             }
-            self.words.append(word)
+            self.words.insert(word, at: 0)
             complition()
         }
     }

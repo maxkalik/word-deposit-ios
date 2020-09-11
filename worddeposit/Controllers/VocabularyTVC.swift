@@ -1,6 +1,6 @@
 import UIKit
 
-class VocabularyTVC: UITableViewController, AddWordVCDelegate {
+class VocabularyTVC: UITableViewController {
     
     // MARK: - Instances
     
@@ -51,14 +51,8 @@ class VocabularyTVC: UITableViewController, AddWordVCDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         prepareContent(words: UserService.shared.words)
-        
         messageView.frame.origin.y = tableView.contentOffset.y
-        
-        if let addWordVC = self.tabBarController?.viewControllers?[1] as? AddWordVC {
-            addWordVC.delegate = self
-        }
         
         // Restore the searchController's active state.
         if restoredState.wasActive {
@@ -101,7 +95,7 @@ class VocabularyTVC: UITableViewController, AddWordVCDelegate {
         resultsTableController.tableView.delegate = self
         
         searchController = UISearchController(searchResultsController: resultsTableController)
-        searchController.delegate = self
+        // searchController.delegate = self
         searchController.searchResultsUpdater = self
         searchController.searchBar.autocapitalizationType = .none
         searchController.searchBar.placeholder = "Search"
@@ -136,11 +130,6 @@ class VocabularyTVC: UITableViewController, AddWordVCDelegate {
                 self.tableView.insertRows(at: [IndexPath(item: index, section: 0)], with: .fade)
             }
         }
-    }
-    
-    func wordDidCreate(_ word: Word) {
-        words.insert(word, at: 0)
-        tableView.insertRows(at: [IndexPath(item: 0, section: 0)], with: .fade)
     }
     
     func wordDidUpdate(_ word: Word, index: Int) {
@@ -226,32 +215,5 @@ extension VocabularyTVC: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         updateSearchResults(for: searchController)
-    }
-}
-
-// MARK: - UISearchControllerDelegate
-
-// These delegate functions for additional control over the search controller
-
-extension VocabularyTVC: UISearchControllerDelegate {
-
-    func presentSearchController(_ searchController: UISearchController) {
-        //Swift.debugPrint("UISearchControllerDelegate invoked method: \(#function).")
-    }
-    
-    func willPresentSearchController(_ searchController: UISearchController) {
-        //Swift.debugPrint("UISearchControllerDelegate invoked method: \(#function).")
-    }
-    
-    func didPresentSearchController(_ searchController: UISearchController) {
-        //Swift.debugPrint("UISearchControllerDelegate invoked method: \(#function).")
-    }
-    
-    func willDismissSearchController(_ searchController: UISearchController) {
-        //Swift.debugPrint("UISearchControllerDelegate invoked method: \(#function).")
-    }
-    
-    func didDismissSearchController(_ searchController: UISearchController) {
-        //Swift.debugPrint("UISearchControllerDelegate invoked method: \(#function).")
     }
 }
