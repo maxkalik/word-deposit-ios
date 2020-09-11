@@ -1,6 +1,6 @@
 import UIKit
 
-let vocabulariesSwitchNotificationKey = "com.maxkalik.vocabulariesSwitchNotificationKey"
+let vocabulariesSwitchNotificationKey = "com.maxkalik.worddeposit.vocabulariesSwitchNotificationKey"
 
 class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
 
@@ -35,7 +35,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         super.viewDidLoad()
         
         let nc = NotificationCenter.default
-        nc.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(rawValue: vocabulariesSwitchNotificationKey), object: nil)
+        nc.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(vocabulariesSwitchNotificationKey), object: nil)
         
         setupTableView()
         view.addSubview(messageView)
@@ -157,7 +157,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
                 
                 UserService.shared.fetchWords { _ in
                     // Post notification for Practice and Vocabulary views
-                    NotificationCenter.default.post(name: Notification.Name(rawValue: vocabulariesSwitchNotificationKey), object: nil)
+                    NotificationCenter.default.post(name: Notification.Name(vocabulariesSwitchNotificationKey), object: nil)
                 }
             }
         } else {

@@ -16,6 +16,8 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     var progressHUD = ProgressHUD(title: "Welcome")
     var messageView = MessageView()
     
+    var isVocabularySwitched = false
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -32,7 +34,10 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                     self.presentVocabulariesVC()
                 } else {
                     userService.getCurrentVocabulary()
-                    self.fetchWords()
+                    userService.fetchWords { words in
+                        self.progressHUD.hide()
+                        self.setupContent(words: words)
+                    }
                 }
             }
         }
@@ -43,37 +48,40 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         messageView.frame.origin.y = collectionView.contentOffset.y
+        
+        if UserService.shared.vocabulary != nil && !isVocabularySwitched {
+            setupContent(words: UserService.shared.words)
+        }
     }
     
     // MARK: - User Service Methods
     
-    func fetchWords() {
-        UserService.shared.fetchWords { words in
-            self.words.removeAll()
-            self.progressHUD.hide()
-            self.words = words
-            self.setupContent()
-        }
-    }
-    
     @objc func vocabularyDidSwitch() {
-        self.words.removeAll()
-        self.words = UserService.shared.words
-        setupContent()
+        isVocabularySwitched = true
+        setupContent(words: UserService.shared.words)
     }
     
     // MARK: - Setup Views
     
-    private func setupContent() {
-        if words.count < minWordsAmount {
-            self.setupMessage(wordsCount: words.count)
-            self.messageView.show()
-        } else {
-            self.messageView.hide()
+    private func setupContent(words: [Word]) {
+        self.words.removeAll()
+        self.words = words
+        
+        print("-------")
+        words.forEach { word in
+            print(word.example)
         }
         
-        self.collectionView.reloadData()
-        self.collectionView.isHidden = false
+        if words.count < minWordsAmount {
+            setupMessage(wordsCount: words.count)
+            messageView.show()
+        } else {
+            messageView.hide()
+        }
+        
+        collectionView.reloadData()
+        collectionView.isHidden = false
+        isVocabularySwitched = false
     }
     
     private func setupUI() {

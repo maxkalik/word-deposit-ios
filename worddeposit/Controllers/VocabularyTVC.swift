@@ -16,9 +16,10 @@ class VocabularyTVC: UITableViewController {
     
     /// Restoration state for UISearchController
     var restoredState = SearchControllerRestorableState()
-
+    
+    /// Flag for current vocabulary
     var isVocabularySwitched = false
-    // var vocabulary: Vocabulary?
+
 
     // MARK: - View Lifecycle
     
@@ -32,16 +33,18 @@ class VocabularyTVC: UITableViewController {
         // Setup message
         self.view.addSubview(messageView)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(rawValue: vocabulariesSwitchNotificationKey), object: nil)
+        let nc = NotificationCenter.default
+        
+        nc.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(vocabulariesSwitchNotificationKey), object: nil)
     }
     
     @objc func vocabularyDidSwitch() {
         self.words.removeAll()
         self.tableView.reloadData()
-        self.prepareContent(words: UserService.shared.words)
+        self.setupContent(words: UserService.shared.words)
         self.isVocabularySwitched = true
     }
-     
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupMessage()
@@ -52,7 +55,7 @@ class VocabularyTVC: UITableViewController {
         super.viewDidAppear(animated)
         
         if !isVocabularySwitched {
-            prepareContent(words: UserService.shared.words) // <-- TODO: Bug
+            setupContent(words: UserService.shared.words) // <-- TODO: Bug
         }
         messageView.frame.origin.y = tableView.contentOffset.y
         
@@ -118,7 +121,7 @@ class VocabularyTVC: UITableViewController {
     
     // MARK: - Content
     
-    private func prepareContent(words: [Word]) {
+    private func setupContent(words: [Word]) {
         
         // Setup vocabulary title
         setupTitle()
@@ -151,7 +154,7 @@ class VocabularyTVC: UITableViewController {
 extension VocabularyTVC {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = VocabularyCardsVC()
-        
+        vc.delegate = self
         if tableView === self.tableView {
             vc.words = words
         } else {
@@ -218,5 +221,11 @@ extension VocabularyTVC: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         updateSearchResults(for: searchController)
+    }
+}
+
+extension VocabularyTVC: VocabularyCardsVCDelegate {
+    func wordCardDidUpdate(word: Word, index: Int) {
+        wordDidUpdate(word, index: index)
     }
 }

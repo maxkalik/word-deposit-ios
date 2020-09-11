@@ -2,15 +2,12 @@ import UIKit
 import Kingfisher
 import YPImagePicker
 
-protocol VocabularyCardCVCellDelegate: AnyObject {
+protocol VocabularyCardCVCellDelegate: VocabularyCardsVC {
     func showAlert(title: String, message: String)
     func presentVC(_ viewControllerToPresent: UIViewController)
     func disableEnableScroll(isKeyboardShow: Bool)
+    func wordDidUpdate(word: Word, index: Int)
 }
-
-//protocol VocabularyCardCVCellUpdating: AnyObject {
-//    func wordDidUpdate()
-//}
 
 class VocabularyCardCVCell: UICollectionViewCell {
 
@@ -31,10 +28,10 @@ class VocabularyCardCVCell: UICollectionViewCell {
 
     var user: User = UserService.shared.user
     var word: Word!
+    var indexItem: Int!
     private var isKeyboardShowing = false
     
     weak var delegate: VocabularyCardCVCellDelegate?
-    // weak var delegateUpdating: VocabularyCardCVCellUpdating?
     
     // MARK: - View Life Cycle
     
@@ -60,7 +57,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
         wordDescriptionTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         
         let nc = NotificationCenter.default
-        
+
         nc.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         nc.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
@@ -131,11 +128,11 @@ class VocabularyCardCVCell: UICollectionViewCell {
         }
     }
     
-    func configureCell(word: Word, delegate: VocabularyCardCVCellDelegate) {
+    func configureCell(word: Word, index: Int, delegate: VocabularyCardCVCellDelegate) {
         self.word = word
+        self.indexItem = index
         self.delegate = delegate
         setupWord(word)
-        
         removePictureButton.isHidden = word.imgUrl.isEmpty
     }
     
@@ -186,6 +183,8 @@ class VocabularyCardCVCell: UICollectionViewCell {
                 self.pictureLoader.stopAnimating()
                 self.removePictureButton.isHidden = true
                 self.wordPictureButton.setImage(UIImage(named: Placeholders.Logo), for: .normal)
+
+                self.delegate?.wordDidUpdate(word: self.word, index: self.indexItem)
             }
         }
     }
@@ -212,6 +211,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
             self.word.imgUrl = url.absoluteString
             UserService.shared.updateWordImageUrl(self.word) {
                 self.pictureLoader.stopAnimating()
+                self.delegate?.wordDidUpdate(word: self.word, index: self.indexItem)
             }
         }
     }
@@ -235,14 +235,12 @@ class VocabularyCardCVCell: UICollectionViewCell {
             updatedWord.description = description
         }
         
-        UserService.shared.updateWord(updatedWord) { index in
-            
-            // TODO: - delegate to vocabulary table
-            
+        UserService.shared.updateWord(updatedWord) { _ in
             self.word = updatedWord
             self.wordLoader.stopAnimating()
             self.hideAllButtons()
             self.endEditing(true)
+            self.delegate?.wordDidUpdate(word: updatedWord, index: self.indexItem)
             self.delegate?.showAlert(title: "Success", message: "Word has been updated")
         }
     }
