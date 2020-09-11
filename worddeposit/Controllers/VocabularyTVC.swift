@@ -32,6 +32,16 @@ class VocabularyTVC: UITableViewController, AddWordVCDelegate {
         self.view.addSubview(messageView)
         
         vocabulary = UserService.shared.currentVocabulary
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(rawValue: vocabulariesSwitchNotificationKey), object: nil)
+    }
+    
+    @objc func vocabularyDidSwitch() {
+        UserService.shared.fetchWords { words in
+            self.words.removeAll()
+            self.tableView.reloadData()
+            self.prepareContent(words: words)
+        }
     }
      
     override func viewWillAppear(_ animated: Bool) {
@@ -136,16 +146,6 @@ class VocabularyTVC: UITableViewController, AddWordVCDelegate {
         self.words.remove(at: index)
         self.tableView.deleteRows(at: [IndexPath(item: index, section: 0)], with: .fade)
     }
-    
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Segues.Vocabularies {
-            if let vc = segue.destination as? UINavigationController {
-                let tvc = vc.viewControllers.first as! VocabulariesTVC
-                tvc.delegate = self
-            }
-        }
-    }
 }
 
 // MARK: - UITableViewDelegate
@@ -247,15 +247,5 @@ extension VocabularyTVC: UISearchControllerDelegate {
     
     func didDismissSearchController(_ searchController: UISearchController) {
         //Swift.debugPrint("UISearchControllerDelegate invoked method: \(#function).")
-    }
-}
-
-extension VocabularyTVC: VocabulariesTVCDelegation {
-    func selectedVocabularyDidChange() {
-        UserService.shared.fetchWords { words in
-            self.words.removeAll()
-            self.tableView.reloadData()
-            self.prepareContent(words: words)
-        }
     }
 }

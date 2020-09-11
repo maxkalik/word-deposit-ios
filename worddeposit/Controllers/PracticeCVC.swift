@@ -24,9 +24,6 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         trainers = PracticeTrainers().data
         registerViews()
         setupUI()
-        
-        let vocabulariesTVC = VocabulariesTVC()
-        vocabulariesTVC.delegate = self
 
         let userService = UserService.shared
         userService.fetchCurrentUser { user in
@@ -40,21 +37,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
             }
         }
         
-        let storyboard = UIStoryboard(name: Storyboards.Home, bundle: nil)
-        if let vc = storyboard.instantiateViewController(withIdentifier: Controllers.Vocabularies) as? UINavigationController {
-            let tvc = vc.viewControllers.first as! VocabulariesTVC
-            tvc.delegate = self
-            tvc.view.backgroundColor = .black
-        }
-        
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(rawValue: vocabulariesSwitchNotificationKey), object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -83,6 +66,8 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
             self.collectionView.isHidden = false
         }
     }
+    
+    @objc func vocabularyDidSwitch() { setupWords() }
     
     // MARK: - Setup Views
     
@@ -166,14 +151,6 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        /*
-        if segue.identifier == Segues.Vocabularies {
-            if let vc = segue.destination as? UINavigationController {
-                let tvc = vc.viewControllers.first as! VocabulariesTVC
-                tvc.delegate = self
-            }
-        }
-        */
         if segue.identifier == Segues.PracticeRead {
             self.practiceReadVC = segue.destination as? PracticeReadVC
             if let sender = (sender as? PracticeTrainer) {
@@ -224,12 +201,5 @@ extension PracticeCVC: PracticeReadVCDelegate {
         UserService.shared.updateAnswersScore(words) {
             self.words = UserService.shared.words
         }
-    }
-}
-
-extension PracticeCVC: VocabulariesTVCDelegation {
-    func selectedVocabularyDidChange() {
-        print("selectedVocabularyDidChange from practices")
-        setupWords()
     }
 }

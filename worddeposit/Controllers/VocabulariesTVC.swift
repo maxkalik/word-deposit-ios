@@ -1,8 +1,6 @@
 import UIKit
 
-protocol VocabulariesTVCDelegation: AnyObject {
-    func selectedVocabularyDidChange()
-}
+let vocabulariesSwitchNotificationKey = "com.maxkalik.vocabulariesSwitchNotificationKey"
 
 class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
 
@@ -31,12 +29,12 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     var messageView = MessageView()
     var progressHUD = ProgressHUD()
     
-    weak var delegate: VocabulariesTVCDelegation?
-    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(rawValue: vocabulariesSwitchNotificationKey), object: nil)
         
         setupTableView()
         view.addSubview(messageView)
@@ -55,6 +53,12 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         super.viewDidAppear(animated)
         messageView.frame.origin.y = tableView.contentOffset.y
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     
     // MARK: - Methods
     
@@ -134,7 +138,12 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
     }
     
+    @objc func vocabularyDidSwitch() {
+        print("vocabularies -- notification is called")
+    }
+    
     @objc func switchChaged(sender: UISwitch) {
+        
         let newSelectedVocabularyIndex = sender.tag
         if newSelectedVocabularyIndex != selectedVocabularyIndex {
             guard let oldIndex = selectedVocabularyIndex else { return }
@@ -142,9 +151,11 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
             tableView.reloadRows(at: [IndexPath(item: oldIndex, section: 0), IndexPath(item: newSelectedVocabularyIndex, section: 0)], with: .fade)
             // update vocabularies request
             UserService.shared.switchSelectedVocabulary(from: vocabularies[oldIndex], to: vocabularies[newSelectedVocabularyIndex]) {
-                // delegation
+                
                 UserService.shared.getCurrentVocabulary()
-                self.delegate?.selectedVocabularyDidChange()
+                
+                // Post notification for Practice and Vocabulary views
+                NotificationCenter.default.post(name: Notification.Name(rawValue: vocabulariesSwitchNotificationKey), object: nil)
             }
         } else {
             sender.isOn = true
