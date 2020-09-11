@@ -11,7 +11,7 @@ final class UserService {
     private(set) var user = User()
     private(set) var vocabularies = [Vocabulary]()
     private(set) var words = [Word]() // did set should triger updating words amount
-    private(set) var currentVocabulary: Vocabulary?
+    private(set) var vocabulary: Vocabulary?
     
     // References
     private var userRef: DocumentReference!
@@ -90,7 +90,7 @@ final class UserService {
                 guard let snap = snapshot else { return }
                 
                 // update vocabulary words amount
-                if vocabulary.wordsAmount != snap.count {
+                if vocabulary.wordsAmount != snap.count && !vocabulary.isSelected {
                     ref.updateData(["words_amount": snap.count]) { error in
                         if let error = error {
                             debugPrint(error.localizedDescription)
@@ -111,14 +111,14 @@ final class UserService {
             return vocabulary.isSelected
         }
         guard let i = index else { return }
-        self.currentVocabulary = self.vocabularies[i]
+        self.vocabulary = self.vocabularies[i]
         self.vocabularyRef = self.vocabulariesRef.document(self.vocabularies[i].id)
     }
     
     func fetchWords(vocabularyId: String? = nil, complition: @escaping ([Word]) -> Void) {
         self.wordsRef = vocabularyRef.collection("words")
         let ref = wordsRef.order(by: "timestamp", descending: true)
-        if self.currentVocabulary != nil {
+        if self.vocabulary != nil {
             ref.getDocuments { (snapshot, error) in
                 if let error = error {
                     debugPrint(error.localizedDescription)
@@ -197,12 +197,13 @@ final class UserService {
                 return
             }
             self.words.insert(word, at: 0)
+            self.updateAmountOfWords()
             complition()
         }
     }
     
     func setWordImage(data: Data?, id: String, complition: @escaping (URL) -> Void) {
-        guard let vocabulary = currentVocabulary, let data = data else { return }
+        guard let vocabulary = self.vocabulary, let data = data else { return }
         let ref: StorageReference = Storage.storage().reference().child("/\(user.id)/\(vocabulary.id)/\(id).jpg")
         let metadata: StorageMetadata = StorageMetadata()
         metadata.contentType = "image/jpg"
@@ -304,6 +305,16 @@ final class UserService {
         }
     }
     
+    private func updateAmountOfWords() {
+        vocabularyRef.updateData(["words_amount": words.count]) { error in
+            if let error = error {
+                debugPrint(error.localizedDescription)
+                return
+            }
+            self.vocabulary?.wordsAmount = self.words.count
+        }
+    }
+    
     private func updateLocal(vocabularies: [Vocabulary]) {
         // TODO: - try to find algorithm to check difference and update array of vocabularies
         vocabularies.forEach { updatedVocabulary in
@@ -380,7 +391,6 @@ final class UserService {
     
     func updateWordImageUrl(_ word: Word, complition: @escaping () -> Void) {
         let ref = wordsRef.document(word.id)
-        print(word)
         ref.updateData(["img_url" : word.imgUrl]) { error in
             if let error = error {
                 debugPrint(error.localizedDescription)
@@ -442,9 +452,10 @@ final class UserService {
             
             guard let index = self.words.firstIndex(matching: word) else { return }
             self.words.remove(at: index)
+            self.updateAmountOfWords()
             
             if word.imgUrl.isNotEmpty {
-                self.removeWordImageFrom(vocabularyId: self.currentVocabulary!.id, wordId: word.id) {
+                self.removeWordImageFrom(vocabularyId: self.vocabulary!.id, wordId: word.id) {
                     complition()
                 }
             } else {
@@ -453,9 +464,10 @@ final class UserService {
         }
     }
     
-    func removeWordImageFrom(vocabularyId: String, wordId: String, complition: (() -> Void)? = nil ) {
+    func removeWordImageFrom(vocabularyId: String? = nil, wordId: String, complition: (() -> Void)? = nil ) {
+        guard let vocabulary = self.vocabulary else { return }
         let ref = self.storage.reference()
-        ref.child("/\(self.user.id)/\(vocabularyId)/\(wordId).jpg").delete { (error) in
+        ref.child("/\(self.user.id)/\(vocabulary.id)/\(wordId).jpg").delete { (error) in
             if let error = error {
                 debugPrint(error.localizedDescription)
                 return

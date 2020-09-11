@@ -17,6 +17,7 @@ class VocabularyTVC: UITableViewController {
     /// Restoration state for UISearchController
     var restoredState = SearchControllerRestorableState()
 
+    var isVocabularySwitched = false
     // var vocabulary: Vocabulary?
 
     // MARK: - View Lifecycle
@@ -26,7 +27,7 @@ class VocabularyTVC: UITableViewController {
         
         // Setup Table View
         setupTableView()
-         setupResultsTableController()
+        setupResultsTableController()
         
         // Setup message
         self.view.addSubview(messageView)
@@ -35,23 +36,24 @@ class VocabularyTVC: UITableViewController {
     }
     
     @objc func vocabularyDidSwitch() {
-        UserService.shared.fetchWords { words in
-            self.words.removeAll()
-            self.tableView.reloadData()
-            self.prepareContent(words: words)
-        }
+        self.words.removeAll()
+        self.tableView.reloadData()
+        self.prepareContent(words: UserService.shared.words)
+        self.isVocabularySwitched = true
     }
      
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         setupMessage()
         messageView.hide()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        prepareContent(words: UserService.shared.words)
+        
+        if !isVocabularySwitched {
+            prepareContent(words: UserService.shared.words) // <-- TODO: Bug
+        }
         messageView.frame.origin.y = tableView.contentOffset.y
         
         // Restore the searchController's active state.
@@ -70,12 +72,13 @@ class VocabularyTVC: UITableViewController {
         super.viewDidDisappear(animated)
         words.removeAll()
         tableView.reloadData()
+        isVocabularySwitched = false
     }
     
     // MARK: - View setups
     
     private func setupTitle() {
-        guard let vocabulary = UserService.shared.currentVocabulary else { return }
+        guard let vocabulary = UserService.shared.vocabulary else { return }
         self.title = vocabulary.title
     }
     

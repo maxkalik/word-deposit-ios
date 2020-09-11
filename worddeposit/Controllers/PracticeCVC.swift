@@ -32,7 +32,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                     self.presentVocabulariesVC()
                 } else {
                     userService.getCurrentVocabulary()
-                    self.setupWords()
+                    self.fetchWords()
                 }
             }
         }
@@ -47,29 +47,34 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     
     // MARK: - User Service Methods
     
-    func setupWords() {
+    func fetchWords() {
         UserService.shared.fetchWords { words in
             self.words.removeAll()
             self.progressHUD.hide()
             self.words = words
-            
-            print(words.count)
-            
-            if words.count < minWordsAmount {
-                self.setupMessage(wordsCount: words.count)
-                self.messageView.show()
-            } else {
-                self.messageView.hide()
-            }
-            
-            self.collectionView.reloadData()
-            self.collectionView.isHidden = false
+            self.setupContent()
         }
     }
     
-    @objc func vocabularyDidSwitch() { setupWords() }
+    @objc func vocabularyDidSwitch() {
+        self.words.removeAll()
+        self.words = UserService.shared.words
+        setupContent()
+    }
     
     // MARK: - Setup Views
+    
+    private func setupContent() {
+        if words.count < minWordsAmount {
+            self.setupMessage(wordsCount: words.count)
+            self.messageView.show()
+        } else {
+            self.messageView.hide()
+        }
+        
+        self.collectionView.reloadData()
+        self.collectionView.isHidden = false
+    }
     
     private func setupUI() {
         

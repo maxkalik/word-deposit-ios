@@ -154,8 +154,10 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
                 
                 UserService.shared.getCurrentVocabulary()
                 
-                // Post notification for Practice and Vocabulary views
-                NotificationCenter.default.post(name: Notification.Name(rawValue: vocabulariesSwitchNotificationKey), object: nil)
+                UserService.shared.fetchWords { _ in
+                    // Post notification for Practice and Vocabulary views
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: vocabulariesSwitchNotificationKey), object: nil)
+                }
             }
         } else {
             sender.isOn = true

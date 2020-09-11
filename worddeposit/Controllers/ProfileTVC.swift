@@ -81,10 +81,14 @@ class ProfileTVC: UITableViewController {
                 self.words.append(word)
             }
             
-            let answersSum = rightAnswers + wrongAnswers
-            let precentageOfCorrectAnswers = (rightAnswers * 100) / answersSum
+            if rightAnswers == 0 {
+                self.correctAnswersLabel.text = "0%"
+            } else {
+                let answersSum = rightAnswers + wrongAnswers
+                let precentageOfCorrectAnswers = (rightAnswers * 100) / answersSum
+                self.correctAnswersLabel.text = "\(precentageOfCorrectAnswers)%"
+            }
             
-            self.correctAnswersLabel.text = "\(precentageOfCorrectAnswers)%"
         }
     }
     

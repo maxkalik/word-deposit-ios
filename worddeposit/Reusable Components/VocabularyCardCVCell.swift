@@ -26,7 +26,6 @@ class VocabularyCardCVCell: UICollectionViewCell {
     // MARK: - Variables
 
     var user: User = UserService.shared.user
-    var vocabulary: Vocabulary!
     var word: Word!
     private var isKeyboardShowing = false
     
@@ -47,10 +46,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        guard let vocabulary = UserService.shared.currentVocabulary else { return }
-        self.vocabulary = vocabulary
-        
+
         hideAllButtons()
         disableAllButtons()
         
@@ -128,8 +124,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
         }
     }
     
-    func configureCell(vocabularyId: String, word: Word, delegate: VocabularyCardCVCellDelegate) {
-        self.vocabulary.id = vocabularyId
+    func configureCell(word: Word, delegate: VocabularyCardCVCellDelegate) {
         self.word = word
         self.delegate = delegate
         setupWord(word)
@@ -179,7 +174,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
     @IBAction func removePictureTouched(_ sender: UIButton) {
         pictureLoader.startAnimating()
         self.word.imgUrl = ""
-        UserService.shared.removeWordImageFrom(vocabularyId: vocabulary.id, wordId: word.id) {
+        UserService.shared.removeWordImageFrom(wordId: word.id) {
             UserService.shared.updateWordImageUrl(self.word) {
                 self.pictureLoader.stopAnimating()
                 self.removePictureButton.isHidden = true
@@ -200,7 +195,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
         
         // remove previous image before uploading is an object have it
         if word.imgUrl.isNotEmpty {
-            UserService.shared.removeWordImageFrom(vocabularyId: vocabulary.id, wordId: word.id)
+            UserService.shared.removeWordImageFrom(wordId: word.id)
         }
         
         let resizedImg = image.resized(toWidth: 400.0)
