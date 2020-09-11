@@ -17,7 +17,7 @@ class VocabularyTVC: UITableViewController, AddWordVCDelegate {
     /// Restoration state for UISearchController
     var restoredState = SearchControllerRestorableState()
 
-    var vocabulary: Vocabulary?
+    // var vocabulary: Vocabulary?
 
     // MARK: - View Lifecycle
     
@@ -26,12 +26,10 @@ class VocabularyTVC: UITableViewController, AddWordVCDelegate {
         
         // Setup Table View
         setupTableView()
-        // setupResultsTableController()
+         setupResultsTableController()
         
         // Setup message
         self.view.addSubview(messageView)
-        
-        vocabulary = UserService.shared.currentVocabulary
         
         NotificationCenter.default.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(rawValue: vocabulariesSwitchNotificationKey), object: nil)
     }
@@ -82,6 +80,11 @@ class VocabularyTVC: UITableViewController, AddWordVCDelegate {
     
     // MARK: - View setups
     
+    private func setupTitle() {
+        guard let vocabulary = UserService.shared.currentVocabulary else { return }
+        self.title = vocabulary.title
+    }
+    
     func setupMessage() {
         messageView.setTitles(messageTxt: "You have no words yet", buttonTitle: "Add words")
         messageView.onPrimaryButtonTap { self.tabBarController?.selectedIndex = 1 }
@@ -119,6 +122,11 @@ class VocabularyTVC: UITableViewController, AddWordVCDelegate {
     // MARK: - Content
     
     private func prepareContent(words: [Word]) {
+        
+        // Setup vocabulary title
+        setupTitle()
+        
+        // Check words
         if words.isEmpty {
             self.messageView.show()
         } else {
@@ -129,8 +137,6 @@ class VocabularyTVC: UITableViewController, AddWordVCDelegate {
             }
         }
     }
-    
-    
     
     func wordDidCreate(_ word: Word) {
         words.insert(word, at: 0)

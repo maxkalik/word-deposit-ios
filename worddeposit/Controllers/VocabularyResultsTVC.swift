@@ -7,9 +7,6 @@
 //
 
 import UIKit
-import FirebaseAuth
-import FirebaseFirestore
-import FirebaseStorage
 
 class VocabularyResultsTVC: UITableViewController {
 
@@ -20,17 +17,12 @@ class VocabularyResultsTVC: UITableViewController {
     // MARK: - Instances
     
     var filteredWords = [Word]()
-    var db: Firestore!
-    var storage: Storage!
+
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        db = Firestore.firestore()
-        storage = Storage.storage()
-        
         setupTableView()
     }
     
@@ -75,31 +67,11 @@ extension VocabularyResultsTVC {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
             
-            let selectedWord = filteredWords[indexPath.row]
+            let word = filteredWords[indexPath.row]
             
-            self.filteredWords.remove(at: indexPath.row)
-            tableView.deleteRows(at: [IndexPath(item: indexPath.row, section: 0)], with: .fade)
-
-            // TODO: shoud be rewrited in the singleton
-
-            guard let user = Auth.auth().currentUser else { return }
-            
-            db.collection("users").document(user.uid).collection("words").document(selectedWord.id).delete { (error) in
-                if let error = error {
-                    self.simpleAlert(title: "Error", msg: error.localizedDescription)
-                    debugPrint(error.localizedDescription)
-                    return
-                }
-
-                if selectedWord.imgUrl.isNotEmpty {
-                    self.storage.reference().child("/\(user.uid)/\(selectedWord.id).jpg").delete { (error) in
-                        if let error = error {
-                            self.simpleAlert(title: "Error", msg: error.localizedDescription)
-                            debugPrint(error.localizedDescription)
-                            return
-                        }
-                    }
-                }
+            UserService.shared.removeWord(word) {
+                self.filteredWords.remove(at: indexPath.row)
+                tableView.deleteRows(at: [IndexPath(item: indexPath.row, section: 0)], with: .fade)
             }
         }
     }
