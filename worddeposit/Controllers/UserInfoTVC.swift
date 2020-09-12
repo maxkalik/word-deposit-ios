@@ -1,5 +1,4 @@
 import UIKit
-import FirebaseAuth
 
 protocol UserInfoTVCDelegate: AnyObject {
     func updateUserInfo(firstName: String, lastName: String)
@@ -17,7 +16,6 @@ class UserInfoTVC: UITableViewController {
     
     // MARK: - Instances
     
-    var auth: Auth!
     var email: String!
     var firstName: String!
     var lastName: String!
@@ -27,7 +25,6 @@ class UserInfoTVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        auth = Auth.auth()
         firstNameTextField.text = firstName
         lastNameTextField.text = lastName
         doneButton.isEnabled = false
@@ -63,23 +60,14 @@ class UserInfoTVC: UITableViewController {
     }
     
     @IBAction func resetPasswordTouched(_ sender: UIButton) {
-        auth.sendPasswordReset(withEmail: email) { error in
-            if let error = error {
-                print(error.localizedDescription)
-            } else {
-                print("password reset success")
-            }
+        UserService.shared.resetPassword(withEmail: email) {
+            self.simpleAlert(title: "Password", msg: "Password reset success")
         }
     }
     
     @IBAction func deleteAccountTouched(_ sender: UIButton) {
-        let user = auth.currentUser
-        user?.delete { error in
-          if let error = error {
-            print(error.localizedDescription)
-          } else {
-            print("account deleted successfully")
-          }
+        UserService.shared.deleteAccount {
+            self.simpleAlert(title: "Account", msg: "Your account has been removed")
         }
     }
 }

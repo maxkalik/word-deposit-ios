@@ -1,6 +1,4 @@
 import UIKit
-import FirebaseAuth
-import FirebaseFirestore
 
 /* use the link below where you can store user token */
 /* https://github.com/jrendel/SwiftKeychainWrapper */

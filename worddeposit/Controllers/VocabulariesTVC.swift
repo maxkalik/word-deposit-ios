@@ -40,14 +40,17 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         setupTableView()
         view.addSubview(messageView)
         view.superview?.addSubview(progressHUD)
-        progressHUD.show()
+        
+        print("0. view did load")
         prepareContent()
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupMessage()
         messageView.hide()
+        checkVocabulariesExist()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -60,38 +63,34 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         NotificationCenter.default.removeObserver(self)
     }
     
-    
     // MARK: - Methods
     
     // fetching content and add it to the view
-    func prepareContent() {
-        
-        // TODO: - we have to call this method only if something changes because we have already vocabularies
-        
-        UserService.shared.fetchVocabularies { vocabularies in
+    private func prepareContent() {
+        if UserService.shared.vocabularies.count > 0 {
+            vocabularies.removeAll()
+            tableView.reloadData()
             
-            self.progressHUD.hide()
-            
-            if vocabularies.isEmpty {
-                self.setupMessage()
-                self.messageView.show()
-                self.isModalInPresentation = true
-            } else {
-                self.isModalInPresentation = false
-            }
-            
-            // Add a vocabulary
-            for index in 0..<vocabularies.count {
-                self.vocabularies.append(vocabularies[index])
+            for index in 0..<UserService.shared.vocabularies.count {
+                self.vocabularies.append(UserService.shared.vocabularies[index])
                 self.tableView.insertRows(at: [IndexPath(item: index, section: 0)], with: .fade)
             }
-            
+        }
+    }
+    
+    private func checkVocabulariesExist() {
+        if UserService.shared.vocabularies.isEmpty {
+            self.setupMessage()
+            self.messageView.show()
+            self.isModalInPresentation = true
+        } else {
+            self.isModalInPresentation = false
         }
     }
     
     func vocabularyDidCreate(_ vocabulary: Vocabulary) {
-        vocabularies.insert(vocabulary, at: 0)
-        tableView.insertRows(at: [IndexPath(item: 0, section: 0)], with: .fade)
+        self.vocabularies.insert(vocabulary, at: 0)
+        self.tableView.insertRows(at: [IndexPath(item: 0, section: 0)], with: .fade)
     }
     
     func vocabularyDidUpdate(_ vocabulary: Vocabulary, index: Int) {

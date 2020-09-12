@@ -1,6 +1,4 @@
 import UIKit
-import Firebase
-import FirebaseFirestore
 
 private let reuseIdentifier = XIBs.PracticeCVCell
 private let minWordsAmount = 10
@@ -32,6 +30,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
             userService.fetchVocabularies { vocabularies in
                 if vocabularies.isEmpty {
                     self.presentVocabulariesVC()
+                    self.progressHUD.hide()
                 } else {
                     userService.getCurrentVocabulary()
                     userService.fetchWords { words in

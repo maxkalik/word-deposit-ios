@@ -63,6 +63,17 @@ final class UserService {
         }
     }
     
+    func deleteAccount(complition: @escaping () -> Void) {
+        guard let currentUser = auth.currentUser else { return }
+        currentUser.delete { error in
+            if let error = error {
+                debugPrint(error.localizedDescription)
+                return
+            }
+            complition()
+        }
+    }
+    
     func logout(complition: @escaping () -> Void) {
         do {
             try auth.signOut()
@@ -466,6 +477,8 @@ final class UserService {
                 debugPrint(error.localizedDescription)
                 return
             }
+            guard let index = self.vocabularies.firstIndex(matching: vocabulary) else { return }
+            self.vocabularies.remove(at: index)
             complition()
         }
     }
