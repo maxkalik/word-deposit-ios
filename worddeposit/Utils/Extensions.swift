@@ -1,6 +1,4 @@
-import Foundation
-import Firebase
-import FirebaseStorage
+import UIKit
 
 extension String {
     var isNotEmpty: Bool {

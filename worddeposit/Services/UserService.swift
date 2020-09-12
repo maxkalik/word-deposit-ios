@@ -1,7 +1,7 @@
 import Foundation
 import Firebase
 import FirebaseAuth
-// import FirebaseStorage
+import FirebaseStorage
 
 final class UserService {
     
@@ -27,6 +27,41 @@ final class UserService {
     private init() {} // original singleton pattern difinition
     
     // MARK: - Methods - AUTH
+    
+    func signIn(withEmail email: String, password: String, complition: @escaping () -> Void) {
+        auth.signIn(withEmail: email, password: password) { result, error in
+            if let error = error {
+                debugPrint(error.localizedDescription)
+                return
+            }
+            complition()
+        }
+    }
+    
+    func signUp(withEmail email: String, password: String, complition: @escaping () -> Void) {
+        auth.createUser(withEmail: email, password: password) { result, error in
+            if let error = error {
+                debugPrint(error.localizedDescription)
+                return
+            }
+            guard let firUser = result?.user else { return }
+            let user = User.init(id: firUser.uid, email: email)
+            
+            self.setUser(user) {
+                complition()
+            }
+        }
+    }
+    
+    func resetPassword(withEmail email: String, complition: @escaping () -> Void) {
+        auth.sendPasswordReset(withEmail: email) { error in
+            if let error = error {
+                debugPrint(error.localizedDescription)
+                return
+            }
+            complition()
+        }
+    }
     
     func logout(complition: @escaping () -> Void) {
         do {
@@ -137,6 +172,19 @@ final class UserService {
     }
     
     // MARK: - Methods - SET
+    
+    func setUser(_ user: User, complition: @escaping () -> Void) {
+        let ref = db.collection("users").document(user.id)
+        let data = User.modelToData(user: user)
+        
+        ref.setData(data) { error in
+            if let error = error {
+                debugPrint(error.localizedDescription)
+                return
+            }
+            complition()
+        }
+    }
     
     func setVocabulary(_ vocabulary: Vocabulary, complition: @escaping (String) -> Void) {
         // creating new id

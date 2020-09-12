@@ -70,13 +70,22 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         
         UserService.shared.fetchVocabularies { vocabularies in
             
+            self.progressHUD.hide()
+            
+            if vocabularies.isEmpty {
+                self.setupMessage()
+                self.messageView.show()
+                self.isModalInPresentation = true
+            } else {
+                self.isModalInPresentation = false
+            }
+            
             // Add a vocabulary
             for index in 0..<vocabularies.count {
                 self.vocabularies.append(vocabularies[index])
                 self.tableView.insertRows(at: [IndexPath(item: index, section: 0)], with: .fade)
             }
             
-            self.progressHUD.hide()
         }
     }
     

@@ -1,6 +1,4 @@
 import UIKit
-import FirebaseAuth
-import FirebaseFirestore
 
 class VocabulariesTVCell: UITableViewCell {
     
