@@ -1,6 +1,10 @@
 import UIKit
-import Firebase
 import FirebaseFirestore
+
+protocol VocabularyDetailsVCDelegate: AnyObject {
+    func vocabularyDidCreate(_ vocabulary: Vocabulary)
+    func vocabularyDidUpdate(_ vocabulary: Vocabulary, index: Int)
+}
 
 class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     
@@ -18,19 +22,16 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     var vocabulary: Vocabulary?
     var isFirstSelected = true
     
-    var db: Firestore!
-    var userRef: DocumentReference!
-    
     private var isKeyboardShowing = false
     private var keyboardHeight: CGFloat!
     
+    weak var delegate: VocabularyDetailsVCDelegate?
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        db = Firestore.firestore()
-        
+
         // Primary setting up UI
         setupUI()
 
@@ -65,6 +66,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         languageTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
+    
     // MARK: - objc Methods
     
     @objc func keyboardWillShow(_ notification: NSNotification) {
@@ -82,7 +84,6 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
             }
         }
         
-        // saveButton.layer.opacity = 1
         buttonsStackView.alpha = 1
     }
     
@@ -95,10 +96,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
             self.view.layoutIfNeeded()
         }
         
-        if vocabulary != nil {
-            // saveButton.layer.opacity = 0
-            buttonsStackView.alpha = 0
-        }
+        if vocabulary != nil { buttonsStackView.alpha = 0 }
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
@@ -142,20 +140,6 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    private func setVocabulary(_ vocabulary: Vocabulary) {
-        let ref = userRef.collection("vocabularies").document(vocabulary.id)
-        let data = Vocabulary.modelToData(vocabulary: vocabulary)
-        ref.setData(data, merge: true) { (error) in
-            if let error = error {
-                self.simpleAlert(title: "Error", msg: error.localizedDescription)
-                self.progressHUD.hide()
-            }
-            // success
-            self.progressHUD.hide()
-            self.navigationController?.popViewController(animated: true)
-        }
-    }
-    
     // MARK: - IBActions
     
     @IBAction func cancelTapped(_ sender: UIButton) {
@@ -179,19 +163,24 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
             return
         }
         
-        guard let user = Auth.auth().currentUser else { return }
-        userRef = db.collection("users").document(user.uid)
-        
         if vocabulary == nil {
-            let vocabularyRef = userRef.collection("vocabularies").document()
-            vocabulary = Vocabulary.init(id: "", title: title, language: language, wordsAmount: 0, isSelected: isFirstSelected, timestamp: Timestamp())
-            vocabulary!.id = vocabularyRef.documentID
-            setVocabulary(vocabulary!)
+            self.vocabulary = Vocabulary.init(id: "", title: title, language: language, wordsAmount: 0, isSelected: isFirstSelected, timestamp: Timestamp())
+            UserService.shared.setVocabulary(vocabulary!) { id in
+                self.progressHUD.hide()
+                self.vocabulary!.id = id
+                self.navigationController?.popViewController(animated: true)
+                self.delegate?.vocabularyDidCreate(self.vocabulary!)
+            }
         } else {
-            guard var existingVocabulary = vocabulary else { return }
-            existingVocabulary.title = title
-            existingVocabulary.language = language
-            setVocabulary(existingVocabulary)
+            guard var vocabulary = self.vocabulary else { return }
+            vocabulary.title = title
+            vocabulary.language = language
+
+            UserService.shared.updateVocabulary(vocabulary) { index in
+                self.progressHUD.hide()
+                self.navigationController?.popViewController(animated: true)
+                self.delegate?.vocabularyDidUpdate(vocabulary, index: index)
+            }
         }
     }
 }

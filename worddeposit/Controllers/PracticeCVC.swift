@@ -1,6 +1,4 @@
 import UIKit
-import Firebase
-import FirebaseFirestore
 
 private let reuseIdentifier = XIBs.PracticeCVCell
 private let minWordsAmount = 10
@@ -8,8 +6,7 @@ private let minWordsAmount = 10
 class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIPopoverPresentationControllerDelegate {
 
     // MARK: - Instances
-    
-    var user = User()
+
     var words = [Word]()
     private var trainers = [PracticeTrainer]()
     
@@ -17,49 +14,85 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     var progressHUD = ProgressHUD(title: "Welcome")
     var messageView = MessageView()
     
-    /// Listeners
-    var auth: Auth!
-    var db: Firestore!
-    var authHandle: AuthStateDidChangeListenerHandle?
-    var vocabulariesListener: ListenerRegistration!
-    
-    /// References
-    var wordsRef: CollectionReference!
+    var isVocabularySwitched = false
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        auth = Auth.auth()
-        db = Firestore.firestore()
+
         trainers = PracticeTrainers().data
         registerViews()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         setupUI()
-        setCurrentUser()
+
+        let userService = UserService.shared
+        userService.fetchCurrentUser { user in
+            userService.fetchVocabularies { vocabularies in
+                if vocabularies.isEmpty {
+                    self.presentVocabulariesVC()
+                    self.progressHUD.hide()
+                } else {
+                    userService.getCurrentVocabulary()
+                    userService.fetchWords { words in
+                        self.progressHUD.hide()
+                        self.setupContent(words: words)
+                    }
+                }
+            }
+        }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(rawValue: vocabulariesSwitchNotificationKey), object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         messageView.frame.origin.y = collectionView.contentOffset.y
+        
+        if UserService.shared.vocabulary != nil && !isVocabularySwitched {
+            setupContent(words: UserService.shared.words)
+        }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        auth.removeStateDidChangeListener(authHandle!)
-        vocabulariesListener.remove()
-        collectionView.reloadData()
+    // MARK: - User Service Methods
+    
+    @objc func vocabularyDidSwitch() {
+        isVocabularySwitched = true
+        setupContent(words: UserService.shared.words)
     }
     
     // MARK: - Setup Views
     
+    private func setupContent(words: [Word]) {
+        self.words.removeAll()
+        self.words = words
+        
+        print("-------")
+        words.forEach { word in
+            print(word.example)
+        }
+        
+        if words.count < minWordsAmount {
+            setupMessage(wordsCount: words.count)
+            messageView.show()
+        } else {
+            messageView.hide()
+        }
+        
+        collectionView.reloadData()
+        collectionView.isHidden = false
+        isVocabularySwitched = false
+    }
+    
     private func setupUI() {
+        
+        // setup loading view
         self.view.addSubview(progressHUD)
         progressHUD.show()
+        
+        // setup collection view
         setupCollectionView()
+        
+        // setup message view
         collectionView.addSubview(messageView)
         messageView.hide()
         setupMessage(wordsCount: words.count)
@@ -85,116 +118,20 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         view.backgroundColor = UIColor.systemBackground
     }
     
-    // MARK: - Listeners Methods
-    
-    private func setCurrentUser() {
-        authHandle = auth.addStateDidChangeListener { (auth, user) in
-            guard let currentUser = auth.currentUser else { return }
-            let userRef = self.db.collection("users").document(currentUser.uid)
-            userRef.getDocument { (document, error) in
-                if let error = error {
-                    debugPrint(error.localizedDescription)
-                    return
-                }
-                if let document = document, document.exists {
-                    guard let data = document.data() else { return }
-                    self.user = User.init(data: data)
-                    self.progressHUD.setTitle(title: "Fetching words")
-                    
-                    // user defaults
-                    let defaults = UserDefaults.standard
-                    defaults.set(self.user.nativeLanguage, forKey: "native_language")
-                    defaults.set(self.user.notifications, forKey: "notifications")
-                    defaults.set(Date(), forKey: "last_run")
-                    
-                    self.setVocabulariesListener(from: userRef)
-                    
-                } else {
-                    print("Document does not exist")
-                }
-            }
+    private func presentVocabulariesVC() {
+        let storyboard = UIStoryboard(name: Storyboards.Home, bundle: .main)
+        let vc = storyboard.instantiateViewController(withIdentifier: Controllers.Vocabularies)
+        vc.modalPresentationStyle = .popover
+        if let popoverPresentationController = vc.popoverPresentationController {
+            popoverPresentationController.delegate = self
         }
+        self.present(vc, animated: true)
     }
     
-    private func setVocabulariesListener(from: DocumentReference) {
-        let vocabularyRef = from.collection("vocabularies")
-        vocabulariesListener = vocabularyRef.whereField("is_selected", isEqualTo: true).addSnapshotListener() { (querySnapshot, err) in
-            if let err = err {
-                print("Error getting documents: \(err)")
-                return
-            } else {
-                if querySnapshot!.documents.isEmpty {
-                    let storyboard = UIStoryboard(name: "Home", bundle: Bundle.main)
-                    let vc = storyboard.instantiateViewController(withIdentifier: "Vocabularies")
-                    vc.modalPresentationStyle = .popover
-                    if let popoverPresentationController = vc.popoverPresentationController {
-                        popoverPresentationController.delegate = self
-                    }
-                    self.present(vc, animated: true)
-                }
-                
-                for document in querySnapshot!.documents {
-                    let data = document.data()
-                    let vocabulary = Vocabulary.init(data: data)
-                    let defaults = UserDefaults.standard
-                    defaults.set(vocabulary.id, forKey: "vocabulary_id")
-                    
-                    // fetch words from current vocabulary
-                    print("From practices", vocabulary.id)
-                    self.fetchWords(from: vocabularyRef.document(vocabulary.id))
-                }
-            }
-        }
-    }
+    // MARK: -
     
-    private func fetchWords(from: DocumentReference) {
-        wordsRef = from.collection("words")
-        
-        wordsRef.getDocuments { (snapshot, error) in
-            if let error = error {
-                debugPrint(error.localizedDescription)
-                return
-            }
-            self.words.removeAll()
-            self.progressHUD.hide()
-            guard let documents = snapshot?.documents else { return }
-            
-            DispatchQueue.main.async {
-                if documents.count < minWordsAmount {
-                    self.setupMessage(wordsCount: documents.count)
-                    self.messageView.show()
-                } else {
-                    self.messageView.hide()
-                }
-            }
-            
-            for document in documents {
-                let data = document.data()
-                let word = Word.init(data: data)
-                self.words.append(word)
-            }
-            self.collectionView.reloadData()
-            self.collectionView.isHidden = false
-        }
-    }
-    
-    // MARK: - Make Word Desk
-    
-    func makeWordDesk(size: Int, wordsData: [Word], _ result: [Word] = []) -> [Word] {
-        var result = result
-        if wordsData.count < 5 {
-            return result
-        }
-        var tmpCount = size
-        if tmpCount <= 0 {
-            return result.shuffled()
-        }
-        let randomWord: Word = wordsData.randomElement() ?? wordsData[0]
-        if !result.contains(where: { $0.id == randomWord.id }) {
-            result.append(randomWord)
-            tmpCount -= 1
-        }
-        return makeWordDesk(size: tmpCount, wordsData: wordsData, result)
+    @IBAction func vocabulariesBarButtonPressed(_ sender: Any) {
+        print("vocabularies tapped")
     }
     
     // MARK: - UICollectinView Delegates
@@ -202,7 +139,6 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return trainers.count
     }
-
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
@@ -264,8 +200,6 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
             }
         }
     }
-    
-    
 }
 
 extension PracticeCVC: PracticeReadVCDelegate {
@@ -276,16 +210,8 @@ extension PracticeCVC: PracticeReadVCDelegate {
     }
     
     func onFinishTrainer(with words: [Word]) {
-        for word in words {
-            wordsRef.document(word.id).updateData(["right_answers" : word.rightAnswers, "wrong_answers" : word.wrongAnswers]) { error in
-                if let error = error {
-                    self.simpleAlert(title: "Error", msg: error.localizedDescription)
-                } else {
-                    let wordsForUpdate = self.words.map({ return $0.id == word.id ? word : $0 })
-                    self.words = wordsForUpdate
-                }
-            }
-            
+        UserService.shared.updateAnswersScore(words) {
+            self.words = UserService.shared.words
         }
     }
 }

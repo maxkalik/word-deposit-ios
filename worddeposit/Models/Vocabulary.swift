@@ -2,7 +2,7 @@ import Foundation
 import FirebaseFirestore
 
 
-struct Vocabulary {
+struct Vocabulary: Identifiable {
     var id: String
     var title: String
     var language: String

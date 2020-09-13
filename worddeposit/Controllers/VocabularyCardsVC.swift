@@ -1,5 +1,9 @@
 import UIKit
 
+protocol VocabularyCardsVCDelegate: VocabularyTVC {
+    func wordCardDidUpdate(word: Word, index: Int)
+}
+
 class VocabularyCardsVC: UIViewController {
 
     // MARK: - Outlets
@@ -21,21 +25,17 @@ class VocabularyCardsVC: UIViewController {
     
     // MARK: - Instances
     
-    var vocabularyId: String!
     var words = [Word]()
     var wordIndexPath: Int = 0
     var lastIndexPath: Int = 0
+    
+    weak var delegate: VocabularyCardsVCDelegate?
     
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupWordsCollectionView()
-        
-        let defaults = UserDefaults.standard
-        guard let vocabularyId = defaults.string(forKey: "vocabulary_id") else { return }
-        self.vocabularyId = vocabularyId
-        print("vocabulary id from card", vocabularyId)
         hideKeyboardWhenTappedAround()
     }
     
@@ -67,14 +67,13 @@ extension VocabularyCardsVC: UICollectionViewDelegate, UICollectionViewDataSourc
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = wordsCollectionView.dequeueReusableCell(withReuseIdentifier: XIBs.VocabularyCardCVCell, for: indexPath) as? VocabularyCardCVCell {
             // here was an fatal error - out of range
-            cell.configureCell(vocabularyId: self.vocabularyId, word: words[indexPath.item], delegate: self)
+            cell.configureCell(word: words[indexPath.item], index: indexPath.item, delegate: self)
             return cell
         }
         return UICollectionViewCell()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        // return CGSize(width: view.frame.width, height: view.safeAreaLayoutGuide.layoutFrame.size.height)
         return view.frame.size
     }
 }
@@ -92,5 +91,10 @@ extension VocabularyCardsVC: VocabularyCardCVCellDelegate {
     
     func disableEnableScroll(isKeyboardShow: Bool) {
         wordsCollectionView.isScrollEnabled = !isKeyboardShow
+    }
+    
+    func wordDidUpdate(word: Word, index: Int) {
+        words[index] = word
+        delegate?.wordCardDidUpdate(word: word, index: index)
     }
 }

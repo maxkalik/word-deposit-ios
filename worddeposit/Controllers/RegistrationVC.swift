@@ -1,6 +1,4 @@
 import UIKit
-import FirebaseAuth
-import FirebaseFirestore
 
 class RegistrationVC: UIViewController {
     
@@ -21,17 +19,10 @@ class RegistrationVC: UIViewController {
     private var isKeyboardShowing = false
     private var keyboardHeight: CGFloat!
     
-    // MARK: - Instances
-    
-    var auth: Auth!
-    var db: Firestore!
-    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        auth = Auth.auth()
-        db = Firestore.firestore()
         
         // Spinner
         self.view.addSubview(progressHUD)
@@ -45,9 +36,9 @@ class RegistrationVC: UIViewController {
         progressHUD.hide()
         
         // Keyboard observers - willshow willhide
-        let notificationCeneter: NotificationCenter = NotificationCenter.default
-        notificationCeneter.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        notificationCeneter.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        let nc = NotificationCenter.default
+        nc.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        nc.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -104,21 +95,10 @@ class RegistrationVC: UIViewController {
         loginButton.alpha = 1
     }
     
-    private func createUserInFirestore(user: User) {
-        let newUserRef = db.collection("users").document(user.id)
-        let data = User.modelToData(user: user)
-        
-        newUserRef.setData(data) { (error) in
-            if let error = error {
-                self.showError(error)
-                self.progressHUD.hide()
-            } else {
-                self.progressHUD.hide()
-                let storyboard = UIStoryboard(name: "Home", bundle: nil)
-                let homeViewController = storyboard.instantiateViewController(identifier: Storyboards.Home) as? UITabBarController
-                self.view.window?.rootViewController = homeViewController
-            }
-        }
+    private func setupApp() {
+        let storyboard = UIStoryboard(name: Storyboards.Home, bundle: nil)
+        let homeViewController = storyboard.instantiateViewController(identifier: Storyboards.Home) as? UITabBarController
+        self.view.window?.rootViewController = homeViewController
     }
     
     private func showError(_ error: Error) {
@@ -138,15 +118,11 @@ class RegistrationVC: UIViewController {
         }
         self.progressHUD.show()
         
-        auth.createUser(withEmail: email, password: password) { (authResult, error) in
-            if let error = error { self.showError(error) }
-            
-            guard let firUser = authResult?.user else { return }
-            let user = User.init(id: firUser.uid, email: email)
-            self.createUserInFirestore(user: user)
+        UserService.shared.signUp(withEmail: email, password: password) {
+            self.progressHUD.hide()
+            self.setupApp()
         }
     }
-    
     
     @IBAction func onHaveAccountBtnPress(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)

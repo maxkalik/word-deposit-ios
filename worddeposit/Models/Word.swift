@@ -1,7 +1,7 @@
 import Foundation
 import FirebaseFirestore
 
-struct Word: Equatable {
+struct Word: Equatable, Identifiable {
     var imgUrl: String
     var example: String
     var translation: String

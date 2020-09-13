@@ -1,5 +1,4 @@
 import UIKit
-import FirebaseAuth
 
 class LoginVC: UIViewController {
     
@@ -24,16 +23,12 @@ class LoginVC: UIViewController {
     private var isKeyboardShowing = false
     private var keyboardHeight: CGFloat!
     
-    // MARK: - Instances
-    
-    private var auth: Auth!
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        auth = Auth.auth()
-        
+
         // Spinner
         self.view.addSubview(progressHUD)
         
@@ -46,9 +41,9 @@ class LoginVC: UIViewController {
         progressHUD.hide()
         
         // Keyboard observers - willshow willhide
-        let notificationCeneter: NotificationCenter = NotificationCenter.default
-        notificationCeneter.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        notificationCeneter.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        let nc = NotificationCenter.default
+        nc.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        nc.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -115,7 +110,7 @@ class LoginVC: UIViewController {
     }
     
     // MARK: - IBActions
-    @IBAction func onSignInBtnPress(_ sender: Any) {
+    @IBAction func onSignInBtnPress(_ sender: UIButton) {
         progressHUD.show()
         guard let email = emailTextField.text, email.isNotEmpty,
               let password = passwordTextField.text, password.isNotEmpty else {
@@ -124,15 +119,9 @@ class LoginVC: UIViewController {
                 return
         }
         
-        auth.signIn(withEmail: email, password: password) { [weak self] authResult, error in
-            if let error = error {
-                self?.simpleAlert(title: "Error", msg: error.localizedDescription)
-                //TODO: - Check infinite loading
-                self?.progressHUD.hide()
-                return
-            }
-            self?.progressHUD.hide()
-            self?.showHomeVC()
+        UserService.shared.signIn(withEmail: email, password: password) {
+            self.progressHUD.hide()
+            self.showHomeVC()
         }
     }
 }

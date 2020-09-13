@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		110F5E3724FD673D00C463A4 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110F5E3624FD673D00C463A4 /* UserService.swift */; };
+		1117D08F25023675000D864F /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1117D08E25023675000D864F /* Array.swift */; };
 		11284211248E7C5700A014E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284210248E7C5700A014E9 /* AppDelegate.swift */; };
 		11284213248E7C5700A014E9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284212248E7C5700A014E9 /* SceneDelegate.swift */; };
 		11284218248E7C5700A014E9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11284216248E7C5700A014E9 /* Main.storyboard */; };
@@ -31,6 +33,7 @@
 		1158D31524917EC50087DC96 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1158D31424917EC50087DC96 /* GoogleService-Info.plist */; };
 		11621A2524C24819003087AB /* ProfileTVCCheckmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11621A2424C24819003087AB /* ProfileTVCCheckmark.swift */; };
 		11621A2724C25EFA003087AB /* WKWebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11621A2624C25EFA003087AB /* WKWebVC.swift */; };
+		1164FB532508CE150023326A /* MakeWordDesk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1164FB522508CE150023326A /* MakeWordDesk.swift */; };
 		116BC94C249182BD00968DA6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC94B249182BD00968DA6 /* Constants.swift */; };
 		116BC94E2491836B00968DA6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC94D2491836B00968DA6 /* Extensions.swift */; };
 		1171E70624981CDD00805D35 /* VocabularyCardCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1171E70424981CDD00805D35 /* VocabularyCardCVCell.swift */; };
@@ -63,6 +66,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		110F5E3624FD673D00C463A4 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		1117D08E25023675000D864F /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		1128420D248E7C5700A014E9 /* worddeposit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = worddeposit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11284210248E7C5700A014E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		11284212248E7C5700A014E9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -89,6 +94,7 @@
 		1158D31424917EC50087DC96 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		11621A2424C24819003087AB /* ProfileTVCCheckmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfileTVCCheckmark.swift; path = worddeposit/Controllers/ProfileTVCCheckmark.swift; sourceTree = SOURCE_ROOT; };
 		11621A2624C25EFA003087AB /* WKWebVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WKWebVC.swift; path = worddeposit/Controllers/WKWebVC.swift; sourceTree = SOURCE_ROOT; };
+		1164FB522508CE150023326A /* MakeWordDesk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeWordDesk.swift; sourceTree = "<group>"; };
 		116BC94B249182BD00968DA6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		116BC94D2491836B00968DA6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		1171E70424981CDD00805D35 /* VocabularyCardCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyCardCVCell.swift; sourceTree = "<group>"; };
@@ -135,6 +141,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		110F5E3524FD670500C463A4 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				110F5E3624FD673D00C463A4 /* UserService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		1117D08D2502365B000D864F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1117D08E25023675000D864F /* Array.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		11284204248E7C5700A014E9 = {
 			isa = PBXGroup;
 			children = (
@@ -156,6 +178,8 @@
 		1128420F248E7C5700A014E9 /* worddeposit */ = {
 			isa = PBXGroup;
 			children = (
+				1117D08D2502365B000D864F /* Extensions */,
+				110F5E3524FD670500C463A4 /* Services */,
 				11D879B12494170B00FF7BA3 /* worddeposit.entitlements */,
 				156C80BA24DDFEB10077905D /* Reusable Components */,
 				116BC94A249182A500968DA6 /* Utils */,
@@ -248,6 +272,7 @@
 				119DBF5624ACCFBF009124B7 /* Configurations.swift */,
 				116BC94B249182BD00968DA6 /* Constants.swift */,
 				116BC94D2491836B00968DA6 /* Extensions.swift */,
+				1164FB522508CE150023326A /* MakeWordDesk.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -430,6 +455,7 @@
 				116BC94C249182BD00968DA6 /* Constants.swift in Sources */,
 				11B20D6D24C8E00800C1CB4E /* PracticeReadVC.swift in Sources */,
 				11F0327024C8272700BD6350 /* PracticeCVC.swift in Sources */,
+				1164FB532508CE150023326A /* MakeWordDesk.swift in Sources */,
 				112EA43524C84A2900FA55E3 /* PracticeTrainers.swift in Sources */,
 				150FA46124D8B6E40083D653 /* Vocabulary.swift in Sources */,
 				118162EF24BFB08E0088C0E1 /* UserInfoTVC.swift in Sources */,
@@ -456,6 +482,8 @@
 				1158D30E24917B9B0087DC96 /* VocabularyTVCell.swift in Sources */,
 				156C80B724D8D27E0077905D /* VocabularyDetailsVC.swift in Sources */,
 				11284233248E83BB00A014E9 /* VocabularyTVC.swift in Sources */,
+				1117D08F25023675000D864F /* Array.swift in Sources */,
+				110F5E3724FD673D00C463A4 /* UserService.swift in Sources */,
 				11284213248E7C5700A014E9 /* SceneDelegate.swift in Sources */,
 				117FA4CC24CEEC350043024D /* PracticeDeskItemButton.swift in Sources */,
 				112F9C7524F6F201007E92D8 /* SuccessMessageVC.swift in Sources */,

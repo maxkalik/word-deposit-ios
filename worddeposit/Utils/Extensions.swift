@@ -1,6 +1,4 @@
-import Foundation
-import Firebase
-import FirebaseStorage
+import UIKit
 
 extension String {
     var isNotEmpty: Bool {
@@ -29,6 +27,8 @@ extension UIViewController {
 }
 
 extension UIImage {
+    
+    // Resize image before uploading
     func resized(toWidth width: CGFloat) -> UIImage? {
         let canvas = CGSize(width: width, height: CGFloat(ceil(width/size.width * size.height)))
         let format = imageRendererFormat
@@ -37,6 +37,7 @@ extension UIImage {
         }
     }
     
+    // Draw circle with color for image picker
     class func circle(diameter: CGFloat, color: UIColor) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: diameter, height: diameter), false, 0)
         // Return the current graphics context (width, height, bpc, bpp, row bytes -> from UIGraphicsBeginImageContextWithOptions()
@@ -66,14 +67,3 @@ extension UIImageView {
         self.clipsToBounds = true
     }
 }
-
-/*
-extension Firestore {
-    var categories: Query {
-        return collection("categories").order(by: "timeStamp", descending: true)
-    }
-    func products(categoryId: String) -> Query {
-        return collection("products").whereField("category", isEqualTo: categoryId).order(by: "timeStamp", descending: true)
-    }
-}
-*/

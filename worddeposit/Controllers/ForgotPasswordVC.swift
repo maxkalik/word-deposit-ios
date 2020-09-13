@@ -1,5 +1,4 @@
 import UIKit
-import FirebaseAuth
 
 class ForgotPasswordVC: UIViewController {
 
@@ -28,9 +27,9 @@ class ForgotPasswordVC: UIViewController {
         progressHUD.hide()
         
         // Keyboard observers - willshow willhide
-        let notificationCeneter: NotificationCenter = NotificationCenter.default
-        notificationCeneter.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        notificationCeneter.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        let nc = NotificationCenter.default
+        nc.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        nc.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -81,18 +80,14 @@ class ForgotPasswordVC: UIViewController {
     // MARK: - Methods
     
     // MARK: - IBActions
-    @IBAction func onResetPasswordBtnPress(_ sender: RoundedButton) {
+    @IBAction func onResetPasswordBtnPress(_ sender: UIButton) {
         guard let email = emailTextField.text, email.isNotEmpty else {
             simpleAlert(title: "Error", msg: "Fill email field out")
             return
         }
         progressHUD.show()
-        Auth.auth().sendPasswordReset(withEmail: email) { (error) in
-            if let error = error {
-                self.progressHUD.hide()
-                self.simpleAlert(title: "Error", msg: error.localizedDescription)
-                return
-            }
+        
+        UserService.shared.resetPassword(withEmail: email) {
             self.navigationController?.popViewController(animated: true)
             self.progressHUD.hide()
         }
