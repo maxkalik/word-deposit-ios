@@ -33,15 +33,12 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(vocabulariesSwitchNotificationKey), object: nil)
         
         setupTableView()
         view.addSubview(messageView)
         view.superview?.addSubview(progressHUD)
-        
-        print("0. view did load")
         prepareContent()
 
     }

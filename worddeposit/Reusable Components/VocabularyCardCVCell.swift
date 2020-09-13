@@ -211,6 +211,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
             self.word.imgUrl = url.absoluteString
             UserService.shared.updateWordImageUrl(self.word) {
                 self.pictureLoader.stopAnimating()
+                self.removePictureButton.isHidden = false
                 self.delegate?.wordDidUpdate(word: self.word, index: self.indexItem)
             }
         }

@@ -126,8 +126,8 @@ class AddWordVC: UIViewController {
         }
         guard let description = wordDescriptionTextField.text else { return }
         
+        // TODO: - try to make this process in background (without canceling on the dismissing view)
         if self.isImageSet {
-            
             guard let image = wordImagePickerBtn.imageView?.image else {
                 simpleAlert(title: "Error", msg: "Fill all fields")
                 progressHUD.hide()
