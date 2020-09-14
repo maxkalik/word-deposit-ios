@@ -41,7 +41,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
             }
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(rawValue: vocabulariesSwitchNotificationKey), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(rawValue: Keys.vocabulariesSwitchNotificationKey), object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {

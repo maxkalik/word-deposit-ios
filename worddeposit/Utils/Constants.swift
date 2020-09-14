@@ -53,3 +53,7 @@ struct Images {
     static let trainerWordToTranslate = "trainer-word-to-translate.png"
     static let trainerTranslateToWord = "trainer-translate-to-word.png"
 }
+
+struct Keys {
+    static let vocabulariesSwitchNotificationKey = "com.maxkalik.worddeposit.vocabulariesSwitchNotificationKey"
+}

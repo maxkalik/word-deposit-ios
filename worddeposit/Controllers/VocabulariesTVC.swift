@@ -1,13 +1,11 @@
 import UIKit
 
-let vocabulariesSwitchNotificationKey = "com.maxkalik.worddeposit.vocabulariesSwitchNotificationKey"
-
 class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
 
     // MARK: - Instances
     
-    var vocabularies = [Vocabulary]()
-    var selectedVocabularyIndex: Int? {
+    private var vocabularies = [Vocabulary]()
+    private var selectedVocabularyIndex: Int? {
         // get first vocabulary is selected
         get {
             if vocabularies.count > 0 {
@@ -26,15 +24,15 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         }
     }
     
-    var messageView = MessageView()
-    var progressHUD = ProgressHUD()
+    private var messageView = MessageView()
+    private var progressHUD = ProgressHUD()
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let nc = NotificationCenter.default
-        nc.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(vocabulariesSwitchNotificationKey), object: nil)
+        nc.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(Keys.vocabulariesSwitchNotificationKey), object: nil)
         
         setupTableView()
         view.addSubview(messageView)
@@ -65,13 +63,16 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     // fetching content and add it to the view
     private func prepareContent() {
         if UserService.shared.vocabularies.count > 0 {
-            vocabularies.removeAll()
-            tableView.reloadData()
+            self.vocabularies.removeAll()
+            self.tableView.reloadData()
             
-            for index in 0..<UserService.shared.vocabularies.count {
-                self.vocabularies.append(UserService.shared.vocabularies[index])
-                self.tableView.insertRows(at: [IndexPath(item: index, section: 0)], with: .fade)
-            }
+            /// main queue dispatching here because we need to avoid a warning UITableViewAlertForLayoutOutsideViewHierarchy
+             DispatchQueue.main.async {
+                for index in 0..<UserService.shared.vocabularies.count {
+                    self.vocabularies.append(UserService.shared.vocabularies[index])
+                    self.tableView.insertRows(at: [IndexPath(item: index, section: 0)], with: .fade)
+                }
+             }
         }
     }
     
@@ -100,7 +101,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         self.tableView.deleteRows(at: [IndexPath(item: index, section: 0)], with: .fade)
     }
     
-    func setupMessage() {
+    private func setupMessage() {
         messageView.setTitles(
             messageTxt: "You have no any vocabularies yet.\nPlease add them.",
             buttonTitle: "+ Add vocabulary",
@@ -138,7 +139,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         UIView.transition(with: window, duration: duration, options: options, animations: nil, completion: nil)
     }
     
-    func setupTableView() {
+    private func setupTableView() {
         let nib = UINib(nibName: XIBs.VocabulariesTVCell, bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: XIBs.VocabulariesTVCell)
         tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
@@ -162,7 +163,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
                 
                 UserService.shared.fetchWords { _ in
                     // Post notification for Practice and Vocabulary views
-                    NotificationCenter.default.post(name: Notification.Name(vocabulariesSwitchNotificationKey), object: nil)
+                    NotificationCenter.default.post(name: Notification.Name(Keys.vocabulariesSwitchNotificationKey), object: nil)
                 }
             }
         } else {

@@ -3,9 +3,6 @@ import YPImagePicker
 
 class YPImagePickerConfig {
     
-    // Set the default configuration for all pickers
-//    YPImagePickerConfiguration.shared = config
-    
     var config = YPImagePickerConfiguration()
     
     func defaultConfig() -> YPImagePickerConfiguration {

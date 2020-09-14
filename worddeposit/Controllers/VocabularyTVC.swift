@@ -35,7 +35,7 @@ class VocabularyTVC: UITableViewController {
         
         let nc = NotificationCenter.default
         
-        nc.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(vocabulariesSwitchNotificationKey), object: nil)
+        nc.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(Keys.vocabulariesSwitchNotificationKey), object: nil)
     }
     
     @objc func vocabularyDidSwitch() {

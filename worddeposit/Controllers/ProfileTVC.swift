@@ -109,6 +109,10 @@ class ProfileTVC: UITableViewController {
         UIView.transition(with: window, duration: duration, options: options, animations: nil, completion: nil)
     }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
+    }
+    
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footerView = UIView()
         if section == 3 {

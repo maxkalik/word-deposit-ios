@@ -51,6 +51,12 @@ class UserInfoTVC: UITableViewController {
         }
     }
     
+    // MARK: - Table View Delegate
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
+    }
+    
     // MARK: - IBActions
     
     @IBAction func doneTouched(_ sender: UIBarButtonItem) {
