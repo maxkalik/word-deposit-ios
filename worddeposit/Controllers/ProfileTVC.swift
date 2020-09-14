@@ -91,7 +91,7 @@ class ProfileTVC: UITableViewController {
     }
     
     private func showLoginVC() {
-       let storyboard = UIStoryboard(name: "Main", bundle: nil)
+       let storyboard = UIStoryboard(name: Storyboards.Main, bundle: nil)
        let loginVC = storyboard.instantiateViewController(identifier: Storyboards.Login)
         
         guard let window = self.view.window else {

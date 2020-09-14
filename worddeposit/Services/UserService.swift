@@ -162,19 +162,21 @@ final class UserService {
     
     // Get current vocabulary and set it to the var
     func getCurrentVocabulary() {
-        // here should be checking if array is not empty then check if any vocabulary is Selected if not turn on and update
+        /// here should be checking if array is not empty then check if any vocabulary is Selected if not turn on and update
         let index = self.vocabularies.firstIndex { vocabulary -> Bool in
             return vocabulary.isSelected
         }
         guard let i = index else { return }
         self.vocabulary = self.vocabularies[i]
+        
+        /// Creating references
         self.vocabularyRef = self.vocabulariesRef.document(self.vocabularies[i].id)
+        self.wordsRef = vocabularyRef.collection("words")
     }
     
     // Fetch all words from particular vocabulary (id) and complition will take an array of fetched words
     func fetchWords(complition: @escaping ([Word]) -> Void) {
         /// Setup global ref if vocabularyRef has a currenct vocabulary id
-        self.wordsRef = vocabularyRef.collection("words")
         let ref = wordsRef.order(by: "timestamp", descending: true)
         if self.vocabulary != nil {
             ref.getDocuments { (snapshot, error) in
@@ -510,6 +512,26 @@ final class UserService {
     
     // MARK: - Methods - REMOVE
     
+    // Remove current user with all vocabularies and words with images
+    func removeAccountData(complition: @escaping () -> Void) {
+        let group = DispatchGroup()
+        vocabularies.forEach { vocabulary in
+            group.enter()
+            self.removeAllWordImagesFrom(vocabulary: vocabulary) {
+                group.leave()
+            }
+        }
+        group.notify(queue: .main) {
+            self.userRef.delete { error in
+                if let error = error {
+                    debugPrint(error.localizedDescription)
+                    return
+                }
+                complition()
+            }
+        }
+    }
+    
     // Remove vocabulary from db
     func removeVocabulary(_ vocabulary: Vocabulary, complition: @escaping () -> Void) {
         let ref: DocumentReference = vocabulariesRef.document(vocabulary.id)
@@ -530,7 +552,8 @@ final class UserService {
     }
     
     // Remove all word images from particular vocabulary
-    func removeAllWordImagesFrom(vocabulary: Vocabulary) {
+    func removeAllWordImagesFrom(vocabulary: Vocabulary, complition: (() -> Void)? = nil) {
+        let group = DispatchGroup()
         let ref: DocumentReference = vocabulariesRef.document(vocabulary.id)
         /// Filtering all words with img_url
         ref.collection("words").order(by: "img_url").getDocuments { (snapshot, error) in
@@ -540,13 +563,19 @@ final class UserService {
             }
             guard let documents = snapshot?.documents else { return }
             for document in documents {
+                group.enter()
                 let data = document.data()
                 let word = Word.init(data: data)
                 if word.imgUrl.isNotEmpty {
                     // TODO: - try to find a solution with batch
-                    self.removeWordImageFrom(vocabularyId: vocabulary.id, wordId: word.id)
+                    self.removeWordImageFrom(vocabularyId: vocabulary.id, wordId: word.id) {
+                        group.leave()
+                    }
                 }
             }
+        }
+        group.notify(queue: .main) {
+            complition?()
         }
     }
     

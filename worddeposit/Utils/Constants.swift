@@ -2,6 +2,7 @@ import Foundation
 import UIKit
 
 struct Storyboards {
+    static let Main = "Main"
     static let Login = "Login"
     static let Home = "Home"
     static let VocabularyResults = "VocabularyResultsTVC"

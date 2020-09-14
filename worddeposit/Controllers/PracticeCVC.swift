@@ -44,10 +44,13 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         NotificationCenter.default.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(rawValue: Keys.vocabulariesSwitchNotificationKey), object: nil)
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        messageView.frame.origin.y = collectionView.contentOffset.y
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        messageView.frame.origin.y = collectionView.contentOffset.y
-        
         if UserService.shared.vocabulary != nil && !isVocabularySwitched {
             setupContent(words: UserService.shared.words)
         }

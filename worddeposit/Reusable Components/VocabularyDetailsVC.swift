@@ -37,8 +37,9 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
 
         // all observers here because it is the last item in the array of controller
         // Keyboard observers
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        let nc = NotificationCenter.default
+        nc.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        nc.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         // TextField observers
         titleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
@@ -106,6 +107,8 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         guard let vocabulary = self.vocabulary else {
             if title.isNotEmpty && language.isNotEmpty {
                 enableAllButtons()
+            } else {
+                disableAllButtons()
             }
             return
         }

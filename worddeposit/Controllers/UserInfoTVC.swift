@@ -57,6 +57,27 @@ class UserInfoTVC: UITableViewController {
         return 50
     }
     
+    // MARK: - Methods
+    
+    private func showLoginVC() {
+        let storyboard = UIStoryboard(name: Storyboards.Main, bundle: nil)
+        let loginVC = storyboard.instantiateViewController(identifier: Storyboards.Login)
+        
+        guard let window = self.view.window else {
+            self.view.window?.rootViewController = loginVC
+            self.view.window?.makeKeyAndVisible()
+            return
+        }
+        
+        window.rootViewController = loginVC
+        window.makeKeyAndVisible()
+
+        let options: UIView.AnimationOptions = .transitionCrossDissolve
+        let duration: TimeInterval = 0.3
+        
+        UIView.transition(with: window, duration: duration, options: options, animations: nil, completion: nil)
+    }
+    
     // MARK: - IBActions
     
     @IBAction func doneTouched(_ sender: UIBarButtonItem) {
@@ -72,8 +93,15 @@ class UserInfoTVC: UITableViewController {
     }
     
     @IBAction func deleteAccountTouched(_ sender: UIButton) {
-        UserService.shared.deleteAccount {
-            self.simpleAlert(title: "Account", msg: "Your account has been removed")
-        }
+        let alert = UIAlertController(title: "Are you sure?", message: "If you are sure your account, all vocabularies and words will be removed permanently", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Remove", style: .default, handler: { (action) in
+            UserService.shared.removeAccountData() {
+                UserService.shared.deleteAccount {
+                    self.showLoginVC()
+                }
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
 }

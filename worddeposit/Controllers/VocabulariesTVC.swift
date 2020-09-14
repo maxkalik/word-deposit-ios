@@ -38,20 +38,18 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         view.addSubview(messageView)
         view.superview?.addSubview(progressHUD)
         prepareContent()
-
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        messageView.frame.origin.y = tableView.contentOffset.y
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupMessage()
         messageView.hide()
-        checkVocabulariesExist()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        messageView.frame.origin.y = tableView.contentOffset.y
-    }
+        checkVocabulariesExist()    }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -80,15 +78,21 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         if UserService.shared.vocabularies.isEmpty {
             self.setupMessage()
             self.messageView.show()
+            self.tableView.isScrollEnabled = false
             self.isModalInPresentation = true
         } else {
+            self.tableView.isScrollEnabled = true
             self.isModalInPresentation = false
         }
     }
     
     func vocabularyDidCreate(_ vocabulary: Vocabulary) {
-        self.vocabularies.insert(vocabulary, at: 0)
-        self.tableView.insertRows(at: [IndexPath(item: 0, section: 0)], with: .fade)
+        vocabularies.insert(vocabulary, at: 0)
+        tableView.insertRows(at: [IndexPath(item: 0, section: 0)], with: .fade)
+        if vocabularies.count == 1 {
+            UserService.shared.getCurrentVocabulary()
+            NotificationCenter.default.post(name: Notification.Name(Keys.vocabulariesSwitchNotificationKey), object: nil)
+        }
     }
     
     func vocabularyDidUpdate(_ vocabulary: Vocabulary, index: Int) {
@@ -121,7 +125,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     }
     
     private func showLoginVC() {
-       let storyboard = UIStoryboard(name: "Main", bundle: nil)
+       let storyboard = UIStoryboard(name: Storyboards.Main, bundle: nil)
        let loginVC = storyboard.instantiateViewController(identifier: Storyboards.Login)
         
         guard let window = self.view.window else {
@@ -162,7 +166,8 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
                 UserService.shared.getCurrentVocabulary()
                 
                 UserService.shared.fetchWords { _ in
-                    // Post notification for Practice and Vocabulary views
+                    
+                    /// Post notification for Practice and Vocabulary views
                     NotificationCenter.default.post(name: Notification.Name(Keys.vocabulariesSwitchNotificationKey), object: nil)
                 }
             }
