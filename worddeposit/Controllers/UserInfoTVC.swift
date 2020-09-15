@@ -16,10 +16,12 @@ class UserInfoTVC: UITableViewController {
     
     // MARK: - Instances
     
-    var email: String!
-    var firstName: String!
-    var lastName: String!
+    private var email: String!
+    private var firstName: String!
+    private var lastName: String!
     weak var delegate: UserInfoTVCDelegate?
+    
+    private var progressHUD = ProgressHUD()
     
     // MARK: - Lifecycle
     
@@ -42,7 +44,7 @@ class UserInfoTVC: UITableViewController {
         lastNameTextField.removeTarget(self, action: #selector(userNameDidChange), for: .editingChanged)
     }
     
-    // MARK: - Methods
+    // MARK: - @objc Methods
     
     @objc func userNameDidChange(_ textField: CellTextField) {
         guard let first = firstNameTextField.text, let last = lastNameTextField.text else { return }
@@ -87,7 +89,12 @@ class UserInfoTVC: UITableViewController {
     }
     
     @IBAction func resetPasswordTouched(_ sender: UIButton) {
-        UserService.shared.resetPassword(withEmail: email) {
+        UserService.shared.resetPassword(withEmail: email) { error in
+            if let error = error {
+                UserService.shared.auth.handleFireAuthError(error, viewController: self)
+                // self.progressHUD.hide()
+                return
+            }
             self.simpleAlert(title: "Password", msg: "Password reset success")
         }
     }
@@ -96,7 +103,12 @@ class UserInfoTVC: UITableViewController {
         let alert = UIAlertController(title: "Are you sure?", message: "If you are sure your account, all vocabularies and words will be removed permanently", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Remove", style: .default, handler: { (action) in
             UserService.shared.removeAccountData() {
-                UserService.shared.deleteAccount {
+                UserService.shared.deleteAccount { error in
+                    if let error = error {
+                        UserService.shared.auth.handleFireAuthError(error, viewController: self)
+                        // self.progressHUD.hide()
+                        return
+                    }
                     self.showLoginVC()
                 }
             }

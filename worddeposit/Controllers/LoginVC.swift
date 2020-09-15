@@ -119,7 +119,12 @@ class LoginVC: UIViewController {
                 return
         }
         
-        UserService.shared.signIn(withEmail: email, password: password) {
+        UserService.shared.signIn(withEmail: email, password: password) { error in
+            if let error = error {
+                UserService.shared.auth.handleFireAuthError(error, viewController: self)
+                self.progressHUD.hide()
+                return
+            }
             self.progressHUD.hide()
             self.showHomeVC()
         }

@@ -31,10 +31,9 @@ class VocabularyTVC: UITableViewController {
         setupResultsTableController()
         
         // Setup message
-        self.view.addSubview(messageView)
+        view.addSubview(messageView)
         
         let nc = NotificationCenter.default
-        
         nc.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(Keys.vocabulariesSwitchNotificationKey), object: nil)
     }
     
@@ -82,7 +81,7 @@ class VocabularyTVC: UITableViewController {
     
     private func setupTitle() {
         guard let vocabulary = UserService.shared.vocabulary else { return }
-        self.title = vocabulary.title
+        navigationItem.title = vocabulary.title
     }
     
     func setupMessage() {

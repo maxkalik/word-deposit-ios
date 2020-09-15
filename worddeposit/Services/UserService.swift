@@ -20,7 +20,7 @@ final class UserService {
     private var wordsRef: CollectionReference!
     
     // Listeners
-    private var auth: Auth = Auth.auth()
+    var auth: Auth = Auth.auth()
     private var db: Firestore = Firestore.firestore()
     private var storage: Storage = Storage.storage()
     
@@ -29,52 +29,41 @@ final class UserService {
     // MARK: - Methods - AUTH
     
     // Sign in
-    func signIn(withEmail email: String, password: String, complition: @escaping () -> Void) {
-        auth.signIn(withEmail: email, password: password) { result, error in
-            if let error = error {
-                debugPrint(error.localizedDescription)
-                return
-            }
-            complition()
+    func signIn(withEmail email: String, password: String, complition: @escaping (Error?) -> Void) {
+        auth.signIn(withEmail: email, password: password) { _, error in
+            complition(error)
         }
     }
     
     // Sign up
-    func signUp(withEmail email: String, password: String, complition: @escaping () -> Void) {
+    func signUp(withEmail email: String, password: String, complition: @escaping (Error?) -> Void) {
         auth.createUser(withEmail: email, password: password) { result, error in
             if let error = error {
                 debugPrint(error.localizedDescription)
+                complition(error)
                 return
             }
             guard let firUser = result?.user else { return }
             let user = User.init(id: firUser.uid, email: email)
             
             self.setUser(user) {
-                complition()
+                complition(nil)
             }
         }
     }
     
     // Reset password
-    func resetPassword(withEmail email: String, complition: @escaping () -> Void) {
+    func resetPassword(withEmail email: String, complition: @escaping (Error?) -> Void) {
         auth.sendPasswordReset(withEmail: email) { error in
-            if let error = error {
-                debugPrint(error.localizedDescription)
-                return
-            }
-            complition()
+            complition(error)
         }
     }
     
     // Delete account
-    func deleteAccount(complition: @escaping () -> Void) {
+    func deleteAccount(complition: @escaping (Error?) -> Void) {
         guard let currentUser = auth.currentUser else { return }
         currentUser.delete { error in
-            if let error = error {
-                debugPrint(error.localizedDescription)
-                return
-            }
-            complition()
+            complition(error)
         }
     }
     

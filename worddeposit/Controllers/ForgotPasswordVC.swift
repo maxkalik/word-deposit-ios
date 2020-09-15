@@ -87,7 +87,12 @@ class ForgotPasswordVC: UIViewController {
         }
         progressHUD.show()
         
-        UserService.shared.resetPassword(withEmail: email) {
+        UserService.shared.resetPassword(withEmail: email) { error in
+            if let error = error {
+                UserService.shared.auth.handleFireAuthError(error, viewController: self)
+                self.progressHUD.hide()
+                return
+            }
             self.navigationController?.popViewController(animated: true)
             self.progressHUD.hide()
         }

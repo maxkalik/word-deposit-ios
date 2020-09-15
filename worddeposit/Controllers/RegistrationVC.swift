@@ -118,7 +118,12 @@ class RegistrationVC: UIViewController {
         }
         self.progressHUD.show()
         
-        UserService.shared.signUp(withEmail: email, password: password) {
+        UserService.shared.signUp(withEmail: email, password: password) { error in
+            if let error = error {
+                UserService.shared.auth.handleFireAuthError(error, viewController: self)
+                self.progressHUD.hide()
+                return
+            }
             self.progressHUD.hide()
             self.setupApp()
         }
