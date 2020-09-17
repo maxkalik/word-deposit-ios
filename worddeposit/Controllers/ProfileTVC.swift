@@ -42,12 +42,10 @@ class ProfileTVC: UITableViewController {
         words = UserService.shared.words
         
         getAllLanguages()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
         setupStatistics()
+        // print(words)
+        
+        print("view did load")
     }
     
     // MARK: - Methods

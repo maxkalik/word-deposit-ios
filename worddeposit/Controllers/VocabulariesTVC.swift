@@ -49,7 +49,8 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         super.viewWillAppear(animated)
         setupMessage()
         messageView.hide()
-        checkVocabulariesExist()    }
+        checkVocabulariesExist()
+    }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)

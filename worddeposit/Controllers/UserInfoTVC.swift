@@ -16,9 +16,9 @@ class UserInfoTVC: UITableViewController {
     
     // MARK: - Instances
     
-    private var email: String!
-    private var firstName: String!
-    private var lastName: String!
+    var email: String!
+    var firstName: String!
+    var lastName: String!
     weak var delegate: UserInfoTVCDelegate?
     
     private var progressHUD = ProgressHUD()
@@ -30,6 +30,7 @@ class UserInfoTVC: UITableViewController {
         firstNameTextField.text = firstName
         lastNameTextField.text = lastName
         doneButton.isEnabled = false
+        view.superview?.addSubview(progressHUD)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -89,10 +90,11 @@ class UserInfoTVC: UITableViewController {
     }
     
     @IBAction func resetPasswordTouched(_ sender: UIButton) {
+        progressHUD.show()
         UserService.shared.resetPassword(withEmail: email) { error in
             if let error = error {
                 UserService.shared.auth.handleFireAuthError(error, viewController: self)
-                // self.progressHUD.hide()
+                self.progressHUD.hide()
                 return
             }
             self.simpleAlert(title: "Password", msg: "Password reset success")
@@ -100,15 +102,17 @@ class UserInfoTVC: UITableViewController {
     }
     
     @IBAction func deleteAccountTouched(_ sender: UIButton) {
+        progressHUD.show()
         let alert = UIAlertController(title: "Are you sure?", message: "If you are sure your account, all vocabularies and words will be removed permanently", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Remove", style: .default, handler: { (action) in
             UserService.shared.removeAccountData() {
                 UserService.shared.deleteAccount { error in
                     if let error = error {
                         UserService.shared.auth.handleFireAuthError(error, viewController: self)
-                        // self.progressHUD.hide()
+                        self.progressHUD.hide()
                         return
                     }
+                    self.progressHUD.hide()
                     self.showLoginVC()
                 }
             }
