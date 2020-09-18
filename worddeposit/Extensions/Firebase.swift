@@ -8,6 +8,15 @@
 
 import Firebase
 
+class ErrorAlert {
+    func show(errorCode: AuthErrorCode, viewController: UIViewController) {
+        let alert = UIAlertController(title: "Error", message: errorCode.message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alert.addAction(okAction)
+        viewController.present(alert, animated: true, completion: nil)
+    }
+}
+
 extension Auth {
     func handleFireAuthError(_ error: Error, viewController: UIViewController) {
         if let errorCode = AuthErrorCode(rawValue: error._code) {
@@ -38,6 +47,28 @@ extension AuthErrorCode {
             return "Your password or email is incorrect."
         default:
             return "Sorry, something went wrong."
+        }
+    }
+}
+
+extension Firestore {
+    func handleFirestoreError(_ error: Error, viewController: UIViewController) {
+        if let code = AuthErrorCode(rawValue: error._code) {
+            let alert = UIAlertController(title: "Error", message: code.message, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+            alert.addAction(okAction)
+            viewController.present(alert, animated: true, completion: nil)
+        }
+    }
+}
+
+extension FirestoreErrorCode {
+    var message: String {
+        switch self {
+        case .notFound:
+            return "There is no "
+        default:
+            return "Sorry, something went wrong.c"
         }
     }
 }

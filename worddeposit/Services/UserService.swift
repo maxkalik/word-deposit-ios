@@ -68,11 +68,12 @@ final class UserService {
     }
     
     // Logout
-    func logout(complition: @escaping () -> Void) {
+    func logout(complition: @escaping (Error?) -> Void) {
         do {
             try auth.signOut()
-            complition()
+            complition(nil)
         } catch let error as NSError {
+            complition(error)
             debugPrint(error.localizedDescription)
             return
         }
@@ -81,22 +82,22 @@ final class UserService {
     // MARK: - Methods - GET
     
     // Get current user from database
-    func fetchCurrentUser(complition: @escaping (User) -> Void) {
+    func fetchCurrentUser(complition: @escaping (Error?, User?) -> Void) {
         guard let currentUser = auth.currentUser else { return }
         userRef = self.db.collection("users").document(currentUser.uid)
         
         userRef.getDocument { (document, error) in
             if let error = error {
                 debugPrint(error.localizedDescription)
+                complition(error, nil)
                 return
             }
             if let document = document, document.exists {
                 guard let data = document.data() else { return }
                 self.user = User.init(data: data)
-                complition(self.user)
+                complition(nil, self.user)
             } else {
-                // TODO: - check if user doesn't exist
-                print("Document does not exist")
+                complition(nil, nil)
             }
         }
     }

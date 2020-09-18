@@ -118,7 +118,12 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         }
         messageView.onSecondaryButtonTap {
             self.progressHUD.show()
-            UserService.shared.logout {
+            UserService.shared.logout { error in
+                if let error = error {
+                    self.progressHUD.hide()
+                    UserService.shared.auth.handleFireAuthError(error, viewController: self)
+                    return
+                }
                 self.progressHUD.hide()
                 self.showLoginVC()
             }

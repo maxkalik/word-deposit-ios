@@ -26,7 +26,11 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         setupUI()
 
         let userService = UserService.shared
-        userService.fetchCurrentUser { user in
+        userService.fetchCurrentUser { error, _ in
+            if let error = error {
+                self.simpleAlert(title: "Error", msg: error.localizedDescription)
+                return
+            }
             userService.fetchVocabularies { vocabularies in
                 if vocabularies.isEmpty {
                     self.presentVocabulariesVC()

@@ -128,7 +128,11 @@ class ProfileTVC: UITableViewController {
     // MARK: - IBActions
     
     @IBAction func logOut(_ sender: UIButton) {
-        UserService.shared.logout {
+        UserService.shared.logout { error in
+            if let error = error {
+                UserService.shared.auth.handleFireAuthError(error, viewController: self)
+                return
+            }
             self.showLoginVC()
         }
     }
