@@ -148,12 +148,20 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
             selectedVocabularyIndex = newSelectedVocabularyIndex
             tableView.reloadRows(at: [IndexPath(item: oldIndex, section: 0), IndexPath(item: newSelectedVocabularyIndex, section: 0)], with: .fade)
             // update vocabularies request
-            UserService.shared.switchSelectedVocabulary(from: vocabularies[oldIndex], to: vocabularies[newSelectedVocabularyIndex]) {
+            UserService.shared.switchSelectedVocabulary(from: vocabularies[oldIndex], to: vocabularies[newSelectedVocabularyIndex]) { error in
+                
+                if let error = error {
+                    UserService.shared.db.handleFirestoreError(error, viewController: self)
+                    return
+                }
                 
                 UserService.shared.getCurrentVocabulary()
                 
-                UserService.shared.fetchWords { _ in
-                    
+                UserService.shared.fetchWords { error, _ in
+                    if let error = error {
+                        UserService.shared.db.handleFirestoreError(error, viewController: self)
+                        return
+                    }
                     /// Post notification for Practice and Vocabulary views
                     NotificationCenter.default.post(name: Notification.Name(Keys.vocabulariesSwitchNotificationKey), object: nil)
                 }
@@ -202,7 +210,11 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
             } else {
                 let alert = UIAlertController(title: title, message: "Are you sure?", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Remove", style: .default, handler: { (action) in
-                    UserService.shared.removeVocabulary(vocabulary) {
+                    UserService.shared.removeVocabulary(vocabulary) { error in
+                        if error != nil {
+                            self.simpleAlert(title: "Error", msg: "Cannot remove vocabulary. Try to reload an app")
+                            return
+                        }
                         self.vocabularyDidRemove(vocabulary, index: indexPath.row)
                     }
                 }))

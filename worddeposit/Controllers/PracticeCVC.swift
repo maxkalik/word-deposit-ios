@@ -32,17 +32,29 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                 return
             }
             guard let _ = user else {
-                self.simpleAlert(title: "Error", msg: "Something went wrong")
-                
+                self.simpleAlert(title: "Error", msg: "Cannot find a user")
+                showLoginVC(view: self.view)
                 return
             }
-            userService.fetchVocabularies { vocabularies in
+            userService.fetchVocabularies { error, vocabularies in
+                if let error = error {
+                    UserService.shared.db.handleFirestoreError(error, viewController: self)
+                    self.progressHUD.hide()
+                    return
+                }
+                guard let vocabularies = vocabularies else { return }
                 if vocabularies.isEmpty {
                     self.presentVocabulariesVC()
                     self.progressHUD.hide()
                 } else {
                     userService.getCurrentVocabulary()
-                    userService.fetchWords { words in
+                    userService.fetchWords { error, words  in
+                        if let error = error {
+                            userService.db.handleFirestoreError(error, viewController: self)
+                            self.progressHUD.hide()
+                            return
+                        }
+                        guard let words = words else { return }
                         self.progressHUD.hide()
                         self.setupContent(words: words)
                     }
@@ -222,7 +234,11 @@ extension PracticeCVC: PracticeReadVCDelegate {
     }
     
     func onFinishTrainer(with words: [Word]) {
-        UserService.shared.updateAnswersScore(words) {
+        UserService.shared.updateAnswersScore(words) { error in
+            if error != nil {
+                self.simpleAlert(title: "Error", msg: "Cannot update answers score")
+                return
+            }
             self.words = UserService.shared.words
         }
     }

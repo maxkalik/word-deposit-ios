@@ -26,9 +26,8 @@ class VocabularyCardCVCell: UICollectionViewCell {
     
     // MARK: - Variables
 
-    var user: User = UserService.shared.user
-    var word: Word!
-    var indexItem: Int!
+    private var word: Word!
+    private var indexItem: Int!
     private var isKeyboardShowing = false
     
     weak var delegate: VocabularyCardCVCellDelegate?
@@ -109,7 +108,15 @@ class VocabularyCardCVCell: UICollectionViewCell {
     
     // MARK: - Other methods
     
-    func textFieldValidation() {
+    func configureCell(word: Word, index: Int, delegate: VocabularyCardCVCellDelegate) {
+        self.word = word
+        self.indexItem = index
+        self.delegate = delegate
+        setupWord(word)
+        removePictureButton.isHidden = word.imgUrl.isEmpty
+    }
+    
+    private func textFieldValidation() {
         guard let wordExample = wordExampleTextField.text,
             let wordTranslation = wordTranslationTextField.text,
             let wordDescription = wordDescriptionTextField.text else { return }
@@ -128,15 +135,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
         }
     }
     
-    func configureCell(word: Word, index: Int, delegate: VocabularyCardCVCellDelegate) {
-        self.word = word
-        self.indexItem = index
-        self.delegate = delegate
-        setupWord(word)
-        removePictureButton.isHidden = word.imgUrl.isEmpty
-    }
-    
-    func setupWord(_ word: Word) {
+    private func setupWord(_ word: Word) {
         if let url = URL(string: word.imgUrl) {
             wordPictureButton.imageView?.kf.indicatorType = .activity
             let options: KingfisherOptionsInfo = [KingfisherOptionsInfoItem.transition(.fade(0.2))]
@@ -179,19 +178,28 @@ class VocabularyCardCVCell: UICollectionViewCell {
         pictureLoader.startAnimating()
         self.word.imgUrl = ""
         UserService.shared.removeWordImageFrom(wordId: word.id) {
-            UserService.shared.updateWordImageUrl(self.word) {
-                self.pictureLoader.stopAnimating()
-                self.removePictureButton.isHidden = true
-                self.wordPictureButton.setImage(UIImage(named: Placeholders.Logo), for: .normal)
-
-                self.delegate?.wordDidUpdate(word: self.word, index: self.indexItem)
-            }
+            self.updateWordImageUrl(isRemove: true)
         }
     }
     
     // MARK: - Uploading Methods
     
-    func uploadImage() {
+    private func updateWordImageUrl(isRemove: Bool) {
+           UserService.shared.updateWordImageUrl(self.word) { error in
+               if error != nil {
+                   self.delegate?.showAlert(title: "Error", message: "Something went wrong. Cannot update a picture")
+                   return
+               }
+               self.pictureLoader.stopAnimating()
+               self.removePictureButton.isHidden = isRemove
+               if isRemove {
+                   self.wordPictureButton.setImage(UIImage(named: Placeholders.Logo), for: .normal)
+               }
+               self.delegate?.wordDidUpdate(word: self.word, index: self.indexItem)
+           }
+       }
+    
+    private func uploadImage() {
         pictureLoader.startAnimating()
         guard let image = wordPictureButton.imageView?.image else {
             self.delegate?.showAlert(title: "Error", message: "Cannot upload your picture, Something went wrong")
@@ -207,17 +215,18 @@ class VocabularyCardCVCell: UICollectionViewCell {
         let resizedImg = image.resized(toWidth: 400.0)
         guard let data = resizedImg?.jpegData(compressionQuality: 0.5) else { return }
         
-        UserService.shared.setWordImage(data: data, id: word.id) { url in
-            self.word.imgUrl = url.absoluteString
-            UserService.shared.updateWordImageUrl(self.word) {
-                self.pictureLoader.stopAnimating()
-                self.removePictureButton.isHidden = false
-                self.delegate?.wordDidUpdate(word: self.word, index: self.indexItem)
+        UserService.shared.setWordImage(data: data, id: word.id) { error, url in
+            if let error = error {
+                self.delegate?.showAlert(title: "Error", message: error.localizedDescription)
+                return
             }
+            guard let url = url else { return }
+            self.word.imgUrl = url.absoluteString
+            self.updateWordImageUrl(isRemove: false)
         }
     }
     
-    func uploadWord() {
+    private func uploadWord() {
         
         guard let example = wordExampleTextField.text, example.isNotEmpty,
             let translation = wordTranslationTextField.text, translation.isNotEmpty
@@ -236,7 +245,11 @@ class VocabularyCardCVCell: UICollectionViewCell {
             updatedWord.description = description
         }
         
-        UserService.shared.updateWord(updatedWord) { _ in
+        UserService.shared.updateWord(updatedWord) { error, _ in
+            if error != nil {
+                self.delegate?.showAlert(title: "Error", message: "Something went wrong. Cannot update the word.")
+                return
+            }
             self.word = updatedWord
             self.wordLoader.stopAnimating()
             self.hideAllButtons()
@@ -248,22 +261,22 @@ class VocabularyCardCVCell: UICollectionViewCell {
 }
 
 extension VocabularyCardCVCell {
-    func hideAllButtons() {
+    private func hideAllButtons() {
         saveChangingButton.isHidden = true
         cancelButton.isHidden = true
     }
     
-    func showAllButtons() {
+    private func showAllButtons() {
         saveChangingButton.isHidden = false
         cancelButton.isHidden = false
     }
     
-    func enableAllButtons() {
+    private func enableAllButtons() {
         cancelButton.isEnabled = true
         saveChangingButton.isEnabled = true
     }
     
-    func disableAllButtons() {
+    private func disableAllButtons() {
         cancelButton.isEnabled = false
         saveChangingButton.isEnabled = false
     }

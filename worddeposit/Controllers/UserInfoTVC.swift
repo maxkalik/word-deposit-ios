@@ -105,7 +105,12 @@ class UserInfoTVC: UITableViewController {
         progressHUD.show()
         let alert = UIAlertController(title: "Are you sure?", message: "If you are sure your account, all vocabularies and words will be removed permanently", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Remove", style: .default, handler: { (action) in
-            UserService.shared.removeAccountData() {
+            UserService.shared.removeAccountData() { error in
+                if let error = error {
+                    UserService.shared.db.handleFirestoreError(error, viewController: self)
+                    self.progressHUD.hide()
+                    return
+                }
                 UserService.shared.deleteAccount { error in
                     if let error = error {
                         UserService.shared.auth.handleFireAuthError(error, viewController: self)

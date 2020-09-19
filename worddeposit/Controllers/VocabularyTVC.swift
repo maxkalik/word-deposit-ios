@@ -202,7 +202,11 @@ extension VocabularyTVC {
             
             let word: Word! = tableView === self.tableView ? words[indexPath.row] : resultsTableController.filteredWords[indexPath.row]
             
-            UserService.shared.removeWord(word) {
+            UserService.shared.removeWord(word) { error in
+                if error != nil {
+                    self.simpleAlert(title: "Error", msg: "Sorry. Cannot remove word. Something wrong.")
+                    return
+                }
                 self.wordDidRemove(word, index: indexPath.row)
             }
         }

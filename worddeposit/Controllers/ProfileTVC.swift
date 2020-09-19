@@ -61,6 +61,15 @@ class ProfileTVC: UITableViewController {
         languages.sort()
     }
     
+    private func updateUser(_ user: User) {
+        UserService.shared.updateUser(user) { error in
+            if let error = error {
+                UserService.shared.db.handleFirestoreError(error, viewController: self)
+                return
+            }
+        }
+    }
+    
     private func setupStatistics() {
         if words.isEmpty {
             self.wordsAmountLabel.text = "0"
@@ -120,7 +129,7 @@ class ProfileTVC: UITableViewController {
     
     @IBAction func notificationSwitched(_ sender: UISwitch) {
         user.notifications = sender.isOn
-        UserService.shared.updateUser(user)
+        updateUser(user)
     }
     
     // MARK: - Segue
@@ -183,7 +192,7 @@ extension ProfileTVC: UserInfoTVCDelegate {
     func updateUserInfo(firstName: String, lastName: String) {
         user.firstName = firstName
         user.lastName = lastName
-        UserService.shared.updateUser(user)
+        updateUser(user)
     }
 }
 
@@ -192,7 +201,7 @@ extension ProfileTVC: ProfileTVCCheckmarkDelegate {
         switch segueId {
         case Segues.NativeLanguage:
             user.nativeLanguage = languages[checkmarked]
-            UserService.shared.updateUser(user)
+            updateUser(user)
         default:
             break
         }

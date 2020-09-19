@@ -136,14 +136,35 @@ class AddWordVC: UIViewController {
             let resizedImg = image.resized(toWidth: 400.0)
             guard let imageData = resizedImg?.jpegData(compressionQuality: 0.5) else { return }
             
-            UserService.shared.setWord(imageData: imageData, example: example, translation: translation, description: description) { word in
+            UserService.shared.setWord(
+                imageData: imageData,
+                example: example,
+                translation: translation,
+                description: description
+            ) { error, word in
+                if error != nil {
+                    self.simpleAlert(title: "Error", msg: "Something went wrong. Cannot add the word")
+                    self.progressHUD.hide()
+                    return
+                }
+                guard let word = word else { return }
                 self.updateUI()
                 self.progressHUD.hide()
                 self.simpleAlert(title: "Success", msg: "Word has been added with image")
                 self.delegate?.wordDidCreate(word)
             }
         } else {
-            UserService.shared.setWord(example: example, translation: translation, description: description) { word in
+            UserService.shared.setWord(
+                example: example,
+                translation: translation,
+                description: description
+            ) { error, word in
+                if error != nil {
+                    self.simpleAlert(title: "Error", msg: "Something went wrong. Cannot add the word")
+                    self.progressHUD.hide()
+                    return
+                }
+                guard let word = word else { return }
                 self.updateUI()
                 self.progressHUD.hide()
                 self.simpleAlert(title: "Success", msg: "Word has been added")

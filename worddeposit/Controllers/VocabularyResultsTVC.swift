@@ -69,7 +69,11 @@ extension VocabularyResultsTVC {
             
             let word = filteredWords[indexPath.row]
             
-            UserService.shared.removeWord(word) {
+            UserService.shared.removeWord(word) { error in
+                if error != nil {
+                    self.simpleAlert(title: "Error", msg: "Sorry. Cannot remove word. Something wrong.")
+                    return
+                }
                 self.filteredWords.remove(at: indexPath.row)
                 tableView.deleteRows(at: [IndexPath(item: indexPath.row, section: 0)], with: .fade)
             }

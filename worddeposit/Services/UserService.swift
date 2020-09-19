@@ -21,7 +21,7 @@ final class UserService {
     
     // Listeners
     var auth: Auth = Auth.auth()
-    private var db: Firestore = Firestore.firestore()
+    var db: Firestore = Firestore.firestore()
     private var storage: Storage = Storage.storage()
     
     private init() {} // original singleton pattern difinition
@@ -46,7 +46,12 @@ final class UserService {
             guard let firUser = result?.user else { return }
             let user = User.init(id: firUser.uid, email: email)
             
-            self.setUser(user) {
+            self.setUser(user) { error in
+                if let error = error {
+                    complition(error)
+                    debugPrint(error.localizedDescription)
+                    return
+                }
                 complition(nil)
             }
         }
@@ -103,12 +108,13 @@ final class UserService {
     }
     
     // Fetch vocabularies
-    func fetchVocabularies(complition: @escaping ([Vocabulary]) -> Void) {
+    func fetchVocabularies(complition: @escaping (Error?, [Vocabulary]?) -> Void) {
         // what if userid is empty?
         vocabulariesRef = userRef.collection("vocabularies")
         vocabulariesRef.order(by: "timestamp", descending: true).getDocuments { (snapshot, error) in
             if let error = error {
                 print("Error getting vocabularies: \(error)")
+                complition(error, nil)
                 return
             } else {
                 self.vocabularies.removeAll()
@@ -118,13 +124,13 @@ final class UserService {
                     let vocabulary = Vocabulary.init(data: data)
                     self.vocabularies.append(vocabulary)
                 }
-                complition(self.vocabularies)
+                complition(nil, self.vocabularies)
             }
         }
     }
     
     // Get amount of words from particular vocabulary
-    func getAmountOfWordsFrom(vocabulary: Vocabulary, complition: @escaping (Int) -> Void) {
+    func getAmountOfWordsFrom(vocabulary: Vocabulary, complition: @escaping (Int?) -> Void) {
         let ref = vocabulariesRef.document(vocabulary.id)
         let wordsRef = ref.collection("words")
         wordsRef.getDocuments { (snapshot, error) in
@@ -134,8 +140,8 @@ final class UserService {
             } else {
                 guard let snap = snapshot else { return }
                 
-                /// Update vocabulary words amount
                 if vocabulary.wordsAmount != snap.count && !vocabulary.isSelected {
+                    /// Update vocabulary words amount
                     ref.updateData(["words_amount": snap.count]) { error in
                         if let error = error {
                             debugPrint(error.localizedDescription)
@@ -165,13 +171,14 @@ final class UserService {
     }
     
     // Fetch all words from particular vocabulary (id) and complition will take an array of fetched words
-    func fetchWords(complition: @escaping ([Word]) -> Void) {
+    func fetchWords(complition: @escaping (Error?, [Word]?) -> Void) {
         /// Setup global ref if vocabularyRef has a currenct vocabulary id
         let ref = wordsRef.order(by: "timestamp", descending: true)
         if self.vocabulary != nil {
             ref.getDocuments { (snapshot, error) in
                 if let error = error {
                     debugPrint(error.localizedDescription)
+                    complition(error, nil)
                     return
                 }
                 /// before apped an array it should be cleaned up
@@ -182,7 +189,7 @@ final class UserService {
                     let word = Word.init(data: data)
                     self.words.append(word)
                 }
-                complition(self.words)
+                complition(nil, self.words)
             }
         }
     }
@@ -190,22 +197,18 @@ final class UserService {
     // MARK: - Methods - SET
     
     // Set up new User to the database
-    func setUser(_ user: User, complition: @escaping () -> Void) {
+    func setUser(_ user: User, complition: @escaping (Error?) -> Void) {
         let ref = db.collection("users").document(user.id)
         let data = User.modelToData(user: user)
         
         ref.setData(data) { error in
-            if let error = error {
-                debugPrint(error.localizedDescription)
-                return
-            }
-            complition()
+            complition(error)
         }
     }
     
     // Create new vocabulary and set to the the db user.vocabularies/<vocabulary>
-    func setVocabulary(_ vocabulary: Vocabulary, complition: @escaping (String) -> Void) {
-        // creating new id
+    func setVocabulary(_ vocabulary: Vocabulary, complition: @escaping (Error?, String?) -> Void) {
+        /// creating new id
         var vocabulary = vocabulary
         let ref = vocabulariesRef.document()
         vocabulary.id = ref.documentID
@@ -214,10 +217,11 @@ final class UserService {
         ref.setData(data) { error in
             if let error = error {
                 debugPrint(error.localizedDescription)
+                complition(error, nil)
                 return
             }
             self.vocabularies.insert(vocabulary, at: 0)
-            complition(vocabulary.id)
+            complition(nil, vocabulary.id)
         }
     }
     
@@ -227,7 +231,7 @@ final class UserService {
         example: String,
         translation: String,
         description: String? = nil,
-        complition: @escaping (Word) -> Void
+        complition: @escaping (Error?, Word?) -> Void
     ) {
         /// Creating new document (word) ref
         let ref = wordsRef.document()
@@ -247,38 +251,40 @@ final class UserService {
         /// Checking if new word has image data
         if imageData != nil {
             /// set image data to the storage
-            setWordImage(data: imageData, id: word.id) { url in
+            setWordImage(data: imageData, id: word.id) { error, url in
                 /// Adding img url string to the word instance
+                guard let url = url else { return }
                 word.imgUrl = url.absoluteString
                 /// Setting word data to the db
-                self.setWordData(word, to: ref) {
-                    complition(word)
+                self.setWordData(word, to: ref) { error in
+                    complition(error, word)
                 }
             }
         } else {
             /// Setting word data to the db
-            setWordData(word, to: ref) {
-                complition(word)
+            setWordData(word, to: ref) { error in
+                complition(error, word)
             }
         }
     }
     
     // Set word data to the db. Works only with ref
-    private func setWordData(_ word: Word, to ref: DocumentReference, complition: @escaping () -> Void) {
+    private func setWordData(_ word: Word, to ref: DocumentReference, complition: @escaping (Error?) -> Void) {
         let data = Word.modelToData(word: word)
         ref.setData(data) { error in
             if let error = error {
+                complition(error)
                 debugPrint(error.localizedDescription)
                 return
             }
             self.words.insert(word, at: 0)
             self.updateAmountOfWords()
-            complition()
+            complition(nil)
         }
     }
     
     // Set word image data to the storage user_id/vocabulary_id/word_id.jpg
-    func setWordImage(data: Data?, id: String, complition: @escaping (URL) -> Void) {
+    func setWordImage(data: Data?, id: String, complition: @escaping (Error?, URL?) -> Void) {
         guard let vocabulary = self.vocabulary, let data = data else { return }
         let ref: StorageReference = Storage.storage().reference().child("/\(user.id)/\(vocabulary.id)/\(id).jpg")
         let metadata: StorageMetadata = StorageMetadata()
@@ -287,17 +293,19 @@ final class UserService {
         ref.putData(data, metadata: metadata) { (storageMetadata, error) in
             if let error = error {
                 debugPrint(error.localizedDescription)
+                complition(error, nil)
                 return
             }
             
             ref.downloadURL { (url, error) in
                 if let error = error {
                     debugPrint(error.localizedDescription)
+                    complition(error, nil)
                     return
                 }
                 guard let url = url else { return }
                 /// Complition with url argument for setting it to the word data when complite this uploading process
-                complition(url)
+                complition(nil, url)
             }
         }
     }
@@ -305,20 +313,21 @@ final class UserService {
     // MARK: - Methods - UPDATE
     
     // Update user profile
-    func updateUser(_ user: User, complition: (() -> Void)? = nil) {
+    func updateUser(_ user: User, complition: ((Error?) -> Void)? = nil) {
         let data = User.modelToData(user: user)
         userRef.updateData(data) { error in
             if let error = error {
                 debugPrint(error.localizedDescription)
+                complition?(error)
                 return
             }
             self.user = user
-            complition?()
+            complition?(nil)
         }
     }
     
     // Switch selected vocabulary - updating is_selected property in 2 vocabularies
-    func switchSelectedVocabulary(from: Vocabulary, to: Vocabulary, complition: @escaping () -> Void) {
+    func switchSelectedVocabulary(from: Vocabulary, to: Vocabulary, complition: @escaping (Error?) -> Void) {
         /// Creating batch for updating in one response
         let batch = db.batch()
         
@@ -334,17 +343,18 @@ final class UserService {
         batch.commit() { error in
             if let error = error {
                 debugPrint(error.localizedDescription)
+                complition(error)
                 return
             } else {
                 /// Updating local array of vocabularies
                 self.updateLocal(vocabularies: [from, to])
-                complition()
+                complition(nil)
             }
         }
     }
     
     // Update whole vocabulry
-    func updateVocabulary(_ vocabulary: Vocabulary, complition: ((Int) -> Void)? = nil) {
+    func updateVocabulary(_ vocabulary: Vocabulary, complition: ((Error?, Int?) -> Void)? = nil) {
         
         // TODO: - could vocabulariesRef be nil?
         // TODO: - what if we can pass an array with what we want update particularly?
@@ -356,20 +366,21 @@ final class UserService {
         ref.updateData(data) { error in
             if let error = error {
                 debugPrint(error.localizedDescription)
+                complition?(error, nil)
                 return
             }
 
             if let index: Int = self.vocabularies.firstIndex(matching: vocabulary) {
                 if !self.vocabularies[index].isSelected {
                     self.vocabularies[index] = vocabulary
-                    complition?(index)
+                    complition?(nil, index)
                 }
             }
         }
     }
     
     // Update several vocabularies in one response
-    func updateVocabularies(_ vocabularies: [Vocabulary], complition: @escaping () -> Void) {
+    func updateVocabularies(_ vocabularies: [Vocabulary], complition: @escaping (Error?) -> Void) {
         /// Creating batch for updating in one response
         let batch = db.batch()
         
@@ -384,10 +395,11 @@ final class UserService {
         batch.commit() { error in
             if let error = error {
                 debugPrint(error.localizedDescription)
+                complition(error)
                 return
             } else {
                 self.updateLocal(vocabularies: vocabularies)
-                complition()
+                complition(nil)
             }
         }
     }
@@ -428,7 +440,7 @@ final class UserService {
     }
     
     // Update multiple words in one response
-    func updateWords(_ words: [Word], complition: @escaping () -> Void) {
+    func updateWords(_ words: [Word], complition: @escaping (Error?) -> Void) {
         let batch = db.batch()
         words.forEach { word in
             let ref = wordsRef.document(word.id)
@@ -438,17 +450,18 @@ final class UserService {
         batch.commit() { error in
             if let error = error {
                 debugPrint(error.localizedDescription)
+                complition(error)
                 return
             } else {
                 self.updateLocal(words: words)
-                complition()
+                complition(nil)
             }
         }
     }
     
     // Update answer score of a word
     /* It should be called each time when practice has finished */
-    func updateAnswersScore(_ words: [Word], complition: @escaping () -> Void) {
+    func updateAnswersScore(_ words: [Word], complition: @escaping (Error?) -> Void) {
         let batch = db.batch()
         words.forEach { word in
             let ref = wordsRef.document(word.id)
@@ -457,45 +470,48 @@ final class UserService {
         batch.commit() { error in
             if let error = error {
                 debugPrint(error.localizedDescription)
+                complition(error)
                 return
             } else {
                 
                 // Update global array of words
                 self.updateLocal(words: words)
-                complition()
+                complition(nil)
             }
         }
     }
     
     // Update particular word of current vocabulary. Complition is optional
-    func updateWord(_ word: Word, complition: ((Int) -> Void)? = nil) {
+    func updateWord(_ word: Word, complition: ((Error?, Int?) -> Void)? = nil) {
         let ref = wordsRef.document(word.id)
         let data = Word.modelToData(word: word)
         ref.updateData(data) { error in
             if let error = error {
                 debugPrint(error.localizedDescription)
+                complition?(error, nil)
                 return
             }
             
             if let index: Int = self.words.firstIndex(matching: word) {
                 self.words[index] = word
                 /// Optional complition can have an argument - index of the word in the global array of words
-                complition?(index)
+                complition?(nil, index)
             }
         }
     }
     
     // Update word image url in current vocabulary
-    func updateWordImageUrl(_ word: Word, complition: @escaping () -> Void) {
+    func updateWordImageUrl(_ word: Word, complition: @escaping (Error?) -> Void) {
         let ref = wordsRef.document(word.id)
         ref.updateData(["img_url" : word.imgUrl]) { error in
             if let error = error {
                 debugPrint(error.localizedDescription)
+                complition(error)
                 return
             }
             if let index: Int = self.words.firstIndex(matching: word) {
                 self.words[index].imgUrl = word.imgUrl
-                complition()
+                complition(nil)
             }
         }
     }
@@ -503,7 +519,7 @@ final class UserService {
     // MARK: - Methods - REMOVE
     
     // Remove current user with all vocabularies and words with images
-    func removeAccountData(complition: @escaping () -> Void) {
+    func removeAccountData(complition: @escaping (Error?) -> Void) {
         let group = DispatchGroup()
         vocabularies.forEach { vocabulary in
             group.enter()
@@ -515,29 +531,31 @@ final class UserService {
             self.userRef.delete { error in
                 if let error = error {
                     debugPrint(error.localizedDescription)
+                    complition(error)
                     return
                 }
-                complition()
+                complition(nil)
             }
         }
     }
     
     // Remove vocabulary from db
-    func removeVocabulary(_ vocabulary: Vocabulary, complition: @escaping () -> Void) {
+    func removeVocabulary(_ vocabulary: Vocabulary, complition: @escaping (Error?) -> Void) {
         let ref: DocumentReference = vocabulariesRef.document(vocabulary.id)
         
         /// Checking if vocabulary have image folder in store
         self.removeAllWordImagesFrom(vocabulary: vocabulary)
         
         /// Deleting vocabulary with words from database
-        ref.delete { (error) in
+        ref.delete { error in
             if let error = error {
                 debugPrint(error.localizedDescription)
+                complition(error)
                 return
             }
             guard let index = self.vocabularies.firstIndex(matching: vocabulary) else { return }
             self.vocabularies.remove(at: index)
-            complition()
+            complition(nil)
         }
     }
     
@@ -570,11 +588,12 @@ final class UserService {
     }
     
     // Remove word from current vocabulary
-    func removeWord(_ word: Word, complition: @escaping () -> Void) {
+    func removeWord(_ word: Word, complition: @escaping (Error?) -> Void) {
         let ref: DocumentReference = wordsRef.document(word.id)
         ref.delete { error in
             if let error = error {
                 debugPrint(error.localizedDescription)
+                complition(error)
                 return
             }
             
@@ -587,10 +606,10 @@ final class UserService {
             /// Checking if word had an image url
             if word.imgUrl.isNotEmpty {
                 self.removeWordImageFrom(vocabularyId: self.vocabulary!.id, wordId: word.id) {
-                    complition()
+                    complition(nil)
                 }
             } else {
-                complition()
+                complition(nil)
             }
         }
     }
