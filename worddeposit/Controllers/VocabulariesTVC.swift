@@ -125,28 +125,9 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
                     return
                 }
                 self.progressHUD.hide()
-                self.showLoginVC()
+                showLoginVC(view: self.view)
             }
         }
-    }
-    
-    private func showLoginVC() {
-       let storyboard = UIStoryboard(name: Storyboards.Main, bundle: nil)
-       let loginVC = storyboard.instantiateViewController(identifier: Storyboards.Login)
-        
-        guard let window = self.view.window else {
-            self.view.window?.rootViewController = loginVC
-            self.view.window?.makeKeyAndVisible()
-            return
-        }
-        
-        window.rootViewController = loginVC
-        window.makeKeyAndVisible()
-
-        let options: UIView.AnimationOptions = .transitionCrossDissolve
-        let duration: TimeInterval = 0.3
-        
-        UIView.transition(with: window, duration: duration, options: options, animations: nil, completion: nil)
     }
     
     private func setupTableView() {

@@ -9,7 +9,7 @@
 import Firebase
 
 class ErrorAlert {
-    func show(errorCode: AuthErrorCode, viewController: UIViewController) {
+    static func show(errorCode: AuthErrorCode, viewController: UIViewController) {
         let alert = UIAlertController(title: "Error", message: errorCode.message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
         alert.addAction(okAction)
@@ -19,11 +19,8 @@ class ErrorAlert {
 
 extension Auth {
     func handleFireAuthError(_ error: Error, viewController: UIViewController) {
-        if let errorCode = AuthErrorCode(rawValue: error._code) {
-            let alert = UIAlertController(title: "Error", message: errorCode.message, preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
-            alert.addAction(okAction)
-            viewController.present(alert, animated: true, completion: nil)
+        if let code = AuthErrorCode(rawValue: error._code) {
+            ErrorAlert.show(errorCode: code, viewController: viewController)
         }
     }
 }
@@ -54,10 +51,7 @@ extension AuthErrorCode {
 extension Firestore {
     func handleFirestoreError(_ error: Error, viewController: UIViewController) {
         if let code = AuthErrorCode(rawValue: error._code) {
-            let alert = UIAlertController(title: "Error", message: code.message, preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
-            alert.addAction(okAction)
-            viewController.present(alert, animated: true, completion: nil)
+            ErrorAlert.show(errorCode: code, viewController: viewController)
         }
     }
 }

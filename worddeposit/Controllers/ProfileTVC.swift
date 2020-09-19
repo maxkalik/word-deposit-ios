@@ -88,25 +88,6 @@ class ProfileTVC: UITableViewController {
         }
     }
     
-    private func showLoginVC() {
-       let storyboard = UIStoryboard(name: Storyboards.Main, bundle: nil)
-       let loginVC = storyboard.instantiateViewController(identifier: Storyboards.Login)
-        
-        guard let window = self.view.window else {
-            self.view.window?.rootViewController = loginVC
-            self.view.window?.makeKeyAndVisible()
-            return
-        }
-        
-        window.rootViewController = loginVC
-        window.makeKeyAndVisible()
-
-        let options: UIView.AnimationOptions = .transitionCrossDissolve
-        let duration: TimeInterval = 0.3
-        
-        UIView.transition(with: window, duration: duration, options: options, animations: nil, completion: nil)
-    }
-    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
@@ -133,7 +114,7 @@ class ProfileTVC: UITableViewController {
                 UserService.shared.auth.handleFireAuthError(error, viewController: self)
                 return
             }
-            self.showLoginVC()
+            showLoginVC(view: self.view)
         }
     }
     

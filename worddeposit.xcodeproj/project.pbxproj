@@ -60,6 +60,7 @@
 		156C80B724D8D27E0077905D /* VocabularyDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156C80B624D8D27E0077905D /* VocabularyDetailsVC.swift */; };
 		15A7E04924D8B322006804FD /* VocabulariesTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A7E04724D8B322006804FD /* VocabulariesTVCell.swift */; };
 		15A7E04A24D8B322006804FD /* VocabulariesTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15A7E04824D8B322006804FD /* VocabulariesTVCell.xib */; };
+		15AFF8B6251692CB00BA6DAF /* ShowLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AFF8B5251692CB00BA6DAF /* ShowLogin.swift */; };
 		15BD0C0224DE0631007E8D27 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BD0C0124DE0631007E8D27 /* MessageView.swift */; };
 		15BD0C0424DE0657007E8D27 /* MessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15BD0C0324DE0657007E8D27 /* MessageView.xib */; };
 		15CEBC6124D71A0300D48C0E /* ProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CEBC6024D71A0300D48C0E /* ProgressHUD.swift */; };
@@ -123,6 +124,7 @@
 		156C80B624D8D27E0077905D /* VocabularyDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyDetailsVC.swift; sourceTree = "<group>"; };
 		15A7E04724D8B322006804FD /* VocabulariesTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabulariesTVCell.swift; sourceTree = "<group>"; };
 		15A7E04824D8B322006804FD /* VocabulariesTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VocabulariesTVCell.xib; sourceTree = "<group>"; };
+		15AFF8B5251692CB00BA6DAF /* ShowLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowLogin.swift; sourceTree = "<group>"; };
 		15BD0C0124DE0631007E8D27 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		15BD0C0324DE0657007E8D27 /* MessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageView.xib; sourceTree = "<group>"; };
 		15CEBC6024D71A0300D48C0E /* ProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressHUD.swift; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 				116BC94B249182BD00968DA6 /* Constants.swift */,
 				116BC94D2491836B00968DA6 /* Extensions.swift */,
 				1164FB522508CE150023326A /* MakeWordDesk.swift */,
+				15AFF8B5251692CB00BA6DAF /* ShowLogin.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -448,6 +451,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15AFF8B6251692CB00BA6DAF /* ShowLogin.swift in Sources */,
 				11B20D6A24C8DF2E00C1CB4E /* PracticeAnswerItem.swift in Sources */,
 				11284239248E83E000A014E9 /* RegistrationVC.swift in Sources */,
 				11284241248E846000A014E9 /* Word.swift in Sources */,
