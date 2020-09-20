@@ -37,8 +37,9 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
 
         // all observers here because it is the last item in the array of controller
         // Keyboard observers
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        let nc = NotificationCenter.default
+        nc.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        nc.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         // TextField observers
         titleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
@@ -106,6 +107,8 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         guard let vocabulary = self.vocabulary else {
             if title.isNotEmpty && language.isNotEmpty {
                 enableAllButtons()
+            } else {
+                disableAllButtons()
             }
             return
         }
@@ -165,7 +168,13 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         
         if vocabulary == nil {
             self.vocabulary = Vocabulary.init(id: "", title: title, language: language, wordsAmount: 0, isSelected: isFirstSelected, timestamp: Timestamp())
-            UserService.shared.setVocabulary(vocabulary!) { id in
+            UserService.shared.setVocabulary(vocabulary!) { error, id in
+                if let error = error {
+                    UserService.shared.db.handleFirestoreError(error, viewController: self)
+                    self.progressHUD.hide()
+                    return
+                }
+                guard let id = id else { return }
                 self.progressHUD.hide()
                 self.vocabulary!.id = id
                 self.navigationController?.popViewController(animated: true)
@@ -176,7 +185,13 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
             vocabulary.title = title
             vocabulary.language = language
 
-            UserService.shared.updateVocabulary(vocabulary) { index in
+            UserService.shared.updateVocabulary(vocabulary) { error, index in
+                if let error = error {
+                    UserService.shared.db.handleFirestoreError(error, viewController: self)
+                    self.progressHUD.hide()
+                    return
+                }
+                guard let index = index else { return }
                 self.progressHUD.hide()
                 self.navigationController?.popViewController(animated: true)
                 self.delegate?.vocabularyDidUpdate(vocabulary, index: index)

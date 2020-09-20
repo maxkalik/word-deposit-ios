@@ -42,12 +42,10 @@ class ProfileTVC: UITableViewController {
         words = UserService.shared.words
         
         getAllLanguages()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
         setupStatistics()
+        // print(words)
+        
+        print("view did load")
     }
     
     // MARK: - Methods
@@ -61,6 +59,15 @@ class ProfileTVC: UITableViewController {
             }
         }
         languages.sort()
+    }
+    
+    private func updateUser(_ user: User) {
+        UserService.shared.updateUser(user) { error in
+            if let error = error {
+                UserService.shared.db.handleFirestoreError(error, viewController: self)
+                return
+            }
+        }
     }
     
     private func setupStatistics() {
@@ -90,23 +97,8 @@ class ProfileTVC: UITableViewController {
         }
     }
     
-    private func showLoginVC() {
-       let storyboard = UIStoryboard(name: "Main", bundle: nil)
-       let loginVC = storyboard.instantiateViewController(identifier: Storyboards.Login)
-        
-        guard let window = self.view.window else {
-            self.view.window?.rootViewController = loginVC
-            self.view.window?.makeKeyAndVisible()
-            return
-        }
-        
-        window.rootViewController = loginVC
-        window.makeKeyAndVisible()
-
-        let options: UIView.AnimationOptions = .transitionCrossDissolve
-        let duration: TimeInterval = 0.3
-        
-        UIView.transition(with: window, duration: duration, options: options, animations: nil, completion: nil)
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
     }
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -126,14 +118,18 @@ class ProfileTVC: UITableViewController {
     // MARK: - IBActions
     
     @IBAction func logOut(_ sender: UIButton) {
-        UserService.shared.logout {
-            self.showLoginVC()
+        UserService.shared.logout { error in
+            if let error = error {
+                UserService.shared.auth.handleFireAuthError(error, viewController: self)
+                return
+            }
+            showLoginVC(view: self.view)
         }
     }
     
     @IBAction func notificationSwitched(_ sender: UISwitch) {
         user.notifications = sender.isOn
-        UserService.shared.updateUser(user)
+        updateUser(user)
     }
     
     // MARK: - Segue
@@ -196,7 +192,7 @@ extension ProfileTVC: UserInfoTVCDelegate {
     func updateUserInfo(firstName: String, lastName: String) {
         user.firstName = firstName
         user.lastName = lastName
-        UserService.shared.updateUser(user)
+        updateUser(user)
     }
 }
 
@@ -205,7 +201,7 @@ extension ProfileTVC: ProfileTVCCheckmarkDelegate {
         switch segueId {
         case Segues.NativeLanguage:
             user.nativeLanguage = languages[checkmarked]
-            UserService.shared.updateUser(user)
+            updateUser(user)
         default:
             break
         }

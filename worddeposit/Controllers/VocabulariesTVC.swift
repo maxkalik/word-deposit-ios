@@ -1,13 +1,11 @@
 import UIKit
 
-let vocabulariesSwitchNotificationKey = "com.maxkalik.worddeposit.vocabulariesSwitchNotificationKey"
-
 class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
 
     // MARK: - Instances
     
-    var vocabularies = [Vocabulary]()
-    var selectedVocabularyIndex: Int? {
+    private var vocabularies = [Vocabulary]()
+    private var selectedVocabularyIndex: Int? {
         // get first vocabulary is selected
         get {
             if vocabularies.count > 0 {
@@ -26,21 +24,25 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         }
     }
     
-    var messageView = MessageView()
-    var progressHUD = ProgressHUD()
+    private var messageView = MessageView()
+    private var progressHUD = ProgressHUD()
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let nc = NotificationCenter.default
-        nc.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(vocabulariesSwitchNotificationKey), object: nil)
+        nc.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(Keys.vocabulariesSwitchNotificationKey), object: nil)
         
         setupTableView()
         view.addSubview(messageView)
         view.superview?.addSubview(progressHUD)
         prepareContent()
-
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        messageView.frame.origin.y = tableView.contentOffset.y
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,11 +50,6 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         setupMessage()
         messageView.hide()
         checkVocabulariesExist()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        messageView.frame.origin.y = tableView.contentOffset.y
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -65,13 +62,16 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     // fetching content and add it to the view
     private func prepareContent() {
         if UserService.shared.vocabularies.count > 0 {
-            vocabularies.removeAll()
-            tableView.reloadData()
+            self.vocabularies.removeAll()
+            self.tableView.reloadData()
             
-            for index in 0..<UserService.shared.vocabularies.count {
-                self.vocabularies.append(UserService.shared.vocabularies[index])
-                self.tableView.insertRows(at: [IndexPath(item: index, section: 0)], with: .fade)
-            }
+            /// main queue dispatching here because we need to avoid a warning UITableViewAlertForLayoutOutsideViewHierarchy
+             DispatchQueue.main.async {
+                for index in 0..<UserService.shared.vocabularies.count {
+                    self.vocabularies.append(UserService.shared.vocabularies[index])
+                    self.tableView.insertRows(at: [IndexPath(item: index, section: 0)], with: .fade)
+                }
+             }
         }
     }
     
@@ -79,15 +79,21 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         if UserService.shared.vocabularies.isEmpty {
             self.setupMessage()
             self.messageView.show()
+            self.tableView.isScrollEnabled = false
             self.isModalInPresentation = true
         } else {
+            self.tableView.isScrollEnabled = true
             self.isModalInPresentation = false
         }
     }
     
     func vocabularyDidCreate(_ vocabulary: Vocabulary) {
-        self.vocabularies.insert(vocabulary, at: 0)
-        self.tableView.insertRows(at: [IndexPath(item: 0, section: 0)], with: .fade)
+        vocabularies.insert(vocabulary, at: 0)
+        tableView.insertRows(at: [IndexPath(item: 0, section: 0)], with: .fade)
+        if vocabularies.count == 1 {
+            UserService.shared.getCurrentVocabulary()
+            NotificationCenter.default.post(name: Notification.Name(Keys.vocabulariesSwitchNotificationKey), object: nil)
+        }
     }
     
     func vocabularyDidUpdate(_ vocabulary: Vocabulary, index: Int) {
@@ -100,7 +106,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         self.tableView.deleteRows(at: [IndexPath(item: index, section: 0)], with: .fade)
     }
     
-    func setupMessage() {
+    private func setupMessage() {
         messageView.setTitles(
             messageTxt: "You have no any vocabularies yet.\nPlease add them.",
             buttonTitle: "+ Add vocabulary",
@@ -112,33 +118,19 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         }
         messageView.onSecondaryButtonTap {
             self.progressHUD.show()
-            UserService.shared.logout {
+            UserService.shared.logout { error in
+                if let error = error {
+                    self.progressHUD.hide()
+                    UserService.shared.auth.handleFireAuthError(error, viewController: self)
+                    return
+                }
                 self.progressHUD.hide()
-                self.showLoginVC()
+                showLoginVC(view: self.view)
             }
         }
     }
     
-    private func showLoginVC() {
-       let storyboard = UIStoryboard(name: "Main", bundle: nil)
-       let loginVC = storyboard.instantiateViewController(identifier: Storyboards.Login)
-        
-        guard let window = self.view.window else {
-            self.view.window?.rootViewController = loginVC
-            self.view.window?.makeKeyAndVisible()
-            return
-        }
-        
-        window.rootViewController = loginVC
-        window.makeKeyAndVisible()
-
-        let options: UIView.AnimationOptions = .transitionCrossDissolve
-        let duration: TimeInterval = 0.3
-        
-        UIView.transition(with: window, duration: duration, options: options, animations: nil, completion: nil)
-    }
-    
-    func setupTableView() {
+    private func setupTableView() {
         let nib = UINib(nibName: XIBs.VocabulariesTVCell, bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: XIBs.VocabulariesTVCell)
         tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
@@ -156,13 +148,22 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
             selectedVocabularyIndex = newSelectedVocabularyIndex
             tableView.reloadRows(at: [IndexPath(item: oldIndex, section: 0), IndexPath(item: newSelectedVocabularyIndex, section: 0)], with: .fade)
             // update vocabularies request
-            UserService.shared.switchSelectedVocabulary(from: vocabularies[oldIndex], to: vocabularies[newSelectedVocabularyIndex]) {
+            UserService.shared.switchSelectedVocabulary(from: vocabularies[oldIndex], to: vocabularies[newSelectedVocabularyIndex]) { error in
+                
+                if let error = error {
+                    UserService.shared.db.handleFirestoreError(error, viewController: self)
+                    return
+                }
                 
                 UserService.shared.getCurrentVocabulary()
                 
-                UserService.shared.fetchWords { _ in
-                    // Post notification for Practice and Vocabulary views
-                    NotificationCenter.default.post(name: Notification.Name(vocabulariesSwitchNotificationKey), object: nil)
+                UserService.shared.fetchWords { error, _ in
+                    if let error = error {
+                        UserService.shared.db.handleFirestoreError(error, viewController: self)
+                        return
+                    }
+                    /// Post notification for Practice and Vocabulary views
+                    NotificationCenter.default.post(name: Notification.Name(Keys.vocabulariesSwitchNotificationKey), object: nil)
                 }
             }
         } else {
@@ -209,7 +210,11 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
             } else {
                 let alert = UIAlertController(title: title, message: "Are you sure?", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Remove", style: .default, handler: { (action) in
-                    UserService.shared.removeVocabulary(vocabulary) {
+                    UserService.shared.removeVocabulary(vocabulary) { error in
+                        if error != nil {
+                            self.simpleAlert(title: "Error", msg: "Cannot remove vocabulary. Try to reload an app")
+                            return
+                        }
                         self.vocabularyDidRemove(vocabulary, index: indexPath.row)
                     }
                 }))

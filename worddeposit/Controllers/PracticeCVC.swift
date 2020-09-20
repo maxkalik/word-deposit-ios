@@ -26,14 +26,35 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         setupUI()
 
         let userService = UserService.shared
-        userService.fetchCurrentUser { user in
-            userService.fetchVocabularies { vocabularies in
+        userService.fetchCurrentUser { error, user in
+            if let error = error {
+                self.simpleAlert(title: "Error", msg: error.localizedDescription)
+                return
+            }
+            guard let _ = user else {
+                self.simpleAlert(title: "Error", msg: "Cannot find a user")
+                showLoginVC(view: self.view)
+                return
+            }
+            userService.fetchVocabularies { error, vocabularies in
+                if let error = error {
+                    UserService.shared.db.handleFirestoreError(error, viewController: self)
+                    self.progressHUD.hide()
+                    return
+                }
+                guard let vocabularies = vocabularies else { return }
                 if vocabularies.isEmpty {
                     self.presentVocabulariesVC()
                     self.progressHUD.hide()
                 } else {
                     userService.getCurrentVocabulary()
-                    userService.fetchWords { words in
+                    userService.fetchWords { error, words  in
+                        if let error = error {
+                            userService.db.handleFirestoreError(error, viewController: self)
+                            self.progressHUD.hide()
+                            return
+                        }
+                        guard let words = words else { return }
                         self.progressHUD.hide()
                         self.setupContent(words: words)
                     }
@@ -41,13 +62,16 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
             }
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(rawValue: vocabulariesSwitchNotificationKey), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(rawValue: Keys.vocabulariesSwitchNotificationKey), object: nil)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        messageView.frame.origin.y = collectionView.contentOffset.y
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        messageView.frame.origin.y = collectionView.contentOffset.y
-        
         if UserService.shared.vocabulary != nil && !isVocabularySwitched {
             setupContent(words: UserService.shared.words)
         }
@@ -210,7 +234,11 @@ extension PracticeCVC: PracticeReadVCDelegate {
     }
     
     func onFinishTrainer(with words: [Word]) {
-        UserService.shared.updateAnswersScore(words) {
+        UserService.shared.updateAnswersScore(words) { error in
+            if error != nil {
+                self.simpleAlert(title: "Error", msg: "Cannot update answers score")
+                return
+            }
             self.words = UserService.shared.words
         }
     }

@@ -2,6 +2,7 @@ import Foundation
 import UIKit
 
 struct Storyboards {
+    static let Main = "Main"
     static let Login = "Login"
     static let Home = "Home"
     static let VocabularyResults = "VocabularyResultsTVC"
@@ -52,4 +53,8 @@ struct Placeholders {
 struct Images {
     static let trainerWordToTranslate = "trainer-word-to-translate.png"
     static let trainerTranslateToWord = "trainer-translate-to-word.png"
+}
+
+struct Keys {
+    static let vocabulariesSwitchNotificationKey = "com.maxkalik.worddeposit.vocabulariesSwitchNotificationKey"
 }

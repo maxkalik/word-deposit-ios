@@ -61,9 +61,8 @@ class VocabulariesTVCell: UITableViewCell {
     
     private func setupWordsAmount() {
         UserService.shared.getAmountOfWordsFrom(vocabulary: vocabulary) { count in
-            if self.vocabulary.wordsAmount != count {
-                self.wordsAmount = count
-            }
+            guard let amount = count, self.vocabulary.wordsAmount != amount else { return }
+            self.wordsAmount = amount
         }
     }
     

@@ -31,11 +31,10 @@ class VocabularyTVC: UITableViewController {
         setupResultsTableController()
         
         // Setup message
-        self.view.addSubview(messageView)
+        view.addSubview(messageView)
         
         let nc = NotificationCenter.default
-        
-        nc.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(vocabulariesSwitchNotificationKey), object: nil)
+        nc.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(Keys.vocabulariesSwitchNotificationKey), object: nil)
     }
     
     @objc func vocabularyDidSwitch() {
@@ -82,7 +81,7 @@ class VocabularyTVC: UITableViewController {
     
     private func setupTitle() {
         guard let vocabulary = UserService.shared.vocabulary else { return }
-        self.title = vocabulary.title
+        navigationItem.title = vocabulary.title
     }
     
     func setupMessage() {
@@ -203,7 +202,11 @@ extension VocabularyTVC {
             
             let word: Word! = tableView === self.tableView ? words[indexPath.row] : resultsTableController.filteredWords[indexPath.row]
             
-            UserService.shared.removeWord(word) {
+            UserService.shared.removeWord(word) { error in
+                if error != nil {
+                    self.simpleAlert(title: "Error", msg: "Sorry. Cannot remove word. Something wrong.")
+                    return
+                }
                 self.wordDidRemove(word, index: indexPath.row)
             }
         }
