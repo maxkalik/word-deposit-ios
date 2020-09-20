@@ -218,7 +218,6 @@ PODS:
   - BoringSSL-GRPC/Implementation (0.0.7):
     - BoringSSL-GRPC/Interface (= 0.0.7)
   - BoringSSL-GRPC/Interface (0.0.7)
-  - CodableFirebase (0.2.1)
   - Firebase/Auth (6.32.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 6.9.1)
@@ -346,7 +345,6 @@ PODS:
     - SteviaLayout (~> 4.7.3)
 
 DEPENDENCIES:
-  - CodableFirebase
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Firestore
@@ -359,7 +357,6 @@ SPEC REPOS:
   trunk:
     - abseil
     - BoringSSL-GRPC
-    - CodableFirebase
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -386,7 +383,6 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
-  CodableFirebase: 0bf201991eeec35eb9fcd987d271ea463cf34a80
   Firebase: afa030f17f5421810f379a42b0e5d3302d27eb26
   FirebaseAnalytics: a4d98464f455f5056063932123fa441025322f30
   FirebaseAuth: f7b269b33c1e842a35400ddc9bbc8b03cdc47ba3
@@ -410,6 +406,6 @@ SPEC CHECKSUMS:
   SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
   YPImagePicker: 08bbb809ed62bf4149fc015c97249eb4b9463ff9
 
-PODFILE CHECKSUM: 5c85868088a1acfcd459949f38b5b74a472601fd
+PODFILE CHECKSUM: 80ae0e039deb3a8bc3d91a7eecf09786fa90fb68
 
 COCOAPODS: 1.9.3

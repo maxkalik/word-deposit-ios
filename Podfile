@@ -13,7 +13,7 @@ target 'worddeposit' do
   pod 'Firebase/Storage'
   pod 'IQKeyboardManagerSwift'
   pod 'Kingfisher'
-  pod 'CodableFirebase'
+#  pod 'CodableFirebase'
   pod 'YPImagePicker'
 
 end
