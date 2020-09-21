@@ -143,9 +143,8 @@ class ProfileTVC: UITableViewController {
             userInfoTVC.title = "User Info"
         }
         
-        if let tvc = segue.destination as? ProfileTVCCheckmark {
+        if let tvc = segue.destination as? CheckmarkListTVC {
             tvc.delegate = self
-            tvc.segueId = segue.identifier
             switch segue.identifier {
             case Segues.NativeLanguage:
                 
@@ -158,14 +157,6 @@ class ProfileTVC: UITableViewController {
                 tvc.data = languages
                 tvc.selected = selected
                 tvc.title = "Native Language"
-            case Segues.AccountType:
-                tvc.data = ["Regular"]
-                tvc.selected = 0
-                tvc.title = "Account"
-            case Segues.Appearance:
-                tvc.data = ["Dark", "Light"]
-                tvc.selected = 0
-                tvc.title = "Appearance"
             default:
                 break
             }
@@ -196,14 +187,9 @@ extension ProfileTVC: UserInfoTVCDelegate {
     }
 }
 
-extension ProfileTVC: ProfileTVCCheckmarkDelegate {
-    func getCheckmared(checkmarked: Int, segueId: String) {
-        switch segueId {
-        case Segues.NativeLanguage:
-            user.nativeLanguage = languages[checkmarked]
-            updateUser(user)
-        default:
-            break
-        }
+extension ProfileTVC: CheckmarkListTVCDelegate {
+    func getCheckmared(index: Int) {
+        user.nativeLanguage = languages[index]
+        updateUser(user)
     }
 }

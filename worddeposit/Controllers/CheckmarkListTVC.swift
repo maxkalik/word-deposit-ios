@@ -1,18 +1,22 @@
 import UIKit
 
-protocol ProfileTVCCheckmarkDelegate: ProfileTVC {
-    func getCheckmared(checkmarked: Int, segueId: String)
+protocol CheckmarkListTVCDelegate: AnyObject {
+    func getCheckmared(index: Int)
 }
 
-class ProfileTVCCheckmark: UITableViewController {
+class CheckmarkListTVC: UITableViewController {
 
     var data: [String]!
-    var selected: Int!
-    var segueId: String?
-    weak var delegate: ProfileTVCCheckmarkDelegate?
+    var selected: Int? {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    weak var delegate: CheckmarkListTVCDelegate?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        guard let selected = self.selected else { return }
         tableView.scrollToRow(at: IndexPath(item: selected, section: 0), at: .middle, animated: false)
     }
 
@@ -36,14 +40,11 @@ class ProfileTVCCheckmark: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if selected != nil {
-            tableView.cellForRow(at: IndexPath(row: selected, section: 0))?.accessoryType = .none
-            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-            selected = indexPath.row
-            tableView.deselectRow(at: indexPath, animated: true)
-            guard let segueId = segueId else {return }
-            delegate?.getCheckmared(checkmarked: indexPath.row, segueId: segueId)
-        }
+        tableView.cellForRow(at: IndexPath(row: selected ?? indexPath.row, section: 0))?.accessoryType = .none
+        tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        self.selected = indexPath.row
+        tableView.deselectRow(at: indexPath, animated: true)
+        delegate?.getCheckmared(index: indexPath.row)
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

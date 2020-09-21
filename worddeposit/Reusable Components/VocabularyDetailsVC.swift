@@ -14,6 +14,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var languageTextField: UITextField!
     
+    @IBOutlet weak var languageButton: UIButton!
     @IBOutlet weak var buttonsStackView: UIStackView!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
@@ -24,6 +25,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     
     private var isKeyboardShowing = false
     private var keyboardHeight: CGFloat!
+    private var languages: [String] = []
     
     weak var delegate: VocabularyDetailsVCDelegate?
     
@@ -33,28 +35,21 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         super.viewDidLoad()
 
         // Primary setting up UI
+        getAllLanguages()
         setupUI()
-
-        // all observers here because it is the last item in the array of controller
-        // Keyboard observers
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         let nc = NotificationCenter.default
-        
         nc.addObserver(self, selector: #selector(currentVocabularyDidUpdate), name: NSNotification.Name(rawValue: Keys.currentVocabularyDidUpdateKey), object: nil)
-        
         nc.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         nc.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         // TextField observers
         titleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         languageTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-    }
-    
-    @objc func currentVocabularyDidUpdate() {
-        print("notification has been sent - currentVocabularyDidUpdate")
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
         disableAllButtons()
         
@@ -76,6 +71,10 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     
     
     // MARK: - objc Methods
+    
+    @objc func currentVocabularyDidUpdate() {
+        print("notification has been sent - currentVocabularyDidUpdate")
+    }
     
     @objc func keyboardWillShow(_ notification: NSNotification) {
         if isKeyboardShowing { return }
@@ -134,8 +133,22 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     
     // MARK: - Methods
     
+    private func getAllLanguages() {
+        for code in NSLocale.isoLanguageCodes  {
+            let id = NSLocale.localeIdentifier(fromComponents: [NSLocale.Key.languageCode.rawValue: code])
+            let name = NSLocale(localeIdentifier: "en").displayName(forKey: NSLocale.Key.identifier, value: id) ?? ""
+            if name != "" {
+                languages.append(name)
+            }
+        }
+        languages.sort()
+        languages.append("Other")
+    }
+    
     private func setupUI() {
         hideKeyboardWhenTappedAround()
+        
+        languageTextField.isHidden = true
         
         // spinner
         view.addSubview(progressHUD)
@@ -146,7 +159,13 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         guard let title = vocabulary?.title, let language = vocabulary?.language else { return }
         if title.isNotEmpty && language.isNotEmpty {
             titleTextField.text = title
-            languageTextField.text = language
+            if languages.contains(where: { $0 == title }) {
+                languageButton.setTitle(title, for: .normal)
+            } else {
+                languageButton.setTitle(languages[languages.count - 1], for: .normal)
+                languageTextField.text = language
+                languageTextField.isHidden = false
+            }
         }
     }
     
@@ -186,22 +205,29 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     @IBAction func cancelTapped(_ sender: UIButton) { onCancel() }
     
     @IBAction func saveTapped(_ sender: UIButton) {
-        progressHUD.show()
-        guard let title = titleTextField.text, title.isNotEmpty, let language = languageTextField.text, language.isNotEmpty else {
-            simpleAlert(title: "Error", msg: "Fill all fields")
-            progressHUD.hide()
-            return
+        
+        guard let title = titleTextField.text, title.isNotEmpty, let language = languageTextField.text, language.isNotEmpty else { return }
+        
+        // validation - min-max title length
+        let titleLengthLimit = 26
+        if title.count > titleLengthLimit {
+            simpleAlert(title: "Too long title", msg: "Please. Try to name your vocabulary within 20 characters.") { _ in
+                self.titleTextField.text = String(title.prefix(titleLengthLimit))
+                self.titleTextField.becomeFirstResponder()
+            }
         }
         
-        // validation
+        // validation - same name
         if UserService.shared.vocabularies.contains(where: { $0.title == title }) {
             simpleAlert(title: "Vocabulary is already exist", msg: "You have already the same vocabulary title. Make different one.") { _ in
                 self.titleTextField.becomeFirstResponder()
             }
-            progressHUD.hide()
             onCancel()
             return
         }
+        
+        // if all is good then start spinner
+        progressHUD.show()
         
         if vocabulary == nil {
             
@@ -238,6 +264,32 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
                 }
                 self.completeSaving(vocabulary: vocabulary, index: index)
             }
+        }
+    }
+    
+    // MARK: - Override
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let tvc = segue.destination as? CheckmarkListTVC {
+            print("prepare for segue")
+            tvc.delegate = self
+            tvc.data = languages
+            
+//            tvc.selected = selected
+            tvc.title = "Select language"
+        }
+    }
+}
+
+extension VocabularyDetailsVC: CheckmarkListTVCDelegate {
+    func getCheckmared(index: Int) {
+        languageButton.setTitle(languages[index], for: .normal)
+        if index == languages.count - 1 {
+            languageTextField.isHidden = false
+            languageTextField.becomeFirstResponder()
+            buttonsStackView.alpha = 1
+        } else {
+            languageTextField.isHidden = true
         }
     }
 }

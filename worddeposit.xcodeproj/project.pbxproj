@@ -31,7 +31,7 @@
 		1158D30E24917B9B0087DC96 /* VocabularyTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1158D30C24917B9B0087DC96 /* VocabularyTVCell.swift */; };
 		1158D30F24917B9B0087DC96 /* VocabularyTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1158D30D24917B9B0087DC96 /* VocabularyTVCell.xib */; };
 		1158D31524917EC50087DC96 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1158D31424917EC50087DC96 /* GoogleService-Info.plist */; };
-		11621A2524C24819003087AB /* ProfileTVCCheckmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11621A2424C24819003087AB /* ProfileTVCCheckmark.swift */; };
+		11621A2524C24819003087AB /* CheckmarkListTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11621A2424C24819003087AB /* CheckmarkListTVC.swift */; };
 		11621A2724C25EFA003087AB /* WKWebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11621A2624C25EFA003087AB /* WKWebVC.swift */; };
 		1164FB532508CE150023326A /* MakeWordDesk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1164FB522508CE150023326A /* MakeWordDesk.swift */; };
 		116BC94C249182BD00968DA6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC94B249182BD00968DA6 /* Constants.swift */; };
@@ -94,7 +94,7 @@
 		1158D30C24917B9B0087DC96 /* VocabularyTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyTVCell.swift; sourceTree = "<group>"; };
 		1158D30D24917B9B0087DC96 /* VocabularyTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VocabularyTVCell.xib; sourceTree = "<group>"; };
 		1158D31424917EC50087DC96 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		11621A2424C24819003087AB /* ProfileTVCCheckmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfileTVCCheckmark.swift; path = worddeposit/Controllers/ProfileTVCCheckmark.swift; sourceTree = SOURCE_ROOT; };
+		11621A2424C24819003087AB /* CheckmarkListTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CheckmarkListTVC.swift; path = worddeposit/Controllers/CheckmarkListTVC.swift; sourceTree = SOURCE_ROOT; };
 		11621A2624C25EFA003087AB /* WKWebVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WKWebVC.swift; path = worddeposit/Controllers/WKWebVC.swift; sourceTree = SOURCE_ROOT; };
 		1164FB522508CE150023326A /* MakeWordDesk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeWordDesk.swift; sourceTree = "<group>"; };
 		116BC94B249182BD00968DA6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -215,7 +215,7 @@
 				11F32A5824AF49DB0097BF39 /* VocabularyTVC+Updating.swift */,
 				1181BBF12498060F00DB682E /* VocabularyCardsVC.swift */,
 				11284234248E83C800A014E9 /* ProfileTVC.swift */,
-				11621A2424C24819003087AB /* ProfileTVCCheckmark.swift */,
+				11621A2424C24819003087AB /* CheckmarkListTVC.swift */,
 				118162EE24BFB08E0088C0E1 /* UserInfoTVC.swift */,
 				11621A2624C25EFA003087AB /* WKWebVC.swift */,
 				11ECE4B324EB0FA100B7884B /* VocabulariesTVC.swift */,
@@ -470,7 +470,7 @@
 				11284235248E83C800A014E9 /* ProfileTVC.swift in Sources */,
 				11F32A5324AF46D00097BF39 /* VocabularyResultsTVC.swift in Sources */,
 				11621A2724C25EFA003087AB /* WKWebVC.swift in Sources */,
-				11621A2524C24819003087AB /* ProfileTVCCheckmark.swift in Sources */,
+				11621A2524C24819003087AB /* CheckmarkListTVC.swift in Sources */,
 				11284237248E83D400A014E9 /* LoginVC.swift in Sources */,
 				11F32A5524AF49C30097BF39 /* VocabularyTVC+Restore.swift in Sources */,
 				11284211248E7C5700A014E9 /* AppDelegate.swift in Sources */,

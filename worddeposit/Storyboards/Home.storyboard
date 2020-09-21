@@ -24,7 +24,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <view key="backgroundView" contentMode="scaleToFill" id="kyP-zW-Sva">
-                            <rect key="frame" x="0.0" y="-140" width="414" height="896"/>
+                            <rect key="frame" x="0.0" y="-88" width="414" height="896"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <viewLayoutGuide key="safeArea" id="ejz-Jy-Tzo"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -193,7 +193,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="DNU-r9-0JB">
-                                <rect key="frame" x="20" y="353" width="374" height="190"/>
+                                <rect key="frame" x="20" y="327" width="374" height="242"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZD9-di-RMR">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
@@ -203,8 +203,16 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Language" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4fs-rZ-Sqq">
-                                        <rect key="frame" x="0.0" y="70" width="374" height="50"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hug-rP-xzC">
+                                        <rect key="frame" x="0.0" y="70" width="374" height="32"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <state key="normal" title="Select language"/>
+                                        <connections>
+                                            <segue destination="p8a-RE-aLZ" kind="show" id="YiF-nd-0zQ"/>
+                                        </connections>
+                                    </button>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Other" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4fs-rZ-Sqq">
+                                        <rect key="frame" x="0.0" y="122" width="374" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="9P7-hp-Qfd"/>
                                         </constraints>
@@ -212,7 +220,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="2Mi-Ca-bAs">
-                                        <rect key="frame" x="0.0" y="140" width="374" height="50"/>
+                                        <rect key="frame" x="0.0" y="192" width="374" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tzx-Zg-Hh5">
                                                 <rect key="frame" x="0.0" y="0.0" width="187" height="50"/>
@@ -250,6 +258,7 @@
                     <connections>
                         <outlet property="buttonsStackView" destination="2Mi-Ca-bAs" id="k18-uO-J0a"/>
                         <outlet property="cancelButton" destination="Tzx-Zg-Hh5" id="ZE7-pV-gWj"/>
+                        <outlet property="languageButton" destination="Hug-rP-xzC" id="fQe-gF-HxY"/>
                         <outlet property="languageTextField" destination="4fs-rZ-Sqq" id="Maz-Y3-2FE"/>
                         <outlet property="saveButton" destination="dxh-uR-aQh" id="Rhb-Xh-HlL"/>
                         <outlet property="stackView" destination="DNU-r9-0JB" id="5I5-zJ-82n"/>
@@ -932,7 +941,7 @@
         <!--Title-->
         <scene sceneID="q2z-gi-5Et">
             <objects>
-                <tableViewController id="p8a-RE-aLZ" customClass="ProfileTVCCheckmark" customModule="worddeposit" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="p8a-RE-aLZ" customClass="CheckmarkListTVC" customModule="worddeposit" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Uz6-R2-zpN">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -965,7 +974,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qQw-9s-M4A" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1909" y="2660"/>
+            <point key="canvasLocation" x="5310" y="1809"/>
         </scene>
         <!--WebVC-->
         <scene sceneID="5tc-WV-JnT">
@@ -1068,7 +1077,7 @@
         <segue reference="cIB-pM-tsi"/>
         <segue reference="L4V-Nc-46o"/>
         <segue reference="cT5-yM-GyM"/>
-        <segue reference="wQV-jD-p7z"/>
+        <segue reference="YiF-nd-0zQ"/>
         <segue reference="FgU-uN-MIW"/>
     </inferredMetricsTieBreakers>
     <resources>

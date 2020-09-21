@@ -104,6 +104,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     func vocabularyDidRemove(_ vocabulary: Vocabulary, index: Int) {
         self.vocabularies.remove(at: index)
         self.tableView.deleteRows(at: [IndexPath(item: index, section: 0)], with: .fade)
+        // TODO: - Bug - attempt to delete row 2 from section 0 which only contains 2 rows before the update
     }
     
     private func setupMessage() {
