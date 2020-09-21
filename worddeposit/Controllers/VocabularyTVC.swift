@@ -39,7 +39,6 @@ class VocabularyTVC: UITableViewController {
     }
     
     @objc func vocabularyDidUpdate() {
-        print("---- vocabulary ----- vocabulary did update")
         setupTitle()
     }
     

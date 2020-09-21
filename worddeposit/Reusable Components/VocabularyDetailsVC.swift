@@ -168,9 +168,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    // MARK: - IBActions
-    
-    @IBAction func cancelTapped(_ sender: UIButton) {
+    private func onCancel() {
         guard let vocabulary = self.vocabulary else {
             titleTextField.text = ""
             languageTextField.text = ""
@@ -183,11 +181,25 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         disableAllButtons()
     }
     
+    // MARK: - IBActions
+    
+    @IBAction func cancelTapped(_ sender: UIButton) { onCancel() }
+    
     @IBAction func saveTapped(_ sender: UIButton) {
         progressHUD.show()
         guard let title = titleTextField.text, title.isNotEmpty, let language = languageTextField.text, language.isNotEmpty else {
             simpleAlert(title: "Error", msg: "Fill all fields")
             progressHUD.hide()
+            return
+        }
+        
+        // validation
+        if UserService.shared.vocabularies.contains(where: { $0.title == title }) {
+            simpleAlert(title: "Vocabulary is already exist", msg: "You have already the same vocabulary title. Make different one.") { _ in
+                self.titleTextField.becomeFirstResponder()
+            }
+            progressHUD.hide()
+            onCancel()
             return
         }
         
@@ -214,6 +226,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
             }
         } else {
             guard var vocabulary = self.vocabulary else { return }
+            
             vocabulary.title = title
             vocabulary.language = language
 
