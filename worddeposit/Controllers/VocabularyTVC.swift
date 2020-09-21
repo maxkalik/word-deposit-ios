@@ -20,7 +20,6 @@ class VocabularyTVC: UITableViewController {
     /// Flag for current vocabulary
     var isVocabularySwitched = false
 
-
     // MARK: - View Lifecycle
     
     override func viewDidLoad() {
@@ -32,10 +31,16 @@ class VocabularyTVC: UITableViewController {
         
         // Setup message
         view.addSubview(messageView)
+
         
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(Keys.vocabulariesSwitchNotificationKey), object: nil)
-        nc.addObserver(self, selector: #selector(vocabularyDidUpdate), name: Notification.Name(Keys.vocabularyUpdateNotificationKey), object: nil)
+        nc.addObserver(self, selector: #selector(vocabularyDidUpdate), name: Notification.Name(rawValue: Keys.currentVocabularyDidUpdateKey), object: nil)
+    }
+    
+    @objc func vocabularyDidUpdate() {
+        print("---- vocabulary ----- vocabulary did update")
+        setupTitle()
     }
     
     @objc func vocabularyDidSwitch() {
@@ -43,11 +48,6 @@ class VocabularyTVC: UITableViewController {
         self.tableView.reloadData()
         self.setupContent(words: UserService.shared.words)
         self.isVocabularySwitched = true
-    }
-    
-    @objc func vocabularyDidUpdate() {
-        print("vocabulary did update")
-        setupTitle()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -88,7 +88,6 @@ class VocabularyTVC: UITableViewController {
     private func setupTitle() {
         guard let vocabulary = UserService.shared.vocabulary else { return }
         navigationItem.title = vocabulary.title
-        print(vocabulary.title)
     }
     
     func setupMessage() {
@@ -100,6 +99,7 @@ class VocabularyTVC: UITableViewController {
         let nib = UINib(nibName: XIBs.VocabularyTVCell, bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: XIBs.VocabularyTVCell)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: ReusableIdentifiers.MessageView)
+        navigationItem.title = ""
     }
     
     func setupResultsTableController() {

@@ -373,6 +373,9 @@ final class UserService {
             if let index: Int = self.vocabularies.firstIndex(matching: vocabulary) {
                 self.vocabularies[index] = vocabulary
                 complition?(nil, index)
+                if vocabulary.isSelected {
+                    self.vocabulary = vocabulary
+                }
             }
         }
     }

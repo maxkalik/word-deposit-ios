@@ -38,14 +38,19 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         // all observers here because it is the last item in the array of controller
         // Keyboard observers
         let nc = NotificationCenter.default
+        
+        nc.addObserver(self, selector: #selector(currentVocabularyDidUpdate), name: NSNotification.Name(rawValue: Keys.currentVocabularyDidUpdateKey), object: nil)
+        
         nc.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         nc.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
-        nc.addObserver(self, selector: #selector(vocabularyDidUpdate), name: Notification.Name(Keys.vocabularyUpdateNotificationKey), object: nil)
         
         // TextField observers
         titleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         languageTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+    }
+    
+    @objc func currentVocabularyDidUpdate() {
+        print("notification has been sent - currentVocabularyDidUpdate")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,10 +76,6 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     
     
     // MARK: - objc Methods
-    
-    @objc func vocabularyDidUpdate() {
-        print("vocabulary updated -- notification is called")
-    }
     
     @objc func keyboardWillShow(_ notification: NSNotification) {
         if isKeyboardShowing { return }
@@ -159,6 +160,12 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         }
         /// update with index
         self.delegate?.vocabularyDidUpdate(vocabulary, index: index)
+        if vocabulary.isSelected {
+            // update vocabulary title in vocabulary tvc
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: Notification.Name(rawValue: Keys.currentVocabularyDidUpdateKey), object: self)
+            }
+        }
     }
     
     // MARK: - IBActions
@@ -217,10 +224,6 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
                     return
                 }
                 self.completeSaving(vocabulary: vocabulary, index: index)
-                
-                if vocabulary.isSelected {
-                    NotificationCenter.default.post(name: Notification.Name(Keys.vocabularyUpdateNotificationKey), object: nil)
-                }
             }
         }
     }
