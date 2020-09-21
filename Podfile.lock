@@ -338,7 +338,7 @@ PODS:
   - nanopb/decode (1.30906.0)
   - nanopb/encode (1.30906.0)
   - PromisesObjC (1.2.10)
-  - PryntTrimmerView (4.0.0)
+  - PryntTrimmerView (4.0.2)
   - SteviaLayout (4.7.3)
   - YPImagePicker (4.3.1):
     - PryntTrimmerView (~> 4.0.0)
@@ -351,7 +351,8 @@ DEPENDENCIES:
   - Firebase/Storage
   - IQKeyboardManagerSwift
   - Kingfisher
-  - YPImagePicker
+  - PryntTrimmerView (from `https://github.com/HHK1/PryntTrimmerView.git`)
+  - YPImagePicker (from `https://github.com/Yummypets/YPImagePicker.git`)
 
 SPEC REPOS:
   trunk:
@@ -376,9 +377,21 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - PromisesObjC
-    - PryntTrimmerView
     - SteviaLayout
-    - YPImagePicker
+
+EXTERNAL SOURCES:
+  PryntTrimmerView:
+    :git: https://github.com/HHK1/PryntTrimmerView.git
+  YPImagePicker:
+    :git: https://github.com/Yummypets/YPImagePicker.git
+
+CHECKOUT OPTIONS:
+  PryntTrimmerView:
+    :commit: 4a9739f251fbf88f394192fdbf3195d55d3811b5
+    :git: https://github.com/HHK1/PryntTrimmerView.git
+  YPImagePicker:
+    :commit: 96bf9abe615cb24e39240f9d7305d7f3ed76f4ff
+    :git: https://github.com/Yummypets/YPImagePicker.git
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
@@ -402,10 +415,10 @@ SPEC CHECKSUMS:
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
   PromisesObjC: b14b1c6b68e306650688599de8a45e49fae81151
-  PryntTrimmerView: 67e67573ffd4c073f1308effa66aefd0cfa667a0
+  PryntTrimmerView: 6a43cc90df5d99addeabd33d4ba09b1365322130
   SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
   YPImagePicker: 08bbb809ed62bf4149fc015c97249eb4b9463ff9
 
-PODFILE CHECKSUM: 80ae0e039deb3a8bc3d91a7eecf09786fa90fb68
+PODFILE CHECKSUM: 92ef6ce43a025841f557a5f1ecc796a0ca63f6f3
 
 COCOAPODS: 1.10.0.rc.1

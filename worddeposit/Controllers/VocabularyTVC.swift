@@ -35,6 +35,7 @@ class VocabularyTVC: UITableViewController {
         
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(Keys.vocabulariesSwitchNotificationKey), object: nil)
+        nc.addObserver(self, selector: #selector(vocabularyDidUpdate), name: Notification.Name(Keys.vocabularyUpdateNotificationKey), object: nil)
     }
     
     @objc func vocabularyDidSwitch() {
@@ -42,6 +43,11 @@ class VocabularyTVC: UITableViewController {
         self.tableView.reloadData()
         self.setupContent(words: UserService.shared.words)
         self.isVocabularySwitched = true
+    }
+    
+    @objc func vocabularyDidUpdate() {
+        print("vocabulary did update")
+        setupTitle()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -82,6 +88,7 @@ class VocabularyTVC: UITableViewController {
     private func setupTitle() {
         guard let vocabulary = UserService.shared.vocabulary else { return }
         navigationItem.title = vocabulary.title
+        print(vocabulary.title)
     }
     
     func setupMessage() {

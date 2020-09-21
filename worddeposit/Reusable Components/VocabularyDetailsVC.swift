@@ -41,6 +41,8 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         nc.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         nc.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
+        nc.addObserver(self, selector: #selector(vocabularyDidUpdate), name: Notification.Name(Keys.vocabularyUpdateNotificationKey), object: nil)
+        
         // TextField observers
         titleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         languageTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
@@ -69,6 +71,10 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     
     
     // MARK: - objc Methods
+    
+    @objc func vocabularyDidUpdate() {
+        print("vocabulary updated -- notification is called")
+    }
     
     @objc func keyboardWillShow(_ notification: NSNotification) {
         if isKeyboardShowing { return }
@@ -143,6 +149,18 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         }
     }
     
+    private func completeSaving(vocabulary: Vocabulary, index: Int? = nil) {
+        self.progressHUD.hide()
+        self.navigationController?.popViewController(animated: true)
+        guard let index = index else {
+            /// create new
+            self.delegate?.vocabularyDidCreate(self.vocabulary!)
+            return
+        }
+        /// update with index
+        self.delegate?.vocabularyDidUpdate(vocabulary, index: index)
+    }
+    
     // MARK: - IBActions
     
     @IBAction func cancelTapped(_ sender: UIButton) {
@@ -167,7 +185,16 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         }
         
         if vocabulary == nil {
-            self.vocabulary = Vocabulary.init(id: "", title: title, language: language, wordsAmount: 0, isSelected: isFirstSelected, timestamp: Timestamp())
+            
+            self.vocabulary = Vocabulary.init(
+                id: "",
+                title: title,
+                language: language,
+                wordsAmount: 0,
+                isSelected: isFirstSelected,
+                timestamp: Timestamp()
+            )
+            
             UserService.shared.setVocabulary(vocabulary!) { error, id in
                 if let error = error {
                     UserService.shared.db.handleFirestoreError(error, viewController: self)
@@ -175,10 +202,8 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
                     return
                 }
                 guard let id = id else { return }
-                self.progressHUD.hide()
                 self.vocabulary!.id = id
-                self.navigationController?.popViewController(animated: true)
-                self.delegate?.vocabularyDidCreate(self.vocabulary!)
+                self.completeSaving(vocabulary: self.vocabulary!)
             }
         } else {
             guard var vocabulary = self.vocabulary else { return }
@@ -191,10 +216,11 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
                     self.progressHUD.hide()
                     return
                 }
-                guard let index = index else { return }
-                self.progressHUD.hide()
-                self.navigationController?.popViewController(animated: true)
-                self.delegate?.vocabularyDidUpdate(vocabulary, index: index)
+                self.completeSaving(vocabulary: vocabulary, index: index)
+                
+                if vocabulary.isSelected {
+                    NotificationCenter.default.post(name: Notification.Name(Keys.vocabularyUpdateNotificationKey), object: nil)
+                }
             }
         }
     }
