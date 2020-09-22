@@ -26,7 +26,18 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     private var isKeyboardShowing = false
     private var keyboardHeight: CGFloat!
     private var languages: [String] = []
-    private var languageIndex: Int?
+    private var languageIndex: Int? {
+        didSet {
+            guard let index = languageIndex else { return }
+            if index != oldValue {
+                buttonsStackView.alpha = 1
+                enableAllButtons()
+            } else {
+                buttonsStackView.alpha = 0
+                disableAllButtons()
+            }
+        }
+    }
     
     weak var delegate: VocabularyDetailsVCDelegate?
     
@@ -34,10 +45,20 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Primary setting up UI
         getAllLanguages()
         setupUI()
+        
+        disableAllButtons()
+        
+        if vocabulary != nil {
+            titleTextField.borderStyle = .none
+            languageTextField.borderStyle = .none
+            buttonsStackView.alpha = 0
+        } else {
+            cancelButton.setTitle("Clear", for: .normal)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -51,16 +72,6 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         // TextField observers
         titleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         languageTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        
-        disableAllButtons()
-        
-        if vocabulary != nil {
-            titleTextField.borderStyle = .none
-            languageTextField.borderStyle = .none
-            buttonsStackView.alpha = 0
-        } else {
-            cancelButton.setTitle("Clear", for: .normal)
-        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -160,10 +171,15 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         titleTextField?.autocorrectionType = .no
         languageTextField?.autocorrectionType = .no
         
+        setupContent()
+    }
+    
+    private func setupContent() {
         guard let title = vocabulary?.title, let language = vocabulary?.language else { return }
         if title.isNotEmpty && language.isNotEmpty {
             titleTextField.text = title
             
+            // setup languages
             if languages.contains(where: { $0 == language }) {
                 languageIndex = languages.firstIndex(where: { $0 == language })
                 languageButton.setTitle(language, for: .normal)
@@ -203,12 +219,24 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         }
         
         titleTextField.text = vocabulary.title
-        languageTextField.text = vocabulary.language
+        
+        setupContent()
+        
+        // languageTextField.text = vocabulary.language
+        buttonsStackView.alpha = 0
         disableAllButtons()
     }
     
     private func onSave() {
-        guard let title = titleTextField.text, title.isNotEmpty, let language = languageTextField.text, language.isNotEmpty else { return }
+        guard let title = titleTextField.text, title.isNotEmpty, let index = languageIndex else { return }
+        
+        var language = ""
+        if index == languages.count - 1 {
+            guard let languageFromTextField = languageTextField.text, language.isNotEmpty else { return }
+            language = languageFromTextField
+        } else {
+            language = languages[index]
+        }
         
         // validation - same vocabulary
         let vocabularies = UserService.shared.vocabularies
@@ -295,7 +323,6 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
 
 extension VocabularyDetailsVC: CheckmarkListTVCDelegate {
     func getCheckmared(index: Int) {
-        
         if languageIndex != index {
             languageButton.setTitle(languages[index], for: .normal)
             self.languageIndex = index
@@ -314,11 +341,13 @@ extension VocabularyDetailsVC: CheckmarkListTVCDelegate {
 
 extension VocabularyDetailsVC {
     private func enableAllButtons() {
+        print("enable all button")
         cancelButton.isEnabled = true
         saveButton.isEnabled = true
     }
     
     private func disableAllButtons() {
+        print("disable all button")
         cancelButton.isEnabled = false
         saveButton.isEnabled = false
     }

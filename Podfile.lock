@@ -328,9 +328,9 @@ PODS:
   - gRPC-Core/Interface (1.28.2)
   - GTMSessionFetcher/Core (1.4.0)
   - IQKeyboardManagerSwift (6.5.6)
-  - Kingfisher (5.15.2):
-    - Kingfisher/Core (= 5.15.2)
-  - Kingfisher/Core (5.15.2)
+  - Kingfisher (5.15.3):
+    - Kingfisher/Core (= 5.15.3)
+  - Kingfisher/Core (5.15.3)
   - leveldb-library (1.22)
   - nanopb (1.30906.0):
     - nanopb/decode (= 1.30906.0)
@@ -341,7 +341,7 @@ PODS:
   - PryntTrimmerView (4.0.2)
   - SteviaLayout (4.7.3)
   - YPImagePicker (4.3.1):
-    - PryntTrimmerView (~> 4.0.0)
+    - PryntTrimmerView (~> 4.0.2)
     - SteviaLayout (~> 4.7.3)
 
 DEPENDENCIES:
@@ -390,7 +390,7 @@ CHECKOUT OPTIONS:
     :commit: 4a9739f251fbf88f394192fdbf3195d55d3811b5
     :git: https://github.com/HHK1/PryntTrimmerView.git
   YPImagePicker:
-    :commit: 96bf9abe615cb24e39240f9d7305d7f3ed76f4ff
+    :commit: 45352de8f798b947e0530edff2ddd24ae236a0ec
     :git: https://github.com/Yummypets/YPImagePicker.git
 
 SPEC CHECKSUMS:
@@ -411,14 +411,14 @@ SPEC CHECKSUMS:
   gRPC-Core: 4afa11bfbedf7cdecd04de535a9e046893404ed5
   GTMSessionFetcher: 6f5c8abbab8a9bce4bb3f057e317728ec6182b10
   IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
-  Kingfisher: 1f60394409c6b916ce31474bcf73fdde6f3b9a7b
+  Kingfisher: 2fef2f4d9e809285aff7f6195b5290520904f3fa
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
   PromisesObjC: b14b1c6b68e306650688599de8a45e49fae81151
   PryntTrimmerView: 6a43cc90df5d99addeabd33d4ba09b1365322130
   SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
-  YPImagePicker: 08bbb809ed62bf4149fc015c97249eb4b9463ff9
+  YPImagePicker: f910a3d3e84beaf7e0860759342d54bc39235aea
 
 PODFILE CHECKSUM: 92ef6ce43a025841f557a5f1ecc796a0ca63f6f3
 
-COCOAPODS: 1.10.0.rc.1
+COCOAPODS: 1.9.3
