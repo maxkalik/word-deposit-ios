@@ -163,10 +163,13 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         guard let title = vocabulary?.title, let language = vocabulary?.language else { return }
         if title.isNotEmpty && language.isNotEmpty {
             titleTextField.text = title
+            
             if languages.contains(where: { $0 == language }) {
+                languageIndex = languages.firstIndex(where: { $0 == language })
                 languageButton.setTitle(language, for: .normal)
             } else {
-                languageButton.setTitle(languages[languages.count - 1], for: .normal)
+                languageIndex = languages.count - 1
+                languageButton.setTitle(languages[languageIndex!], for: .normal)
                 languageTextField.text = language
                 languageTextField.isHidden = false
             }
@@ -292,16 +295,20 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
 
 extension VocabularyDetailsVC: CheckmarkListTVCDelegate {
     func getCheckmared(index: Int) {
-        languageButton.setTitle(languages[index], for: .normal)
-        self.languageIndex = index
         
-        if index == languages.count - 1 {
-            languageTextField.isHidden = false
-            languageTextField.becomeFirstResponder()
-            buttonsStackView.alpha = 1
-        } else {
-            languageTextField.isHidden = true
+        if languageIndex != index {
+            languageButton.setTitle(languages[index], for: .normal)
+            self.languageIndex = index
+            
+            if index == languages.count - 1 {
+                languageTextField.isHidden = false
+                languageTextField.becomeFirstResponder()
+                buttonsStackView.alpha = 1
+            } else {
+                languageTextField.isHidden = true
+            }
         }
+        
     }
 }
 
