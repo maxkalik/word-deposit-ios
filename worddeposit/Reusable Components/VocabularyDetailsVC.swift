@@ -26,6 +26,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     private var isKeyboardShowing = false
     private var keyboardHeight: CGFloat!
     private var languages: [String] = []
+    private var languageIndex: Int?
     
     weak var delegate: VocabularyDetailsVCDelegate?
     
@@ -43,7 +44,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         super.viewWillAppear(animated)
         
         let nc = NotificationCenter.default
-        nc.addObserver(self, selector: #selector(currentVocabularyDidUpdate), name: NSNotification.Name(rawValue: Keys.currentVocabularyDidUpdateKey), object: nil)
+        nc.addObserver(self, selector: #selector(currentVocabularyDidUpdate), name: NSNotification.Name(Keys.currentVocabularyDidUpdateKey), object: nil)
         nc.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         nc.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
@@ -150,6 +151,9 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         
         languageTextField.isHidden = true
         
+        titleTextField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
+        titleTextField.delegate = self
+        
         // spinner
         view.addSubview(progressHUD)
         progressHUD.hide()
@@ -159,8 +163,8 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         guard let title = vocabulary?.title, let language = vocabulary?.language else { return }
         if title.isNotEmpty && language.isNotEmpty {
             titleTextField.text = title
-            if languages.contains(where: { $0 == title }) {
-                languageButton.setTitle(title, for: .normal)
+            if languages.contains(where: { $0 == language }) {
+                languageButton.setTitle(language, for: .normal)
             } else {
                 languageButton.setTitle(languages[languages.count - 1], for: .normal)
                 languageTextField.text = language
@@ -200,83 +204,88 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         disableAllButtons()
     }
     
-    // MARK: - IBActions
-    
-    @IBAction func cancelTapped(_ sender: UIButton) { onCancel() }
-    
-    @IBAction func saveTapped(_ sender: UIButton) {
-        
+    private func onSave() {
         guard let title = titleTextField.text, title.isNotEmpty, let language = languageTextField.text, language.isNotEmpty else { return }
         
-        // validation - min-max title length
-        let titleLengthLimit = 26
-        if title.count > titleLengthLimit {
-            simpleAlert(title: "Too long title", msg: "Please. Try to name your vocabulary within 20 characters.") { _ in
-                self.titleTextField.text = String(title.prefix(titleLengthLimit))
+        // validation - same vocabulary
+        let vocabularies = UserService.shared.vocabularies
+        if vocabularies.contains(where: { $0.title.lowercased() == title.lowercased() && $0.language.lowercased() == language.lowercased() }) {
+            simpleAlert(title: "Vocabulary is already exist", msg: "You have already the same vocabulary. Make different one.") { _ in
                 self.titleTextField.becomeFirstResponder()
+                self.disableAllButtons()
             }
-        }
-        
-        // validation - same name
-        if UserService.shared.vocabularies.contains(where: { $0.title == title }) {
-            simpleAlert(title: "Vocabulary is already exist", msg: "You have already the same vocabulary title. Make different one.") { _ in
-                self.titleTextField.becomeFirstResponder()
-            }
-            onCancel()
             return
         }
-        
+
         // if all is good then start spinner
         progressHUD.show()
         
         if vocabulary == nil {
-            
-            self.vocabulary = Vocabulary.init(
-                id: "",
-                title: title,
-                language: language,
-                wordsAmount: 0,
-                isSelected: isFirstSelected,
-                timestamp: Timestamp()
-            )
-            
-            UserService.shared.setVocabulary(vocabulary!) { error, id in
-                if let error = error {
-                    UserService.shared.db.handleFirestoreError(error, viewController: self)
-                    self.progressHUD.hide()
-                    return
-                }
-                guard let id = id else { return }
-                self.vocabulary!.id = id
-                self.completeSaving(vocabulary: self.vocabulary!)
-            }
+            createVocabulary(title: title, language: language)
         } else {
-            guard var vocabulary = self.vocabulary else { return }
-            
-            vocabulary.title = title
-            vocabulary.language = language
-
-            UserService.shared.updateVocabulary(vocabulary) { error, index in
-                if let error = error {
-                    UserService.shared.db.handleFirestoreError(error, viewController: self)
-                    self.progressHUD.hide()
-                    return
-                }
-                self.completeSaving(vocabulary: vocabulary, index: index)
-            }
+            updateVocabulary(title: title, language: language)
         }
     }
+    
+    private func createVocabulary(title: String, language: String) {
+        self.vocabulary = Vocabulary.init(
+            id: "",
+            title: title,
+            language: language,
+            wordsAmount: 0,
+            isSelected: isFirstSelected,
+            timestamp: Timestamp()
+        )
+        
+        UserService.shared.setVocabulary(vocabulary!) { error, id in
+            if let error = error {
+                UserService.shared.db.handleFirestoreError(error, viewController: self)
+                self.progressHUD.hide()
+                return
+            }
+            guard let id = id else { return }
+            self.vocabulary!.id = id
+            self.completeSaving(vocabulary: self.vocabulary!)
+        }
+    }
+    
+    private func updateVocabulary(title: String, language: String) {
+        guard var vocabulary = self.vocabulary else { return }
+        
+        vocabulary.title = title
+        vocabulary.language = language
+
+        UserService.shared.updateVocabulary(vocabulary) { error, index in
+            if let error = error {
+                UserService.shared.db.handleFirestoreError(error, viewController: self)
+                self.progressHUD.hide()
+                return
+            }
+            self.completeSaving(vocabulary: vocabulary, index: index)
+        }
+    }
+    
+    // MARK: - IBActions
+    
+    @IBAction func cancelTapped(_ sender: UIButton) { onCancel() }
+    @IBAction func saveTapped(_ sender: UIButton) { onSave() }
     
     // MARK: - Override
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let tvc = segue.destination as? CheckmarkListTVC {
-            print("prepare for segue")
             tvc.delegate = self
             tvc.data = languages
-            
-//            tvc.selected = selected
             tvc.title = "Select language"
+            
+            guard let vocabulary = self.vocabulary else { return }
+            if vocabulary.language.isNotEmpty {
+                if languages.contains(where: {$0 == vocabulary.language}) {
+                    tvc.selected = languages.firstIndex(where: {$0 == vocabulary.language})
+                } else {
+                    tvc.selected = languages.count - 1
+                }
+            }
         }
     }
 }
@@ -284,6 +293,8 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
 extension VocabularyDetailsVC: CheckmarkListTVCDelegate {
     func getCheckmared(index: Int) {
         languageButton.setTitle(languages[index], for: .normal)
+        self.languageIndex = index
+        
         if index == languages.count - 1 {
             languageTextField.isHidden = false
             languageTextField.becomeFirstResponder()
@@ -303,5 +314,16 @@ extension VocabularyDetailsVC {
     private func disableAllButtons() {
         cancelButton.isEnabled = false
         saveButton.isEnabled = false
+    }
+}
+
+extension VocabularyDetailsVC: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let textFieldText = textField.text, let rangeOfTextToReplace = Range(range, in: textFieldText) else {
+            return false
+        }
+        let substringToReplace = textFieldText[rangeOfTextToReplace]
+        let count = textFieldText.count - substringToReplace.count + string.count
+        return count <= 26
     }
 }
