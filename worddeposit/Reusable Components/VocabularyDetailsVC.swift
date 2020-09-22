@@ -28,10 +28,24 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     private var languages: [String] = []
     private var languageIndex: Int? {
         didSet {
-            guard let index = languageIndex else { return }
+            guard let title = titleTextField.text, let index = languageIndex else { return }
             if index != oldValue {
                 buttonsStackView.alpha = 1
-                enableAllButtons()
+                if title.isEmpty {
+                    saveButton.isEnabled = false
+                    cancelButton.isEnabled = true
+                } else {
+                    if index == languages.count - 1 {
+                        guard let language = languageTextField.text else { return }
+                        if language.isEmpty {
+                            print("lnaguage is still empty")
+                            saveButton.isEnabled = false
+                            cancelButton.isEnabled = true
+                        }
+                    } else {
+                        enableAllButtons()
+                    }
+                }
             } else {
                 buttonsStackView.alpha = 0
                 disableAllButtons()
@@ -119,11 +133,21 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
-        guard let title = titleTextField.text, let language = languageTextField.text else { return }
+        guard let title = titleTextField.text, let index = languageIndex else { return }
 
+        var language = ""
+        if index == languages.count - 1 {
+            guard let languageFromTextField = languageTextField.text else { return }
+            language = languageFromTextField
+        } else {
+            language = languages[index]
+        }
+        
+        print(language)
+        
         // if vocabulary is creating new
         guard let vocabulary = self.vocabulary else {
-            if title.isNotEmpty && language.isNotEmpty {
+            if title.isNotEmpty && languageIndex != nil {
                 enableAllButtons()
             } else {
                 disableAllButtons()
@@ -159,9 +183,6 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     
     private func setupUI() {
         hideKeyboardWhenTappedAround()
-        
-        languageTextField.isHidden = true
-        
         titleTextField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
         titleTextField.delegate = self
         
@@ -175,7 +196,10 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     }
     
     private func setupContent() {
-        guard let title = vocabulary?.title, let language = vocabulary?.language else { return }
+        guard let title = vocabulary?.title, let language = vocabulary?.language else {
+            languageTextField.isHidden = true
+            return
+        }
         if title.isNotEmpty && language.isNotEmpty {
             titleTextField.text = title
             
@@ -183,6 +207,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
             if languages.contains(where: { $0 == language }) {
                 languageIndex = languages.firstIndex(where: { $0 == language })
                 languageButton.setTitle(language, for: .normal)
+                languageTextField.isHidden = true
             } else {
                 languageIndex = languages.count - 1
                 languageButton.setTitle(languages[languageIndex!], for: .normal)
@@ -211,19 +236,19 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     }
     
     private func onCancel() {
-        guard let vocabulary = self.vocabulary else {
-            titleTextField.text = ""
-            languageTextField.text = ""
+        dismissKeyboard()
+        if vocabulary != nil {
+            setupContent()
+            buttonsStackView.alpha = 0
             disableAllButtons()
             return
         }
         
-        titleTextField.text = vocabulary.title
-        
-        setupContent()
-        
-        // languageTextField.text = vocabulary.language
-        buttonsStackView.alpha = 0
+        titleTextField.text = ""
+        languageTextField.text = ""
+        languageTextField.isHidden = true
+        languageIndex = nil
+        languageButton.setTitle("Select language", for: .normal)
         disableAllButtons()
     }
     
@@ -330,7 +355,6 @@ extension VocabularyDetailsVC: CheckmarkListTVCDelegate {
             if index == languages.count - 1 {
                 languageTextField.isHidden = false
                 languageTextField.becomeFirstResponder()
-                buttonsStackView.alpha = 1
             } else {
                 languageTextField.isHidden = true
             }
@@ -341,13 +365,11 @@ extension VocabularyDetailsVC: CheckmarkListTVCDelegate {
 
 extension VocabularyDetailsVC {
     private func enableAllButtons() {
-        print("enable all button")
         cancelButton.isEnabled = true
         saveButton.isEnabled = true
     }
     
     private func disableAllButtons() {
-        print("disable all button")
         cancelButton.isEnabled = false
         saveButton.isEnabled = false
     }
