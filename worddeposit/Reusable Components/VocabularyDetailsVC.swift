@@ -32,15 +32,12 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
             if index != oldValue {
                 buttonsStackView.alpha = 1
                 if title.isEmpty {
-                    saveButton.isEnabled = false
-                    cancelButton.isEnabled = true
+                    disableOnlySaveButton()
                 } else {
                     if index == languages.count - 1 {
                         guard let language = languageTextField.text else { return }
                         if language.isEmpty {
-                            print("lnaguage is still empty")
-                            saveButton.isEnabled = false
-                            cancelButton.isEnabled = true
+                            disableOnlySaveButton()
                         }
                     } else {
                         enableAllButtons()
@@ -132,18 +129,20 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         if vocabulary != nil { buttonsStackView.alpha = 0 }
     }
     
-    @objc func textFieldDidChange(_ textField: UITextField) {
-        guard let title = titleTextField.text, let index = languageIndex else { return }
-
-        var language = ""
+    private func getLanguage() -> String {
+        guard let index = languageIndex else { return "" }
         if index == languages.count - 1 {
-            guard let languageFromTextField = languageTextField.text else { return }
-            language = languageFromTextField
+            guard let languageFromTextField = languageTextField.text else { return "" }
+            return languageFromTextField
         } else {
-            language = languages[index]
+            return languages[index]
         }
-        
-        print(language)
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        guard let title = titleTextField.text else { return }
+
+        let language = getLanguage()
         
         // if vocabulary is creating new
         guard let vocabulary = self.vocabulary else {
@@ -253,15 +252,8 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     }
     
     private func onSave() {
-        guard let title = titleTextField.text, title.isNotEmpty, let index = languageIndex else { return }
-        
-        var language = ""
-        if index == languages.count - 1 {
-            guard let languageFromTextField = languageTextField.text, language.isNotEmpty else { return }
-            language = languageFromTextField
-        } else {
-            language = languages[index]
-        }
+        let language = getLanguage()
+        guard let title = titleTextField.text, title.isNotEmpty, language.isNotEmpty else { return }
         
         // validation - same vocabulary
         let vocabularies = UserService.shared.vocabularies
@@ -372,6 +364,11 @@ extension VocabularyDetailsVC {
     private func disableAllButtons() {
         cancelButton.isEnabled = false
         saveButton.isEnabled = false
+    }
+    
+    private func disableOnlySaveButton() {
+        saveButton.isEnabled = false
+        cancelButton.isEnabled = true
     }
 }
 
