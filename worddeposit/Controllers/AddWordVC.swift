@@ -166,8 +166,8 @@ class AddWordVC: UIViewController {
                 return
         }
         
-        if UserService.shared.words.contains(where: { $0.example == example && $0.translation == translation }) {
-            simpleAlert(title: "The word \(example) is already exist", msg: "You have already the same word with translation. Make different one.") { _ in
+        if UserService.shared.words.contains(where: { $0.example.lowercased() == example.lowercased() && $0.translation.lowercased() == translation.lowercased() }) {
+            simpleAlert(title: "You have already this word", msg: " \(example) is already exist. Try to make another one") { _ in
                 self.wordExampleTextField.becomeFirstResponder()
                 self.progressHUD.hide()
             }

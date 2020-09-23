@@ -56,7 +56,6 @@ class VocabularyCardCVCell: UICollectionViewCell {
         wordDescriptionTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         
         let nc = NotificationCenter.default
-
         nc.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         nc.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
@@ -71,6 +70,11 @@ class VocabularyCardCVCell: UICollectionViewCell {
     // MARK: - @objc methods
     
     @objc func textFieldDidChange(_ textField: UITextField) {
+        
+        TextFieldLimit.checkMaxLength(textField: wordExampleTextField, maxLength: Limits.wordExample)
+        TextFieldLimit.checkMaxLength(textField: wordTranslationTextField, maxLength: Limits.wordTranslation)
+        TextFieldLimit.checkMaxLength(textField: wordDescriptionTextField, maxLength: Limits.wordDescription)
+        
         textFieldValidation()
     }
     
@@ -117,6 +121,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
     }
     
     private func textFieldValidation() {
+        
         guard let wordExample = wordExampleTextField.text,
             let wordTranslation = wordTranslationTextField.text,
             let wordDescription = wordDescriptionTextField.text else { return }
@@ -233,6 +238,12 @@ class VocabularyCardCVCell: UICollectionViewCell {
             else {
                 self.delegate?.showAlert(title: "Error", message: "Fields cannot be empty")
                 return
+        }
+        
+        if UserService.shared.words.contains(where: { $0.example.lowercased() == example.lowercased() && $0.id != word.id && $0.translation.lowercased() == translation.lowercased() }) {
+            self.delegate?.showAlert(title: "You have already this word", message: " \(example) is already exist. Try to make another one")
+            self.wordLoader.stopAnimating()
+            return
         }
         
         guard let description = wordDescriptionTextField.text else { return }
