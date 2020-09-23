@@ -405,11 +405,6 @@ extension VocabularyDetailsVC {
 
 extension VocabularyDetailsVC: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let text = textField.text, let rangeOfTextToReplace = Range(range, in: text) else {
-            return false
-        }
-        let substringToReplace = text[rangeOfTextToReplace]
-        let count = text.count - substringToReplace.count + string.count
-        return count <= Limits.vocabularyTitle
+        TextFieldLimit.checkMaxLength(textField, range: range, string: string, limit: Limits.vocabularyTitle)
     }
 }

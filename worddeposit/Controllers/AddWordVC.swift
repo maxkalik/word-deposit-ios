@@ -104,20 +104,14 @@ class AddWordVC: UIViewController {
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         
-        checkMaxLength(textField: wordExampleTextField, maxLength: Limits.wordExample)
-        checkMaxLength(textField: wordTranslationTextField, maxLength: Limits.wordTranslation)
-        checkMaxLength(textField: wordDescriptionTextField, maxLength: Limits.wordDescription)
+        TextFieldLimit.checkMaxLength(textField: wordExampleTextField, maxLength: Limits.wordExample)
+        TextFieldLimit.checkMaxLength(textField: wordTranslationTextField, maxLength: Limits.wordTranslation)
+        TextFieldLimit.checkMaxLength(textField: wordDescriptionTextField, maxLength: Limits.wordDescription)
         
         textFieldValidation()
     }
     
     // MARK: - Support Methods
-    
-    private func checkMaxLength(textField: UITextField!, maxLength: Int) {
-        if (textField.text!.count > maxLength) {
-            textField.deleteBackward()
-        }
-    }
     
     private func textFieldValidation() {
         guard let wordExample = wordExampleTextField.text,
