@@ -14,6 +14,7 @@ target 'worddeposit' do
   pod 'IQKeyboardManagerSwift'
   pod 'Kingfisher'
 #  pod 'CodableFirebase'
-  pod 'YPImagePicker'
+  pod 'YPImagePicker', :git => 'https://github.com/Yummypets/YPImagePicker.git'
+  pod 'PryntTrimmerView', :git => 'https://github.com/HHK1/PryntTrimmerView.git'
 
 end

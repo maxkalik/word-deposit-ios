@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -41,10 +43,10 @@
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="dby-dI-Ln7" secondAttribute="trailing" constant="20" id="DTJ-d8-UNv"/>
                                     <constraint firstItem="dby-dI-Ln7" firstAttribute="centerY" secondItem="tIz-zy-KYF" secondAttribute="centerY" id="b16-9E-rQZ"/>
@@ -67,14 +69,14 @@
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="KK2-6x-PG2">
                                 <rect key="frame" x="20" y="458" width="209" height="30"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tGQ-iE-CeE">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tGQ-iE-CeE">
                                         <rect key="frame" x="0.0" y="0.0" width="104.5" height="30"/>
                                         <state key="normal" title="Cancel"/>
                                         <connections>
                                             <action selector="onCancelTouched:" destination="gTV-IL-0wX" eventType="touchUpInside" id="LLp-db-Exu"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kmJ-5p-Gjf">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kmJ-5p-Gjf">
                                         <rect key="frame" x="104.5" y="0.0" width="104.5" height="30"/>
                                         <state key="normal" title="Save"/>
                                         <connections>
@@ -104,7 +106,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="VgD-DV-qMQ" firstAttribute="centerY" secondItem="qEf-66-3td" secondAttribute="centerY" id="0N8-VC-FGd"/>
                             <constraint firstAttribute="bottom" secondItem="KK2-6x-PG2" secondAttribute="bottom" constant="20" id="4Y4-Dc-0XF"/>
@@ -126,13 +128,13 @@
                     </view>
                 </subviews>
             </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
                 <constraint firstItem="NG3-UZ-tdL" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="9be-al-oaP"/>
                 <constraint firstItem="NG3-UZ-tdL" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="PTX-ag-z2r"/>
                 <constraint firstAttribute="bottom" secondItem="NG3-UZ-tdL" secondAttribute="bottom" constant="10" id="ldt-jH-OnD"/>
                 <constraint firstAttribute="trailing" secondItem="NG3-UZ-tdL" secondAttribute="trailing" constant="10" id="tro-S9-gFn"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="269" height="528"/>
             <connections>
                 <outlet property="cancelButton" destination="tGQ-iE-CeE" id="78w-u4-B9K"/>
@@ -152,5 +154,8 @@
     <resources>
         <image name="logo" width="64" height="64"/>
         <image name="multiply.circle.fill" catalog="system" width="128" height="121"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

@@ -20,7 +20,6 @@ class VocabularyTVC: UITableViewController {
     /// Flag for current vocabulary
     var isVocabularySwitched = false
 
-
     // MARK: - View Lifecycle
     
     override func viewDidLoad() {
@@ -32,9 +31,15 @@ class VocabularyTVC: UITableViewController {
         
         // Setup message
         view.addSubview(messageView)
+
         
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(Keys.vocabulariesSwitchNotificationKey), object: nil)
+        nc.addObserver(self, selector: #selector(vocabularyDidUpdate), name: Notification.Name(Keys.currentVocabularyDidUpdateKey), object: nil)
+    }
+    
+    @objc func vocabularyDidUpdate() {
+        setupTitle()
     }
     
     @objc func vocabularyDidSwitch() {
@@ -93,6 +98,7 @@ class VocabularyTVC: UITableViewController {
         let nib = UINib(nibName: XIBs.VocabularyTVCell, bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: XIBs.VocabularyTVCell)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: ReusableIdentifiers.MessageView)
+        navigationItem.title = ""
     }
     
     func setupResultsTableController() {
