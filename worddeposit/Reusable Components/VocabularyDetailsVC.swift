@@ -58,7 +58,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         super.viewDidLoad()
         
         // Primary setting up UI
-        getAllLanguages()
+        getLanguages()
         setupUI()
         
         disableAllButtons()
@@ -168,15 +168,23 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     
     // MARK: - Methods
     
-    private func getAllLanguages() {
+    private func getLanguages() {
+        // Get default languages and appen them to languages array
         for code in NSLocale.isoLanguageCodes  {
             let id = NSLocale.localeIdentifier(fromComponents: [NSLocale.Key.languageCode.rawValue: code])
             let name = NSLocale(localeIdentifier: "en").displayName(forKey: NSLocale.Key.identifier, value: id) ?? ""
-            if name != "" {
-                languages.append(name)
-            }
+            if name != "" { languages.append(name) }
         }
+        
+        // Sort them
         languages.sort()
+        
+        // Add custom languages from created vocabularies to the beginning of the array
+        for vocabulary in UserService.shared.vocabularies {
+            languages.insert(vocabulary.language, at: 0)
+        }
+        
+        // Add "Other" to the end of the array
         languages.append("Other")
     }
     
