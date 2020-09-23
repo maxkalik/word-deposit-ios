@@ -124,6 +124,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     
     private func setupMessage(wordsCount: Int) {
         messageView.setTitles(messageTxt: "You have insufficient words amount for practice.\nAdd at least \(minWordsAmount - wordsCount) words", buttonTitle: "Add more words")
+        // push to add word view
         messageView.onPrimaryButtonTap { self.tabBarController?.selectedIndex = 1 }
     }
     

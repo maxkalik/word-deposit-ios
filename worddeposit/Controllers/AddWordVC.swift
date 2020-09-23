@@ -33,7 +33,8 @@ class AddWordVC: UIViewController {
     
     // MARK: - Instances
     
-    var progressHUD = ProgressHUD(title: "Saving")
+    private var progressHUD = ProgressHUD(title: "Saving")
+    private var messageView = MessageView()
     private var isImageSet = false
     private var isKeyboardShowing = false
     
@@ -49,6 +50,12 @@ class AddWordVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        if UserService.shared.words.count > 8 {
+            view.addSubview(messageView)
+            messageView.show()
+            setupMessage()
+        }
         
         wordExampleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         wordTranslationTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
@@ -100,11 +107,21 @@ class AddWordVC: UIViewController {
     
     // MARK: - Support Methods
     
-    func textFieldValidation() {
+    private func textFieldValidation() {
         guard let wordExample = wordExampleTextField.text,
               let wordTranslation = wordTranslationTextField.text else { return }
         wordSaveButton.isEnabled = !(wordExample.isEmpty || wordTranslation.isEmpty)
         clearAllButton.isEnabled = !(wordExample.isEmpty && wordTranslation.isEmpty)
+    }
+    
+    private func setupMessage() {
+        messageView.setTitles(
+            messageTxt: "Words limit exceeded.\n",
+            buttonTitle: "Continue",
+            secondaryButtonTitle: "Logout"
+        )
+        // push to vocabulary view
+        messageView.onPrimaryButtonTap { self.tabBarController?.selectedIndex = 2 }
     }
     
     private func setupUI() {
@@ -134,7 +151,6 @@ class AddWordVC: UIViewController {
     }
     
     private func prepareForUpload() {
-        
         guard let example = wordExampleTextField.text, example.isNotEmpty,
             let translation = wordTranslationTextField.text, example.isNotEmpty else {
                 simpleAlert(title: "Error", msg: "Fill all fields")
@@ -170,6 +186,13 @@ class AddWordVC: UIViewController {
     
     
     func updateUI() {
+        // TODO: - not showing message while adding
+        
+        if UserService.shared.words.count > 8 {
+            messageView.show()
+            setupMessage()
+        }
+        
         self.wordImagePickerBtn.setImage(UIImage(named: Placeholders.Logo), for: .normal)
         wordExampleTextField.text = ""
         wordTranslationTextField.text = ""

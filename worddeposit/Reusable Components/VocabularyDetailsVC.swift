@@ -19,7 +19,8 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
     
-    var progressHUD = ProgressHUD(title: "Saving")
+    private var progressHUD = ProgressHUD(title: "Saving")
+    private var messageView = MessageView()
     var vocabulary: Vocabulary?
     var isFirstSelected = true
     
@@ -60,7 +61,6 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         // Primary setting up UI
         getLanguages()
         setupUI()
-        
         disableAllButtons()
         
         if vocabulary != nil {
@@ -68,6 +68,12 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
             languageTextField.borderStyle = .none
             buttonsStackView.alpha = 0
         } else {
+            // Vocabularies limit
+            if UserService.shared.vocabularies.count > 10 {
+                view.addSubview(messageView)
+                messageView.show()
+                setupMessage()
+            }
             cancelButton.setTitle("Clear", for: .normal)
         }
     }
@@ -113,7 +119,6 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
                 self.view.layoutIfNeeded()
             }
         }
-        
         buttonsStackView.alpha = 1
     }
     
@@ -167,6 +172,15 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     }
     
     // MARK: - Methods
+    
+    private func setupMessage() {
+        messageView.setTitles(
+            messageTxt: "Vocabularies limit exceeded.\n",
+            buttonTitle: "Continue",
+            secondaryButtonTitle: "Logout"
+        )
+        messageView.onPrimaryButtonTap { self.dismiss(animated: true, completion: nil) }
+    }
     
     private func getLanguages() {
         // Get default languages and appen them to languages array
