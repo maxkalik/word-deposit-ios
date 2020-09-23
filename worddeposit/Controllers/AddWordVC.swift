@@ -134,13 +134,21 @@ class AddWordVC: UIViewController {
     }
     
     private func prepareForUpload() {
+        
         guard let example = wordExampleTextField.text, example.isNotEmpty,
             let translation = wordTranslationTextField.text, example.isNotEmpty else {
                 simpleAlert(title: "Error", msg: "Fill all fields")
                 progressHUD.hide()
                 return
         }
-        guard let description = wordDescriptionTextField.text else { return }
+        
+        if UserService.shared.words.contains(where: { $0.example == example && $0.translation == translation }) {
+            simpleAlert(title: "The word \(example) is already exist", msg: "You have already the same word with translation. Make different one.") { _ in
+                self.wordExampleTextField.becomeFirstResponder()
+                self.progressHUD.hide()
+            }
+            return
+        }
         
         // TODO: - try to make this process in background (without canceling on the dismissing view)
         // TODO: - BUG - freazing while typing word
@@ -149,7 +157,7 @@ class AddWordVC: UIViewController {
             imageData: setImageData(),
             example: example,
             translation: translation,
-            description: description
+            description: wordDescriptionTextField.text
         ) { error, word in
             self.progressHUD.hide()
             if error != nil {
@@ -189,12 +197,12 @@ class AddWordVC: UIViewController {
         present(picker, animated: true, completion: nil)
     }
     
-    @IBAction func onAddWordBtnPress(_ sender: Any) {
+    @IBAction func onAddWordBtnPress(_ sender: UIButton) {
         progressHUD.show()
         prepareForUpload()
     }
     
-    @IBAction func onClearAllBtnPress(_ sender: Any) {
+    @IBAction func onClearAllBtnPress(_ sender: UIButton) {
         updateUI()
     }
 }
