@@ -69,7 +69,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
             buttonsStackView.alpha = 0
         } else {
             // Vocabularies limit
-            if UserService.shared.vocabularies.count > 10 {
+            if UserService.shared.vocabularies.count > Limits.vocabularies {
                 view.addSubview(messageView)
                 messageView.show()
                 setupMessage()
@@ -145,6 +145,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
+        
         guard let title = titleTextField.text else { return }
 
         let language = getLanguage()
@@ -204,8 +205,12 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     
     private func setupUI() {
         hideKeyboardWhenTappedAround()
+        
+        // Typing Limits
         titleTextField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
+        languageTextField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
         titleTextField.delegate = self
+        languageTextField.delegate = self
         
         // spinner
         view.addSubview(progressHUD)
@@ -258,6 +263,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     
     private func onCancel() {
         dismissKeyboard()
+        isKeyboardShowing = false
         if vocabulary != nil {
             setupContent()
             buttonsStackView.alpha = 0
@@ -399,11 +405,11 @@ extension VocabularyDetailsVC {
 
 extension VocabularyDetailsVC: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let textFieldText = textField.text, let rangeOfTextToReplace = Range(range, in: textFieldText) else {
+        guard let text = textField.text, let rangeOfTextToReplace = Range(range, in: text) else {
             return false
         }
-        let substringToReplace = textFieldText[rangeOfTextToReplace]
-        let count = textFieldText.count - substringToReplace.count + string.count
-        return count <= 26
+        let substringToReplace = text[rangeOfTextToReplace]
+        let count = text.count - substringToReplace.count + string.count
+        return count <= Limits.vocabularyTitle
     }
 }

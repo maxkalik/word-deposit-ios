@@ -9,6 +9,7 @@ class ProfileTVC: UITableViewController {
     @IBOutlet weak var userEmail: UILabel!
     @IBOutlet weak var nativeLanguage: UILabel!
     @IBOutlet weak var notificationsSwitch: UISwitch!
+    @IBOutlet weak var vocabulariesAmount: UILabel!
     @IBOutlet weak var wordsAmountLabel: UILabel!
     @IBOutlet weak var correctAnswersLabel: UILabel!
     
@@ -71,6 +72,7 @@ class ProfileTVC: UITableViewController {
     }
     
     private func setupStatistics() {
+        vocabulariesAmount.text = String(UserService.shared.vocabularies.count)
         if words.isEmpty {
             self.wordsAmountLabel.text = "0"
             self.correctAnswersLabel.text = "0%"

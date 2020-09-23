@@ -48,13 +48,14 @@ class AddWordVC: UIViewController {
         hideKeyboardWhenTappedAround()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        if UserService.shared.words.count > 8 {
-            view.addSubview(messageView)
+        if UserService.shared.words.count > Limits.words {
             messageView.show()
             setupMessage()
+        } else {
+            messageView.hide()
         }
         
         wordExampleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
@@ -102,10 +103,21 @@ class AddWordVC: UIViewController {
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
+        
+        checkMaxLength(textField: wordExampleTextField, maxLength: Limits.wordExample)
+        checkMaxLength(textField: wordTranslationTextField, maxLength: Limits.wordTranslation)
+        checkMaxLength(textField: wordDescriptionTextField, maxLength: Limits.wordDescription)
+        
         textFieldValidation()
     }
     
     // MARK: - Support Methods
+    
+    private func checkMaxLength(textField: UITextField!, maxLength: Int) {
+        if (textField.text!.count > maxLength) {
+            textField.deleteBackward()
+        }
+    }
     
     private func textFieldValidation() {
         guard let wordExample = wordExampleTextField.text,
@@ -126,7 +138,9 @@ class AddWordVC: UIViewController {
     
     private func setupUI() {
         view.addSubview(progressHUD)
+        view.addSubview(messageView)
         progressHUD.hide()
+        messageView.hide()
         wordExampleTextField.autocorrectionType = .no
         wordTranslationTextField.autocorrectionType = .no
         wordDescriptionTextField.autocorrectionType = .no
@@ -188,9 +202,14 @@ class AddWordVC: UIViewController {
     func updateUI() {
         // TODO: - not showing message while adding
         
-        if UserService.shared.words.count > 8 {
-            messageView.show()
-            setupMessage()
+        self.dismissKeyboard()
+        self.isKeyboardShowing = false
+        
+        if UserService.shared.words.count > Limits.words {
+            DispatchQueue.main.async {
+                self.messageView.show()
+                self.setupMessage()
+            }
         }
         
         self.wordImagePickerBtn.setImage(UIImage(named: Placeholders.Logo), for: .normal)

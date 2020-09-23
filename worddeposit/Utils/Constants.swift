@@ -60,12 +60,11 @@ struct Keys {
     static let currentVocabularyDidUpdateKey = "com.maxkalik.worddeposit.currentVocabularyDidUpdateKey"
 }
 
-struct Validation {
-    struct Title {
-        static let lengthLimit = 26
-    }
-    
-    struct Language {
-        static let lengthLimit = 26
-    }
+struct Limits {
+    static let vocabularies = 10
+    static let words = 300
+    static let vocabularyTitle = 26
+    static let wordExample = 60
+    static let wordTranslation = 60
+    static let wordDescription = 80
 }
