@@ -117,7 +117,24 @@ class AddWordVC: UIViewController {
         clearAllButton.isEnabled = false
     }
     
-    func prepareForUpload() {
+    private func successComplition(word: Word?) {
+        guard let word = word else { return }
+        self.updateUI()
+        self.simpleAlert(title: "Success", msg: "Word has been added")
+        self.delegate?.wordDidCreate(word)
+    }
+    
+    private func setImageData() -> Data? {
+        if self.isImageSet {
+            guard let image = wordImagePickerBtn.imageView?.image else { return nil }
+            let resizedImg = image.resized(toWidth: 400.0)
+            return resizedImg?.jpegData(compressionQuality: 0.5)
+        } else {
+            return nil
+        }
+    }
+    
+    private func prepareForUpload() {
         guard let example = wordExampleTextField.text, example.isNotEmpty,
             let translation = wordTranslationTextField.text, example.isNotEmpty else {
                 simpleAlert(title: "Error", msg: "Fill all fields")
@@ -127,49 +144,20 @@ class AddWordVC: UIViewController {
         guard let description = wordDescriptionTextField.text else { return }
         
         // TODO: - try to make this process in background (without canceling on the dismissing view)
-        if self.isImageSet {
-            guard let image = wordImagePickerBtn.imageView?.image else {
-                simpleAlert(title: "Error", msg: "Fill all fields")
-                progressHUD.hide()
+        // TODO: - BUG - freazing while typing word
+        
+        UserService.shared.setWord(
+            imageData: setImageData(),
+            example: example,
+            translation: translation,
+            description: description
+        ) { error, word in
+            self.progressHUD.hide()
+            if error != nil {
+                self.simpleAlert(title: "Error", msg: "Something went wrong. Cannot add the word")
                 return
             }
-            let resizedImg = image.resized(toWidth: 400.0)
-            guard let imageData = resizedImg?.jpegData(compressionQuality: 0.5) else { return }
-            
-            UserService.shared.setWord(
-                imageData: imageData,
-                example: example,
-                translation: translation,
-                description: description
-            ) { error, word in
-                if error != nil {
-                    self.simpleAlert(title: "Error", msg: "Something went wrong. Cannot add the word")
-                    self.progressHUD.hide()
-                    return
-                }
-                guard let word = word else { return }
-                self.updateUI()
-                self.progressHUD.hide()
-                self.simpleAlert(title: "Success", msg: "Word has been added with image")
-                self.delegate?.wordDidCreate(word)
-            }
-        } else {
-            UserService.shared.setWord(
-                example: example,
-                translation: translation,
-                description: description
-            ) { error, word in
-                if error != nil {
-                    self.simpleAlert(title: "Error", msg: "Something went wrong. Cannot add the word")
-                    self.progressHUD.hide()
-                    return
-                }
-                guard let word = word else { return }
-                self.updateUI()
-                self.progressHUD.hide()
-                self.simpleAlert(title: "Success", msg: "Word has been added")
-                self.delegate?.wordDidCreate(word)
-            }
+            self.successComplition(word: word)
         }
     }
     
