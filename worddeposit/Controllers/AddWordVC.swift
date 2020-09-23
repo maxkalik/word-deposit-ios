@@ -129,9 +129,8 @@ class AddWordVC: UIViewController {
             guard let image = wordImagePickerBtn.imageView?.image else { return nil }
             let resizedImg = image.resized(toWidth: 400.0)
             return resizedImg?.jpegData(compressionQuality: 0.5)
-        } else {
-            return nil
         }
+        return nil
     }
     
     private func prepareForUpload() {

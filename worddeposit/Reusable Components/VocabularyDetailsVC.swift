@@ -263,9 +263,12 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         let language = getLanguage()
         guard let title = titleTextField.text, title.isNotEmpty, language.isNotEmpty else { return }
         
-        // validation - same vocabulary
         let vocabularies = UserService.shared.vocabularies
-        if vocabularies.contains(where: { $0.title.lowercased() == title.lowercased() && $0.language.lowercased() == language.lowercased() }) {
+        if vocabularies.contains(where: {
+                                    $0.title.lowercased() == title.lowercased()
+                                 && $0.id != self.vocabulary?.id
+                                 && $0.language.lowercased() == language.lowercased()
+        }) {
             simpleAlert(title: "Vocabulary is already exist", msg: "You have already the same vocabulary. Make different one.") { _ in
                 self.titleTextField.becomeFirstResponder()
                 self.disableAllButtons()
