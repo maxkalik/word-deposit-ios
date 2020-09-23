@@ -51,6 +51,9 @@ class VocabularyTVC: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        print("vocabulary will appear")
+        
         setupMessage()
         messageView.hide()
     }
@@ -104,9 +107,9 @@ class VocabularyTVC: UITableViewController {
     func setupResultsTableController() {
         resultsTableController = self.storyboard?.instantiateViewController(withIdentifier: Storyboards.VocabularyResults) as? VocabularyResultsTVC
         resultsTableController.tableView.delegate = self
+        resultsTableController.delegate = self
         
         searchController = UISearchController(searchResultsController: resultsTableController)
-        // searchController.delegate = self
         searchController.searchResultsUpdater = self
         searchController.searchBar.autocapitalizationType = .none
         searchController.searchBar.placeholder = "Search"
@@ -235,5 +238,12 @@ extension VocabularyTVC: UISearchBarDelegate {
 extension VocabularyTVC: VocabularyCardsVCDelegate {
     func wordCardDidUpdate(word: Word, index: Int) {
         wordDidUpdate(word, index: index)
+    }
+}
+
+extension VocabularyTVC: VocabularyResultsTVCDelegate {
+    func resultsWordDidRemove(word: Word) {
+        guard let index = words.firstIndex(matching: word) else { return }
+        self.wordDidRemove(word, index: index)
     }
 }
