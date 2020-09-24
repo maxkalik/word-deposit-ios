@@ -84,11 +84,6 @@ class PracticeReadVC: UIViewController {
         self.navigationController?.navigationBar.tintColor = UIColor.systemBlue
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-    }
-    
-    
     // MARK: - Methods
     
     private func result(_ trainedWord: Word, answer: Bool) {
@@ -119,20 +114,20 @@ class PracticeReadVC: UIViewController {
         let precentageOfCorrectAnswers = (rightAnswers * 100) / answersSum
         
         if rightAnswers > wrongAnswers {
-            if precentageOfCorrectAnswers > 80 {
+            if precentageOfCorrectAnswers > 70 {
                 return "Perfect!"
             } else if precentageOfCorrectAnswers > 90 {
                 return "Excelent!"
             } else {
-                return "Greate!"
+                return "Great!"
             }
         } else {
-            if precentageOfCorrectAnswers < 20 {
-                return "It's not your best result."
+            if precentageOfCorrectAnswers < 30 {
+                return "It's not your the best result."
             } else if precentageOfCorrectAnswers < 10 {
-                return ":("
-            } else {
                 return "You can do better!"
+            } else {
+                return "Mistakes are ok."
             }
         }
     }
@@ -209,6 +204,36 @@ class PracticeReadVC: UIViewController {
 
 extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    private func usePracticeType(for cell: PracticeAnswerItem, at index: Int) {
+        switch practiceType {
+        case Controllers.TrainerWordToTranslate:
+            cell.configureCell(word: wordsDesk[index].translation)
+        case Controllers.TrainerTranslateToWord:
+            cell.configureCell(word: wordsDesk[index].example)
+        default:
+            break
+        }
+    }
+    
+    private func setupPracticeCell(_ cell: PracticeAnswerItem, at index: Int) {
+        if selectedIndex == index {
+            if wordsDesk[selectedIndex!].id == trainedWord!.id {
+                cell.backgroundColor = UIColor.green
+                result(self.trainedWord!, answer: true)
+            } else {
+                cell.backgroundColor = UIColor.red
+                result(self.trainedWord!, answer: false)
+            }
+            
+        } else {
+            if isSelected {
+                cell.backgroundColor = UIColor.white
+                cell.alpha = 0.5
+                cell.contentView.alpha = 0.5
+            }
+        }
+    }
+    
     // MARK: - UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -217,33 +242,8 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: XIBs.PracticeAnswerItem, for: indexPath) as? PracticeAnswerItem {
-            
-            switch practiceType {
-            case Controllers.TrainerWordToTranslate:
-                cell.configureCell(word: wordsDesk[indexPath.row].translation)
-            case Controllers.TrainerTranslateToWord:
-                cell.configureCell(word: wordsDesk[indexPath.row].example)
-            default:
-                break
-            }
-
-            if selectedIndex == indexPath.row {
-                if wordsDesk[selectedIndex!].id == trainedWord!.id {
-                    cell.backgroundColor = UIColor.green
-                    result(self.trainedWord!, answer: true)
-                } else {
-                    cell.backgroundColor = UIColor.red
-                    result(self.trainedWord!, answer: false)
-                }
-                
-            } else {
-                if isSelected {
-                    cell.backgroundColor = UIColor.white
-                    cell.alpha = 0.5
-                    cell.contentView.alpha = 0.5
-                }
-            }
-            
+            usePracticeType(for: cell, at: indexPath.row)
+            setupPracticeCell(cell, at: indexPath.row)
             return cell
         }
         return UICollectionViewCell()
