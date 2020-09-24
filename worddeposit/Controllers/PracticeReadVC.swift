@@ -113,11 +113,35 @@ class PracticeReadVC: UIViewController {
         }
     }
     
+    private func printTitle(with rightAnswers: Int, and wrongAnswers: Int) -> String {
+        // get precentage
+        let answersSum = rightAnswers + wrongAnswers
+        let precentageOfCorrectAnswers = (rightAnswers * 100) / answersSum
+        
+        if rightAnswers > wrongAnswers {
+            if precentageOfCorrectAnswers > 80 {
+                return "Perfect!"
+            } else if precentageOfCorrectAnswers > 90 {
+                return "Excelent!"
+            } else {
+                return "Greate!"
+            }
+        } else {
+            if precentageOfCorrectAnswers < 20 {
+                return "It's not your best result."
+            } else if precentageOfCorrectAnswers < 10 {
+                return ":("
+            } else {
+                return "You can do better!"
+            }
+        }
+    }
+    
     private func prepareForQuit() {
         let successMessage = SuccessMessageVC()
         successMessage.delegate = self
         
-        successMessage.titleTxt = "Great!"
+        successMessage.titleTxt = printTitle(with: sessionRightAnswersSum, and: sessionWrongAnswersSum)
         successMessage.descriptionTxt = "You trained \(trainedWords.count) words\n Correct: \(sessionRightAnswersSum) / Wrong: \(sessionWrongAnswersSum)"
         
         successMessage.modalTransitionStyle = .crossDissolve
@@ -146,6 +170,18 @@ class PracticeReadVC: UIViewController {
         }
     }
     
+    private func updateScreen() {
+        isSelected = true
+        spinner.startAnimating()
+        collectionView.isUserInteractionEnabled = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.updateUI()
+            self.spinner.stopAnimating()
+        }
+        
+        self.collectionView.reloadData()
+    }
+    
     private func updateUI() {
         self.delegate?.updatePracticeVC()
         self.selectedIndex = nil
@@ -166,15 +202,7 @@ class PracticeReadVC: UIViewController {
             }
         }
         result(trainedWord!, answer: false)
-        isSelected = true
-        spinner.startAnimating()
-        collectionView.isUserInteractionEnabled = false
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.updateUI()
-            self.spinner.stopAnimating()
-        }
-        
-        self.collectionView.reloadData()
+        updateScreen()
     }
     
 }
@@ -223,15 +251,7 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedIndex = selectedIndex == indexPath.row ? nil : indexPath.row
-        isSelected = true
-        spinner.startAnimating()
-        collectionView.isUserInteractionEnabled = false
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            // TODO: - check main queue
-            self.updateUI()
-            self.spinner.stopAnimating()
-        }
-        self.collectionView.reloadData()
+        updateScreen()
     }
 }
 
