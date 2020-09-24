@@ -84,11 +84,6 @@ class PracticeReadVC: UIViewController {
         self.navigationController?.navigationBar.tintColor = UIColor.systemBlue
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-    }
-    
-    
     // MARK: - Methods
     
     private func result(_ trainedWord: Word, answer: Bool) {
@@ -113,15 +108,35 @@ class PracticeReadVC: UIViewController {
         }
     }
     
-    private func prepareForQuit() {
-        print(trainedWords)
-        print(trainedWords.count)
-        print("right: \(sessionRightAnswersSum), wrong: \(sessionWrongAnswersSum)")
+    private func printTitle(with rightAnswers: Int, and wrongAnswers: Int) -> String {
+        // get precentage
+        let answersSum = rightAnswers + wrongAnswers
+        let precentageOfCorrectAnswers = (rightAnswers * 100) / answersSum
         
+        if rightAnswers > wrongAnswers {
+            if precentageOfCorrectAnswers > 70 {
+                return "Perfect!"
+            } else if precentageOfCorrectAnswers > 90 {
+                return "Excelent!"
+            } else {
+                return "Great!"
+            }
+        } else {
+            if precentageOfCorrectAnswers < 30 {
+                return "It's not your the best result."
+            } else if precentageOfCorrectAnswers < 10 {
+                return "You can do better!"
+            } else {
+                return "Mistakes are ok."
+            }
+        }
+    }
+    
+    private func prepareForQuit() {
         let successMessage = SuccessMessageVC()
         successMessage.delegate = self
         
-        successMessage.titleTxt = "Great!"
+        successMessage.titleTxt = printTitle(with: sessionRightAnswersSum, and: sessionWrongAnswersSum)
         successMessage.descriptionTxt = "You trained \(trainedWords.count) words\n Correct: \(sessionRightAnswersSum) / Wrong: \(sessionWrongAnswersSum)"
         
         successMessage.modalTransitionStyle = .crossDissolve
@@ -150,6 +165,18 @@ class PracticeReadVC: UIViewController {
         }
     }
     
+    private func updateScreen() {
+        isSelected = true
+        spinner.startAnimating()
+        collectionView.isUserInteractionEnabled = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.updateUI()
+            self.spinner.stopAnimating()
+        }
+        
+        self.collectionView.reloadData()
+    }
+    
     private func updateUI() {
         self.delegate?.updatePracticeVC()
         self.selectedIndex = nil
@@ -162,13 +189,50 @@ class PracticeReadVC: UIViewController {
     // MARK: - IBActions
     
     @IBAction func skip(_ sender: UIBarButtonItem) {
+        guard let index = wordsDesk.firstIndex(matching: trainedWord!) else { return }
+        let indexPath = IndexPath(row: index, section: 0)
+        if let cell = collectionView.cellForItem(at: indexPath) {
+            DispatchQueue.main.async {
+                cell.backgroundColor = UIColor.green
+            }
+        }
         result(trainedWord!, answer: false)
-        updateUI()
+        updateScreen()
     }
     
 }
 
 extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    private func usePracticeType(for cell: PracticeAnswerItem, at index: Int) {
+        switch practiceType {
+        case Controllers.TrainerWordToTranslate:
+            cell.configureCell(word: wordsDesk[index].translation)
+        case Controllers.TrainerTranslateToWord:
+            cell.configureCell(word: wordsDesk[index].example)
+        default:
+            break
+        }
+    }
+    
+    private func setupPracticeCell(_ cell: PracticeAnswerItem, at index: Int) {
+        if selectedIndex == index {
+            if wordsDesk[selectedIndex!].id == trainedWord!.id {
+                cell.backgroundColor = UIColor.green
+                result(self.trainedWord!, answer: true)
+            } else {
+                cell.backgroundColor = UIColor.red
+                result(self.trainedWord!, answer: false)
+            }
+            
+        } else {
+            if isSelected {
+                cell.backgroundColor = UIColor.white
+                cell.alpha = 0.5
+                cell.contentView.alpha = 0.5
+            }
+        }
+    }
     
     // MARK: - UICollectionViewDataSource
     
@@ -178,34 +242,8 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: XIBs.PracticeAnswerItem, for: indexPath) as? PracticeAnswerItem {
-            
-            switch practiceType {
-            case Controllers.TrainerWordToTranslate:
-                cell.configureCell(word: wordsDesk[indexPath.row].translation)
-            case Controllers.TrainerTranslateToWord:
-                cell.configureCell(word: wordsDesk[indexPath.row].example)
-            default:
-                break
-            }
-
-            if selectedIndex == indexPath.row {
-                if wordsDesk[selectedIndex!].id == trainedWord!.id {
-                    cell.backgroundColor = UIColor.green
-                    result(self.trainedWord!, answer: true)
-                } else {
-                    cell.backgroundColor = UIColor.red
-                    result(self.trainedWord!, answer: false)
-                }
-                
-            } else {
-                if isSelected {
-                    cell.backgroundColor = UIColor.white
-                    cell.alpha = 0.5
-                    cell.contentView.alpha = 0.5
-                }
-            }
-            
-            
+            usePracticeType(for: cell, at: indexPath.row)
+            setupPracticeCell(cell, at: indexPath.row)
             return cell
         }
         return UICollectionViewCell()
@@ -213,15 +251,7 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedIndex = selectedIndex == indexPath.row ? nil : indexPath.row
-        isSelected = true
-        spinner.startAnimating()
-        collectionView.isUserInteractionEnabled = false
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            // TODO: - check main queue
-            self.updateUI()
-            self.spinner.stopAnimating()
-        }
-        self.collectionView.reloadData()
+        updateScreen()
     }
 }
 

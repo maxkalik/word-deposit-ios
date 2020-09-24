@@ -19,7 +19,8 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
     
-    var progressHUD = ProgressHUD(title: "Saving")
+    private var progressHUD = ProgressHUD(title: "Saving")
+    private var messageView = MessageView()
     var vocabulary: Vocabulary?
     var isFirstSelected = true
     
@@ -60,7 +61,6 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         // Primary setting up UI
         getLanguages()
         setupUI()
-        
         disableAllButtons()
         
         if vocabulary != nil {
@@ -68,6 +68,12 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
             languageTextField.borderStyle = .none
             buttonsStackView.alpha = 0
         } else {
+            // Vocabularies limit
+            if UserService.shared.vocabularies.count > Limits.vocabularies {
+                view.addSubview(messageView)
+                messageView.show()
+                setupMessage()
+            }
             cancelButton.setTitle("Clear", for: .normal)
         }
     }
@@ -113,7 +119,6 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
                 self.view.layoutIfNeeded()
             }
         }
-        
         buttonsStackView.alpha = 1
     }
     
@@ -140,6 +145,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
+        
         guard let title = titleTextField.text else { return }
 
         let language = getLanguage()
@@ -168,6 +174,15 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     
     // MARK: - Methods
     
+    private func setupMessage() {
+        messageView.setTitles(
+            messageTxt: "Vocabularies limit exceeded.\n",
+            buttonTitle: "Continue",
+            secondaryButtonTitle: "Logout"
+        )
+        messageView.onPrimaryButtonTap { self.dismiss(animated: true, completion: nil) }
+    }
+    
     private func getLanguages() {
         // Get default languages and appen them to languages array
         for code in NSLocale.isoLanguageCodes  {
@@ -190,8 +205,12 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     
     private func setupUI() {
         hideKeyboardWhenTappedAround()
+        
+        // Typing Limits
         titleTextField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
+        languageTextField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
         titleTextField.delegate = self
+        languageTextField.delegate = self
         
         // spinner
         view.addSubview(progressHUD)
@@ -244,6 +263,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     
     private func onCancel() {
         dismissKeyboard()
+        isKeyboardShowing = false
         if vocabulary != nil {
             setupContent()
             buttonsStackView.alpha = 0
@@ -263,9 +283,12 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         let language = getLanguage()
         guard let title = titleTextField.text, title.isNotEmpty, language.isNotEmpty else { return }
         
-        // validation - same vocabulary
         let vocabularies = UserService.shared.vocabularies
-        if vocabularies.contains(where: { $0.title.lowercased() == title.lowercased() && $0.language.lowercased() == language.lowercased() }) {
+        if vocabularies.contains(where: {
+                                    $0.title.lowercased() == title.lowercased()
+                                 && $0.id != self.vocabulary?.id
+                                 && $0.language.lowercased() == language.lowercased()
+        }) {
             simpleAlert(title: "Vocabulary is already exist", msg: "You have already the same vocabulary. Make different one.") { _ in
                 self.titleTextField.becomeFirstResponder()
                 self.disableAllButtons()
@@ -382,11 +405,6 @@ extension VocabularyDetailsVC {
 
 extension VocabularyDetailsVC: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let textFieldText = textField.text, let rangeOfTextToReplace = Range(range, in: textFieldText) else {
-            return false
-        }
-        let substringToReplace = textFieldText[rangeOfTextToReplace]
-        let count = textFieldText.count - substringToReplace.count + string.count
-        return count <= 26
+        TextFieldLimit.checkMaxLength(textField, range: range, string: string, limit: Limits.vocabularyTitle)
     }
 }

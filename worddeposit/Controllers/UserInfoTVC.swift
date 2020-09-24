@@ -27,10 +27,7 @@ class UserInfoTVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        firstNameTextField.text = firstName
-        lastNameTextField.text = lastName
-        doneButton.isEnabled = false
-        view.superview?.addSubview(progressHUD)
+        setupUI()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -62,23 +59,15 @@ class UserInfoTVC: UITableViewController {
     
     // MARK: - Methods
     
-    private func showLoginVC() {
-        let storyboard = UIStoryboard(name: Storyboards.Main, bundle: nil)
-        let loginVC = storyboard.instantiateViewController(identifier: Storyboards.Login)
-        
-        guard let window = self.view.window else {
-            self.view.window?.rootViewController = loginVC
-            self.view.window?.makeKeyAndVisible()
-            return
-        }
-        
-        window.rootViewController = loginVC
-        window.makeKeyAndVisible()
-
-        let options: UIView.AnimationOptions = .transitionCrossDissolve
-        let duration: TimeInterval = 0.3
-        
-        UIView.transition(with: window, duration: duration, options: options, animations: nil, completion: nil)
+    private func setupUI() {
+        firstNameTextField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
+        lastNameTextField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
+        firstNameTextField.delegate = self
+        lastNameTextField.delegate = self
+        firstNameTextField.text = firstName
+        lastNameTextField.text = lastName
+        doneButton.isEnabled = false
+        view.superview?.addSubview(progressHUD)
     }
     
     // MARK: - IBActions
@@ -92,9 +81,9 @@ class UserInfoTVC: UITableViewController {
     @IBAction func resetPasswordTouched(_ sender: UIButton) {
         progressHUD.show()
         UserService.shared.resetPassword(withEmail: email) { error in
+            self.progressHUD.hide()
             if let error = error {
                 UserService.shared.auth.handleFireAuthError(error, viewController: self)
-                self.progressHUD.hide()
                 return
             }
             self.simpleAlert(title: "Password", msg: "Password reset success")
@@ -106,23 +95,28 @@ class UserInfoTVC: UITableViewController {
         let alert = UIAlertController(title: "Are you sure?", message: "If you are sure your account, all vocabularies and words will be removed permanently", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Remove", style: .default, handler: { (action) in
             UserService.shared.removeAccountData() { error in
+                self.progressHUD.hide()
                 if let error = error {
                     UserService.shared.db.handleFirestoreError(error, viewController: self)
-                    self.progressHUD.hide()
                     return
                 }
                 UserService.shared.deleteAccount { error in
+                    self.progressHUD.hide()
                     if let error = error {
                         UserService.shared.auth.handleFireAuthError(error, viewController: self)
-                        self.progressHUD.hide()
                         return
                     }
-                    self.progressHUD.hide()
-                    self.showLoginVC()
+                    showLoginVC(view: self.view)
                 }
             }
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         present(alert, animated: true, completion: nil)
+    }
+}
+
+extension UserInfoTVC: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        TextFieldLimit.checkMaxLength(textField, range: range, string: string, limit: Limits.vocabularyTitle)
     }
 }

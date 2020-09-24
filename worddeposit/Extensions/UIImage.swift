@@ -1,30 +1,12 @@
+//
+//  UIImage.swift
+//  worddeposit
+//
+//  Created by Maksim Kalik on 9/24/20.
+//  Copyright © 2020 Maksim Kalik. All rights reserved.
+//
+
 import UIKit
-
-extension String {
-    var isNotEmpty: Bool {
-        return !isEmpty
-    }
-}
-
-extension UIViewController {
-    // alert
-    func simpleAlert(title: String, msg: String, handler: ((UIAlertAction) -> Void)? = nil) {
-        let alert = UIAlertController(title: title, message: msg, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: handler))
-        present(alert, animated: true, completion: nil)
-    }
-    
-    // hide keyboard when tapped around
-    func hideKeyboardWhenTappedAround() {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
-        tap.cancelsTouchesInView = true
-        view.addGestureRecognizer(tap)
-    }
-
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
-    }
-}
 
 extension UIImage {
     
@@ -59,7 +41,6 @@ extension UIImage {
         return img
     }
 }
-
 
 extension UIImageView {
     func makeRounded() {

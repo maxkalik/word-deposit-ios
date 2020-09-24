@@ -35,7 +35,7 @@
 		11621A2724C25EFA003087AB /* WKWebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11621A2624C25EFA003087AB /* WKWebVC.swift */; };
 		1164FB532508CE150023326A /* MakeWordDesk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1164FB522508CE150023326A /* MakeWordDesk.swift */; };
 		116BC94C249182BD00968DA6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC94B249182BD00968DA6 /* Constants.swift */; };
-		116BC94E2491836B00968DA6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC94D2491836B00968DA6 /* Extensions.swift */; };
+		116BC94E2491836B00968DA6 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC94D2491836B00968DA6 /* UIViewController.swift */; };
 		1171E70624981CDD00805D35 /* VocabularyCardCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1171E70424981CDD00805D35 /* VocabularyCardCVCell.swift */; };
 		1171E70724981CDD00805D35 /* VocabularyCardCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1171E70524981CDD00805D35 /* VocabularyCardCVCell.xib */; };
 		117FA4CA24CEE78A0043024D /* CollectionViewCenterLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117FA4C924CEE78A0043024D /* CollectionViewCenterLayout.swift */; };
@@ -43,8 +43,6 @@
 		118162EF24BFB08E0088C0E1 /* UserInfoTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118162EE24BFB08E0088C0E1 /* UserInfoTVC.swift */; };
 		1181BBF32498060F00DB682E /* VocabularyCardsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1181BBF12498060F00DB682E /* VocabularyCardsVC.swift */; };
 		1181BBF42498060F00DB682E /* VocabularyCardsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1181BBF22498060F00DB682E /* VocabularyCardsVC.xib */; };
-		1190DACC2519EAA70029264C /* Validators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1190DACB2519EAA70029264C /* Validators.swift */; };
-		1190DACF2519F1BA0029264C /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1190DACE2519F1BA0029264C /* UITextField.swift */; };
 		1192355024BFB66C00E76403 /* TextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1192354F24BFB66C00E76403 /* TextFields.swift */; };
 		119DBF5724ACCFBF009124B7 /* Configurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119DBF5624ACCFBF009124B7 /* Configurations.swift */; };
 		11B20D6A24C8DF2E00C1CB4E /* PracticeAnswerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B20D6824C8DF2E00C1CB4E /* PracticeAnswerItem.swift */; };
@@ -60,12 +58,16 @@
 		150FA46124D8B6E40083D653 /* Vocabulary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150FA46024D8B6E40083D653 /* Vocabulary.swift */; };
 		15266E6A251140D200BB621C /* Firebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15266E69251140D200BB621C /* Firebase.swift */; };
 		156C80B724D8D27E0077905D /* VocabularyDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156C80B624D8D27E0077905D /* VocabularyDetailsVC.swift */; };
+		158B1095251BE29A0003C3A9 /* TextFieldLimit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158B1094251BE29A0003C3A9 /* TextFieldLimit.swift */; };
 		15A7E04924D8B322006804FD /* VocabulariesTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A7E04724D8B322006804FD /* VocabulariesTVCell.swift */; };
 		15A7E04A24D8B322006804FD /* VocabulariesTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15A7E04824D8B322006804FD /* VocabulariesTVCell.xib */; };
 		15AFF8B6251692CB00BA6DAF /* ShowLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AFF8B5251692CB00BA6DAF /* ShowLogin.swift */; };
 		15BD0C0224DE0631007E8D27 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BD0C0124DE0631007E8D27 /* MessageView.swift */; };
 		15BD0C0424DE0657007E8D27 /* MessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15BD0C0324DE0657007E8D27 /* MessageView.xib */; };
 		15CEBC6124D71A0300D48C0E /* ProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CEBC6024D71A0300D48C0E /* ProgressHUD.swift */; };
+		15D51907251C069F00590073 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D51906251C069F00590073 /* UIImage.swift */; };
+		15D5190A251C070100590073 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D51909251C070100590073 /* String.swift */; };
+		15D5190E251C076900590073 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D5190D251C076900590073 /* Validator.swift */; };
 		EB804A1F3EEA1D715B4655FE /* Pods_worddeposit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F57192022ED3D6D6824465E3 /* Pods_worddeposit.framework */; };
 /* End PBXBuildFile section */
 
@@ -100,7 +102,7 @@
 		11621A2624C25EFA003087AB /* WKWebVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WKWebVC.swift; path = worddeposit/Controllers/WKWebVC.swift; sourceTree = SOURCE_ROOT; };
 		1164FB522508CE150023326A /* MakeWordDesk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeWordDesk.swift; sourceTree = "<group>"; };
 		116BC94B249182BD00968DA6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		116BC94D2491836B00968DA6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		116BC94D2491836B00968DA6 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		1171E70424981CDD00805D35 /* VocabularyCardCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyCardCVCell.swift; sourceTree = "<group>"; };
 		1171E70524981CDD00805D35 /* VocabularyCardCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VocabularyCardCVCell.xib; sourceTree = "<group>"; };
 		117FA4C924CEE78A0043024D /* CollectionViewCenterLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCenterLayout.swift; sourceTree = "<group>"; };
@@ -108,8 +110,6 @@
 		118162EE24BFB08E0088C0E1 /* UserInfoTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoTVC.swift; sourceTree = "<group>"; };
 		1181BBF12498060F00DB682E /* VocabularyCardsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyCardsVC.swift; sourceTree = "<group>"; };
 		1181BBF22498060F00DB682E /* VocabularyCardsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VocabularyCardsVC.xib; sourceTree = "<group>"; };
-		1190DACB2519EAA70029264C /* Validators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validators.swift; sourceTree = "<group>"; };
-		1190DACE2519F1BA0029264C /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		1192354F24BFB66C00E76403 /* TextFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFields.swift; sourceTree = "<group>"; };
 		119DBF5624ACCFBF009124B7 /* Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
 		11B20D6824C8DF2E00C1CB4E /* PracticeAnswerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PracticeAnswerItem.swift; path = "worddeposit/Reusable Components/PracticeAnswerItem.swift"; sourceTree = SOURCE_ROOT; };
@@ -126,12 +126,16 @@
 		150FA46024D8B6E40083D653 /* Vocabulary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vocabulary.swift; sourceTree = "<group>"; };
 		15266E69251140D200BB621C /* Firebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firebase.swift; sourceTree = "<group>"; };
 		156C80B624D8D27E0077905D /* VocabularyDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyDetailsVC.swift; sourceTree = "<group>"; };
+		158B1094251BE29A0003C3A9 /* TextFieldLimit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldLimit.swift; sourceTree = "<group>"; };
 		15A7E04724D8B322006804FD /* VocabulariesTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabulariesTVCell.swift; sourceTree = "<group>"; };
 		15A7E04824D8B322006804FD /* VocabulariesTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VocabulariesTVCell.xib; sourceTree = "<group>"; };
 		15AFF8B5251692CB00BA6DAF /* ShowLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowLogin.swift; sourceTree = "<group>"; };
 		15BD0C0124DE0631007E8D27 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		15BD0C0324DE0657007E8D27 /* MessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageView.xib; sourceTree = "<group>"; };
 		15CEBC6024D71A0300D48C0E /* ProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressHUD.swift; sourceTree = "<group>"; };
+		15D51906251C069F00590073 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		15D51909251C070100590073 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		15D5190D251C076900590073 /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
 		A070823C5C9FE2E6B5A6D7F8 /* Pods-worddeposit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-worddeposit.release.xcconfig"; path = "Target Support Files/Pods-worddeposit/Pods-worddeposit.release.xcconfig"; sourceTree = "<group>"; };
 		C0BEB3DBDC84F83AE219EA46 /* Pods-worddeposit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-worddeposit.debug.xcconfig"; path = "Target Support Files/Pods-worddeposit/Pods-worddeposit.debug.xcconfig"; sourceTree = "<group>"; };
 		F57192022ED3D6D6824465E3 /* Pods_worddeposit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_worddeposit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -162,7 +166,9 @@
 			children = (
 				1117D08E25023675000D864F /* Array.swift */,
 				15266E69251140D200BB621C /* Firebase.swift */,
-				1190DACE2519F1BA0029264C /* UITextField.swift */,
+				15D51906251C069F00590073 /* UIImage.swift */,
+				15D51909251C070100590073 /* String.swift */,
+				116BC94D2491836B00968DA6 /* UIViewController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -281,10 +287,10 @@
 				117FA4C924CEE78A0043024D /* CollectionViewCenterLayout.swift */,
 				119DBF5624ACCFBF009124B7 /* Configurations.swift */,
 				116BC94B249182BD00968DA6 /* Constants.swift */,
-				116BC94D2491836B00968DA6 /* Extensions.swift */,
 				1164FB522508CE150023326A /* MakeWordDesk.swift */,
 				15AFF8B5251692CB00BA6DAF /* ShowLogin.swift */,
-				1190DACB2519EAA70029264C /* Validators.swift */,
+				158B1094251BE29A0003C3A9 /* TextFieldLimit.swift */,
+				15D5190D251C076900590073 /* Validator.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -465,7 +471,6 @@
 				1128423B248E83ED00A014E9 /* ForgotPasswordVC.swift in Sources */,
 				15CEBC6124D71A0300D48C0E /* ProgressHUD.swift in Sources */,
 				1128423D248E840000A014E9 /* RoundedViews.swift in Sources */,
-				1190DACC2519EAA70029264C /* Validators.swift in Sources */,
 				116BC94C249182BD00968DA6 /* Constants.swift in Sources */,
 				11B20D6D24C8E00800C1CB4E /* PracticeReadVC.swift in Sources */,
 				11F0327024C8272700BD6350 /* PracticeCVC.swift in Sources */,
@@ -474,16 +479,18 @@
 				150FA46124D8B6E40083D653 /* Vocabulary.swift in Sources */,
 				118162EF24BFB08E0088C0E1 /* UserInfoTVC.swift in Sources */,
 				1128423F248E845900A014E9 /* User.swift in Sources */,
+				15D5190E251C076900590073 /* Validator.swift in Sources */,
 				11284235248E83C800A014E9 /* ProfileTVC.swift in Sources */,
 				11F32A5324AF46D00097BF39 /* VocabularyResultsTVC.swift in Sources */,
 				11621A2724C25EFA003087AB /* WKWebVC.swift in Sources */,
+				15D51907251C069F00590073 /* UIImage.swift in Sources */,
+				158B1095251BE29A0003C3A9 /* TextFieldLimit.swift in Sources */,
 				11621A2524C24819003087AB /* CheckmarkListTVC.swift in Sources */,
 				11284237248E83D400A014E9 /* LoginVC.swift in Sources */,
 				11F32A5524AF49C30097BF39 /* VocabularyTVC+Restore.swift in Sources */,
 				11284211248E7C5700A014E9 /* AppDelegate.swift in Sources */,
 				112EA43324C83B7200FA55E3 /* PracticeTrainer.swift in Sources */,
-				1190DACF2519F1BA0029264C /* UITextField.swift in Sources */,
-				116BC94E2491836B00968DA6 /* Extensions.swift in Sources */,
+				116BC94E2491836B00968DA6 /* UIViewController.swift in Sources */,
 				1171E70624981CDD00805D35 /* VocabularyCardCVCell.swift in Sources */,
 				11F32A5924AF49DB0097BF39 /* VocabularyTVC+Updating.swift in Sources */,
 				11ECE4B424EB0FA100B7884B /* VocabulariesTVC.swift in Sources */,
@@ -503,6 +510,7 @@
 				11284213248E7C5700A014E9 /* SceneDelegate.swift in Sources */,
 				117FA4CC24CEEC350043024D /* PracticeDeskItemButton.swift in Sources */,
 				112F9C7524F6F201007E92D8 /* SuccessMessageVC.swift in Sources */,
+				15D5190A251C070100590073 /* String.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

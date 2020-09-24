@@ -116,15 +116,30 @@ class RegistrationVC: UIViewController {
                 simpleAlert(title: "Error", msg: "Please fill out all fields.")
                 return
         }
+        
+        let validator = Validator()
+        let emailValidMessage = validator.validate(text: email, with: [.email])
+        if emailValidMessage != nil {
+            guard let message = emailValidMessage else { return }
+            simpleAlert(title: "Error", msg: message)
+            return
+        }
+        
+        let passwordValidMessage = validator.validate(text: password, with: [.password])
+        if passwordValidMessage != nil {
+            guard let message = passwordValidMessage else { return }
+            simpleAlert(title: "Error", msg: message)
+            return
+        }
+        
         self.progressHUD.show()
         
         UserService.shared.signUp(withEmail: email, password: password) { error in
+            self.progressHUD.hide()
             if let error = error {
                 UserService.shared.auth.handleFireAuthError(error, viewController: self)
-                self.progressHUD.hide()
                 return
             }
-            self.progressHUD.hide()
             self.setupApp()
         }
     }

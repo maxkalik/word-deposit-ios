@@ -33,7 +33,8 @@ class AddWordVC: UIViewController {
     
     // MARK: - Instances
     
-    var progressHUD = ProgressHUD(title: "Saving")
+    private var progressHUD = ProgressHUD(title: "Saving")
+    private var messageView = MessageView()
     private var isImageSet = false
     private var isKeyboardShowing = false
     
@@ -47,8 +48,15 @@ class AddWordVC: UIViewController {
         hideKeyboardWhenTappedAround()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if UserService.shared.words.count > Limits.words {
+            messageView.show()
+            setupMessage()
+        } else {
+            messageView.hide()
+        }
         
         wordExampleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         wordTranslationTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
@@ -95,21 +103,38 @@ class AddWordVC: UIViewController {
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
+        
+        TextFieldLimit.checkMaxLength(textField: wordExampleTextField, maxLength: Limits.wordExample)
+        TextFieldLimit.checkMaxLength(textField: wordTranslationTextField, maxLength: Limits.wordTranslation)
+        TextFieldLimit.checkMaxLength(textField: wordDescriptionTextField, maxLength: Limits.wordDescription)
+        
         textFieldValidation()
     }
     
     // MARK: - Support Methods
     
-    func textFieldValidation() {
+    private func textFieldValidation() {
         guard let wordExample = wordExampleTextField.text,
               let wordTranslation = wordTranslationTextField.text else { return }
         wordSaveButton.isEnabled = !(wordExample.isEmpty || wordTranslation.isEmpty)
         clearAllButton.isEnabled = !(wordExample.isEmpty && wordTranslation.isEmpty)
     }
     
+    private func setupMessage() {
+        messageView.setTitles(
+            messageTxt: "Words limit exceeded.\n",
+            buttonTitle: "Continue",
+            secondaryButtonTitle: "Logout"
+        )
+        // push to vocabulary view
+        messageView.onPrimaryButtonTap { self.tabBarController?.selectedIndex = 2 }
+    }
+    
     private func setupUI() {
         view.addSubview(progressHUD)
+        view.addSubview(messageView)
         progressHUD.hide()
+        messageView.hide()
         wordExampleTextField.autocorrectionType = .no
         wordTranslationTextField.autocorrectionType = .no
         wordDescriptionTextField.autocorrectionType = .no
@@ -117,64 +142,70 @@ class AddWordVC: UIViewController {
         clearAllButton.isEnabled = false
     }
     
-    func prepareForUpload() {
+    private func successComplition(word: Word?) {
+        guard let word = word else { return }
+        self.updateUI()
+        self.simpleAlert(title: "Success", msg: "Word has been added")
+        self.delegate?.wordDidCreate(word)
+    }
+    
+    private func setImageData() -> Data? {
+        if self.isImageSet {
+            guard let image = wordImagePickerBtn.imageView?.image else { return nil }
+            let resizedImg = image.resized(toWidth: 400.0)
+            return resizedImg?.jpegData(compressionQuality: 0.5)
+        }
+        return nil
+    }
+    
+    private func prepareForUpload() {
         guard let example = wordExampleTextField.text, example.isNotEmpty,
             let translation = wordTranslationTextField.text, example.isNotEmpty else {
                 simpleAlert(title: "Error", msg: "Fill all fields")
                 progressHUD.hide()
                 return
         }
-        guard let description = wordDescriptionTextField.text else { return }
+        
+        if UserService.shared.words.contains(where: { $0.example.lowercased() == example.lowercased() && $0.translation.lowercased() == translation.lowercased() }) {
+            simpleAlert(title: "You have already this word", msg: " \(example) is already exist. Try to make another one") { _ in
+                self.wordExampleTextField.becomeFirstResponder()
+                self.progressHUD.hide()
+            }
+            return
+        }
         
         // TODO: - try to make this process in background (without canceling on the dismissing view)
-        if self.isImageSet {
-            guard let image = wordImagePickerBtn.imageView?.image else {
-                simpleAlert(title: "Error", msg: "Fill all fields")
-                progressHUD.hide()
+        // TODO: - BUG - freazing while typing word
+        
+        UserService.shared.setWord(
+            imageData: setImageData(),
+            example: example,
+            translation: translation,
+            description: wordDescriptionTextField.text
+        ) { error, word in
+            self.progressHUD.hide()
+            if error != nil {
+                self.simpleAlert(title: "Error", msg: "Something went wrong. Cannot add the word")
                 return
             }
-            let resizedImg = image.resized(toWidth: 400.0)
-            guard let imageData = resizedImg?.jpegData(compressionQuality: 0.5) else { return }
-            
-            UserService.shared.setWord(
-                imageData: imageData,
-                example: example,
-                translation: translation,
-                description: description
-            ) { error, word in
-                if error != nil {
-                    self.simpleAlert(title: "Error", msg: "Something went wrong. Cannot add the word")
-                    self.progressHUD.hide()
-                    return
-                }
-                guard let word = word else { return }
-                self.updateUI()
-                self.progressHUD.hide()
-                self.simpleAlert(title: "Success", msg: "Word has been added with image")
-                self.delegate?.wordDidCreate(word)
-            }
-        } else {
-            UserService.shared.setWord(
-                example: example,
-                translation: translation,
-                description: description
-            ) { error, word in
-                if error != nil {
-                    self.simpleAlert(title: "Error", msg: "Something went wrong. Cannot add the word")
-                    self.progressHUD.hide()
-                    return
-                }
-                guard let word = word else { return }
-                self.updateUI()
-                self.progressHUD.hide()
-                self.simpleAlert(title: "Success", msg: "Word has been added")
-                self.delegate?.wordDidCreate(word)
-            }
+            self.successComplition(word: word)
         }
     }
     
     
     func updateUI() {
+        // TODO: - not showing message while adding
+        
+        self.dismissKeyboard()
+        self.isKeyboardShowing = false
+        
+        if UserService.shared.words.count > Limits.words {
+            DispatchQueue.main.async {
+                self.messageView.show()
+                self.setupMessage()
+            }
+        }
+        
         self.wordImagePickerBtn.setImage(UIImage(named: Placeholders.Logo), for: .normal)
         wordExampleTextField.text = ""
         wordTranslationTextField.text = ""
@@ -202,12 +233,12 @@ class AddWordVC: UIViewController {
         present(picker, animated: true, completion: nil)
     }
     
-    @IBAction func onAddWordBtnPress(_ sender: Any) {
+    @IBAction func onAddWordBtnPress(_ sender: UIButton) {
         progressHUD.show()
         prepareForUpload()
     }
     
-    @IBAction func onClearAllBtnPress(_ sender: Any) {
+    @IBAction func onClearAllBtnPress(_ sender: UIButton) {
         updateUI()
     }
 }

@@ -85,16 +85,24 @@ class ForgotPasswordVC: UIViewController {
             simpleAlert(title: "Error", msg: "Fill email field out")
             return
         }
+        
+        let validator = Validator()
+        let emailValidMessage = validator.validate(text: email, with: [.email])
+        if emailValidMessage != nil {
+            guard let message = emailValidMessage else { return }
+            simpleAlert(title: "Error", msg: message)
+            return
+        }
+        
         progressHUD.show()
         
         UserService.shared.resetPassword(withEmail: email) { error in
+            self.progressHUD.hide()
             if let error = error {
                 UserService.shared.auth.handleFireAuthError(error, viewController: self)
-                self.progressHUD.hide()
                 return
             }
             self.navigationController?.popViewController(animated: true)
-            self.progressHUD.hide()
         }
     }
     

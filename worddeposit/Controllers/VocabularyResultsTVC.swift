@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol VocabularyResultsTVCDelegate: VocabularyTVC {
+    func resultsWordDidRemove(word: Word)
+}
+
 class VocabularyResultsTVC: UITableViewController {
 
     // MARK: - IBOutlets
@@ -18,6 +22,7 @@ class VocabularyResultsTVC: UITableViewController {
     
     var filteredWords = [Word]()
 
+    weak var delegate: VocabularyResultsTVCDelegate?
     
     // MARK: - Lifecycle
     
@@ -74,8 +79,10 @@ extension VocabularyResultsTVC {
                     self.simpleAlert(title: "Error", msg: "Sorry. Cannot remove word. Something wrong.")
                     return
                 }
+                
                 self.filteredWords.remove(at: indexPath.row)
                 tableView.deleteRows(at: [IndexPath(item: indexPath.row, section: 0)], with: .fade)
+                self.delegate?.resultsWordDidRemove(word: word)
             }
         }
     }

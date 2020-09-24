@@ -76,6 +76,9 @@ final class UserService {
     func logout(complition: @escaping (Error?) -> Void) {
         do {
             try auth.signOut()
+            self.words.removeAll()
+            self.vocabularies.removeAll()
+            self.vocabulary = nil
             complition(nil)
         } catch let error as NSError {
             complition(error)
