@@ -50,6 +50,12 @@ struct Colors {
     static let grey = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
 }
 
+struct Fonts {
+    static let regular = "DMSans-Regular"
+    static let medium = "DMSans-Medium"
+    static let bold = "DMSans-Bold"
+}
+
 struct Placeholders {
     static let Logo = "logo"
 }

@@ -28,7 +28,7 @@ class LoginVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Spinner
         self.view.addSubview(progressHUD)
         

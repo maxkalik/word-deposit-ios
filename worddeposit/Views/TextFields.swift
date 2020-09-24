@@ -35,6 +35,6 @@ class LoginTextField: UITextField {
         bottomBorder.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
         // Font
-        font = UIFont(name: "Futura", size: 16.0)
+        font = UIFont(name: Fonts.regular, size: 16.0)
     }
 }
