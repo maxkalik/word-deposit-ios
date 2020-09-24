@@ -34,6 +34,10 @@ class LoginVC: UIViewController {
         
         // Hide keyboard when tapped around if keyboard on the screen
         hideKeyboardWhenTappedAround()
+        
+        // Visuals
+        view.backgroundColor = Colors.yellow
+        navigationController?.navigationBar.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {

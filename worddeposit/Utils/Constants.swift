@@ -44,6 +44,10 @@ struct ReusableIdentifiers {
 
 struct Colors {
     static let black = UIColor.black.cgColor
+    static let dark = #colorLiteral(red: 0.01088568699, green: 0.06228606028, blue: 0.06561407343, alpha: 1)
+    static let yellow = #colorLiteral(red: 1, green: 0.7058823529, blue: 0.007843137255, alpha: 1)
+    static let silver = #colorLiteral(red: 0.9180576574, green: 0.9599677666, blue: 0.8276135252, alpha: 1)
+    static let grey = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
 }
 
 struct Placeholders {
