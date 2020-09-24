@@ -114,10 +114,6 @@ class PracticeReadVC: UIViewController {
     }
     
     private func prepareForQuit() {
-        print(trainedWords)
-        print(trainedWords.count)
-        print("right: \(sessionRightAnswersSum), wrong: \(sessionWrongAnswersSum)")
-        
         let successMessage = SuccessMessageVC()
         successMessage.delegate = self
         
@@ -162,8 +158,23 @@ class PracticeReadVC: UIViewController {
     // MARK: - IBActions
     
     @IBAction func skip(_ sender: UIBarButtonItem) {
+        guard let index = wordsDesk.firstIndex(matching: trainedWord!) else { return }
+        let indexPath = IndexPath(row: index, section: 0)
+        if let cell = collectionView.cellForItem(at: indexPath) {
+            DispatchQueue.main.async {
+                cell.backgroundColor = UIColor.green
+            }
+        }
         result(trainedWord!, answer: false)
-        updateUI()
+        isSelected = true
+        spinner.startAnimating()
+        collectionView.isUserInteractionEnabled = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.updateUI()
+            self.spinner.stopAnimating()
+        }
+        
+        self.collectionView.reloadData()
     }
     
 }
@@ -204,7 +215,6 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
                     cell.contentView.alpha = 0.5
                 }
             }
-            
             
             return cell
         }
