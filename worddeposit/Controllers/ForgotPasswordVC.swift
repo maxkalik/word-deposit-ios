@@ -81,18 +81,7 @@ class ForgotPasswordVC: UIViewController {
     
     // MARK: - IBActions
     @IBAction func onResetPasswordBtnPress(_ sender: UIButton) {
-        guard let email = emailTextField.text, email.isNotEmpty else {
-            simpleAlert(title: "Error", msg: "Fill email field out")
-            return
-        }
-        
-        let validator = Validator()
-        let emailValidMessage = validator.validate(text: email, with: [.email])
-        if emailValidMessage != nil {
-            guard let message = emailValidMessage else { return }
-            simpleAlert(title: "Error", msg: message)
-            return
-        }
+        guard let email = emailTextField.text, email.isNotEmpty else { return }
         
         progressHUD.show()
         

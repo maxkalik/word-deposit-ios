@@ -112,25 +112,7 @@ class RegistrationVC: UIViewController {
     @IBAction func onSignUpBtnPress(_ sender: UIButton) {
         
         guard let email = emailTextField.text, email.isNotEmpty,
-            let password = passwordTextField.text, password.isNotEmpty else {
-                simpleAlert(title: "Error", msg: "Please fill out all fields.")
-                return
-        }
-        
-        let validator = Validator()
-        let emailValidMessage = validator.validate(text: email, with: [.email])
-        if emailValidMessage != nil {
-            guard let message = emailValidMessage else { return }
-            simpleAlert(title: "Error", msg: message)
-            return
-        }
-        
-        let passwordValidMessage = validator.validate(text: password, with: [.password])
-        if passwordValidMessage != nil {
-            guard let message = passwordValidMessage else { return }
-            simpleAlert(title: "Error", msg: message)
-            return
-        }
+            let password = passwordTextField.text, password.isNotEmpty else { return }
         
         self.progressHUD.show()
         

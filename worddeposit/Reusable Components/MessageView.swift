@@ -11,7 +11,7 @@ class MessageView: UIView {
     
 
     @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var primaryButton: RoundedButton!
+    @IBOutlet weak var primaryButton: PrimaryButton!
     @IBOutlet weak var secondaryButton: UIButton!
     
     override init(frame: CGRect) {
