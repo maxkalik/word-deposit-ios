@@ -390,7 +390,7 @@ CHECKOUT OPTIONS:
     :commit: 4a9739f251fbf88f394192fdbf3195d55d3811b5
     :git: https://github.com/HHK1/PryntTrimmerView.git
   YPImagePicker:
-    :commit: d77dd050e69733039912ab7e96faa37c5c976b34
+    :commit: 89acc4c3bea687f53e7b05a9adab08153f158721
     :git: https://github.com/Yummypets/YPImagePicker.git
 
 SPEC CHECKSUMS:

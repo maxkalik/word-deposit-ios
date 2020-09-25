@@ -29,6 +29,7 @@ class LoginVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Disable login button
         loginButton.isEnabled = false
         
         // Spinner
@@ -39,8 +40,10 @@ class LoginVC: UIViewController {
         
         // Visuals
         view.backgroundColor = Colors.yellow
-        navigationController?.navigationBar.isHidden = true
         titleLabel.textColor = Colors.dark
+        
+        // Setup Navigation Bar
+        setupNavigationBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,6 +62,8 @@ class LoginVC: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self)
+        emailTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        passwordTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
     // MARK: - @objc Methods
@@ -104,6 +109,13 @@ class LoginVC: UIViewController {
             self.stackViewCenterY.constant += (self.keyboardHeight - self.stackView.frame.size.height / 2)
             self.view.layoutIfNeeded()
          }
+    }
+    
+    private func setupNavigationBar() {
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.view.backgroundColor = .clear
     }
     
     // MARK: - Methods

@@ -6,6 +6,7 @@ class PrimaryButton: UIButton {
         super.awakeFromNib()
         layer.cornerRadius = 12
         setTitleColor(Colors.yellow, for: .normal)
+        layer.backgroundColor = Colors.dark.cgColor
     }
     
     override var isEnabled: Bool {

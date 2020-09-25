@@ -7,6 +7,7 @@ class RegistrationVC: UIViewController {
     // Views
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var signUpButton: PrimaryButton!
     
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var stackViewCenterY: NSLayoutConstraint!
@@ -24,12 +25,23 @@ class RegistrationVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Disable login button
+        signUpButton.isEnabled = false
+        
         // Spinner
         self.view.addSubview(progressHUD)
         
         // Hide keyboard when tapped around if keyboard on the screen
         hideKeyboardWhenTappedAround()
+        
+        // Visuals
+        view.backgroundColor = Colors.yellow        
+        titleLabel.textColor = Colors.dark
+        
+        setNavigationBar()
     }
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -39,14 +51,24 @@ class RegistrationVC: UIViewController {
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         nc.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        emailTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        passwordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self)
+        emailTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        passwordTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
     // MARK: - @objc Methods
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        guard let email = emailTextField.text, let password = passwordTextField.text else { return }
+        validateFields(email: email, password: password)
+    }
     
     @objc func keyboardWillShow(_ notification: NSNotification) {
         // check if keyboard already is on the screen
@@ -85,7 +107,36 @@ class RegistrationVC: UIViewController {
         }
     }
     
+    @objc func backToMain() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     // MARK: - Methods
+    
+    private func setNavigationBar() {
+        self.navigationItem.setHidesBackButton(true, animated: false)
+
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 42, height: 42))
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 10, width: 24, height: 24))
+
+        if let imgBackArrow = UIImage(named: "icon_back") {
+            imageView.image = imgBackArrow
+        }
+        view.addSubview(imageView)
+
+        let backTap = UITapGestureRecognizer(target: self, action: #selector(backToMain))
+        view.addGestureRecognizer(backTap)
+
+        let leftBarButtonItem = UIBarButtonItem(customView: view )
+        self.navigationItem.leftBarButtonItem = leftBarButtonItem
+    }
+    
+    private func validateFields(email: String, password: String) {
+        let validator = Validator()
+        let validEmail = validator.validate(text: email, with: [.email, .notEmpty])
+        let validPassword = validator.validate(text: password, with: [.password, .notEmpty])
+        signUpButton.isEnabled = validEmail && validPassword
+    }
     
     private func hideSecondaryButtons() {
         loginButton.alpha = 0

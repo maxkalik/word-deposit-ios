@@ -56,6 +56,7 @@
 		11F32A5524AF49C30097BF39 /* VocabularyTVC+Restore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F32A5424AF49C30097BF39 /* VocabularyTVC+Restore.swift */; };
 		11F32A5924AF49DB0097BF39 /* VocabularyTVC+Updating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F32A5824AF49DB0097BF39 /* VocabularyTVC+Updating.swift */; };
 		150FA46124D8B6E40083D653 /* Vocabulary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150FA46024D8B6E40083D653 /* Vocabulary.swift */; };
+		151F2F0C251E97D5002D292B /* LoginTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151F2F0B251E97D5002D292B /* LoginTitle.swift */; };
 		15266E6A251140D200BB621C /* Firebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15266E69251140D200BB621C /* Firebase.swift */; };
 		156C80B724D8D27E0077905D /* VocabularyDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156C80B624D8D27E0077905D /* VocabularyDetailsVC.swift */; };
 		158B1095251BE29A0003C3A9 /* TextFieldLimit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158B1094251BE29A0003C3A9 /* TextFieldLimit.swift */; };
@@ -128,6 +129,7 @@
 		11F32A5424AF49C30097BF39 /* VocabularyTVC+Restore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VocabularyTVC+Restore.swift"; sourceTree = "<group>"; };
 		11F32A5824AF49DB0097BF39 /* VocabularyTVC+Updating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VocabularyTVC+Updating.swift"; sourceTree = "<group>"; };
 		150FA46024D8B6E40083D653 /* Vocabulary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vocabulary.swift; sourceTree = "<group>"; };
+		151F2F0B251E97D5002D292B /* LoginTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTitle.swift; sourceTree = "<group>"; };
 		15266E69251140D200BB621C /* Firebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firebase.swift; sourceTree = "<group>"; };
 		156C80B624D8D27E0077905D /* VocabularyDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyDetailsVC.swift; sourceTree = "<group>"; };
 		158B1094251BE29A0003C3A9 /* TextFieldLimit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldLimit.swift; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 				1192354F24BFB66C00E76403 /* TextFields.swift */,
 				117FA4CB24CEEC350043024D /* PracticeDeskItemButton.swift */,
 				15D51953251E7F2500590073 /* PrimaryButton.swift */,
+				151F2F0B251E97D5002D292B /* LoginTitle.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -524,6 +527,7 @@
 				117FA4CA24CEE78A0043024D /* CollectionViewCenterLayout.swift in Sources */,
 				15266E6A251140D200BB621C /* Firebase.swift in Sources */,
 				15BD0C0224DE0631007E8D27 /* MessageView.swift in Sources */,
+				151F2F0C251E97D5002D292B /* LoginTitle.swift in Sources */,
 				15A7E04924D8B322006804FD /* VocabulariesTVCell.swift in Sources */,
 				15D51954251E7F2500590073 /* PrimaryButton.swift in Sources */,
 				1158D30E24917B9B0087DC96 /* VocabularyTVCell.swift in Sources */,

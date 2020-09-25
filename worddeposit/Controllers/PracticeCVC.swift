@@ -182,6 +182,18 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         return CGSize(width: screenSize.width - 40, height: 200)
     }
     
+    private func setupNavigationBar() {
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.view.backgroundColor = .clear
+        
+        let backItem = UIBarButtonItem()
+        backItem.title = ""
+        navigationItem.backBarButtonItem = backItem
+        navigationController?.navigationBar.tintColor = UIColor.white
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let sender = trainers[indexPath.row]
         self.performSegue(withIdentifier: Segues.PracticeRead, sender: sender)
@@ -198,15 +210,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                 // Restore the tabbar when it's popped in the future
                 DispatchQueue.main.async { self.hidesBottomBarWhenPushed = false }
                 
-                self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-                self.navigationController?.navigationBar.shadowImage = UIImage()
-                self.navigationController?.navigationBar.isTranslucent = true
-                self.navigationController?.view.backgroundColor = .clear
-                
-                let backItem = UIBarButtonItem()
-                backItem.title = ""
-                self.navigationItem.backBarButtonItem = backItem
-                self.navigationController?.navigationBar.tintColor = UIColor.white
+                self.setupNavigationBar()
                 
                 practiceReadVC?.delegate = self
                 // worddesk

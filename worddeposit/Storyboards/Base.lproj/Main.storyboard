@@ -28,7 +28,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="01T-X9-a2a">
                                 <rect key="frame" x="60" y="277.5" width="294" height="341"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e07-Zq-yaq">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e07-Zq-yaq" customClass="LoginTitle" customModule="worddeposit" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="294" height="29"/>
                                         <fontDescription key="fontDescription" name="DMSans-Medium" family="DM Sans" pointSize="22"/>
                                         <nil key="textColor"/>
@@ -65,7 +65,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a4c-sX-kdq">
                                         <rect key="frame" x="0.0" y="259" width="294" height="31"/>
-                                        <fontDescription key="fontDescription" name="DMSans-Regular" family="DM Sans" pointSize="14"/>
+                                        <fontDescription key="fontDescription" name="DMSans-Medium" family="DM Sans" pointSize="14"/>
                                         <state key="normal" title="Create new Account"/>
                                         <connections>
                                             <segue destination="gOh-uS-taK" kind="show" id="W4m-8p-BUf"/>
@@ -73,7 +73,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rdf-CM-1lM">
                                         <rect key="frame" x="0.0" y="310" width="294" height="31"/>
-                                        <fontDescription key="fontDescription" name="DMSans-Regular" family="DM Sans" pointSize="14"/>
+                                        <fontDescription key="fontDescription" name="DMSans-Medium" family="DM Sans" pointSize="14"/>
                                         <state key="normal" title="Forgot Password"/>
                                         <connections>
                                             <segue destination="lGh-rJ-leP" kind="show" id="Hht-Ho-5vH"/>
@@ -115,24 +115,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="k1A-ET-bVF">
-                                <rect key="frame" x="20" y="303" width="374" height="290"/>
+                                <rect key="frame" x="60" y="302.5" width="294" height="291"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Registration" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BFm-ed-JJO">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Registration" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BFm-ed-JJO" customClass="LoginTitle" customModule="worddeposit" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="294" height="30"/>
+                                        <fontDescription key="fontDescription" name="DMSans-Medium" family="DM Sans" pointSize="23"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="kb4-ry-iGt">
-                                        <rect key="frame" x="0.0" y="50" width="374" height="50"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="kb4-ry-iGt" customClass="LoginTextField" customModule="worddeposit" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="294" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="Aot-0q-FIO"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" textContentType="email"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z8D-Xl-CGP">
-                                        <rect key="frame" x="0.0" y="120" width="374" height="50"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z8D-Xl-CGP" customClass="LoginTextField" customModule="worddeposit" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="120" width="294" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="hcD-N6-JWm"/>
                                         </constraints>
@@ -140,8 +140,7 @@
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Bx-VB-muo" customClass="PrimaryButton" customModule="worddeposit" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="190" width="374" height="50"/>
-                                        <color key="backgroundColor" red="0.2274509804" green="0.2666666667" blue="0.36078431370000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <rect key="frame" x="0.0" y="190" width="294" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="Zj9-cl-h5V"/>
                                         </constraints>
@@ -153,7 +152,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tqS-aX-VeA">
-                                        <rect key="frame" x="0.0" y="260" width="374" height="30"/>
+                                        <rect key="frame" x="0.0" y="260" width="294" height="31"/>
+                                        <fontDescription key="fontDescription" name="DMSans-Medium" family="DM Sans" pointSize="14"/>
                                         <state key="normal" title="Do you have an account already?"/>
                                         <connections>
                                             <action selector="onHaveAccountBtnPress:" destination="gOh-uS-taK" eventType="touchUpInside" id="cud-xC-0NN"/>
@@ -166,8 +166,8 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="k1A-ET-bVF" firstAttribute="centerY" secondItem="EBp-Rm-cHa" secondAttribute="centerY" id="7NS-pr-Dv8"/>
-                            <constraint firstItem="n3h-xx-1xp" firstAttribute="trailing" secondItem="k1A-ET-bVF" secondAttribute="trailing" constant="20" id="BBv-bZ-WSt"/>
-                            <constraint firstItem="k1A-ET-bVF" firstAttribute="leading" secondItem="n3h-xx-1xp" secondAttribute="leading" constant="20" id="sbQ-r6-k1M"/>
+                            <constraint firstItem="n3h-xx-1xp" firstAttribute="trailing" secondItem="k1A-ET-bVF" secondAttribute="trailing" constant="60" id="BBv-bZ-WSt"/>
+                            <constraint firstItem="k1A-ET-bVF" firstAttribute="leading" secondItem="n3h-xx-1xp" secondAttribute="leading" constant="60" id="sbQ-r6-k1M"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="LnZ-Da-IKe"/>
@@ -175,6 +175,7 @@
                         <outlet property="emailTextField" destination="kb4-ry-iGt" id="BVd-cG-4Sr"/>
                         <outlet property="loginButton" destination="tqS-aX-VeA" id="PgO-Fc-uLN"/>
                         <outlet property="passwordTextField" destination="Z8D-Xl-CGP" id="Fu9-zO-Xkc"/>
+                        <outlet property="signUpButton" destination="0Bx-VB-muo" id="v88-4f-HKn"/>
                         <outlet property="stackView" destination="k1A-ET-bVF" id="HyI-bA-lXy"/>
                         <outlet property="stackViewCenterY" destination="7NS-pr-Dv8" id="mkG-nq-hqe"/>
                         <outlet property="titleLabel" destination="BFm-ed-JJO" id="hG7-wJ-4T5"/>
@@ -211,16 +212,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="23h-Uc-ftl">
-                                <rect key="frame" x="20" y="338" width="374" height="220"/>
+                                <rect key="frame" x="60" y="337.5" width="294" height="221"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Forgot password?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YZL-ml-heO">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="30"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Forgot password?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YZL-ml-heO" customClass="LoginTitle" customModule="worddeposit" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="294" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="5B0-YN-bqy">
-                                        <rect key="frame" x="0.0" y="50" width="374" height="50"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="5B0-YN-bqy" customClass="LoginTextField" customModule="worddeposit" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="294" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="iy7-ll-53E"/>
                                         </constraints>
@@ -228,7 +229,7 @@
                                         <textInputTraits key="textInputTraits" textContentType="email"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yas-V8-NdO" customClass="PrimaryButton" customModule="worddeposit" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="120" width="374" height="50"/>
+                                        <rect key="frame" x="0.0" y="120" width="294" height="50"/>
                                         <color key="backgroundColor" red="0.2274509804" green="0.2666666667" blue="0.36078431370000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="jGS-yZ-nXv"/>
@@ -241,7 +242,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lqG-MK-qsD">
-                                        <rect key="frame" x="0.0" y="190" width="374" height="30"/>
+                                        <rect key="frame" x="0.0" y="190" width="294" height="31"/>
+                                        <fontDescription key="fontDescription" name="DMSans-Medium" family="DM Sans" pointSize="14"/>
                                         <state key="normal" title="Cancel"/>
                                         <connections>
                                             <action selector="onCancelBtnPress:" destination="lGh-rJ-leP" eventType="touchUpInside" id="sKW-G9-9x5"/>
@@ -253,8 +255,8 @@
                         <viewLayoutGuide key="safeArea" id="piu-6q-KGq"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="23h-Uc-ftl" firstAttribute="leading" secondItem="j0o-dG-3HN" secondAttribute="leading" constant="20" id="94P-kT-vg4"/>
-                            <constraint firstItem="piu-6q-KGq" firstAttribute="trailing" secondItem="23h-Uc-ftl" secondAttribute="trailing" constant="20" id="gPS-Ou-5FX"/>
+                            <constraint firstItem="23h-Uc-ftl" firstAttribute="leading" secondItem="j0o-dG-3HN" secondAttribute="leading" constant="60" id="94P-kT-vg4"/>
+                            <constraint firstItem="piu-6q-KGq" firstAttribute="trailing" secondItem="23h-Uc-ftl" secondAttribute="trailing" constant="60" id="gPS-Ou-5FX"/>
                             <constraint firstItem="23h-Uc-ftl" firstAttribute="centerY" secondItem="j0o-dG-3HN" secondAttribute="centerY" id="r3b-8Z-Wf0"/>
                         </constraints>
                     </view>
@@ -262,6 +264,7 @@
                     <connections>
                         <outlet property="cancelButton" destination="lqG-MK-qsD" id="c9C-xQ-Fjx"/>
                         <outlet property="emailTextField" destination="5B0-YN-bqy" id="CH0-jo-46z"/>
+                        <outlet property="resetPasswordButton" destination="Yas-V8-NdO" id="TDc-hg-zgp"/>
                         <outlet property="stackView" destination="23h-Uc-ftl" id="ZRg-fZ-fRi"/>
                         <outlet property="stackViewCenterY" destination="r3b-8Z-Wf0" id="IKB-Fc-SyW"/>
                         <outlet property="titleLabel" destination="YZL-ml-heO" id="Fqj-sb-1y1"/>
