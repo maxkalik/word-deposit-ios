@@ -120,14 +120,17 @@ class RegistrationVC: UIViewController {
         let imageView = UIImageView(frame: CGRect(x: 0, y: 10, width: 24, height: 24))
 
         if let imgBackArrow = UIImage(named: "icon_back") {
-            imageView.image = imgBackArrow
+            let tintedImage = imgBackArrow.withRenderingMode(.alwaysTemplate)
+            imageView.image = tintedImage
+            imageView.tintColor = Colors.blue
         }
+
         view.addSubview(imageView)
 
         let backTap = UITapGestureRecognizer(target: self, action: #selector(backToMain))
         view.addGestureRecognizer(backTap)
 
-        let leftBarButtonItem = UIBarButtonItem(customView: view )
+        let leftBarButtonItem = UIBarButtonItem(customView: view)
         self.navigationItem.leftBarButtonItem = leftBarButtonItem
     }
     

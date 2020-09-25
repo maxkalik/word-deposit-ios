@@ -21,9 +21,8 @@ class ForgotPasswordVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         hideKeyboardWhenTappedAround()
-        setNavigationBar()
-        
-//        resetPasswordButton
+        setupNavigationBar()
+
         view.backgroundColor = Colors.silver
         resetPasswordButton.setTitleColor(Colors.silver, for: .normal)
         resetPasswordButton.isEnabled = false
@@ -100,22 +99,24 @@ class ForgotPasswordVC: UIViewController {
     
     // MARK: - Methods
     
-    func setNavigationBar() {
+    func setupNavigationBar() {
         self.navigationItem.setHidesBackButton(true, animated: false)
-
+        
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 42, height: 42))
         let imageView = UIImageView(frame: CGRect(x: 0, y: 10, width: 24, height: 24))
 
         if let imgBackArrow = UIImage(named: "icon_back") {
-            imageView.image = imgBackArrow
+            let tintedImage = imgBackArrow.withRenderingMode(.alwaysTemplate)
+            imageView.image = tintedImage
+            imageView.tintColor = Colors.blue
         }
         view.addSubview(imageView)
 
         let backTap = UITapGestureRecognizer(target: self, action: #selector(backToMain))
         view.addGestureRecognizer(backTap)
 
-        let leftBarButtonItem = UIBarButtonItem(customView: view )
-        self.navigationItem.leftBarButtonItem = leftBarButtonItem
+        let leftBarButtonItem = UIBarButtonItem(customView: view)
+        navigationItem.leftBarButtonItem = leftBarButtonItem
     }
     
     // MARK: - IBActions

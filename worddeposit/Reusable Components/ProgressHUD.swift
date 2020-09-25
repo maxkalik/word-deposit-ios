@@ -94,7 +94,6 @@ class ProgressHUD: UIVisualEffectView {
     
     func setTitle(title: String) {
         self.title = title
-        print(title)
         setupTitle()
     }
     

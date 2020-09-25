@@ -48,6 +48,7 @@ struct Colors {
     static let yellow = #colorLiteral(red: 1, green: 0.7058823529, blue: 0.007843137255, alpha: 1)
     static let silver = #colorLiteral(red: 0.9180576574, green: 0.9599677666, blue: 0.8276135252, alpha: 1)
     static let grey = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)
+    static let blue = #colorLiteral(red: 0, green: 0.3176470588, blue: 0.6117647059, alpha: 1)
 }
 
 struct Fonts {

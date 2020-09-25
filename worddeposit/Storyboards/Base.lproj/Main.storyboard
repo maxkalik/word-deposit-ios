@@ -63,7 +63,7 @@
                                             <action selector="onSignInBtnPress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="f1y-QB-y7l"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a4c-sX-kdq">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a4c-sX-kdq" customClass="DefaultButton" customModule="worddeposit" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="259" width="294" height="31"/>
                                         <fontDescription key="fontDescription" name="DMSans-Medium" family="DM Sans" pointSize="14"/>
                                         <state key="normal" title="Create new Account"/>
@@ -71,7 +71,7 @@
                                             <segue destination="gOh-uS-taK" kind="show" id="W4m-8p-BUf"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rdf-CM-1lM">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rdf-CM-1lM" customClass="DefaultButton" customModule="worddeposit" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="310" width="294" height="31"/>
                                         <fontDescription key="fontDescription" name="DMSans-Medium" family="DM Sans" pointSize="14"/>
                                         <state key="normal" title="Forgot Password"/>
@@ -151,7 +151,7 @@
                                             <action selector="onSignUpBtnPress:" destination="gOh-uS-taK" eventType="touchUpInside" id="qF3-uH-g1m"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tqS-aX-VeA">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tqS-aX-VeA" customClass="DefaultButton" customModule="worddeposit" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="260" width="294" height="31"/>
                                         <fontDescription key="fontDescription" name="DMSans-Medium" family="DM Sans" pointSize="14"/>
                                         <state key="normal" title="Do you have an account already?"/>
@@ -241,7 +241,7 @@
                                             <action selector="onResetPasswordBtnPress:" destination="lGh-rJ-leP" eventType="touchUpInside" id="7Cd-jn-s4u"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lqG-MK-qsD">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lqG-MK-qsD" customClass="DefaultButton" customModule="worddeposit" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="190" width="294" height="31"/>
                                         <fontDescription key="fontDescription" name="DMSans-Medium" family="DM Sans" pointSize="14"/>
                                         <state key="normal" title="Cancel"/>
