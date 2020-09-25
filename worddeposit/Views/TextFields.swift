@@ -11,17 +11,20 @@ class CellTextField: UITextField {
     }
 }
 
-class LoginTextField: UITextField {
+class LoginTextField: UITextField, UITextFieldDelegate {
     
     var bottomBorder = UIView()
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        delegate = self
+        self.autocorrectionType = .no
+        
         // Prepare for uiview
         translatesAutoresizingMaskIntoConstraints = false
         bottomBorder = UIView.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        bottomBorder.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
+        bottomBorder.backgroundColor = Colors.grey
         bottomBorder.translatesAutoresizingMaskIntoConstraints = false
         addSubview(bottomBorder)
         
@@ -35,6 +38,24 @@ class LoginTextField: UITextField {
         bottomBorder.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
         // Font
-        font = UIFont(name: Fonts.regular, size: 16.0)
+        font = UIFont(name: Fonts.medium, size: 16.0)
+        textColor = Colors.dark
+        
+        // Placeholder
+        attributedPlaceholder = NSAttributedString(string: self.placeholder != nil ? self.placeholder! : "", attributes: [NSAttributedString.Key.foregroundColor: Colors.grey])
     }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        bottomBorder.backgroundColor = Colors.dark
+        print("begin editing")
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        guard let text = self.text else { return }
+        if text.isEmpty {
+            bottomBorder.backgroundColor = Colors.grey
+        }
+        print("did end editing")
+    }
+    
 }
