@@ -60,12 +60,59 @@ class PracticeReadVC: UIViewController {
         collectionView.collectionViewLayout = layout
         
         // back button preparing for action
-        self.navigationItem.hidesBackButton = true
-        let newBackButton = UIBarButtonItem(title: "🏁", style: .plain, target: self, action: #selector(backAction))
-        self.navigationItem.leftBarButtonItem = newBackButton
+//        self.navigationItem.hidesBackButton = true
+//        let newBackButton = UIBarButtonItem(title: "🏁", style: .plain, target: self, action: #selector(backAction))
+//        self.navigationItem.leftBarButtonItem = newBackButton
+        
+        setNavigationBar()
+        setNavgationBarRight()
     }
     
-    @objc func backAction() {
+//    private func setupNavigationBarView(image: UIImage) -> UIView {
+//        let view = UIView(frame: CGRect(x: 0, y: 0, width: 42, height: 42))
+//        let imageView = UIImageView(frame: CGRect(x: 0, y: 10, width: 24, height: 24))
+//        view.addSubview(imageView)
+//    }
+    
+    private func setNavigationBar() {
+        self.navigationItem.setHidesBackButton(true, animated: false)
+
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 42, height: 42))
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 10, width: 24, height: 24))
+
+        if let imgBackArrow = UIImage(named: "icon_back") {
+            let tintedImage = imgBackArrow.withRenderingMode(.alwaysTemplate)
+            imageView.image = tintedImage
+            imageView.tintColor = Colors.silver
+        }
+
+        view.addSubview(imageView)
+
+        let backTap = UITapGestureRecognizer(target: self, action: #selector(backToMain))
+        view.addGestureRecognizer(backTap)
+
+        let leftBarButtonItem = UIBarButtonItem(customView: view)
+        self.navigationItem.leftBarButtonItem = leftBarButtonItem
+    }
+    
+    private func setNavgationBarRight() {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 42, height: 42))
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 10, width: 24, height: 24))
+        if let imgQuestion = UIImage(named: "question") {
+            let plainImage = imgQuestion.withRenderingMode(.alwaysOriginal)
+            imageView.image = plainImage
+        }
+        view.addSubview(imageView)
+        
+        let skipTap = UITapGestureRecognizer(target: self, action: #selector(skip))
+        view.addGestureRecognizer(skipTap)
+        
+        let rightBarButtonItem = UIBarButtonItem(customView: view)
+        self.navigationItem.rightBarButtonItem = rightBarButtonItem
+    }
+    
+    
+    @objc func backToMain() {
         if trainedWords.count == 0 {
             _ = navigationController?.popViewController(animated: true)
         } else {
@@ -188,7 +235,7 @@ class PracticeReadVC: UIViewController {
     
     // MARK: - IBActions
     
-    @IBAction func skip(_ sender: UIBarButtonItem) {
+    @objc func skip() {
         guard let index = wordsDesk.firstIndex(matching: trainedWord!) else { return }
         let indexPath = IndexPath(row: index, section: 0)
         if let cell = collectionView.cellForItem(at: indexPath) {

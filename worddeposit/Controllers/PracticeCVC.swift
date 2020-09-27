@@ -188,10 +188,11 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.view.backgroundColor = .clear
         
-        let backItem = UIBarButtonItem()
-        backItem.title = ""
-        navigationItem.backBarButtonItem = backItem
-        navigationController?.navigationBar.tintColor = UIColor.white
+//        let backItem = UIBarButtonItem()
+//        backItem.title = ""
+//        navigationItem.backBarButtonItem = backItem
+//        navigationController?.navigationBar.tintColor = UIColor.white
+        
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
