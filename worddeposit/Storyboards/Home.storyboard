@@ -164,7 +164,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Vocabularies" id="iUH-cY-NBg">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Sd8-2t-pyB">
+                        <barButtonItem key="rightBarButtonItem" image="icon_add_vocabulary" id="Sd8-2t-pyB">
                             <connections>
                                 <segue destination="qvX-RP-zC0" kind="show" id="FgU-uN-MIW"/>
                             </connections>
@@ -264,10 +264,10 @@
             </objects>
             <point key="canvasLocation" x="-1165.217391304348" y="-1443.0803571428571"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Tab Bar Conroller-->
         <scene sceneID="HfZ-1V-o4J">
             <objects>
-                <tabBarController storyboardIdentifier="Home" automaticallyAdjustsScrollViewInsets="NO" id="to1-eN-B6t" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="Home" automaticallyAdjustsScrollViewInsets="NO" id="to1-eN-B6t" customClass="TabBarConroller" customModule="worddeposit" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="JeK-BG-e3g">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
@@ -1100,6 +1100,7 @@
         <segue reference="FgU-uN-MIW"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="icon_add_vocabulary" width="24" height="24"/>
         <image name="icon_plus" width="24" height="24"/>
         <image name="icon_practice" width="24" height="24"/>
         <image name="icon_profile" width="24" height="24"/>

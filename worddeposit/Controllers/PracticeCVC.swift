@@ -20,7 +20,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         trainers = PracticeTrainers().data
         registerViews()
         setupUI()
@@ -187,12 +187,6 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.view.backgroundColor = .clear
-        
-//        let backItem = UIBarButtonItem()
-//        backItem.title = ""
-//        navigationItem.backBarButtonItem = backItem
-//        navigationController?.navigationBar.tintColor = UIColor.white
-        
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
