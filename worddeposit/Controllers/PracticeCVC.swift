@@ -140,7 +140,8 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
             flowlayout.minimumLineSpacing = 20
         }
         collectionView!.isPrefetchingEnabled = false
-        view.backgroundColor = UIColor.systemBackground
+        // view.backgroundColor = UIColor.systemBackground
+        view.backgroundColor = Colors.silverLight
     }
     
     private func presentVocabulariesVC() {
