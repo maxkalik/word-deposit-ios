@@ -15,9 +15,7 @@ class TabBarConroller: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print("tab bar controller called")
-        tabBar.backgroundImage = .none
-        tabBar.shadowImage = .none
-        tabBar.backgroundColor = .clear
+        
         tabBar.layer.borderWidth = 0
         tabBar.clipsToBounds = true
         // Do any additional setup after loading the view.
@@ -34,14 +32,18 @@ class TabBarConroller: UITabBarController {
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: Fonts.bold, size: 16)!], for: .selected)
         
         
-        layerGradient.colors = [UIColor.clear.cgColor, Colors.silverLight.cgColor]
-        layerGradient.locations = [0, 0.1]
+        layerGradient.colors = [
+            UIColor.init(red: 255, green: 255, blue: 255, alpha: 0).cgColor,
+            UIColor.init(red: 255, green: 255, blue: 255, alpha: 0.7).cgColor,
+            UIColor.init(red: 255, green: 255, blue: 255, alpha: 1).cgColor
+        ]
+        layerGradient.locations = [0, 0.03, 0.1]
         layerGradient.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
         tabBar.layer.insertSublayer(layerGradient, at: 0)
         
-        let tabBar = UITabBar.appearance()
-        tabBar.barTintColor = UIColor.clear
-        tabBar.backgroundImage = UIImage()
+        let appearance = UITabBar.appearance()
+        appearance.barTintColor = UIColor.clear
+        appearance.backgroundImage = UIImage()
         
     }
     
