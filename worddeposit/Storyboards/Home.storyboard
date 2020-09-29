@@ -362,7 +362,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" alwaysBounceVertical="YES" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u8a-OR-7Ws">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CAr-Nn-7oU">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="734"/>
@@ -467,9 +467,9 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="u8a-OR-7Ws" firstAttribute="top" secondItem="0hT-VJ-UGF" secondAttribute="top" id="Lpp-iO-lVx"/>
-                            <constraint firstItem="u8a-OR-7Ws" firstAttribute="bottom" secondItem="pgB-dc-eSC" secondAttribute="bottom" id="OAw-Bg-eaj"/>
                             <constraint firstItem="u8a-OR-7Ws" firstAttribute="leading" secondItem="pgB-dc-eSC" secondAttribute="leading" id="Oiy-TQ-7uk"/>
                             <constraint firstItem="u8a-OR-7Ws" firstAttribute="trailing" secondItem="pgB-dc-eSC" secondAttribute="trailing" id="bPu-cJ-jKm"/>
+                            <constraint firstAttribute="bottom" secondItem="u8a-OR-7Ws" secondAttribute="bottom" id="uDQ-r3-4n7"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Add Word" image="icon_plus" id="Mmj-xg-myp"/>
@@ -1022,6 +1022,9 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="mN9-sV-96K">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="yvr-8f-efO" kind="relationship" relationship="rootViewController" id="R3z-jY-o4I"/>
                     </connections>

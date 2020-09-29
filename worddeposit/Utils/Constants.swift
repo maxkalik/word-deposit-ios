@@ -46,7 +46,7 @@ struct Colors {
     static let dark = #colorLiteral(red: 0.01088568699, green: 0.06228606028, blue: 0.06561407343, alpha: 1)
     static let yellow = #colorLiteral(red: 1, green: 0.7058823529, blue: 0.007843137255, alpha: 1)
     static let orange = #colorLiteral(red: 1, green: 0.4645918398, blue: 0, alpha: 1)
-    static let silver = #colorLiteral(red: 0.9314891436, green: 0.9599677666, blue: 0.8717267808, alpha: 1)
+    static let silver = #colorLiteral(red: 0.93099447, green: 0.9588879667, blue: 0.9599677666, alpha: 1)
     static let grey = #colorLiteral(red: 0.6468691242, green: 0.6480719886, blue: 0.6009513889, alpha: 1)
     static let blue = #colorLiteral(red: 0, green: 0.3176470588, blue: 0.6117647059, alpha: 1)
 }

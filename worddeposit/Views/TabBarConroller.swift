@@ -14,11 +14,10 @@ class TabBarConroller: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("tab bar controller called")
         
+        tabBar.backgroundColor = UIColor.clear
         tabBar.layer.borderWidth = 0
         tabBar.clipsToBounds = true
-        // Do any additional setup after loading the view.
         tabBar.tintColor = Colors.orange
         tabBar.unselectedItemTintColor = Colors.dark
      
@@ -36,9 +35,6 @@ class TabBarConroller: UITabBarController {
             Colors.silver.withAlphaComponent(0).cgColor,
             Colors.silver.withAlphaComponent(0.7).cgColor,
             Colors.silver.withAlphaComponent(1).cgColor
-//            UIColor.init(red: 255, green: 255, blue: 255, alpha: 0).cgColor,
-//            UIColor.init(red: 255, green: 255, blue: 255, alpha: 0.7).cgColor,
-//            UIColor.init(red: 255, green: 255, blue: 255, alpha: 1).cgColor
         ]
         layerGradient.locations = [0, 0.03, 0.1]
         layerGradient.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
