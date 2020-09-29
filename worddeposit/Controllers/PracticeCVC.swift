@@ -76,8 +76,19 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         messageView.frame.origin.y = collectionView.contentOffset.y
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // show tab bar after finishing practice
+        guard let tabBarController = tabBarController else { return }
+        if tabBarController.tabBar.isHidden {
+            tabBarController.tabBar.isHidden = false
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         if UserService.shared.vocabulary != nil && !isVocabularySwitched {
             setupContent(words: UserService.shared.words)
         }
@@ -213,11 +224,9 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
             self.practiceReadVC = segue.destination as? PracticeReadVC
             if let sender = (sender as? PracticeTrainer) {
                 
-                // Hide the tabbar during this segue
-                hidesBottomBarWhenPushed = true
+                tabBarController?.tabBar.isHidden = true
 
                 // Restore the tabbar when it's popped in the future
-                DispatchQueue.main.async { self.hidesBottomBarWhenPushed = false }
                 
                 self.setupNavigationBar()
                 

@@ -9,7 +9,6 @@ class PracticeCVCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.layer.cornerRadius = Radiuses.large
-//        titleLabel.
         titleLabel.font = UIFont(name: Fonts.bold, size: 18)
     }
     

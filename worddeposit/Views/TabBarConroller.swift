@@ -27,8 +27,8 @@ class TabBarConroller: UITabBarController {
         
         // Appearence
         let tabBarItemApperance = UITabBarItem.appearance()
-        tabBarItemApperance.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: Fonts.bold, size: 16)!], for: .normal)
-        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: Fonts.bold, size: 16)!], for: .selected)
+        tabBarItemApperance.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: Fonts.bold, size: 14)!], for: .normal)
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: Fonts.bold, size: 14)!], for: .selected)
         
         
         layerGradient.colors = [
