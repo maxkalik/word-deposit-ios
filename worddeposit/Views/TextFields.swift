@@ -24,7 +24,7 @@ class LoginTextField: UITextField, UITextFieldDelegate {
         // Prepare for uiview
         translatesAutoresizingMaskIntoConstraints = false
         bottomBorder = UIView.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        bottomBorder.backgroundColor = Colors.grey
+        bottomBorder.backgroundColor = Colors.dark.withAlphaComponent(0.4)
         bottomBorder.translatesAutoresizingMaskIntoConstraints = false
         addSubview(bottomBorder)
         
@@ -42,20 +42,18 @@ class LoginTextField: UITextField, UITextFieldDelegate {
         textColor = Colors.dark
         
         // Placeholder
-        attributedPlaceholder = NSAttributedString(string: self.placeholder != nil ? self.placeholder! : "", attributes: [NSAttributedString.Key.foregroundColor: Colors.grey])
+        attributedPlaceholder = NSAttributedString(string: self.placeholder != nil ? self.placeholder! : "", attributes: [NSAttributedString.Key.foregroundColor: Colors.dark.withAlphaComponent(0.4)])
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         bottomBorder.backgroundColor = Colors.dark
-        print("begin editing")
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         guard let text = self.text else { return }
         if text.isEmpty {
-            bottomBorder.backgroundColor = Colors.grey
+            bottomBorder.backgroundColor = Colors.dark.withAlphaComponent(0.4)
         }
-        print("did end editing")
     }
     
 }

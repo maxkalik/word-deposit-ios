@@ -25,10 +25,13 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         registerViews()
         setupUI()
 
+        self.allowInteractingWithUI(false)
+        
         let userService = UserService.shared
         userService.fetchCurrentUser { error, user in
             if let error = error {
                 self.simpleAlert(title: "Error", msg: error.localizedDescription)
+                showLoginVC(view: self.view)
                 return
             }
             guard let _ = user else {
@@ -45,6 +48,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                 guard let vocabularies = vocabularies else { return }
                 if vocabularies.isEmpty {
                     self.presentVocabulariesVC()
+                    self.allowInteractingWithUI(true)
                     self.progressHUD.hide()
                 } else {
                     userService.getCurrentVocabulary()
@@ -56,6 +60,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                         }
                         guard let words = words else { return }
                         self.progressHUD.hide()
+                        self.allowInteractingWithUI(true)
                         self.setupContent(words: words)
                     }
                 }
@@ -86,6 +91,11 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     
     // MARK: - Setup Views
     
+    private func allowInteractingWithUI(_ flag: Bool) {
+        self.navigationController?.navigationBar.isUserInteractionEnabled = true
+        self.tabBarController?.tabBar.isUserInteractionEnabled = true
+    }
+    
     private func setupContent(words: [Word]) {
         self.words.removeAll()
         self.words = words
@@ -108,6 +118,9 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     }
     
     private func setupUI() {
+        
+        // background
+        collectionView.backgroundView?.backgroundColor = Colors.silver
         
         // setup loading view
         self.view.addSubview(progressHUD)
@@ -141,7 +154,6 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         }
         collectionView!.isPrefetchingEnabled = false
         // view.backgroundColor = UIColor.systemBackground
-        view.backgroundColor = Colors.silverLight
     }
     
     private func presentVocabulariesVC() {

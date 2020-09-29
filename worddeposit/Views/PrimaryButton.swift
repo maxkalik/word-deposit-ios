@@ -14,7 +14,7 @@ class PrimaryButton: UIButton {
             if self.isEnabled {
                 layer.backgroundColor = Colors.dark.cgColor
             } else {
-                layer.backgroundColor = Colors.grey.cgColor
+                layer.backgroundColor = Colors.dark.withAlphaComponent(0.4).cgColor
             }
         }
     }
