@@ -79,3 +79,7 @@ struct Limits {
     static let wordTranslation = 60
     static let wordDescription = 80
 }
+
+struct Radiuses {
+    static let large: CGFloat = 10
+}
