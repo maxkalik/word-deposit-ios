@@ -25,8 +25,9 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         registerViews()
         setupUI()
 
-        self.allowInteractingWithUI(false)
+        navigationController?.setFont()
         
+        self.allowInteractingWithUI(false)
         let userService = UserService.shared
         userService.fetchCurrentUser { error, user in
             if let error = error {
