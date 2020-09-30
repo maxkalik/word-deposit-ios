@@ -1059,8 +1059,8 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Q6o-nl-XP1" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Practice" image="icon_practice" id="Kck-HL-rmo"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="oty-tH-WAA">
-                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="oty-tH-WAA">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

@@ -31,7 +31,6 @@ class VocabularyTVC: UITableViewController {
         
         // Setup message
         view.addSubview(messageView)
-
         
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(Keys.vocabulariesSwitchNotificationKey), object: nil)
@@ -118,7 +117,7 @@ class VocabularyTVC: UITableViewController {
         searchController.definesPresentationContext = true
         searchController.searchBar.delegate = self // Monitor when the search button is tapped
         
-        navigationController?.navigationBar.prefersLargeTitles = true
+//        navigationController?.navigationBar.prefersLargeTitles = true
         
         // Place the search bar in the nav bar
         navigationItem.searchController = searchController

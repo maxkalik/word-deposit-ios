@@ -24,8 +24,6 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         trainers = PracticeTrainers().data
         registerViews()
         setupUI()
-
-        navigationController?.setFont()
         
         self.allowInteractingWithUI(false)
         let userService = UserService.shared
@@ -222,6 +220,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Segues.PracticeRead {
             self.practiceReadVC = segue.destination as? PracticeReadVC
+
             if let sender = (sender as? PracticeTrainer) {
                 
                 tabBarController?.tabBar.isHidden = true
@@ -231,6 +230,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                 self.setupNavigationBar()
                 
                 practiceReadVC?.delegate = self
+
                 // worddesk
                 updatePracticeVC()
                 

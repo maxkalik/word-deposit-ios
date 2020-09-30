@@ -55,26 +55,17 @@ class PracticeReadVC: UIViewController {
         super.viewDidLoad()
         setupCollectionView()
         setupTrainedWord()
+        
         let layout = UICollectionViewCenterLayout()
         layout.estimatedItemSize = CGSize(width: layout.itemSize.width, height: 40)
+        practiceLabel.font = UIFont(name: Fonts.bold, size: 28)
+        
         collectionView.collectionViewLayout = layout
-        
-        // back button preparing for action
-//        self.navigationItem.hidesBackButton = true
-//        let newBackButton = UIBarButtonItem(title: "🏁", style: .plain, target: self, action: #selector(backAction))
-//        self.navigationItem.leftBarButtonItem = newBackButton
-        
-        setNavigationBar()
+        setNavigationBarLeft()
         setNavgationBarRight()
     }
-    
-//    private func setupNavigationBarView(image: UIImage) -> UIView {
-//        let view = UIView(frame: CGRect(x: 0, y: 0, width: 42, height: 42))
-//        let imageView = UIImageView(frame: CGRect(x: 0, y: 10, width: 24, height: 24))
-//        view.addSubview(imageView)
-//    }
-    
-    private func setNavigationBar() {
+
+    private func setNavigationBarLeft() {
         self.navigationItem.setHidesBackButton(true, animated: false)
 
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 42, height: 42))
@@ -128,7 +119,7 @@ class PracticeReadVC: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.navigationController?.navigationBar.tintColor = UIColor.systemBlue
+        self.navigationController?.navigationBar.tintColor = Colors.dark
     }
     
     // MARK: - Methods
