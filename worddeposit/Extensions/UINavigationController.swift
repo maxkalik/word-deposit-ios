@@ -5,7 +5,7 @@ extension UINavigationController {
     open override func viewDidLoad() {
         super.viewDidLoad()
         setFont()
-        setUpNavBar()
+        setUpNavBar(isClear: false)
     }
     
     func setFont() {
@@ -14,12 +14,17 @@ extension UINavigationController {
         navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: Fonts.bold, size: 14)!, NSAttributedString.Key.kern: -0.5]
     }
     
-    func setUpNavBar() {
+    func setUpNavBar(isClear: Bool) {
         let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.configureWithOpaqueBackground()
         navBarAppearance.shadowColor = .clear
         navBarAppearance.shadowImage = UIImage()
-        navBarAppearance.backgroundColor = Colors.silver
+        navBarAppearance.backgroundColor = isClear ? UIColor.clear : Colors.silver
         navigationBar.standardAppearance = navBarAppearance
         navigationBar.scrollEdgeAppearance = navBarAppearance
+    }
+    
+    func setStatusBar() {
+        // chnage here
     }
 }

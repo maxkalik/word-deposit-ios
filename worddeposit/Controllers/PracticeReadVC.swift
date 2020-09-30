@@ -38,7 +38,7 @@ class PracticeReadVC: UIViewController {
     
     // MARK: - IBOutlets
     
-    @IBOutlet weak var wordImage: UIImageView!
+    @IBOutlet weak var wordImage: RoundedImageView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var practiceLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView! {
@@ -58,6 +58,7 @@ class PracticeReadVC: UIViewController {
         
         let layout = UICollectionViewCenterLayout()
         layout.estimatedItemSize = CGSize(width: layout.itemSize.width, height: 40)
+        
         practiceLabel.font = UIFont(name: Fonts.bold, size: 28)
         
         collectionView.collectionViewLayout = layout

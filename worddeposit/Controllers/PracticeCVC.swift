@@ -205,13 +205,6 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         return CGSize(width: screenSize.width - 40, height: 200)
     }
     
-    private func setupNavigationBar() {
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.view.backgroundColor = .clear
-    }
-    
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let sender = trainers[indexPath.row]
         self.performSegue(withIdentifier: Segues.PracticeRead, sender: sender)
@@ -227,7 +220,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
 
                 // Restore the tabbar when it's popped in the future
                 
-                self.setupNavigationBar()
+                self.navigationController?.setUpNavBar(isClear: true)
                 
                 practiceReadVC?.delegate = self
 
