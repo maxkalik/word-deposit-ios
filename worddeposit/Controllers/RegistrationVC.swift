@@ -84,9 +84,9 @@ class RegistrationVC: UIViewController {
             
             // Using centerY constrains and changing it allow to save the position of the stackview at the center
             // even if we accidently touch (and drag) uiViewController.
-            UIView.animate(withDuration: 0.3) {
-                self.stackViewCenterY.constant -= (self.keyboardHeight - self.stackView.frame.size.height / 2)
-                self.view.layoutIfNeeded()
+            UIView.animate(withDuration: 0.3) { [self] in
+                stackViewCenterY.constant -= (keyboardHeight - stackView.frame.size.height / 2)
+                view.layoutIfNeeded()
             }
         }
     }
@@ -99,11 +99,11 @@ class RegistrationVC: UIViewController {
         titleLabel.alpha = 1
         showSecondaryButtons()
         
-        self.stackView.frame.origin.y += (keyboardHeight - self.stackView.frame.height / 2)
+        stackView.frame.origin.y += (keyboardHeight - stackView.frame.height / 2)
         
-        UIView.animate(withDuration: 0.3) {
-            self.stackViewCenterY.constant += (self.keyboardHeight - self.stackView.frame.size.height / 2)
-            self.view.layoutIfNeeded()
+        UIView.animate(withDuration: 0.3) { [self] in
+            stackViewCenterY.constant += (keyboardHeight - stackView.frame.size.height / 2)
+            view.layoutIfNeeded()
         }
     }
     

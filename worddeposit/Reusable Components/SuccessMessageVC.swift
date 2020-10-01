@@ -25,7 +25,7 @@ class SuccessMessageVC: UIViewController {
     }
         
     @IBAction func buttonTap(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
-        self.delegate?.onSuccessMessageButtonTap()
+        dismiss(animated: true, completion: nil)
+        delegate?.onSuccessMessageButtonTap()
     }
 }

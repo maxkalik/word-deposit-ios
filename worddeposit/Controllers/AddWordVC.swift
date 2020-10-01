@@ -147,9 +147,9 @@ class AddWordVC: UIViewController {
     
     private func successComplition(word: Word?) {
         guard let word = word else { return }
-        self.updateUI()
-        self.simpleAlert(title: "Success", msg: "Word has been added")
-        self.delegate?.wordDidCreate(word)
+        updateUI()
+        simpleAlert(title: "Success", msg: "Word has been added")
+        delegate?.wordDidCreate(word)
     }
     
     private func setImageData() -> Data? {

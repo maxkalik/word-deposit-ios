@@ -70,9 +70,9 @@ class ForgotPasswordVC: UIViewController {
             
             // Using centerY constrains and changing it allow to save the position of the stackview at the center
             // even if we accidently touch (and drag) uiViewController.
-             UIView.animate(withDuration: 0.3) {
-                self.stackViewCenterY.constant -= (self.keyboardHeight - self.stackView.frame.size.height)
-                self.view.layoutIfNeeded()
+             UIView.animate(withDuration: 0.3) { [self] in
+                stackViewCenterY.constant -= (keyboardHeight - stackView.frame.size.height)
+                view.layoutIfNeeded()
              }
         }
     }
@@ -85,11 +85,11 @@ class ForgotPasswordVC: UIViewController {
         titleLabel.alpha = 1
         cancelButton.alpha = 1
         
-        self.stackView.frame.origin.y += (keyboardHeight - self.stackView.frame.height)
+        stackView.frame.origin.y += (keyboardHeight - stackView.frame.height)
         
-         UIView.animate(withDuration: 0.3) {
-            self.stackViewCenterY.constant += (self.keyboardHeight - self.stackView.frame.size.height)
-            self.view.layoutIfNeeded()
+         UIView.animate(withDuration: 0.3) { [self] in
+            stackViewCenterY.constant += (keyboardHeight - stackView.frame.size.height)
+            view.layoutIfNeeded()
          }
     }
     

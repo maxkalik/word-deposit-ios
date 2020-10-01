@@ -19,7 +19,7 @@ class LoginTextField: UITextField, UITextFieldDelegate {
         super.awakeFromNib()
         
         delegate = self
-        self.autocorrectionType = .no
+        autocorrectionType = .no
         
         // Prepare for uiview
         translatesAutoresizingMaskIntoConstraints = false

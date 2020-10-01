@@ -102,8 +102,8 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     // MARK: - Setup Views
     
     private func allowInteractingWithUI(_ flag: Bool) {
-        self.navigationController?.navigationBar.isUserInteractionEnabled = true
-        self.tabBarController?.tabBar.isUserInteractionEnabled = true
+        navigationController?.navigationBar.isUserInteractionEnabled = true
+        tabBarController?.tabBar.isUserInteractionEnabled = true
     }
     
     private func setupContent(words: [Word]) {
@@ -220,7 +220,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
 
                 // Restore the tabbar when it's popped in the future
                 
-                self.navigationController?.setUpNavBar(isClear: true)
+                navigationController?.setUpNavBar(isClear: true)
                 
                 practiceReadVC?.delegate = self
 
