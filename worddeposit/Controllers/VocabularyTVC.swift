@@ -101,6 +101,7 @@ class VocabularyTVC: UITableViewController {
         tableView.register(nib, forCellReuseIdentifier: XIBs.VocabularyTVCell)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: ReusableIdentifiers.MessageView)
         navigationItem.title = ""
+        tableView.backgroundColor = Colors.silver
     }
     
     func setupResultsTableController() {
@@ -187,6 +188,7 @@ extension VocabularyTVC {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: XIBs.VocabularyTVCell, for: indexPath) as? VocabularyTVCell {
+            cell.backgroundColor = .clear
             cell.configureCell(word: words[indexPath.row])
             return cell
         }

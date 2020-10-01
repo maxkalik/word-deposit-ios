@@ -477,7 +477,9 @@
                             <constraint firstAttribute="bottom" secondItem="u8a-OR-7Ws" secondAttribute="bottom" id="uDQ-r3-4n7"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Add Word" image="icon_plus" id="Mmj-xg-myp"/>
+                    <tabBarItem key="tabBarItem" title="Add Word" image="icon_plus" id="Mmj-xg-myp">
+                        <inset key="imageInsets" minX="0.0" minY="13" maxX="0.0" maxY="-13"/>
+                    </tabBarItem>
                     <connections>
                         <outlet property="clearAllButton" destination="bhh-6m-fMG" id="UqK-cM-eJE"/>
                         <outlet property="inputsView" destination="DkP-3p-CNm" id="uP8-Bm-DfH"/>
@@ -1020,7 +1022,9 @@
         <scene sceneID="B5u-h6-MZb">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="eSR-CY-Dzt" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Vocabulary" image="icon_vocabulary" id="yLS-d6-QEP"/>
+                    <tabBarItem key="tabBarItem" title="Vocabulary" image="icon_vocabulary" id="yLS-d6-QEP">
+                        <inset key="imageInsets" minX="0.0" minY="13" maxX="0.0" maxY="-13"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="JJ9-1V-Ut2">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -1062,7 +1066,9 @@
         <scene sceneID="WLh-AX-HSn">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Q6o-nl-XP1" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Practice" image="icon_practice" id="Kck-HL-rmo"/>
+                    <tabBarItem key="tabBarItem" title="Practice" image="icon_practice" id="Kck-HL-rmo">
+                        <inset key="imageInsets" minX="0.0" minY="13" maxX="0.0" maxY="-13"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="oty-tH-WAA">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>

@@ -9,6 +9,7 @@ class PracticeAnswerItem: UICollectionViewCell {
         didSet {
             deskItemLabel.text = word
             deskItemLabel.font = UIFont(name: Fonts.medium, size: 16)
+            deskItemLabel.textColor = Colors.dark
             deskItemLabel.highlightedTextColor = Colors.grey
         }
     }
@@ -40,10 +41,12 @@ class PracticeAnswerItem: UICollectionViewCell {
     }
     
     func correctAnswer() {
-        deskItemLabel.backgroundColor = UIColor.green
+        deskItemLabel.textColor = UIColor.white
+        deskItemLabel.backgroundColor = Colors.green
     }
     
     func wrondAnswer() {
+        deskItemLabel.textColor = UIColor.white
         deskItemLabel.backgroundColor = UIColor.red
     }
     
@@ -53,6 +56,7 @@ class PracticeAnswerItem: UICollectionViewCell {
     
     func withoutAnswer() {
         deskItemLabel.backgroundColor = Colors.silver
+        backgroundColor = UIColor.clear
         contentView.alpha = 0.5
     }
 }

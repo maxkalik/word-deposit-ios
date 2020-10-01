@@ -21,9 +21,9 @@ class TabBarConroller: UITabBarController {
         tabBar.tintColor = Colors.orange
         tabBar.unselectedItemTintColor = Colors.dark
      
-        tabBar.items!.first?.titlePositionAdjustment = UIOffset(horizontal: 10.0, vertical: -10);
-        tabBar.items?[1].titlePositionAdjustment = UIOffset(horizontal: 0, vertical: -10);
-        tabBar.items!.last?.titlePositionAdjustment = UIOffset(horizontal: -10.0, vertical: -10);
+        tabBar.items!.first?.titlePositionAdjustment = UIOffset(horizontal: 10.0, vertical: -5);
+        tabBar.items?[1].titlePositionAdjustment = UIOffset(horizontal: 0, vertical: -5);
+        tabBar.items!.last?.titlePositionAdjustment = UIOffset(horizontal: -10.0, vertical: -5);
         
         // Appearence
         let tabBarItemApperance = UITabBarItem.appearance()
@@ -36,7 +36,7 @@ class TabBarConroller: UITabBarController {
             Colors.silver.withAlphaComponent(0.7).cgColor,
             Colors.silver.withAlphaComponent(1).cgColor
         ]
-        layerGradient.locations = [0, 0.03, 0.1]
+        layerGradient.locations = [0, 0.025, 0.05]
         layerGradient.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
         tabBar.layer.insertSublayer(layerGradient, at: 0)
         
@@ -49,7 +49,7 @@ class TabBarConroller: UITabBarController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        let height = 70 + view.safeAreaInsets.bottom
+        let height = 90 + view.safeAreaInsets.bottom
         tabBar.frame.size.height = height
         tabBar.frame.origin.y = view.frame.height - height
         tabBar.invalidateIntrinsicContentSize()
