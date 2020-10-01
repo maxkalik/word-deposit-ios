@@ -81,6 +81,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         guard let tabBarController = tabBarController else { return }
         if tabBarController.tabBar.isHidden {
             tabBarController.tabBar.isHidden = false
+            navigationController?.setup(isClear: true)
         }
     }
     
@@ -220,7 +221,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
 
                 // Restore the tabbar when it's popped in the future
                 
-                navigationController?.setUpNavBar(isClear: true)
+                navigationController?.setup(isClear: true)
                 
                 practiceReadVC?.delegate = self
 

@@ -43,7 +43,7 @@ class LoginVC: UIViewController {
         titleLabel.textColor = Colors.dark
         
         // Setup Navigation Bar
-        navigationController?.setUpNavBar(isClear: true)
+        navigationController?.setup(isClear: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {

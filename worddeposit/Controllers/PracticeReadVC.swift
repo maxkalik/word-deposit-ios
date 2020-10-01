@@ -230,9 +230,9 @@ class PracticeReadVC: UIViewController {
     @objc func skip() {
         guard let index = wordsDesk.firstIndex(matching: trainedWord!) else { return }
         let indexPath = IndexPath(row: index, section: 0)
-        if let cell = collectionView.cellForItem(at: indexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) as? PracticeAnswerItem {
             DispatchQueue.main.async {
-                cell.backgroundColor = UIColor.green
+                cell.hintAnswer()
             }
         }
         result(trainedWord!, answer: false)
@@ -255,21 +255,23 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
     }
     
     private func setupPracticeCell(_ cell: PracticeAnswerItem, at index: Int) {
+        
+        // set the shadow properties
+        cell.layer.shadowColor = UIColor.black.cgColor
+        cell.layer.shadowOffset = CGSize(width: 0, height: 2.0)
+        cell.layer.shadowOpacity = 1
+        cell.layer.shadowRadius = 4.0
+        
         if selectedIndex == index {
             if wordsDesk[selectedIndex!].id == trainedWord!.id {
-                cell.backgroundColor = UIColor.green
+                cell.correctAnswer()
                 result(self.trainedWord!, answer: true)
             } else {
-                cell.backgroundColor = UIColor.red
+                cell.wrondAnswer()
                 result(self.trainedWord!, answer: false)
             }
-            
         } else {
-            if isSelected {
-                cell.backgroundColor = UIColor.white
-                cell.alpha = 0.5
-                cell.contentView.alpha = 0.5
-            }
+            if isSelected { cell.withoutAnswer() }
         }
     }
     
