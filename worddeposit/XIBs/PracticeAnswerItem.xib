@@ -18,8 +18,8 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0XS-4c-or2" customClass="PracticeDeskItemLabel" customModule="worddeposit" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="231" height="50"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <rect key="frame" x="0.0" y="0.0" width="231" height="48"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </label>
@@ -30,7 +30,7 @@
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="0XS-4c-or2" secondAttribute="trailing" id="5Mr-yv-z4m"/>
                 <constraint firstItem="0XS-4c-or2" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="GwI-Pd-dJD"/>
-                <constraint firstAttribute="bottom" secondItem="0XS-4c-or2" secondAttribute="bottom" id="sG4-XJ-aEo"/>
+                <constraint firstAttribute="bottom" secondItem="0XS-4c-or2" secondAttribute="bottom" constant="2" id="sG4-XJ-aEo"/>
                 <constraint firstItem="0XS-4c-or2" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="yKB-xr-o08"/>
             </constraints>
             <size key="customSize" width="231" height="50"/>

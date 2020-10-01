@@ -256,12 +256,6 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
     
     private func setupPracticeCell(_ cell: PracticeAnswerItem, at index: Int) {
         
-        // set the shadow properties
-        cell.layer.shadowColor = UIColor.black.cgColor
-        cell.layer.shadowOffset = CGSize(width: 0, height: 2.0)
-        cell.layer.shadowOpacity = 1
-        cell.layer.shadowRadius = 4.0
-        
         if selectedIndex == index {
             if wordsDesk[selectedIndex!].id == trainedWord!.id {
                 cell.correctAnswer()

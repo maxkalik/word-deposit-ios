@@ -8,7 +8,7 @@ class PracticeAnswerItem: UICollectionViewCell {
     var word: String! {
         didSet {
             deskItemLabel.text = word
-            deskItemLabel.font = UIFont(name: Fonts.bold, size: 16)
+            deskItemLabel.font = UIFont(name: Fonts.medium, size: 16)
             deskItemLabel.highlightedTextColor = Colors.grey
         }
     }
@@ -24,23 +24,15 @@ class PracticeAnswerItem: UICollectionViewCell {
     }
     
     func setupCell() {
-        alpha = 1
         contentView.alpha = 1
-        backgroundColor = Colors.silver
-        layer.cornerRadius = Radiuses.large
         clipsToBounds = true
-//        containerView.backgroundColor = Colors.dark
-//
-//        addSubview(containerView)
-//
-//        // add constraints
-//        containerView.translatesAutoresizingMaskIntoConstraints = false
-//
-//        // pin the containerView to the edges to the view
-//        containerView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-//        containerView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-//        containerView.heightAnchor.constraint(equalToConstant: 2).isActive = true
-//        containerView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+
+        deskItemLabel.layer.cornerRadius = Radiuses.large
+        deskItemLabel.layer.masksToBounds = true
+        deskItemLabel.backgroundColor = Colors.silver
+
+        layer.cornerRadius = Radiuses.large
+        backgroundColor = Colors.dark.withAlphaComponent(0.4)
     }
     
     func configureCell(word: String) {
@@ -48,20 +40,19 @@ class PracticeAnswerItem: UICollectionViewCell {
     }
     
     func correctAnswer() {
-        backgroundColor = UIColor.green
+        deskItemLabel.backgroundColor = UIColor.green
     }
     
     func wrondAnswer() {
-        backgroundColor = UIColor.red
+        deskItemLabel.backgroundColor = UIColor.red
     }
     
     func hintAnswer() {
-        backgroundColor = Colors.yellow
+        deskItemLabel.backgroundColor = Colors.yellow
     }
     
     func withoutAnswer() {
-        backgroundColor = Colors.silver
-        alpha = 0.5
+        deskItemLabel.backgroundColor = Colors.silver
         contentView.alpha = 0.5
     }
 }
