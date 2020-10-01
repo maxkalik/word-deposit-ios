@@ -43,7 +43,7 @@ class LoginVC: UIViewController {
         titleLabel.textColor = Colors.dark
         
         // Setup Navigation Bar
-        setupNavigationBar()
+        navigationController?.setUpNavBar(isClear: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -109,13 +109,6 @@ class LoginVC: UIViewController {
             stackViewCenterY.constant += (keyboardHeight - stackView.frame.size.height / 2)
             view.layoutIfNeeded()
          }
-    }
-    
-    private func setupNavigationBar() {
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.view.backgroundColor = .clear
     }
     
     // MARK: - Methods
