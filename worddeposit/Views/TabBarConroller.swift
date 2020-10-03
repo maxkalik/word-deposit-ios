@@ -54,15 +54,4 @@ class TabBarConroller: UITabBarController {
         tabBar.frame.origin.y = view.frame.height - height
         tabBar.invalidateIntrinsicContentSize()
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

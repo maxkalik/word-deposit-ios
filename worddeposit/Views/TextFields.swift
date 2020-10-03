@@ -11,6 +11,43 @@ class CellTextField: UITextField {
     }
 }
 
+class PrimaryTextField: UITextField, UITextFieldDelegate {
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        delegate = self
+        autocorrectionType = .no
+        
+        layer.cornerRadius = Radiuses.large
+        
+        // Remove Default Border
+        borderStyle = .none
+        
+        // Font
+        font = UIFont(name: Fonts.medium, size: 22.0)
+        textColor = Colors.dark
+        
+        // Placeholder
+        attributedPlaceholder = NSAttributedString(string: self.placeholder != nil ? self.placeholder! : "", attributes: [NSAttributedString.Key.foregroundColor: Colors.dark.withAlphaComponent(0.4), NSAttributedString.Key.kern: -0.4])
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        UIView.animate(withDuration: 0.3) {
+            self.backgroundColor = Colors.dark.withAlphaComponent(0.1)
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        guard let text = self.text else { return }
+        if text.isEmpty {
+            UIView.animate(withDuration: 0.3) {
+                self.backgroundColor = .clear
+            }
+        }
+    }
+}
+
 class LoginTextField: UITextField, UITextFieldDelegate {
     
     var bottomBorder = UIView()
@@ -55,5 +92,5 @@ class LoginTextField: UITextField, UITextFieldDelegate {
             bottomBorder.backgroundColor = Colors.dark.withAlphaComponent(0.4)
         }
     }
-    
 }
+

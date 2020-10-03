@@ -58,14 +58,16 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = Colors.silver
+        
         // Primary setting up UI
         getLanguages()
         setupUI()
         disableAllButtons()
         
         if vocabulary != nil {
-            titleTextField.borderStyle = .none
-            languageTextField.borderStyle = .none
+//            titleTextField.borderStyle = .none
+//            languageTextField.borderStyle = .none
             buttonsStackView.alpha = 0
         } else {
             // Vocabularies limit
@@ -207,16 +209,16 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         hideKeyboardWhenTappedAround()
         
         // Typing Limits
-        titleTextField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
-        languageTextField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
-        titleTextField.delegate = self
-        languageTextField.delegate = self
+//        titleTextField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
+//        languageTextField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
+//        titleTextField.delegate = self
+//        languageTextField.delegate = self
         
         // spinner
         view.addSubview(progressHUD)
         progressHUD.hide()
-        titleTextField?.autocorrectionType = .no
-        languageTextField?.autocorrectionType = .no
+//        titleTextField?.autocorrectionType = .no
+//        languageTextField?.autocorrectionType = .no
         
         setupContent()
     }

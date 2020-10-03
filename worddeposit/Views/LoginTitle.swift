@@ -1,5 +1,4 @@
 import UIKit
-import Foundation
 
 class LoginTitle: UILabel {
     override func awakeFromNib() {
