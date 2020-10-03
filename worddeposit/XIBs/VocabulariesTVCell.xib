@@ -18,20 +18,20 @@
                 <rect key="frame" x="0.0" y="0.0" width="538" height="127"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pbn-JH-aVJ">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pbn-JH-aVJ" customClass="ShadowView" customModule="worddeposit" customModuleProvider="target">
                         <rect key="frame" x="20" y="10" width="498" height="107"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="DHp-d8-H9x">
-                                <rect key="frame" x="20" y="59" width="458" height="28"/>
+                                <rect key="frame" x="20" y="55" width="458" height="32"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Language" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qgF-H7-8Ne">
-                                        <rect key="frame" x="0.0" y="0.0" width="364" height="28"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="364" height="32"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yyE-G3-p92">
-                                        <rect key="frame" x="373" y="0.0" width="85" height="28"/>
+                                        <rect key="frame" x="373" y="0.0" width="85" height="32"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" systemColor="systemGrayColor"/>
                                         <nil key="highlightedColor"/>
@@ -39,7 +39,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="x2h-5k-6Ag">
-                                <rect key="frame" x="20" y="20" width="458" height="31"/>
+                                <rect key="frame" x="20" y="16" width="458" height="31"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="22" translatesAutoresizingMaskIntoConstraints="NO" id="hVN-64-Wyy">
                                         <rect key="frame" x="0.0" y="0.0" width="399" height="31"/>
@@ -56,7 +56,7 @@
                                 </constraints>
                             </stackView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="ajA-dt-T0k">
-                                <rect key="frame" x="458" y="63" width="20" height="20"/>
+                                <rect key="frame" x="458" y="61" width="20" height="20"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -68,7 +68,7 @@
                             <constraint firstAttribute="trailing" secondItem="DHp-d8-H9x" secondAttribute="trailing" constant="20" id="bfa-RT-t3m"/>
                             <constraint firstItem="x2h-5k-6Ag" firstAttribute="leading" secondItem="pbn-JH-aVJ" secondAttribute="leading" constant="20" id="iGs-uC-Wue"/>
                             <constraint firstAttribute="trailing" secondItem="x2h-5k-6Ag" secondAttribute="trailing" constant="20" id="ln9-3v-DgT"/>
-                            <constraint firstItem="x2h-5k-6Ag" firstAttribute="top" secondItem="pbn-JH-aVJ" secondAttribute="top" constant="20" id="osf-te-ci2"/>
+                            <constraint firstItem="x2h-5k-6Ag" firstAttribute="top" secondItem="pbn-JH-aVJ" secondAttribute="top" constant="16" id="osf-te-ci2"/>
                             <constraint firstItem="DHp-d8-H9x" firstAttribute="leading" secondItem="pbn-JH-aVJ" secondAttribute="leading" constant="20" id="t4f-wl-X7n"/>
                         </constraints>
                     </view>

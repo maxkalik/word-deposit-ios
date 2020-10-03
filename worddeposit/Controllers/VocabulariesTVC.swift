@@ -31,6 +31,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(Keys.vocabulariesSwitchNotificationKey), object: nil)
         
@@ -135,6 +136,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         let nib = UINib(nibName: XIBs.VocabulariesTVCell, bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: XIBs.VocabulariesTVCell)
         tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+        tableView.backgroundColor = Colors.silver
     }
     
     @objc func vocabularyDidSwitch() {
@@ -180,6 +182,9 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: XIBs.VocabulariesTVCell, for: indexPath) as? VocabulariesTVCell {
+            
+            cell.backgroundColor = .clear
+            
             let vocabulary = vocabularies[indexPath.row]
             cell.configureCell(vocabulary: vocabulary)
             cell.isSelectedVocabulary = false
@@ -203,6 +208,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
+            // TODO: - BUG - deleting out of the range of the array
             
             let vocabulary = vocabularies[indexPath.row]
             

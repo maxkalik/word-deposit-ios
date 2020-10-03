@@ -7,7 +7,7 @@ class VocabulariesTVCell: UITableViewCell {
     @IBOutlet weak var wordsAmountActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var wordsAmountLabel: UILabel!
     @IBOutlet weak var selectionSwitch: UISwitch!
-    @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var containerView: ShadowView!
     
     // MARK: - Istances
     
@@ -16,7 +16,10 @@ class VocabulariesTVCell: UITableViewCell {
             selectionSwitch.isOn = isSelectedVocabulary
             if isSelectedVocabulary {
                 containerView.layer.borderWidth = 2
-                containerView.layer.borderColor = CGColor(srgbRed: 0, green: 0, blue: 0, alpha: 1)
+                containerView.layer.borderColor = Colors.blue.cgColor
+                containerView.layer.backgroundColor = UIColor.white.cgColor
+                titleLabel.textColor = Colors.blue
+                selectionSwitch.onTintColor = Colors.blue
             }
         }
     }
@@ -42,22 +45,19 @@ class VocabulariesTVCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         selectionSwitch.isOn = false
+        titleLabel.textColor = Colors.dark
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        titleLabel.font = UIFont(name: Fonts.bold, size: 22)
+        titleLabel.addCharactersSpacing(spacing: -0.6, text: titleLabel.text!)
+        languageLabel.font = UIFont(name: Fonts.medium, size: 18)
+        languageLabel.addCharactersSpacing(spacing: -0.5, text: languageLabel.text!)
+        wordsAmountLabel.font = UIFont(name: Fonts.medium, size: 18)
     }
     
     // MARK: - Own Methods
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        if selected == true {
-            containerView.layer.backgroundColor = CGColor(srgbRed: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1)
-            
-        } else {
-            if isSelectedVocabulary == true {
-                containerView.layer.backgroundColor = .none
-            } else {
-                containerView.layer.backgroundColor = CGColor(srgbRed: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 0.5)
-            }
-        }
-    }
     
     private func setupWordsAmount() {
         UserService.shared.getAmountOfWordsFrom(vocabulary: vocabulary) { count in
@@ -73,9 +73,6 @@ class VocabulariesTVCell: UITableViewCell {
         
         containerView.layer.cornerRadius = 8
         containerView.layer.borderWidth = 0
-        containerView.layer.backgroundColor = CGColor(srgbRed: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 0.5)
-        if isSelectedVocabulary == true {
-            containerView.layer.backgroundColor = .none
-        }
+        containerView.layer.backgroundColor = UIColor.white.cgColor
     }
 }

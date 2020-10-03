@@ -50,9 +50,6 @@ class VocabularyTVC: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        print("vocabulary will appear")
-        
         setupMessage()
         messageView.hide()
     }

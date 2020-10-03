@@ -76,6 +76,8 @@
 		15D5190A251C070100590073 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D51909251C070100590073 /* String.swift */; };
 		15D5190E251C076900590073 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D5190D251C076900590073 /* Validator.swift */; };
 		15D51954251E7F2500590073 /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D51953251E7F2500590073 /* PrimaryButton.swift */; };
+		15E7741C2529205400EC57D0 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E7741B2529205400EC57D0 /* UILabel.swift */; };
+		15E7741F25292F0100EC57D0 /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E7741E25292F0100EC57D0 /* ShadowView.swift */; };
 		EB804A1F3EEA1D715B4655FE /* Pods_worddeposit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F57192022ED3D6D6824465E3 /* Pods_worddeposit.framework */; };
 /* End PBXBuildFile section */
 
@@ -152,6 +154,8 @@
 		15D51909251C070100590073 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		15D5190D251C076900590073 /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
 		15D51953251E7F2500590073 /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
+		15E7741B2529205400EC57D0 /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
+		15E7741E25292F0100EC57D0 /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
 		A070823C5C9FE2E6B5A6D7F8 /* Pods-worddeposit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-worddeposit.release.xcconfig"; path = "Target Support Files/Pods-worddeposit/Pods-worddeposit.release.xcconfig"; sourceTree = "<group>"; };
 		C0BEB3DBDC84F83AE219EA46 /* Pods-worddeposit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-worddeposit.debug.xcconfig"; path = "Target Support Files/Pods-worddeposit/Pods-worddeposit.debug.xcconfig"; sourceTree = "<group>"; };
 		F57192022ED3D6D6824465E3 /* Pods_worddeposit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_worddeposit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -186,6 +190,7 @@
 				15D51909251C070100590073 /* String.swift */,
 				116BC94D2491836B00968DA6 /* UIViewController.swift */,
 				155F39E72523D69400EC63B9 /* UINavigationController.swift */,
+				15E7741B2529205400EC57D0 /* UILabel.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -262,6 +267,7 @@
 				151F2F0B251E97D5002D292B /* LoginTitle.swift */,
 				151F2F28251EB193002D292B /* DefaultButton.swift */,
 				15122F5725213FF900DB0E8F /* TabBarConroller.swift */,
+				15E7741E25292F0100EC57D0 /* ShadowView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -502,6 +508,7 @@
 				11B20D6A24C8DF2E00C1CB4E /* PracticeAnswerItem.swift in Sources */,
 				11284239248E83E000A014E9 /* RegistrationVC.swift in Sources */,
 				11284241248E846000A014E9 /* Word.swift in Sources */,
+				15E7741C2529205400EC57D0 /* UILabel.swift in Sources */,
 				1192355024BFB66C00E76403 /* TextFields.swift in Sources */,
 				1128423B248E83ED00A014E9 /* ForgotPasswordVC.swift in Sources */,
 				15CEBC6124D71A0300D48C0E /* ProgressHUD.swift in Sources */,
@@ -531,6 +538,7 @@
 				1171E70624981CDD00805D35 /* VocabularyCardCVCell.swift in Sources */,
 				11F32A5924AF49DB0097BF39 /* VocabularyTVC+Updating.swift in Sources */,
 				11ECE4B424EB0FA100B7884B /* VocabulariesTVC.swift in Sources */,
+				15E7741F25292F0100EC57D0 /* ShadowView.swift in Sources */,
 				1128422F248E839D00A014E9 /* AddWordVC.swift in Sources */,
 				1181BBF32498060F00DB682E /* VocabularyCardsVC.swift in Sources */,
 				11F0326D24C8267E00BD6350 /* PracticeCVCell.swift in Sources */,
