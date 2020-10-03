@@ -16,10 +16,10 @@ class VocabulariesTVCell: UITableViewCell {
             selectionSwitch.isOn = isSelectedVocabulary
             if isSelectedVocabulary {
                 containerView.layer.borderWidth = 2
-                containerView.layer.borderColor = Colors.blue.cgColor
+                containerView.layer.borderColor = Colors.orange.cgColor
                 containerView.layer.backgroundColor = UIColor.white.cgColor
-                titleLabel.textColor = Colors.blue
-                selectionSwitch.onTintColor = Colors.blue
+                titleLabel.textColor = Colors.orange
+                selectionSwitch.onTintColor = Colors.orange
             }
         }
     }

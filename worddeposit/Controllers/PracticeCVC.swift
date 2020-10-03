@@ -132,6 +132,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         
         // background
         collectionView.backgroundView?.backgroundColor = Colors.silver
+        collectionView.backgroundColor = Colors.silver
         
         // setup loading view
         self.view.addSubview(progressHUD)

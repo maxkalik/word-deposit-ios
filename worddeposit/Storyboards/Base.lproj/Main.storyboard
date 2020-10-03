@@ -55,7 +55,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="Ur2-Yl-bgU"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="DMSans-Medium" family="DM Sans" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name="DMSans-Medium" family="DM Sans" pointSize="16"/>
                                         <state key="normal" title="Sign In">
                                             <color key="titleColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         </state>

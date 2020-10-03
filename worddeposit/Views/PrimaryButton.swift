@@ -4,8 +4,9 @@ import Foundation
 class PrimaryButton: UIButton {
     override func awakeFromNib() {
         super.awakeFromNib()
-        layer.cornerRadius = 12
+        layer.cornerRadius = Radiuses.large
         setTitleColor(Colors.yellow, for: .normal)
+        titleLabel?.font = UIFont(name: Fonts.medium, size: 16)
         layer.backgroundColor = Colors.dark.cgColor
     }
     

@@ -30,11 +30,15 @@ class MessageView: UIView {
         
         primaryButton.contentEdgeInsets.left = 20
         primaryButton.contentEdgeInsets.right = 20
+        primaryButton.setTitleColor(UIColor.white, for: .normal)
         
         secondaryButton.isHidden = true
         
         self.addSubview(view)
         contentView = view
+        contentView.layer.backgroundColor = Colors.silver.cgColor
+        
+        label.font = UIFont(name: Fonts.medium, size: 22)
     }
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
@@ -43,6 +47,7 @@ class MessageView: UIView {
     
     func setTitles(messageTxt: String, buttonTitle: String, secondaryButtonTitle: String? = nil) {
         label.text  = messageTxt
+        label.addCharactersSpacing(spacing: -0.8, text: messageTxt)
         primaryButton.setTitle(buttonTitle, for: .normal)
         // primaryButton.addTarget(self, action: #selector(secondaryButtonTapped), for: .touchUpInside)
         
@@ -58,7 +63,7 @@ class MessageView: UIView {
     
     func setupOnSuperView() {
         if let superview = self.superview {
-            self.frame = superview.bounds
+            frame = superview.bounds
         }
     }
     

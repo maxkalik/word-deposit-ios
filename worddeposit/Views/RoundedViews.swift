@@ -3,7 +3,7 @@ import UIKit
 class RoundedView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
-        layer.cornerRadius = 8
+        layer.cornerRadius = Radiuses.large
         layer.isOpaque = false
     }
 }
