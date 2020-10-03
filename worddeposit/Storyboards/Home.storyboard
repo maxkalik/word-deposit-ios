@@ -64,7 +64,7 @@
         <!--Practice ReadVC-->
         <scene sceneID="0Sg-WE-eYW">
             <objects>
-                <viewController storyboardIdentifier="PracticeReadVC" id="XGr-ab-fSU" customClass="PracticeReadVC" customModule="worddeposit" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PracticeReadVC" interfaceStyle="dark" id="XGr-ab-fSU" customClass="PracticeReadVC" customModule="worddeposit" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7Zb-h6-gYF">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

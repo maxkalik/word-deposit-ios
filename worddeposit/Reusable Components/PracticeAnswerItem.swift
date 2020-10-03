@@ -33,7 +33,7 @@ class PracticeAnswerItem: UICollectionViewCell {
         deskItemLabel.backgroundColor = Colors.silver
 
         layer.cornerRadius = Radiuses.large
-        backgroundColor = Colors.dark.withAlphaComponent(0.4)
+        backgroundColor = Colors.dark.withAlphaComponent(0.3)
     }
     
     func configureCell(word: String) {

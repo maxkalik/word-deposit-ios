@@ -9,7 +9,7 @@
 import UIKit
 
 class TabBarConroller: UITabBarController {
-
+    
     let layerGradient = CAGradientLayer()
     
     override func viewDidLoad() {

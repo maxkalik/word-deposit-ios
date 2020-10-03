@@ -52,6 +52,7 @@ class PracticeReadVC: UIViewController {
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         setupCollectionView()
         setupTrainedWord()
@@ -64,20 +65,28 @@ class PracticeReadVC: UIViewController {
         collectionView.collectionViewLayout = layout
         setNavigationBarLeft()
         setNavgationBarRight()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        spinner.stopAnimating()
+        setupTrainedWord()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.navigationBar.tintColor = Colors.dark
     }
 
     private func setNavigationBarLeft() {
         self.navigationItem.setHidesBackButton(true, animated: false)
-
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 42, height: 42))
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 10, width: 24, height: 24))
-
-        if let imgBackArrow = UIImage(named: "icon_back") {
-            let tintedImage = imgBackArrow.withRenderingMode(.alwaysTemplate)
-            imageView.image = tintedImage
-            imageView.tintColor = Colors.silver
+        let imageView = UIImageView(frame: CGRect(x: 14, y: 10, width: 24, height: 24))
+        if let imgBackArrow = UIImage(named: "finish") {
+            let plainImage = imgBackArrow.withRenderingMode(.alwaysOriginal)
+            imageView.image = plainImage
         }
-
         view.addSubview(imageView)
 
         let backTap = UITapGestureRecognizer(target: self, action: #selector(backToMain))
@@ -110,17 +119,6 @@ class PracticeReadVC: UIViewController {
         } else {
             prepareForQuit()
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        spinner.stopAnimating()
-        setupTrainedWord()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.navigationBar.tintColor = Colors.dark
     }
     
     // MARK: - Methods
