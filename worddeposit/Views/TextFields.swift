@@ -12,12 +12,15 @@ class CellTextField: UITextField {
 }
 
 class PrimaryTextField: UITextField, UITextFieldDelegate {
+    
+    var limitOfString: Int?
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+            
         delegate = self
         autocorrectionType = .no
+        smartInsertDeleteType = UITextSmartInsertDeleteType.no
         
         layer.cornerRadius = Radiuses.large
         
@@ -36,6 +39,11 @@ class PrimaryTextField: UITextField, UITextFieldDelegate {
         UIView.animate(withDuration: 0.3) {
             self.backgroundColor = Colors.dark.withAlphaComponent(0.1)
         }
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let limit = limitOfString else { return true }
+        return TextFieldLimit.checkMaxLength(textField, range: range, string: string, limit: limit)
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {

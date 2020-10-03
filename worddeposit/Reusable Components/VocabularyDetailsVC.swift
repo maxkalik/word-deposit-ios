@@ -11,7 +11,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var stackViewCenterY: NSLayoutConstraint!
     @IBOutlet weak var stackView: UIStackView!
     
-    @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var titleTextField: PrimaryTextField!
     @IBOutlet weak var languageTextField: UITextField!
     
     @IBOutlet weak var languageButton: UIButton!
@@ -66,8 +66,6 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         disableAllButtons()
         
         if vocabulary != nil {
-//            titleTextField.borderStyle = .none
-//            languageTextField.borderStyle = .none
             buttonsStackView.alpha = 0
         } else {
             // Vocabularies limit
@@ -207,18 +205,10 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     
     private func setupUI() {
         hideKeyboardWhenTappedAround()
-        
-        // Typing Limits
-//        titleTextField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
-//        languageTextField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
-//        titleTextField.delegate = self
-//        languageTextField.delegate = self
-        
+//        titleTextField.limitOfString = Limits.vocabularyTitle 
         // spinner
         view.addSubview(progressHUD)
         progressHUD.hide()
-//        titleTextField?.autocorrectionType = .no
-//        languageTextField?.autocorrectionType = .no
         
         setupContent()
     }
@@ -402,11 +392,5 @@ extension VocabularyDetailsVC {
     private func disableOnlySaveButton() {
         saveButton.isEnabled = false
         cancelButton.isEnabled = true
-    }
-}
-
-extension VocabularyDetailsVC: UITextFieldDelegate {
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        TextFieldLimit.checkMaxLength(textField, range: range, string: string, limit: Limits.vocabularyTitle)
     }
 }
