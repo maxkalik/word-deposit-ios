@@ -11,6 +11,21 @@ class CellTextField: UITextField {
     }
 }
 
+class LimitedTextField: UITextField, UITextFieldDelegate {
+    var limitOfString: Int?
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        delegate = self
+        autocorrectionType = .no
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let limit = limitOfString else { return true }
+        return TextFieldLimit.checkMaxLength(textField, range: range, string: string, limit: limit)
+    }
+}
+
 class PrimaryTextField: UITextField, UITextFieldDelegate {
     
     var limitOfString: Int?
@@ -28,7 +43,13 @@ class PrimaryTextField: UITextField, UITextFieldDelegate {
         borderStyle = .none
         
         // Placeholder
-        attributedPlaceholder = NSAttributedString(string: self.placeholder != nil ? self.placeholder! : "", attributes: [NSAttributedString.Key.foregroundColor: Colors.dark.withAlphaComponent(0.4), NSAttributedString.Key.kern: -0.4])
+        attributedPlaceholder = NSAttributedString(
+            string: self.placeholder != nil ? self.placeholder! : "",
+            attributes: [
+                NSAttributedString.Key.foregroundColor: Colors.dark.withAlphaComponent(0.4),
+                NSAttributedString.Key.kern: -0.4
+            ]
+        )
         
         // Font
         font = UIFont(name: Fonts.bold, size: 22.0)
@@ -37,6 +58,70 @@ class PrimaryTextField: UITextField, UITextFieldDelegate {
         defaultTextAttributes = [
             NSAttributedString.Key.foregroundColor: Colors.dark,
             NSAttributedString.Key.kern: -0.8,
+            NSAttributedString.Key.font: font!,
+            NSAttributedString.Key.paragraphStyle: paragraphStyle
+        ]
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        UIView.animate(withDuration: 0.3) {
+            self.backgroundColor = Colors.dark.withAlphaComponent(0.1)
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+        UIView.animate(withDuration: 0.3) {
+            self.backgroundColor = .clear
+        }
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let limit = limitOfString else { return true }
+        return TextFieldLimit.checkMaxLength(textField, range: range, string: string, limit: limit)
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        guard let text = self.text else { return }
+        if text.isEmpty {
+            UIView.animate(withDuration: 0.3) {
+                self.backgroundColor = .clear
+            }
+        }
+    }
+}
+
+class SecondaryTextField: UITextField, UITextFieldDelegate {
+    
+    var limitOfString: Int?
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+            
+        delegate = self
+        autocorrectionType = .no
+        smartInsertDeleteType = UITextSmartInsertDeleteType.no
+        
+        layer.cornerRadius = Radiuses.large
+        
+        // Remove Default Border
+        borderStyle = .none
+        
+        // Placeholder
+        attributedPlaceholder = NSAttributedString(
+            string: self.placeholder != nil ? self.placeholder! : "",
+            attributes: [
+                NSAttributedString.Key.foregroundColor: Colors.dark.withAlphaComponent(0.4),
+                NSAttributedString.Key.kern: -0.4
+            ]
+        )
+        
+        // Font
+        font = UIFont(name: Fonts.medium, size: 18.0)
+        let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = NSTextAlignment.center
+        defaultTextAttributes = [
+            NSAttributedString.Key.foregroundColor: Colors.dark,
+            NSAttributedString.Key.kern: -0.6,
             NSAttributedString.Key.font: font!,
             NSAttributedString.Key.paragraphStyle: paragraphStyle
         ]

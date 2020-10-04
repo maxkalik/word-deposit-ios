@@ -200,7 +200,7 @@
                                             <constraint firstAttribute="height" constant="50" id="4xy-ka-v9J"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hug-rP-xzC" customClass="ButtonSelector" customModule="worddeposit" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="70" width="374" height="32"/>
@@ -210,13 +210,13 @@
                                             <segue destination="p8a-RE-aLZ" kind="show" id="YiF-nd-0zQ"/>
                                         </connections>
                                     </button>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Other" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4fs-rZ-Sqq">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Other" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4fs-rZ-Sqq" customClass="SecondaryTextField" customModule="worddeposit" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="122" width="374" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="9P7-hp-Qfd"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                     </textField>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="2Mi-Ca-bAs">
                                         <rect key="frame" x="0.0" y="192" width="374" height="50"/>
@@ -379,10 +379,10 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DkP-3p-CNm">
                                                 <rect key="frame" x="0.0" y="414" width="414" height="320"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="GMM-oe-XGe">
-                                                        <rect key="frame" x="20" y="20" width="374" height="270"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="GMM-oe-XGe">
+                                                        <rect key="frame" x="20" y="20" width="374" height="260"/>
                                                         <subviews>
-                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Example" textAlignment="center" minimumFontSize="22" translatesAutoresizingMaskIntoConstraints="NO" id="IsX-s0-gXE">
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Example" textAlignment="center" minimumFontSize="22" translatesAutoresizingMaskIntoConstraints="NO" id="IsX-s0-gXE" customClass="PrimaryTextField" customModule="worddeposit" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="50" id="11o-kO-kIf"/>
@@ -390,47 +390,64 @@
                                                                 <fontDescription key="fontDescription" name="DMSans-Regular" family="DM Sans" pointSize="25"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                             </textField>
-                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Translation" textAlignment="center" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="VKL-sr-heo">
-                                                                <rect key="frame" x="0.0" y="60" width="374" height="50"/>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Translation" textAlignment="center" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="VKL-sr-heo" customClass="SecondaryTextField" customModule="worddeposit" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="50" width="374" height="50"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="50" id="wYH-fG-ATm"/>
                                                                 </constraints>
                                                                 <fontDescription key="fontDescription" name="DMSans-Regular" family="DM Sans" pointSize="20"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                             </textField>
-                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="[description]" textAlignment="center" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="b71-bp-t3y">
-                                                                <rect key="frame" x="0.0" y="120" width="374" height="50"/>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="[description]" textAlignment="center" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="b71-bp-t3y" customClass="SecondaryTextField" customModule="worddeposit" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="100" width="374" height="50"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="50" id="VZP-07-lY7"/>
                                                                 </constraints>
                                                                 <fontDescription key="fontDescription" name="DMSans-Regular" family="DM Sans" pointSize="16"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                             </textField>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EN0-4t-0qf" customClass="PrimaryButton" customModule="worddeposit" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="180" width="374" height="50"/>
-                                                                <color key="backgroundColor" systemColor="systemFillColor"/>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ppC-dJ-vvB">
+                                                                <rect key="frame" x="0.0" y="150" width="374" height="60"/>
+                                                                <subviews>
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EN0-4t-0qf" customClass="PrimaryButton" customModule="worddeposit" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="10" width="374" height="50"/>
+                                                                        <color key="backgroundColor" systemColor="systemFillColor"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="height" constant="50" id="yXk-it-0iX"/>
+                                                                        </constraints>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                                        <state key="normal" title="Add word">
+                                                                            <color key="titleColor" systemColor="systemBlueColor"/>
+                                                                        </state>
+                                                                        <connections>
+                                                                            <action selector="onAddWordBtnPress:" destination="8x7-ml-O9y" eventType="touchUpInside" id="jOe-SD-Yh1"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                </subviews>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="height" constant="50" id="yXk-it-0iX"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="EN0-4t-0qf" secondAttribute="bottom" id="Gfq-wl-ELq"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="EN0-4t-0qf" secondAttribute="trailing" id="Gin-M7-c2Y"/>
+                                                                    <constraint firstItem="EN0-4t-0qf" firstAttribute="top" secondItem="ppC-dJ-vvB" secondAttribute="top" constant="10" id="bAV-AX-ENb"/>
+                                                                    <constraint firstAttribute="height" constant="60" id="sf9-K7-RNt"/>
+                                                                    <constraint firstItem="EN0-4t-0qf" firstAttribute="leading" secondItem="ppC-dJ-vvB" secondAttribute="leading" id="tXe-ku-qmE"/>
                                                                 </constraints>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                                                <state key="normal" title="Add word">
-                                                                    <color key="titleColor" systemColor="systemBlueColor"/>
-                                                                </state>
-                                                                <connections>
-                                                                    <action selector="onAddWordBtnPress:" destination="8x7-ml-O9y" eventType="touchUpInside" id="jOe-SD-Yh1"/>
-                                                                </connections>
-                                                            </button>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bhh-6m-fMG">
-                                                                <rect key="frame" x="0.0" y="240" width="374" height="30"/>
+                                                            </view>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bhh-6m-fMG" customClass="DefaultButton" customModule="worddeposit" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="210" width="374" height="50"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="50" id="4tB-fU-BLm"/>
+                                                                </constraints>
                                                                 <state key="normal" title="Clear All"/>
                                                                 <connections>
                                                                     <action selector="onClearAllBtnPress:" destination="8x7-ml-O9y" eventType="touchUpInside" id="5bg-bz-J3L"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </stackView>
                                                 </subviews>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="320" id="71p-hr-Z0T"/>
                                                     <constraint firstItem="GMM-oe-XGe" firstAttribute="top" secondItem="DkP-3p-CNm" secondAttribute="top" constant="20" id="SNy-if-s0o"/>
@@ -444,13 +461,13 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="YLl-Up-aaC" secondAttribute="height" multiplier="1:1" id="gyl-iI-SpU"/>
                                                 </constraints>
-                                                <state key="normal" image="logo"/>
+                                                <state key="normal" image="picture"/>
                                                 <connections>
                                                     <action selector="wordImagePickerBtnTapped:" destination="8x7-ml-O9y" eventType="touchUpInside" id="xi0-8W-hHR"/>
                                                 </connections>
                                             </button>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="YLl-Up-aaC" firstAttribute="top" secondItem="CAr-Nn-7oU" secondAttribute="top" id="Ati-AZ-BTc"/>
                                             <constraint firstAttribute="bottom" secondItem="DkP-3p-CNm" secondAttribute="bottom" id="Cd2-D3-s1D"/>
@@ -1124,8 +1141,8 @@
         <image name="icon_profile" width="24" height="24"/>
         <image name="icon_vocabularies" width="24" height="24"/>
         <image name="icon_vocabulary" width="24" height="24"/>
-        <image name="logo" width="64" height="64"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
+        <image name="picture" width="86" height="86"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

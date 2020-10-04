@@ -18,6 +18,7 @@ class CheckmarkListTVC: UITableViewController {
         super.viewWillAppear(animated)
         guard let selected = self.selected else { return }
         tableView.scrollToRow(at: IndexPath(item: selected, section: 0), at: .middle, animated: false)
+        tableView.backgroundColor = Colors.silver
     }
 
     // MARK: - Table view data source
@@ -30,6 +31,9 @@ class CheckmarkListTVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ReusableIdentifiers.CheckedCell, for: indexPath)
+//        cell.backgroundColor = UIColor
+        cell.backgroundColor = UIColor.clear
+        cell.textLabel?.font = UIFont(name: Fonts.regular, size: 16)
         cell.textLabel?.text = data[indexPath.row]
         if indexPath.row == selected {
             cell.accessoryType = .checkmark

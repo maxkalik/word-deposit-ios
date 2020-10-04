@@ -27,17 +27,17 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="29" translatesAutoresizingMaskIntoConstraints="NO" id="dby-dI-Ln7">
                                         <rect key="frame" x="20" y="39.5" width="209" height="130.5"/>
                                         <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Example" textAlignment="center" minimumFontSize="22" translatesAutoresizingMaskIntoConstraints="NO" id="bYr-Ab-Q6M">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Example" textAlignment="center" minimumFontSize="22" translatesAutoresizingMaskIntoConstraints="NO" id="bYr-Ab-Q6M" customClass="PrimaryTextField" customModule="worddeposit" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="209" height="30.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Translation" textAlignment="center" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="N7c-oH-trs">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Translation" textAlignment="center" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="N7c-oH-trs" customClass="SecondaryTextField" customModule="worddeposit" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="59.5" width="209" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="[description]" textAlignment="center" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="0hr-gr-S4R">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="[description]" textAlignment="center" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="0hr-gr-S4R" customClass="SecondaryTextField" customModule="worddeposit" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="109.5" width="209" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits"/>
@@ -61,7 +61,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="qEf-66-3td" secondAttribute="height" multiplier="1:1" id="dKB-sV-oVk"/>
                                 </constraints>
-                                <state key="normal" image="logo"/>
+                                <state key="normal" image="picture"/>
                                 <connections>
                                     <action selector="wordPictureButtonTouched:" destination="gTV-IL-0wX" eventType="touchUpInside" id="2Uo-Ey-b62"/>
                                 </connections>
@@ -69,14 +69,14 @@
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="KK2-6x-PG2">
                                 <rect key="frame" x="20" y="458" width="209" height="30"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tGQ-iE-CeE">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tGQ-iE-CeE" customClass="SecondaryButton" customModule="worddeposit" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="104.5" height="30"/>
                                         <state key="normal" title="Cancel"/>
                                         <connections>
                                             <action selector="onCancelTouched:" destination="gTV-IL-0wX" eventType="touchUpInside" id="LLp-db-Exu"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kmJ-5p-Gjf">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kmJ-5p-Gjf" customClass="SecondaryButton" customModule="worddeposit" customModuleProvider="target">
                                         <rect key="frame" x="104.5" y="0.0" width="104.5" height="30"/>
                                         <state key="normal" title="Save"/>
                                         <connections>
@@ -152,8 +152,8 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="logo" width="64" height="64"/>
         <image name="multiply.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="picture" width="86" height="86"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -115,7 +115,14 @@ class VocabularyTVC: UITableViewController {
         searchController.definesPresentationContext = true
         searchController.searchBar.delegate = self // Monitor when the search button is tapped
         
-//        navigationController?.navigationBar.prefersLargeTitles = true
+        let attributes = [NSAttributedString.Key.font: UIFont(name: Fonts.medium, size: 16), NSAttributedString.Key.foregroundColor: UIColor.black]
+
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = attributes as [NSAttributedString.Key : Any]
+        
+        let searchIcon = UIImage(named: "icon_search")
+        
+        UISearchBar.appearance().setImage(searchIcon, for: .search, state: .normal)
+        
         
         // Place the search bar in the nav bar
         navigationItem.searchController = searchController
