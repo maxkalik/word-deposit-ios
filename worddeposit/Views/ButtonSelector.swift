@@ -6,6 +6,6 @@ class ButtonSelector: UIButton {
         titleLabel?.font = UIFont(name: Fonts.medium, size: 18)
         setTitleColor(Colors.dark, for: .normal)
         guard let text = title(for: .normal) else { return }
-        titleLabel?.addCharactersSpacing(spacing: -0.7, text: text)
+        titleLabel?.addCharactersSpacing(spacing: -0.6, text: text)
     }
 }

@@ -218,21 +218,25 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="2Mi-Ca-bAs">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="2Mi-Ca-bAs">
                                         <rect key="frame" x="0.0" y="192" width="374" height="50"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tzx-Zg-Hh5">
-                                                <rect key="frame" x="0.0" y="0.0" width="187" height="50"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tzx-Zg-Hh5" customClass="SecondaryButton" customModule="worddeposit" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="182" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="rop-yd-9sh"/>
+                                                </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <state key="normal" title="Cancel"/>
                                                 <connections>
                                                     <action selector="cancelTapped:" destination="qvX-RP-zC0" eventType="touchUpInside" id="Mgx-PY-tfR"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dxh-uR-aQh">
-                                                <rect key="frame" x="187" y="0.0" width="187" height="50"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dxh-uR-aQh" customClass="SecondaryButton" customModule="worddeposit" customModuleProvider="target">
+                                                <rect key="frame" x="192" y="0.0" width="182" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="6Em-IH-t3j"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="Kfj-XW-448"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <state key="normal" title="Save"/>

@@ -48,6 +48,12 @@ class PrimaryTextField: UITextField, UITextFieldDelegate {
         }
     }
     
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+        UIView.animate(withDuration: 0.3) {
+            self.backgroundColor = .clear
+        }
+    }
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let limit = limitOfString else { return true }
         return TextFieldLimit.checkMaxLength(textField, range: range, string: string, limit: limit)

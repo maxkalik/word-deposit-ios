@@ -16,8 +16,8 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var languageButton: ButtonSelector!
     @IBOutlet weak var buttonsStackView: UIStackView!
-    @IBOutlet weak var cancelButton: UIButton!
-    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var cancelButton: SecondaryButton!
+    @IBOutlet weak var saveButton: SecondaryButton!
     
     private var progressHUD = ProgressHUD(title: "Saving")
     private var messageView = MessageView()
@@ -35,7 +35,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
                 if title.isEmpty {
                     disableOnlySaveButton()
                 } else {
-                    if index == languages.endIndex {
+                    if index == languages.count - 1 {
                         guard let language = languageTextField.text else { return }
                         if language.isEmpty {
                             disableOnlySaveButton()
@@ -136,7 +136,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     
     private func getLanguage() -> String {
         guard let index = languageIndex else { return "" }
-        if index == languages.endIndex {
+        if index == languages.count - 1 {
             guard let languageFromTextField = languageTextField.text else { return "" }
             return languageFromTextField
         } else {
@@ -209,10 +209,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         // Limits of text in the text intput comes from extension
         titleTextField.limitOfString = Limits.vocabularyTitle
         
-        // Appearance of Select Language Button
-        
-        
-        // spinner
+        // Spinner
         view.addSubview(progressHUD)
         progressHUD.hide()
         
@@ -233,7 +230,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
                 languageButton.setTitle(language, for: .normal)
                 languageTextField.isHidden = true
             } else {
-                languageIndex = languages.endIndex
+                languageIndex = languages.count - 1
                 languageButton.setTitle(languages[languageIndex!], for: .normal)
                 languageTextField.text = language
                 languageTextField.isHidden = false
@@ -262,6 +259,8 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     private func onCancel() {
         dismissKeyboard()
         isKeyboardShowing = false
+        languageButton.isHidden = false
+        
         if vocabulary != nil {
             setupContent()
             buttonsStackView.alpha = 0
@@ -356,11 +355,15 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
             tvc.title = "Select language"
             
             guard let vocabulary = self.vocabulary else { return }
-            if vocabulary.language.isNotEmpty {
-                if languages.contains(where: {$0 == vocabulary.language}) {
-                    tvc.selected = languages.firstIndex(where: {$0 == vocabulary.language})
-                } else {
-                    tvc.selected = languages.endIndex
+            if languageIndex != nil {
+                tvc.selected = languageIndex
+            } else {
+                if vocabulary.language.isNotEmpty {
+                    if languages.contains(where: {$0 == vocabulary.language}) {
+                        tvc.selected = languages.firstIndex(where: {$0 == vocabulary.language})
+                    } else {
+                        tvc.selected = languages.count - 1
+                    }
                 }
             }
         }
@@ -373,11 +376,13 @@ extension VocabularyDetailsVC: CheckmarkListTVCDelegate {
             languageButton.setTitle(languages[index], for: .normal)
             self.languageIndex = index
             
-            if index == languages.endIndex {
+            if index == languages.count - 1 {
+                languageButton.isHidden = true
                 languageTextField.isHidden = false
                 languageTextField.becomeFirstResponder()
             } else {
                 languageTextField.isHidden = true
+                languageButton.isHidden = false
             }
         }
         

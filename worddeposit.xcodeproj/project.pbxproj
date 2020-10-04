@@ -79,6 +79,7 @@
 		15E7741C2529205400EC57D0 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E7741B2529205400EC57D0 /* UILabel.swift */; };
 		15E7741F25292F0100EC57D0 /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E7741E25292F0100EC57D0 /* ShadowView.swift */; };
 		15E77426252A2C7C00EC57D0 /* ButtonSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E77425252A2C7C00EC57D0 /* ButtonSelector.swift */; };
+		15E77429252A3BF400EC57D0 /* SecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E77428252A3BF400EC57D0 /* SecondaryButton.swift */; };
 		EB804A1F3EEA1D715B4655FE /* Pods_worddeposit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F57192022ED3D6D6824465E3 /* Pods_worddeposit.framework */; };
 /* End PBXBuildFile section */
 
@@ -158,6 +159,7 @@
 		15E7741B2529205400EC57D0 /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		15E7741E25292F0100EC57D0 /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
 		15E77425252A2C7C00EC57D0 /* ButtonSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonSelector.swift; sourceTree = "<group>"; };
+		15E77428252A3BF400EC57D0 /* SecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButton.swift; sourceTree = "<group>"; };
 		A070823C5C9FE2E6B5A6D7F8 /* Pods-worddeposit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-worddeposit.release.xcconfig"; path = "Target Support Files/Pods-worddeposit/Pods-worddeposit.release.xcconfig"; sourceTree = "<group>"; };
 		C0BEB3DBDC84F83AE219EA46 /* Pods-worddeposit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-worddeposit.debug.xcconfig"; path = "Target Support Files/Pods-worddeposit/Pods-worddeposit.debug.xcconfig"; sourceTree = "<group>"; };
 		F57192022ED3D6D6824465E3 /* Pods_worddeposit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_worddeposit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -271,6 +273,7 @@
 				15122F5725213FF900DB0E8F /* TabBarConroller.swift */,
 				15E7741E25292F0100EC57D0 /* ShadowView.swift */,
 				15E77425252A2C7C00EC57D0 /* ButtonSelector.swift */,
+				15E77428252A3BF400EC57D0 /* SecondaryButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -555,6 +558,7 @@
 				15D51954251E7F2500590073 /* PrimaryButton.swift in Sources */,
 				1158D30E24917B9B0087DC96 /* VocabularyTVCell.swift in Sources */,
 				156C80B724D8D27E0077905D /* VocabularyDetailsVC.swift in Sources */,
+				15E77429252A3BF400EC57D0 /* SecondaryButton.swift in Sources */,
 				15122F5825213FF900DB0E8F /* TabBarConroller.swift in Sources */,
 				11284233248E83BB00A014E9 /* VocabularyTVC.swift in Sources */,
 				1117D08F25023675000D864F /* Array.swift in Sources */,

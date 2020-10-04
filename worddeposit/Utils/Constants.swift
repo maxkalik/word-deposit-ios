@@ -83,5 +83,6 @@ struct Limits {
 }
 
 struct Radiuses {
+    static let huge: CGFloat = 20
     static let large: CGFloat = 10
 }
