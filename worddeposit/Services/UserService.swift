@@ -558,6 +558,7 @@ final class UserService {
                 return
             }
             guard let index = self.vocabularies.firstIndex(matching: vocabulary) else { return }
+            print("00 - VOCABULARY BUG INVISTIGATION. Vocabulary index in UserService: \(index)")
             self.vocabularies.remove(at: index)
             complition(nil)
         }

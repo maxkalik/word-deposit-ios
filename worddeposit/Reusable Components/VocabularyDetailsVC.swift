@@ -14,7 +14,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var titleTextField: PrimaryTextField!
     @IBOutlet weak var languageTextField: UITextField!
     
-    @IBOutlet weak var languageButton: UIButton!
+    @IBOutlet weak var languageButton: ButtonSelector!
     @IBOutlet weak var buttonsStackView: UIStackView!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
@@ -35,7 +35,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
                 if title.isEmpty {
                     disableOnlySaveButton()
                 } else {
-                    if index == languages.count - 1 {
+                    if index == languages.endIndex {
                         guard let language = languageTextField.text else { return }
                         if language.isEmpty {
                             disableOnlySaveButton()
@@ -136,7 +136,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     
     private func getLanguage() -> String {
         guard let index = languageIndex else { return "" }
-        if index == languages.count - 1 {
+        if index == languages.endIndex {
             guard let languageFromTextField = languageTextField.text else { return "" }
             return languageFromTextField
         } else {
@@ -205,7 +205,13 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     
     private func setupUI() {
         hideKeyboardWhenTappedAround()
-//        titleTextField.limitOfString = Limits.vocabularyTitle 
+        
+        // Limits of text in the text intput comes from extension
+        titleTextField.limitOfString = Limits.vocabularyTitle
+        
+        // Appearance of Select Language Button
+        
+        
         // spinner
         view.addSubview(progressHUD)
         progressHUD.hide()
@@ -227,7 +233,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
                 languageButton.setTitle(language, for: .normal)
                 languageTextField.isHidden = true
             } else {
-                languageIndex = languages.count - 1
+                languageIndex = languages.endIndex
                 languageButton.setTitle(languages[languageIndex!], for: .normal)
                 languageTextField.text = language
                 languageTextField.isHidden = false
@@ -354,7 +360,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
                 if languages.contains(where: {$0 == vocabulary.language}) {
                     tvc.selected = languages.firstIndex(where: {$0 == vocabulary.language})
                 } else {
-                    tvc.selected = languages.count - 1
+                    tvc.selected = languages.endIndex
                 }
             }
         }
@@ -367,7 +373,7 @@ extension VocabularyDetailsVC: CheckmarkListTVCDelegate {
             languageButton.setTitle(languages[index], for: .normal)
             self.languageIndex = index
             
-            if index == languages.count - 1 {
+            if index == languages.endIndex {
                 languageTextField.isHidden = false
                 languageTextField.becomeFirstResponder()
             } else {

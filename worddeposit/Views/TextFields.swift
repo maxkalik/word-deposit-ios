@@ -27,12 +27,19 @@ class PrimaryTextField: UITextField, UITextFieldDelegate {
         // Remove Default Border
         borderStyle = .none
         
-        // Font
-        font = UIFont(name: Fonts.medium, size: 22.0)
-        textColor = Colors.dark
-        
         // Placeholder
         attributedPlaceholder = NSAttributedString(string: self.placeholder != nil ? self.placeholder! : "", attributes: [NSAttributedString.Key.foregroundColor: Colors.dark.withAlphaComponent(0.4), NSAttributedString.Key.kern: -0.4])
+        
+        // Font
+        font = UIFont(name: Fonts.bold, size: 22.0)
+        let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = NSTextAlignment.center
+        defaultTextAttributes = [
+            NSAttributedString.Key.foregroundColor: Colors.dark,
+            NSAttributedString.Key.kern: -0.8,
+            NSAttributedString.Key.font: font!,
+            NSAttributedString.Key.paragraphStyle: paragraphStyle
+        ]
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {

@@ -15,7 +15,7 @@ class CollectionViewRow {
     var rowWidth: CGFloat {
         return attributes.reduce(0, { result, attribute -> CGFloat in
             return result + attribute.frame.width
-        }) + CGFloat(attributes.count - 1) * spacing
+        }) + CGFloat(attributes.endIndex) * spacing
     }
 
     func centerLayout(collectionViewWidth: CGFloat) {
