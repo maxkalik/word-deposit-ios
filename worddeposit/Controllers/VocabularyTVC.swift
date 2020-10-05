@@ -28,6 +28,7 @@ class VocabularyTVC: UITableViewController {
         // Setup Table View
         setupTableView()
         setupResultsTableController()
+        setupMessage()
         
         // Setup message
         view.addSubview(messageView)
@@ -42,22 +43,16 @@ class VocabularyTVC: UITableViewController {
     }
     
     @objc func vocabularyDidSwitch() {
-        self.words.removeAll()
-        self.tableView.reloadData()
-        self.setupContent(words: UserService.shared.words)
-        self.isVocabularySwitched = true
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setupMessage()
-        messageView.hide()
+        words.removeAll()
+        tableView.reloadData()
+        setupContent(words: UserService.shared.words)
+        isVocabularySwitched = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if !isVocabularySwitched {
+        if isVocabularySwitched == false {
             setupContent(words: UserService.shared.words) // <-- TODO: Bug
         }
         messageView.frame.origin.y = tableView.contentOffset.y
@@ -94,6 +89,10 @@ class VocabularyTVC: UITableViewController {
     }
     
     func setupTableView() {
+        
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
+        tableView.contentInset = insets
+        
         let nib = UINib(nibName: XIBs.VocabularyTVCell, bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: XIBs.VocabularyTVCell)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: ReusableIdentifiers.MessageView)
@@ -140,9 +139,9 @@ class VocabularyTVC: UITableViewController {
         
         // Check words
         if words.isEmpty {
-            self.messageView.show()
+            messageView.show()
         } else {
-            self.messageView.hide()
+            messageView.hide()
             for index in 0..<words.count {
                 self.words.append(words[index])
                 self.tableView.insertRows(at: [IndexPath(item: index, section: 0)], with: .fade)
