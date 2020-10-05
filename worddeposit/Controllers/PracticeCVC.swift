@@ -25,7 +25,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         registerViews()
         setupUI()
         
-        self.allowInteractingWithUI(false)
+        disableInteractingWithUI()
         let userService = UserService.shared
         userService.fetchCurrentUser { error, user in
             if let error = error {
@@ -47,7 +47,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                 guard let vocabularies = vocabularies else { return }
                 if vocabularies.isEmpty {
                     self.presentVocabulariesVC()
-                    self.allowInteractingWithUI(true)
+                    self.allowInteractingWithUI()
                     self.progressHUD.hide()
                 } else {
                     userService.getCurrentVocabulary()
@@ -59,7 +59,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                         }
                         guard let words = words else { return }
                         self.progressHUD.hide()
-                        self.allowInteractingWithUI(true)
+                        self.allowInteractingWithUI()
                         self.setupContent(words: words)
                     }
                 }
@@ -102,9 +102,14 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     
     // MARK: - Setup Views
     
-    private func allowInteractingWithUI(_ flag: Bool) {
+    private func allowInteractingWithUI() {
         navigationController?.navigationBar.isUserInteractionEnabled = true
         tabBarController?.tabBar.isUserInteractionEnabled = true
+    }
+    
+    private func disableInteractingWithUI() {
+        navigationController?.navigationBar.isUserInteractionEnabled = false
+        tabBarController?.tabBar.isUserInteractionEnabled = false
     }
     
     private func setupContent(words: [Word]) {
