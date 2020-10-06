@@ -170,7 +170,7 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="icon_close_circle" width="20" height="20"/>
+        <image name="icon_close_circle" width="26" height="26"/>
         <image name="picture" width="86" height="86"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

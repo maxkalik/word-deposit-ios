@@ -31,12 +31,23 @@ class VocabularyCardsVC: UIViewController {
     
     weak var delegate: VocabularyCardsVCDelegate?
     
+    private var progressHUD = ProgressHUD(title: "Saving")
+    
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        progressHUD.show()
+        
         setupWordsCollectionView()
         hideKeyboardWhenTappedAround()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        view.addSubview(progressHUD)
+        progressHUD.hide()
     }
     
     override func viewDidLayoutSubviews() {
@@ -96,5 +107,13 @@ extension VocabularyCardsVC: VocabularyCardCVCellDelegate {
     func wordDidUpdate(word: Word, index: Int) {
         words[index] = word
         delegate?.wordCardDidUpdate(word: word, index: index)
+    }
+    
+    func showLoader() {
+        progressHUD.show()
+    }
+    
+    func hideLoader() {
+        progressHUD.hide()
     }
 }

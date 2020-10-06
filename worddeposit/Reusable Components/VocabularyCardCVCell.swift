@@ -4,6 +4,8 @@ import YPImagePicker
 
 protocol VocabularyCardCVCellDelegate: VocabularyCardsVC {
     func showAlert(title: String, message: String)
+    func showLoader()
+    func hideLoader()
     func presentVC(_ viewControllerToPresent: UIViewController)
     func disableEnableScroll(isKeyboardShow: Bool)
     func wordDidUpdate(word: Word, index: Int)
@@ -21,7 +23,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
     @IBOutlet weak var wordDescriptionTextField: SecondaryTextField!
     @IBOutlet weak var saveChangingButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
-    @IBOutlet weak var wordLoader: UIActivityIndicatorView!
+    @IBOutlet weak var wordLoader: UIActivityIndicatorView! // <- change to global loader
     @IBOutlet weak var pictureLoader: UIActivityIndicatorView!
     @IBOutlet weak var removePictureButton: UIButton!
     
@@ -37,6 +39,8 @@ class VocabularyCardCVCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        
+        wordLoader.isHidden = true
         
         hideAllButtons()
         disableAllButtons()
@@ -133,15 +137,6 @@ class VocabularyCardCVCell: UICollectionViewCell {
     
     private func setupRemovePictureButton() {
         removePictureButton.imageView?.alpha = 0.5
-        /*
-        removePictureButton.backgroundColor = Colors.dark.withAlphaComponent(0.3)
-        removePictureButton.layer.cornerRadius = removePictureButton.frame.size.width / 2
-        removePictureButton.clipsToBounds = true
-        
-        let image = UIImage(named: Icons.Close)?.withRenderingMode(.alwaysTemplate)
-        removePictureButton.setImage(image, for: .normal)
-        removePictureButton.tintColor = UIColor.white
-        */
     }
     
     private func setupImagePlaceholder() {
@@ -188,7 +183,8 @@ class VocabularyCardCVCell: UICollectionViewCell {
     }
 
     @IBAction func onSaveChangingTouched(_ sender: UIButton) {
-        wordLoader.startAnimating()
+        // wordLoader.startAnimating()
+        delegate?.showLoader()
         uploadWord()
         disableAllButtons()
     }
@@ -261,7 +257,8 @@ class VocabularyCardCVCell: UICollectionViewCell {
         
         if UserService.shared.words.contains(where: { $0.example.lowercased() == example.lowercased() && $0.id != word.id && $0.translation.lowercased() == translation.lowercased() }) {
             self.delegate?.showAlert(title: "You have already this word", message: " \(example) is already exist. Try to make another one")
-            self.wordLoader.stopAnimating()
+//            self.wordLoader.stopAnimating()
+            self.delegate?.hideLoader()
             return
         }
         
@@ -281,11 +278,12 @@ class VocabularyCardCVCell: UICollectionViewCell {
                 return
             }
             self.word = updatedWord
-            self.wordLoader.stopAnimating()
+            // self.wordLoader.stopAnimating()
+            self.delegate?.hideLoader() // Success loader complition
             self.hideAllButtons()
             self.endEditing(true)
             self.delegate?.wordDidUpdate(word: updatedWord, index: self.indexItem)
-            self.delegate?.showAlert(title: "Success", message: "Word has been updated")
+            // self.delegate?.showAlert(title: "Success", message: "Word has been updated")
         }
     }
 }
