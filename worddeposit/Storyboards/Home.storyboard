@@ -951,9 +951,13 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="deleteAccountButton" destination="fQg-p5-3ve" id="FjR-XU-4Ij"/>
                         <outlet property="doneButton" destination="csU-tv-Eev" id="6lb-N0-Nee"/>
+                        <outlet property="firstNameLabel" destination="BGz-3c-jIK" id="7uL-Rh-d6m"/>
                         <outlet property="firstNameTextField" destination="XeH-88-fk6" id="z67-xI-oX7"/>
+                        <outlet property="lastNameLabel" destination="47K-uk-AGH" id="HWN-Eh-wsr"/>
                         <outlet property="lastNameTextField" destination="Cyt-nF-HyN" id="jXU-V4-J4t"/>
+                        <outlet property="resetPasswordButton" destination="QhY-s2-Hgj" id="n4e-yr-6Z7"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uVC-LW-nZg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

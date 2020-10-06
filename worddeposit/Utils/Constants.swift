@@ -76,6 +76,7 @@ struct Keys {
 }
 
 struct Limits {
+    static let name = 60
     static let vocabularies = 10
     static let words = 300
     static let vocabularyTitle = 26
