@@ -62,6 +62,7 @@ struct Fonts {
 struct Placeholders {
     static let Logo = "logo"
     static let Picture = "picture"
+    static let Close = "icon_close"
 }
 
 struct Images {

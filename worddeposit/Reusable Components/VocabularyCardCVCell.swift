@@ -48,12 +48,12 @@ class VocabularyCardCVCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-
         cardView.layer.backgroundColor = Colors.silver.cgColor
         
         hideAllButtons()
         disableAllButtons()
         setupImagePlaceholder()
+        setupRemovePictureButton()
         
         wordExampleTextField.limitOfString = Limits.wordExample
         wordTranslationTextField.limitOfString = Limits.wordTranslation
@@ -131,6 +131,16 @@ class VocabularyCardCVCell: UICollectionViewCell {
     
     // MARK: - Other methods
     
+    private func setupRemovePictureButton() {
+        removePictureButton.backgroundColor = Colors.dark.withAlphaComponent(0.3)
+        removePictureButton.layer.cornerRadius = removePictureButton.frame.size.width / 2
+        removePictureButton.clipsToBounds = true
+        
+        let image = UIImage(named: Placeholders.Close)?.withRenderingMode(.alwaysTemplate)
+        removePictureButton.setImage(image, for: .normal)
+        removePictureButton.tintColor = UIColor.white
+    }
+    
     private func setupImagePlaceholder() {
         wordPictureButton.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
         let image = UIImage(named: Placeholders.Picture)?.withRenderingMode(.alwaysTemplate)
@@ -196,19 +206,19 @@ class VocabularyCardCVCell: UICollectionViewCell {
     // MARK: - Uploading Methods
     
     private func updateWordImageUrl(isRemove: Bool) {
-           UserService.shared.updateWordImageUrl(self.word) { error in
-               if error != nil {
-                   self.delegate?.showAlert(title: "Error", message: "Something went wrong. Cannot update a picture")
-                   return
-               }
-               self.pictureLoader.stopAnimating()
-               self.removePictureButton.isHidden = isRemove
-               if isRemove {
-                   self.wordPictureButton.setImage(UIImage(named: Placeholders.Logo), for: .normal)
-               }
-               self.delegate?.wordDidUpdate(word: self.word, index: self.indexItem)
-           }
-       }
+        UserService.shared.updateWordImageUrl(self.word) { error in
+            if error != nil {
+                self.delegate?.showAlert(title: "Error", message: "Something went wrong. Cannot update a picture")
+                return
+            }
+            self.pictureLoader.stopAnimating()
+            self.removePictureButton.isHidden = isRemove
+            if isRemove {
+                self.setupImagePlaceholder()
+            }
+            self.delegate?.wordDidUpdate(word: self.word, index: self.indexItem)
+        }
+    }
     
     private func uploadImage() {
         pictureLoader.startAnimating()

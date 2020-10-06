@@ -115,7 +115,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <color key="tintColor" white="0.0" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="icon_close"/>
+                                <state key="normal" image="icon_close">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                                 <connections>
                                     <action selector="removePictureTouched:" destination="gTV-IL-0wX" eventType="touchUpInside" id="dwC-q3-Jsn"/>
                                 </connections>
