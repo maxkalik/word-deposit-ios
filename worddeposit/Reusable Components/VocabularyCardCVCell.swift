@@ -132,18 +132,21 @@ class VocabularyCardCVCell: UICollectionViewCell {
     // MARK: - Other methods
     
     private func setupRemovePictureButton() {
+        removePictureButton.imageView?.alpha = 0.5
+        /*
         removePictureButton.backgroundColor = Colors.dark.withAlphaComponent(0.3)
         removePictureButton.layer.cornerRadius = removePictureButton.frame.size.width / 2
         removePictureButton.clipsToBounds = true
         
-        let image = UIImage(named: Placeholders.Close)?.withRenderingMode(.alwaysTemplate)
+        let image = UIImage(named: Icons.Close)?.withRenderingMode(.alwaysTemplate)
         removePictureButton.setImage(image, for: .normal)
         removePictureButton.tintColor = UIColor.white
+        */
     }
     
     private func setupImagePlaceholder() {
         wordPictureButton.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
-        let image = UIImage(named: Placeholders.Picture)?.withRenderingMode(.alwaysTemplate)
+        let image = UIImage(named: Icons.Picture)?.withRenderingMode(.alwaysTemplate)
         wordPictureButton.setImage(image, for: .normal)
         wordPictureButton.tintColor = Colors.silver
     }

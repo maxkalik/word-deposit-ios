@@ -59,8 +59,7 @@ struct Fonts {
     static let bold = "DMSans-Bold"
 }
 
-struct Placeholders {
-    static let Logo = "logo"
+struct Icons {
     static let Picture = "picture"
     static let Close = "icon_close"
 }
