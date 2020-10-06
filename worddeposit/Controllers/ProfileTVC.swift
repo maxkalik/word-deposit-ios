@@ -8,10 +8,12 @@ class ProfileTVC: UITableViewController {
     @IBOutlet weak var userFullName: UILabel!
     @IBOutlet weak var userEmail: UILabel!
     @IBOutlet weak var nativeLanguage: UILabel!
+    @IBOutlet weak var notificationsLabel: UILabel!
     @IBOutlet weak var notificationsSwitch: UISwitch!
     @IBOutlet weak var vocabulariesAmount: UILabel!
     @IBOutlet weak var wordsAmountLabel: UILabel!
     @IBOutlet weak var correctAnswersLabel: UILabel!
+    @IBOutlet weak var logoutButton: UIButton!
     
     // MARK: - Instances
     
@@ -44,9 +46,11 @@ class ProfileTVC: UITableViewController {
         
         getAllLanguages()
         setupStatistics()
-        // print(words)
         
-        print("view did load")
+        notificationsLabel.font = UIFont(name: Fonts.medium, size: 16)
+        notificationsLabel.textColor = Colors.darkGrey
+        
+        logoutButton.titleLabel?.font = UIFont(name: Fonts.medium, size: 16)
     }
     
     // MARK: - Methods
@@ -99,6 +103,22 @@ class ProfileTVC: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
+        guard let label = header.textLabel else { return }
+        label.font = UIFont(name: Fonts.bold, size: 14)
+        label.textColor = Colors.grey
+        guard let text = label.text else { return }
+        label.addCharactersSpacing(spacing: 1, text: text)
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.textLabel?.font = UIFont(name: Fonts.medium, size: 16)
+        cell.textLabel?.textColor = Colors.darkGrey
+        cell.detailTextLabel?.font = UIFont(name: Fonts.medium, size: 14)
+        cell.detailTextLabel?.textColor = Colors.dark
+    }
+    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
@@ -107,9 +127,9 @@ class ProfileTVC: UITableViewController {
         let footerView = UIView()
         if section == 3 {
             let versionLabel = UILabel()
-            versionLabel.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width - 40, height: 60)
-            versionLabel.font = UIFont.systemFont(ofSize: 14)
-            versionLabel.textColor = #colorLiteral(red: 0.6666666865, green: 0.6666666865, blue: 0.6666666865, alpha: 1)
+            versionLabel.frame = CGRect(x: 0, y: 0, width: view.frame.size.width - 40, height: 60)
+            versionLabel.font = UIFont(name: Fonts.medium, size: 15)
+            versionLabel.textColor = Colors.grey
             versionLabel.textAlignment = .center
             versionLabel.text = "Version 2.0.0"
             footerView.addSubview(versionLabel)
