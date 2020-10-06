@@ -117,6 +117,10 @@ class ProgressHUD: UIVisualEffectView {
         self.title = title
         activityIndictor.stopAnimating()
         setupImage()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.activityIndictor.startAnimating()
+            self.hide()
+        }
     }
     
     func setTitle(title: String) {

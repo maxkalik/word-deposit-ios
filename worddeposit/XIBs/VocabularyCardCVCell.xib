@@ -101,13 +101,10 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </stackView>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="eLD-MA-D1N">
-                                <rect key="frame" x="114.5" y="453" width="20" height="20"/>
-                            </activityIndicatorView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="VgD-DV-qMQ">
                                 <rect key="frame" x="106" y="106" width="37" height="37"/>
                             </activityIndicatorView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mC1-dx-JNe">
+                            <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mC1-dx-JNe">
                                 <rect key="frame" x="209" y="10" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="aTn-ir-QYX"/>
@@ -131,14 +128,12 @@
                             <constraint firstItem="qEf-66-3td" firstAttribute="top" secondItem="NG3-UZ-tdL" secondAttribute="top" id="Agx-zj-gdf"/>
                             <constraint firstItem="KK2-6x-PG2" firstAttribute="leading" secondItem="NG3-UZ-tdL" secondAttribute="leading" constant="20" id="Aul-Zo-u5m"/>
                             <constraint firstItem="tIz-zy-KYF" firstAttribute="leading" secondItem="NG3-UZ-tdL" secondAttribute="leading" id="DhI-lr-DSf"/>
-                            <constraint firstItem="eLD-MA-D1N" firstAttribute="centerX" secondItem="KK2-6x-PG2" secondAttribute="centerX" id="NDf-2l-510"/>
                             <constraint firstItem="mC1-dx-JNe" firstAttribute="top" secondItem="NG3-UZ-tdL" secondAttribute="top" constant="10" id="ZXK-BZ-9HU"/>
                             <constraint firstAttribute="trailing" secondItem="mC1-dx-JNe" secondAttribute="trailing" constant="10" id="ceW-BI-fpo"/>
                             <constraint firstAttribute="trailing" secondItem="qEf-66-3td" secondAttribute="trailing" id="dFB-Eg-Aw6"/>
                             <constraint firstAttribute="trailing" secondItem="KK2-6x-PG2" secondAttribute="trailing" constant="20" id="gp8-Bb-pNa"/>
                             <constraint firstItem="VgD-DV-qMQ" firstAttribute="centerX" secondItem="qEf-66-3td" secondAttribute="centerX" id="ozu-ln-sa9"/>
                             <constraint firstItem="KK2-6x-PG2" firstAttribute="top" secondItem="tIz-zy-KYF" secondAttribute="bottom" id="qfD-Vz-GIR"/>
-                            <constraint firstItem="eLD-MA-D1N" firstAttribute="centerY" secondItem="KK2-6x-PG2" secondAttribute="centerY" id="xeD-ND-Kld"/>
                             <constraint firstItem="tIz-zy-KYF" firstAttribute="top" secondItem="qEf-66-3td" secondAttribute="bottom" id="zGZ-1f-7Si"/>
                             <constraint firstItem="qEf-66-3td" firstAttribute="leading" secondItem="NG3-UZ-tdL" secondAttribute="leading" id="zbw-Ka-SQE"/>
                         </constraints>
@@ -162,7 +157,6 @@
                 <outlet property="stackView" destination="dby-dI-Ln7" id="6yr-ln-VZ0"/>
                 <outlet property="wordDescriptionTextField" destination="0hr-gr-S4R" id="EFR-eP-22e"/>
                 <outlet property="wordExampleTextField" destination="bYr-Ab-Q6M" id="gCz-JX-ORL"/>
-                <outlet property="wordLoader" destination="eLD-MA-D1N" id="HDc-me-rmj"/>
                 <outlet property="wordPictureButton" destination="qEf-66-3td" id="PO7-Vx-shA"/>
                 <outlet property="wordTranslationTextField" destination="N7c-oH-trs" id="T2e-wl-5uN"/>
             </connections>

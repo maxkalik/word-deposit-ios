@@ -198,9 +198,6 @@ class AddWordVC: UIViewController {
                 return
             }
             self.progressHUD.success(with: "Added")
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.progressHUD.hide()
-            }
             self.successComplition(word: word)
         }
     }
