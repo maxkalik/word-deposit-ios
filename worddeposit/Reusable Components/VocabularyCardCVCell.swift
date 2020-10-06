@@ -13,11 +13,12 @@ class VocabularyCardCVCell: UICollectionViewCell {
 
     // MARK: - Outlets
 
+    @IBOutlet weak var cardView: RoundedView!
     @IBOutlet weak var wordPictureButton: UIButton!
     @IBOutlet weak var stackView: UIStackView!
-    @IBOutlet weak var wordExampleTextField: UITextField!
-    @IBOutlet weak var wordTranslationTextField: UITextField!
-    @IBOutlet weak var wordDescriptionTextField: UITextField!
+    @IBOutlet weak var wordExampleTextField: PrimaryTextField!
+    @IBOutlet weak var wordTranslationTextField: SecondaryTextField!
+    @IBOutlet weak var wordDescriptionTextField: SecondaryTextField!
     @IBOutlet weak var saveChangingButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var wordLoader: UIActivityIndicatorView!
@@ -36,10 +37,10 @@ class VocabularyCardCVCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        wordPictureButton.setImage(UIImage(named: Placeholders.Logo), for: .normal)
         
         hideAllButtons()
         disableAllButtons()
+        setupImagePlaceholder()
         
         removePictureButton.isHidden = true
         
@@ -48,8 +49,15 @@ class VocabularyCardCVCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
 
+        cardView.layer.backgroundColor = Colors.silver.cgColor
+        
         hideAllButtons()
         disableAllButtons()
+        setupImagePlaceholder()
+        
+        wordExampleTextField.limitOfString = Limits.wordExample
+        wordTranslationTextField.limitOfString = Limits.wordTranslation
+        wordDescriptionTextField.limitOfString = Limits.wordDescription
         
         wordExampleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         wordTranslationTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
@@ -70,12 +78,23 @@ class VocabularyCardCVCell: UICollectionViewCell {
     // MARK: - @objc methods
     
     @objc func textFieldDidChange(_ textField: UITextField) {
+    
+        guard let wordExample = wordExampleTextField.text,
+            let wordTranslation = wordTranslationTextField.text,
+            let wordDescription = wordDescriptionTextField.text else { return }
         
-        TextFieldLimit.checkMaxLength(textField: wordExampleTextField, maxLength: Limits.wordExample)
-        TextFieldLimit.checkMaxLength(textField: wordTranslationTextField, maxLength: Limits.wordTranslation)
-        TextFieldLimit.checkMaxLength(textField: wordDescriptionTextField, maxLength: Limits.wordDescription)
-        
-        textFieldValidation()
+        if wordExample != word.example
+            || wordTranslation != word.translation
+            || wordDescription != word.description
+        {
+            enableAllButtons()
+            if wordExample.isEmpty || wordTranslation.isEmpty {
+                cancelButton.isEnabled = true
+                saveChangingButton.isEnabled = false
+            }
+        } else {
+            disableAllButtons()
+        }
     }
     
     @objc func keyboardWillShow(_ notification: NSNotification) {
@@ -90,7 +109,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
         }
         
         UIView.animate(withDuration: 0.3) {
-            self.wordPictureButton.alpha = 0
+            self.wordPictureButton.alpha = 0.2
         }
         
         delegate?.disableEnableScroll(isKeyboardShow: true)
@@ -112,32 +131,19 @@ class VocabularyCardCVCell: UICollectionViewCell {
     
     // MARK: - Other methods
     
+    private func setupImagePlaceholder() {
+        wordPictureButton.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
+        let image = UIImage(named: Placeholders.Picture)?.withRenderingMode(.alwaysTemplate)
+        wordPictureButton.setImage(image, for: .normal)
+        wordPictureButton.tintColor = Colors.silver
+    }
+    
     func configureCell(word: Word, index: Int, delegate: VocabularyCardCVCellDelegate) {
         self.word = word
         self.indexItem = index
         self.delegate = delegate
         setupWord(word)
         removePictureButton.isHidden = word.imgUrl.isEmpty
-    }
-    
-    private func textFieldValidation() {
-        
-        guard let wordExample = wordExampleTextField.text,
-            let wordTranslation = wordTranslationTextField.text,
-            let wordDescription = wordDescriptionTextField.text else { return }
-        
-        if wordExample != word.example
-            || wordTranslation != word.translation
-            || wordDescription != word.description
-        {
-            enableAllButtons()
-            if wordExample.isEmpty || wordTranslation.isEmpty {
-                cancelButton.isEnabled = true
-                saveChangingButton.isEnabled = false
-            }
-        } else {
-            disableAllButtons()
-        }
     }
     
     private func setupWord(_ word: Word) {
