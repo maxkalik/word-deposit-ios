@@ -48,9 +48,9 @@ class ProfileTVC: UITableViewController {
         setupStatistics()
         
         notificationsLabel.font = UIFont(name: Fonts.medium, size: 16)
-        notificationsLabel.textColor = Colors.darkGrey
+        notificationsLabel.textColor = Colors.dark
         
-        logoutButton.titleLabel?.font = UIFont(name: Fonts.medium, size: 16)
+        logoutButton.titleLabel?.font = UIFont(name: Fonts.bold, size: 16)
     }
     
     // MARK: - Methods
@@ -105,16 +105,20 @@ class ProfileTVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
+        
+        // capitalize first letter
+        header.textLabel?.text =  header.textLabel?.text?.capitalized
+        
         guard let label = header.textLabel else { return }
-        label.font = UIFont(name: Fonts.bold, size: 14)
-        label.textColor = Colors.grey
+        label.font = UIFont(name: Fonts.bold, size: 18)
+        label.textColor = Colors.dark
         guard let text = label.text else { return }
-        label.addCharactersSpacing(spacing: 1, text: text)
+        label.addCharactersSpacing(spacing: -0.4, text: text)
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.textLabel?.font = UIFont(name: Fonts.medium, size: 16)
-        cell.textLabel?.textColor = Colors.darkGrey
+        cell.textLabel?.textColor = Colors.dark
         cell.detailTextLabel?.font = UIFont(name: Fonts.medium, size: 14)
         cell.detailTextLabel?.textColor = Colors.dark
     }

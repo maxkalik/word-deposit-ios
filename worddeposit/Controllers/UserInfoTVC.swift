@@ -65,8 +65,9 @@ class UserInfoTVC: UITableViewController {
     
     private func setupUI() {
         
+        // Titles
         let titleFont = UIFont(name: Fonts.medium, size: 16)
-        let titleColor = Colors.darkGrey
+        let titleColor = Colors.dark
         
         firstNameLabel.font = titleFont
         lastNameLabel.font = titleFont
@@ -74,6 +75,7 @@ class UserInfoTVC: UITableViewController {
         firstNameLabel.textColor = titleColor
         lastNameLabel.textColor = titleColor
         
+        // Text fields
         let textFieldFont = UIFont(name: Fonts.medium, size: 16)
         let textFieldTextColor = Colors.dark
         
@@ -83,7 +85,7 @@ class UserInfoTVC: UITableViewController {
         lastNameTextField.font = textFieldFont
         lastNameTextField.textColor = textFieldTextColor
         
-        let buttonsFont = UIFont(name: Fonts.medium, size: 16)
+        let buttonsFont = UIFont(name: Fonts.bold, size: 16)
         
         resetPasswordButton.titleLabel?.font = buttonsFont
         deleteAccountButton.titleLabel?.font = buttonsFont

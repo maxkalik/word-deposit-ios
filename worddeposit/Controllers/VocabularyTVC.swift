@@ -114,14 +114,21 @@ class VocabularyTVC: UITableViewController {
         searchController.definesPresentationContext = true
         searchController.searchBar.delegate = self // Monitor when the search button is tapped
         
-        let attributes = [NSAttributedString.Key.font: UIFont(name: Fonts.medium, size: 16), NSAttributedString.Key.foregroundColor: UIColor.black]
-
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = attributes as [NSAttributedString.Key : Any]
-        
+        // Custom icons
         let searchIcon = UIImage(named: "icon_search")
+        let closeIcon = UIImage(named: "icon_close")
         
-        UISearchBar.appearance().setImage(searchIcon, for: .search, state: .normal)
+        searchController.searchBar.setImage(searchIcon, for: .search, state: .normal)
+        searchController.searchBar.setImage(closeIcon, for: .clear, state: .normal)
         
+        searchController.searchBar.setPositionAdjustment(UIOffset(horizontal: 8, vertical: .zero), for: .search)
+        searchController.searchBar.setPositionAdjustment(UIOffset(horizontal: -5, vertical: .zero), for: .clear)
+        searchController.searchBar.searchTextPositionAdjustment = UIOffset(horizontal: 4, vertical: .zero)
+        
+        
+        // Cusom font
+        let attributes = [NSAttributedString.Key.font: UIFont(name: Fonts.medium, size: 16), NSAttributedString.Key.foregroundColor: UIColor.black]
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = attributes as [NSAttributedString.Key : Any]
         
         // Place the search bar in the nav bar
         navigationItem.searchController = searchController
