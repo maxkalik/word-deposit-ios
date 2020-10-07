@@ -67,6 +67,7 @@
 		155F39E82523D69400EC63B9 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 155F39E72523D69400EC63B9 /* UINavigationController.swift */; };
 		156C80B724D8D27E0077905D /* VocabularyDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156C80B624D8D27E0077905D /* VocabularyDetailsVC.swift */; };
 		158B1095251BE29A0003C3A9 /* TextFieldLimit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158B1094251BE29A0003C3A9 /* TextFieldLimit.swift */; };
+		158D655B95A91BBFB440BB73 /* Pods_worddeposit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E74A45028EABF36BDC29B0D7 /* Pods_worddeposit.framework */; };
 		15A7E04924D8B322006804FD /* VocabulariesTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A7E04724D8B322006804FD /* VocabulariesTVCell.swift */; };
 		15A7E04A24D8B322006804FD /* VocabulariesTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15A7E04824D8B322006804FD /* VocabulariesTVCell.xib */; };
 		15AFF8B6251692CB00BA6DAF /* ShowLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AFF8B5251692CB00BA6DAF /* ShowLogin.swift */; };
@@ -81,7 +82,6 @@
 		15E7741F25292F0100EC57D0 /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E7741E25292F0100EC57D0 /* ShadowView.swift */; };
 		15E77426252A2C7C00EC57D0 /* ButtonSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E77425252A2C7C00EC57D0 /* ButtonSelector.swift */; };
 		15E77429252A3BF400EC57D0 /* SecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E77428252A3BF400EC57D0 /* SecondaryButton.swift */; };
-		EB804A1F3EEA1D715B4655FE /* Pods_worddeposit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F57192022ED3D6D6824465E3 /* Pods_worddeposit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -162,9 +162,9 @@
 		15E7741E25292F0100EC57D0 /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
 		15E77425252A2C7C00EC57D0 /* ButtonSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonSelector.swift; sourceTree = "<group>"; };
 		15E77428252A3BF400EC57D0 /* SecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButton.swift; sourceTree = "<group>"; };
-		A070823C5C9FE2E6B5A6D7F8 /* Pods-worddeposit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-worddeposit.release.xcconfig"; path = "Target Support Files/Pods-worddeposit/Pods-worddeposit.release.xcconfig"; sourceTree = "<group>"; };
-		C0BEB3DBDC84F83AE219EA46 /* Pods-worddeposit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-worddeposit.debug.xcconfig"; path = "Target Support Files/Pods-worddeposit/Pods-worddeposit.debug.xcconfig"; sourceTree = "<group>"; };
-		F57192022ED3D6D6824465E3 /* Pods_worddeposit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_worddeposit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		64D79D641400D9D1E19CC310 /* Pods-worddeposit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-worddeposit.debug.xcconfig"; path = "Target Support Files/Pods-worddeposit/Pods-worddeposit.debug.xcconfig"; sourceTree = "<group>"; };
+		E2568201BEE4DB94972CDA34 /* Pods-worddeposit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-worddeposit.release.xcconfig"; path = "Target Support Files/Pods-worddeposit/Pods-worddeposit.release.xcconfig"; sourceTree = "<group>"; };
+		E74A45028EABF36BDC29B0D7 /* Pods_worddeposit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_worddeposit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,7 +172,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EB804A1F3EEA1D715B4655FE /* Pods_worddeposit.framework in Frameworks */,
+				158D655B95A91BBFB440BB73 /* Pods_worddeposit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,7 +208,7 @@
 				1128420F248E7C5700A014E9 /* worddeposit */,
 				1128420E248E7C5700A014E9 /* Products */,
 				13969C7DBB50ED88A4E2A9CB /* Pods */,
-				B9F5208C899BB238BD900697 /* Frameworks */,
+				94DA42225305F6CE72EE0B51 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -344,8 +344,8 @@
 		13969C7DBB50ED88A4E2A9CB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				C0BEB3DBDC84F83AE219EA46 /* Pods-worddeposit.debug.xcconfig */,
-				A070823C5C9FE2E6B5A6D7F8 /* Pods-worddeposit.release.xcconfig */,
+				64D79D641400D9D1E19CC310 /* Pods-worddeposit.debug.xcconfig */,
+				E2568201BEE4DB94972CDA34 /* Pods-worddeposit.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -377,10 +377,10 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		B9F5208C899BB238BD900697 /* Frameworks */ = {
+		94DA42225305F6CE72EE0B51 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F57192022ED3D6D6824465E3 /* Pods_worddeposit.framework */,
+				E74A45028EABF36BDC29B0D7 /* Pods_worddeposit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -392,11 +392,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 11284221248E7C5800A014E9 /* Build configuration list for PBXNativeTarget "worddeposit" */;
 			buildPhases = (
-				D22B08DE3C7C50B00BD3788D /* [CP] Check Pods Manifest.lock */,
+				BC7967448B04ACAD2F276EC5 /* [CP] Check Pods Manifest.lock */,
 				11284209248E7C5700A014E9 /* Sources */,
 				1128420A248E7C5700A014E9 /* Frameworks */,
 				1128420B248E7C5700A014E9 /* Resources */,
-				CE0F3DF472A7168321D7B093 /* [CP] Embed Pods Frameworks */,
+				082AF394C0C89311E27FFA55 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -467,7 +467,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		CE0F3DF472A7168321D7B093 /* [CP] Embed Pods Frameworks */ = {
+		082AF394C0C89311E27FFA55 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -484,7 +484,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-worddeposit/Pods-worddeposit-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D22B08DE3C7C50B00BD3788D /* [CP] Check Pods Manifest.lock */ = {
+		BC7967448B04ACAD2F276EC5 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -654,6 +654,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -708,13 +709,14 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 		11284222248E7C5800A014E9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C0BEB3DBDC84F83AE219EA46 /* Pods-worddeposit.debug.xcconfig */;
+			baseConfigurationReference = 64D79D641400D9D1E19CC310 /* Pods-worddeposit.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = worddeposit/worddeposit.entitlements;
@@ -736,7 +738,7 @@
 		};
 		11284223248E7C5800A014E9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A070823C5C9FE2E6B5A6D7F8 /* Pods-worddeposit.release.xcconfig */;
+			baseConfigurationReference = E2568201BEE4DB94972CDA34 /* Pods-worddeposit.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = worddeposit/worddeposit.entitlements;
