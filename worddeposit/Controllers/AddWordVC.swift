@@ -207,7 +207,15 @@ class AddWordVC: UIViewController {
         // TODO: - not showing message while adding
         
         dismissKeyboard()
+        
         isKeyboardShowing = false
+        
+        wordExampleTextField.resignFirstResponder()
+        wordTranslationTextField.resignFirstResponder()
+        wordDescriptionTextField.resignFirstResponder()
+        
+        view.endEditing(true)
+        
         wordDescriptionTextField.isHidden = true
         
         if UserService.shared.words.count > Limits.words {
@@ -221,6 +229,9 @@ class AddWordVC: UIViewController {
         wordExampleTextField.text = ""
         wordTranslationTextField.text = ""
         wordDescriptionTextField.text = ""
+        
+        
+        
         isImageSet = false
         wordSaveButton.isEnabled = false
         clearAllButton.isEnabled = false
