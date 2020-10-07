@@ -8,21 +8,7 @@ class CellTextField: UITextField {
         layer.backgroundColor = .none
         font = UIFont(name: "System", size: 17.0)
         clearButtonMode = .whileEditing
-    }
-}
-
-class LimitedTextField: UITextField, UITextFieldDelegate {
-    var limitOfString: Int?
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        delegate = self
-        autocorrectionType = .no
-    }
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let limit = limitOfString else { return true }
-        return TextFieldLimit.checkMaxLength(textField, range: range, string: string, limit: limit)
+        applyCustomClearButton()
     }
 }
 
@@ -186,6 +172,8 @@ class LoginTextField: UITextField, UITextFieldDelegate {
         
         // Placeholder
         attributedPlaceholder = NSAttributedString(string: self.placeholder != nil ? self.placeholder! : "", attributes: [NSAttributedString.Key.foregroundColor: Colors.dark.withAlphaComponent(0.4)])
+        
+        applyCustomClearButton()
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {

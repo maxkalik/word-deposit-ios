@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		110C3F87252DEFC600FE5667 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110C3F86252DEFC600FE5667 /* UITextField.swift */; };
 		110F5E3724FD673D00C463A4 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110F5E3624FD673D00C463A4 /* UserService.swift */; };
 		11108C02252356BC00A44945 /* DMSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 11108BFF252356BC00A44945 /* DMSans-Medium.ttf */; };
 		11108C03252356BC00A44945 /* DMSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 11108C00252356BC00A44945 /* DMSans-Bold.ttf */; };
@@ -84,6 +85,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		110C3F86252DEFC600FE5667 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		110F5E3624FD673D00C463A4 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		11108BFF252356BC00A44945 /* DMSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DMSans-Medium.ttf"; sourceTree = "<group>"; };
 		11108C00252356BC00A44945 /* DMSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DMSans-Bold.ttf"; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 				116BC94D2491836B00968DA6 /* UIViewController.swift */,
 				155F39E72523D69400EC63B9 /* UINavigationController.swift */,
 				15E7741B2529205400EC57D0 /* UILabel.swift */,
+				110C3F86252DEFC600FE5667 /* UITextField.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -517,6 +520,7 @@
 				15E7741C2529205400EC57D0 /* UILabel.swift in Sources */,
 				1147B609252B1F420078A296 /* CheckmarkListTVC.swift in Sources */,
 				1192355024BFB66C00E76403 /* TextFields.swift in Sources */,
+				110C3F87252DEFC600FE5667 /* UITextField.swift in Sources */,
 				1128423B248E83ED00A014E9 /* ForgotPasswordVC.swift in Sources */,
 				15CEBC6124D71A0300D48C0E /* ProgressHUD.swift in Sources */,
 				1128423D248E840000A014E9 /* RoundedViews.swift in Sources */,
