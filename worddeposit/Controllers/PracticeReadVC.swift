@@ -147,35 +147,12 @@ class PracticeReadVC: UIViewController {
         }
     }
     
-    private func printTitle(with rightAnswers: Int, and wrongAnswers: Int) -> String {
-        // get precentage
-        let answersSum = rightAnswers + wrongAnswers
-        let precentageOfCorrectAnswers = (rightAnswers * 100) / answersSum
-        
-        if rightAnswers > wrongAnswers {
-            if precentageOfCorrectAnswers > 70 {
-                return "Perfect!"
-            } else if precentageOfCorrectAnswers > 90 {
-                return "Excelent!"
-            } else {
-                return "Great!"
-            }
-        } else {
-            if precentageOfCorrectAnswers < 30 {
-                return "It's not your the best result."
-            } else if precentageOfCorrectAnswers < 10 {
-                return "You can do better!"
-            } else {
-                return "Mistakes are ok."
-            }
-        }
-    }
-    
     private func prepareForQuit() {
         successMessage.delegate = self
         
-        successMessage.titleTxt = printTitle(with: sessionRightAnswersSum, and: sessionWrongAnswersSum)
-        successMessage.descriptionTxt = "You trained \(trainedWords.count) words\n Correct: \(sessionRightAnswersSum) / Wrong: \(sessionWrongAnswersSum)"
+        successMessage.wordsAmount = trainedWords.count
+        successMessage.answersCorrect = sessionRightAnswersSum
+        successMessage.answersWrong = sessionWrongAnswersSum
         
         successMessage.modalTransitionStyle = .crossDissolve
         successMessage.modalPresentationStyle = .popover
