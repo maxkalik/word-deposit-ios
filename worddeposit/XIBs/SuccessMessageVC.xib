@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SuccessMessageVC" customModule="worddeposit" customModuleProvider="target">
             <connections>
                 <outlet property="button" destination="gLg-fs-Eew" id="e3G-aE-YnE"/>
+                <outlet property="contentView" destination="zYD-zJ-UCu" id="PEa-yC-Iic"/>
                 <outlet property="descriptionLabel" destination="umA-9b-onf" id="unV-hi-vNq"/>
                 <outlet property="imageView" destination="jjy-sg-2JS" id="skU-am-qfc"/>
                 <outlet property="titleLabel" destination="9cv-Ju-Msc" id="d9j-H0-5RJ"/>
@@ -43,8 +44,11 @@
                                 </label>
                             </subviews>
                         </stackView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gLg-fs-Eew">
-                            <rect key="frame" x="40" y="593" width="274" height="35"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gLg-fs-Eew" customClass="PrimaryButton" customModule="worddeposit" customModuleProvider="target">
+                            <rect key="frame" x="40" y="578" width="274" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="DCm-NC-lbw"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="19"/>
                             <state key="normal" title="Finish"/>
                             <connections>

@@ -34,6 +34,8 @@ class PracticeReadVC: UIViewController {
     private var sessionRightAnswersSum = 0
     private var sessionWrongAnswersSum = 0
     
+    private let successMessage = SuccessMessageVC()
+    
     weak var delegate: PracticeReadVCDelegate?
     
     // MARK: - IBOutlets
@@ -170,7 +172,6 @@ class PracticeReadVC: UIViewController {
     }
     
     private func prepareForQuit() {
-        let successMessage = SuccessMessageVC()
         successMessage.delegate = self
         
         successMessage.titleTxt = printTitle(with: sessionRightAnswersSum, and: sessionWrongAnswersSum)
