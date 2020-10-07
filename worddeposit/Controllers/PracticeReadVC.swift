@@ -34,11 +34,13 @@ class PracticeReadVC: UIViewController {
     private var sessionRightAnswersSum = 0
     private var sessionWrongAnswersSum = 0
     
+    private let successMessage = SuccessMessageVC()
+    
     weak var delegate: PracticeReadVCDelegate?
     
     // MARK: - IBOutlets
     
-    @IBOutlet weak var wordImage: UIImageView!
+    @IBOutlet weak var wordImage: RoundedImageView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var practiceLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView! {
@@ -52,25 +54,20 @@ class PracticeReadVC: UIViewController {
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         setupCollectionView()
         setupTrainedWord()
+        
         let layout = UICollectionViewCenterLayout()
         layout.estimatedItemSize = CGSize(width: layout.itemSize.width, height: 40)
-        collectionView.collectionViewLayout = layout
         
-        // back button preparing for action
-        self.navigationItem.hidesBackButton = true
-        let newBackButton = UIBarButtonItem(title: "🏁", style: .plain, target: self, action: #selector(backAction))
-        self.navigationItem.leftBarButtonItem = newBackButton
-    }
-    
-    @objc func backAction() {
-        if trainedWords.count == 0 {
-            _ = navigationController?.popViewController(animated: true)
-        } else {
-            prepareForQuit()
-        }
+        practiceLabel.font = UIFont(name: Fonts.bold, size: 28)
+        
+        collectionView.collectionViewLayout = layout
+        setNavigationBarLeft()
+        setNavgationBarRight()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -81,7 +78,49 @@ class PracticeReadVC: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.navigationController?.navigationBar.tintColor = UIColor.systemBlue
+        self.navigationController?.navigationBar.tintColor = Colors.dark
+    }
+
+    private func setNavigationBarLeft() {
+        self.navigationItem.setHidesBackButton(true, animated: false)
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 42, height: 42))
+        let imageView = UIImageView(frame: CGRect(x: 14, y: 10, width: 24, height: 24))
+        if let imgBackArrow = UIImage(named: "finish") {
+            let plainImage = imgBackArrow.withRenderingMode(.alwaysOriginal)
+            imageView.image = plainImage
+        }
+        view.addSubview(imageView)
+
+        let backTap = UITapGestureRecognizer(target: self, action: #selector(backToMain))
+        view.addGestureRecognizer(backTap)
+
+        let leftBarButtonItem = UIBarButtonItem(customView: view)
+        self.navigationItem.leftBarButtonItem = leftBarButtonItem
+    }
+    
+    private func setNavgationBarRight() {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 42, height: 42))
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 10, width: 24, height: 24))
+        if let imgQuestion = UIImage(named: "question") {
+            let plainImage = imgQuestion.withRenderingMode(.alwaysOriginal)
+            imageView.image = plainImage
+        }
+        view.addSubview(imageView)
+        
+        let skipTap = UITapGestureRecognizer(target: self, action: #selector(skip))
+        view.addGestureRecognizer(skipTap)
+        
+        let rightBarButtonItem = UIBarButtonItem(customView: view)
+        self.navigationItem.rightBarButtonItem = rightBarButtonItem
+    }
+    
+    
+    @objc func backToMain() {
+        if trainedWords.count == 0 {
+            _ = navigationController?.popViewController(animated: true)
+        } else {
+            prepareForQuit()
+        }
     }
     
     // MARK: - Methods
@@ -108,36 +147,12 @@ class PracticeReadVC: UIViewController {
         }
     }
     
-    private func printTitle(with rightAnswers: Int, and wrongAnswers: Int) -> String {
-        // get precentage
-        let answersSum = rightAnswers + wrongAnswers
-        let precentageOfCorrectAnswers = (rightAnswers * 100) / answersSum
-        
-        if rightAnswers > wrongAnswers {
-            if precentageOfCorrectAnswers > 70 {
-                return "Perfect!"
-            } else if precentageOfCorrectAnswers > 90 {
-                return "Excelent!"
-            } else {
-                return "Great!"
-            }
-        } else {
-            if precentageOfCorrectAnswers < 30 {
-                return "It's not your the best result."
-            } else if precentageOfCorrectAnswers < 10 {
-                return "You can do better!"
-            } else {
-                return "Mistakes are ok."
-            }
-        }
-    }
-    
     private func prepareForQuit() {
-        let successMessage = SuccessMessageVC()
         successMessage.delegate = self
         
-        successMessage.titleTxt = printTitle(with: sessionRightAnswersSum, and: sessionWrongAnswersSum)
-        successMessage.descriptionTxt = "You trained \(trainedWords.count) words\n Correct: \(sessionRightAnswersSum) / Wrong: \(sessionWrongAnswersSum)"
+        successMessage.wordsAmount = trainedWords.count
+        successMessage.answersCorrect = sessionRightAnswersSum
+        successMessage.answersWrong = sessionWrongAnswersSum
         
         successMessage.modalTransitionStyle = .crossDissolve
         successMessage.modalPresentationStyle = .popover
@@ -188,12 +203,12 @@ class PracticeReadVC: UIViewController {
     
     // MARK: - IBActions
     
-    @IBAction func skip(_ sender: UIBarButtonItem) {
+    @objc func skip() {
         guard let index = wordsDesk.firstIndex(matching: trainedWord!) else { return }
         let indexPath = IndexPath(row: index, section: 0)
-        if let cell = collectionView.cellForItem(at: indexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) as? PracticeAnswerItem {
             DispatchQueue.main.async {
-                cell.backgroundColor = UIColor.green
+                cell.hintAnswer()
             }
         }
         result(trainedWord!, answer: false)
@@ -216,21 +231,17 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
     }
     
     private func setupPracticeCell(_ cell: PracticeAnswerItem, at index: Int) {
+        
         if selectedIndex == index {
             if wordsDesk[selectedIndex!].id == trainedWord!.id {
-                cell.backgroundColor = UIColor.green
+                cell.correctAnswer()
                 result(self.trainedWord!, answer: true)
             } else {
-                cell.backgroundColor = UIColor.red
+                cell.wrondAnswer()
                 result(self.trainedWord!, answer: false)
             }
-            
         } else {
-            if isSelected {
-                cell.backgroundColor = UIColor.white
-                cell.alpha = 0.5
-                cell.contentView.alpha = 0.5
-            }
+            if isSelected { cell.withoutAnswer() }
         }
     }
     

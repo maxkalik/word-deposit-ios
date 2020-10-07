@@ -14,7 +14,7 @@ class LoginVC: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     
     // Buttons
-    @IBOutlet weak var loginButton: RoundedButton!
+    @IBOutlet weak var loginButton: PrimaryButton!
     @IBOutlet weak var createAccountButton: UIButton!
     @IBOutlet weak var forgotPasswordButton: UIButton!
     
@@ -28,12 +28,22 @@ class LoginVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        // Disable login button
+        loginButton.isEnabled = false
+        
         // Spinner
         self.view.addSubview(progressHUD)
         
         // Hide keyboard when tapped around if keyboard on the screen
         hideKeyboardWhenTappedAround()
+        
+        // Visuals
+        view.backgroundColor = Colors.yellow
+        titleLabel.textColor = Colors.dark
+        
+        // Setup Navigation Bar
+        navigationController?.setup(isClear: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,14 +54,24 @@ class LoginVC: UIViewController {
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         nc.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        emailTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        passwordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self)
+        emailTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        passwordTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
     // MARK: - @objc Methods
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        guard let email = emailTextField.text, let password = passwordTextField.text else { return }
+        validateFields(email: email, password: password)
+    }
     
     @objc func keyboardWillShow(_ notification: NSNotification) {
         // check if keyboard already is on the screen
@@ -68,9 +88,9 @@ class LoginVC: UIViewController {
             
             // Using centerY constrains and changing it allow to save the position of the stackview at the center
             // even if we accidently touch (and drag) uiViewController.
-             UIView.animate(withDuration: 0.3) {
-                self.stackViewCenterY.constant -= (self.keyboardHeight - self.stackView.frame.size.height / 2)
-                self.view.layoutIfNeeded()
+             UIView.animate(withDuration: 0.3) { [self] in
+                stackViewCenterY.constant -= (keyboardHeight - stackView.frame.size.height / 2)
+                view.layoutIfNeeded()
              }
         }
     }
@@ -85,13 +105,20 @@ class LoginVC: UIViewController {
         
         self.stackView.frame.origin.y += (keyboardHeight - self.stackView.frame.height / 2)
         
-         UIView.animate(withDuration: 0.3) {
-            self.stackViewCenterY.constant += (self.keyboardHeight - self.stackView.frame.size.height / 2)
-            self.view.layoutIfNeeded()
+         UIView.animate(withDuration: 0.3) { [self] in
+            stackViewCenterY.constant += (keyboardHeight - stackView.frame.size.height / 2)
+            view.layoutIfNeeded()
          }
     }
     
     // MARK: - Methods
+    private func validateFields(email: String, password: String) {
+        let validator = Validator()
+        let validEmail = validator.validate(text: email, with: [.email, .notEmpty])
+        let validPassword = validator.validate(text: password, with: [.password, .notEmpty])
+        loginButton.isEnabled = validEmail && validPassword
+    }
+    
     private func showHomeVC() {
         let storyboard = UIStoryboard(name: Storyboards.Home, bundle: nil)
         let homeViewController = storyboard.instantiateViewController(identifier: Storyboards.Home) as? UITabBarController
@@ -113,26 +140,8 @@ class LoginVC: UIViewController {
     @IBAction func onSignInBtnPress(_ sender: UIButton) {
         
         guard let email = emailTextField.text, email.isNotEmpty,
-              let password = passwordTextField.text, password.isNotEmpty else {
-                simpleAlert(title: "Error", msg: "Please fill out all fields")
-                return
-        }
-        
-        let validator = Validator()
-        let emailValidMessage = validator.validate(text: email, with: [.email])
-        if emailValidMessage != nil {
-            guard let message = emailValidMessage else { return }
-            simpleAlert(title: "Error", msg: message)
-            return
-        }
-        
-        let passwordValidMessage = validator.validate(text: password, with: [.password])
-        if passwordValidMessage != nil {
-            guard let message = passwordValidMessage else { return }
-            simpleAlert(title: "Error", msg: message)
-            return
-        }
-        
+              let password = passwordTextField.text, password.isNotEmpty else { return }
+
         progressHUD.show()
         
         UserService.shared.signIn(withEmail: email, password: password) { error in

@@ -8,6 +8,11 @@
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="DMSans-Regular.ttf">
+            <string>DMSans-Regular</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Practice-->
         <scene sceneID="SVv-Ow-xyB">
@@ -36,13 +41,13 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="Practice" id="0Cu-Qy-S6P">
-                        <barButtonItem key="leftBarButtonItem" image="tray.2.fill" catalog="system" id="Bmx-e7-52X">
+                        <barButtonItem key="leftBarButtonItem" image="icon_vocabularies" id="Bmx-e7-52X">
                             <connections>
                                 <action selector="vocabulariesBarButtonPressed:" destination="cyQ-JK-l0X" id="bkS-g5-n7P"/>
                                 <segue destination="12l-q6-uD8" kind="show" identifier="Vocabularies" id="khA-EK-dTJ"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="rectangle.stack.person.crop.fill" catalog="system" id="Y9D-hn-rYG">
+                        <barButtonItem key="rightBarButtonItem" image="icon_profile" id="Y9D-hn-rYG">
                             <connections>
                                 <segue destination="5Oc-vH-7SN" kind="show" id="JpH-Z0-vxD"/>
                             </connections>
@@ -59,7 +64,7 @@
         <!--Practice ReadVC-->
         <scene sceneID="0Sg-WE-eYW">
             <objects>
-                <viewController storyboardIdentifier="PracticeReadVC" id="XGr-ab-fSU" customClass="PracticeReadVC" customModule="worddeposit" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PracticeReadVC" interfaceStyle="dark" id="XGr-ab-fSU" customClass="PracticeReadVC" customModule="worddeposit" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7Zb-h6-gYF">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -80,7 +85,7 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Xgn-gY-Lyj">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Xgn-gY-Lyj" customClass="RoundedImageView" customModule="worddeposit" customModuleProvider="target">
                                                 <rect key="frame" x="72" y="30" width="270" height="270"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="Xgn-gY-Lyj" secondAttribute="height" multiplier="1:1" id="fdd-k2-fyy"/>
@@ -139,13 +144,7 @@
                             <constraint firstAttribute="bottom" secondItem="TCq-te-lsk" secondAttribute="bottom" id="mCR-nI-Cgs"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="keS-6x-LG6">
-                        <barButtonItem key="rightBarButtonItem" title="☹️" id="e0T-BB-hks">
-                            <connections>
-                                <action selector="skip:" destination="XGr-ab-fSU" id="fc0-pC-oXb"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="keS-6x-LG6"/>
                     <connections>
                         <outlet property="collectionView" destination="Fie-T9-cv2" id="gQb-jT-yce"/>
                         <outlet property="practiceLabel" destination="HlN-VU-D6V" id="Xdh-y8-JQ5"/>
@@ -170,7 +169,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Vocabularies" id="iUH-cY-NBg">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Sd8-2t-pyB">
+                        <barButtonItem key="rightBarButtonItem" image="icon_add_vocabulary" id="Sd8-2t-pyB">
                             <connections>
                                 <segue destination="qvX-RP-zC0" kind="show" id="FgU-uN-MIW"/>
                             </connections>
@@ -195,15 +194,15 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="DNU-r9-0JB">
                                 <rect key="frame" x="20" y="327" width="374" height="242"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZD9-di-RMR">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="New Vocabulary" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZD9-di-RMR" customClass="PrimaryTextField" customModule="worddeposit" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="4xy-ka-v9J"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hug-rP-xzC">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hug-rP-xzC" customClass="ButtonSelector" customModule="worddeposit" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="70" width="374" height="32"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <state key="normal" title="Select language"/>
@@ -211,29 +210,33 @@
                                             <segue destination="p8a-RE-aLZ" kind="show" id="YiF-nd-0zQ"/>
                                         </connections>
                                     </button>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Other" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4fs-rZ-Sqq">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Other" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4fs-rZ-Sqq" customClass="SecondaryTextField" customModule="worddeposit" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="122" width="374" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="9P7-hp-Qfd"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                     </textField>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="2Mi-Ca-bAs">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="2Mi-Ca-bAs">
                                         <rect key="frame" x="0.0" y="192" width="374" height="50"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tzx-Zg-Hh5">
-                                                <rect key="frame" x="0.0" y="0.0" width="187" height="50"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tzx-Zg-Hh5" customClass="SecondaryButton" customModule="worddeposit" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="182" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="rop-yd-9sh"/>
+                                                </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <state key="normal" title="Cancel"/>
                                                 <connections>
                                                     <action selector="cancelTapped:" destination="qvX-RP-zC0" eventType="touchUpInside" id="Mgx-PY-tfR"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dxh-uR-aQh">
-                                                <rect key="frame" x="187" y="0.0" width="187" height="50"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dxh-uR-aQh" customClass="SecondaryButton" customModule="worddeposit" customModuleProvider="target">
+                                                <rect key="frame" x="192" y="0.0" width="182" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="6Em-IH-t3j"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="Kfj-XW-448"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <state key="normal" title="Save"/>
@@ -270,10 +273,10 @@
             </objects>
             <point key="canvasLocation" x="-1165.217391304348" y="-1443.0803571428571"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Tab Bar Conroller-->
         <scene sceneID="HfZ-1V-o4J">
             <objects>
-                <tabBarController storyboardIdentifier="Home" automaticallyAdjustsScrollViewInsets="NO" id="to1-eN-B6t" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="Home" automaticallyAdjustsScrollViewInsets="NO" id="to1-eN-B6t" customClass="TabBarConroller" customModule="worddeposit" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="JeK-BG-e3g">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
@@ -304,12 +307,12 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Vocabulary" id="uKz-c3-4M2">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="tray.2.fill" catalog="system" id="UuC-Hs-bwX">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="icon_vocabularies" id="UuC-Hs-bwX">
                             <connections>
                                 <segue destination="12l-q6-uD8" kind="show" identifier="Vocabularies" id="cIB-pM-tsi"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="User" image="rectangle.stack.person.crop.fill" catalog="system" id="lcJ-ix-GSG">
+                        <barButtonItem key="rightBarButtonItem" title="User" image="icon_profile" id="lcJ-ix-GSG">
                             <connections>
                                 <segue destination="5Oc-vH-7SN" kind="show" id="L4V-Nc-46o"/>
                             </connections>
@@ -368,7 +371,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" alwaysBounceVertical="YES" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u8a-OR-7Ws">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CAr-Nn-7oU">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="734"/>
@@ -376,58 +379,75 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DkP-3p-CNm">
                                                 <rect key="frame" x="0.0" y="414" width="414" height="320"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="GMM-oe-XGe">
-                                                        <rect key="frame" x="20" y="20" width="374" height="270"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="GMM-oe-XGe">
+                                                        <rect key="frame" x="20" y="20" width="374" height="260"/>
                                                         <subviews>
-                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Example" textAlignment="center" minimumFontSize="22" translatesAutoresizingMaskIntoConstraints="NO" id="IsX-s0-gXE">
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Example" textAlignment="center" minimumFontSize="22" translatesAutoresizingMaskIntoConstraints="NO" id="IsX-s0-gXE" customClass="PrimaryTextField" customModule="worddeposit" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="50" id="11o-kO-kIf"/>
                                                                 </constraints>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                                <fontDescription key="fontDescription" name="DMSans-Regular" family="DM Sans" pointSize="25"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                             </textField>
-                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Translation" textAlignment="center" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="VKL-sr-heo">
-                                                                <rect key="frame" x="0.0" y="60" width="374" height="50"/>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Translation" textAlignment="center" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="VKL-sr-heo" customClass="SecondaryTextField" customModule="worddeposit" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="50" width="374" height="50"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="50" id="wYH-fG-ATm"/>
                                                                 </constraints>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                <fontDescription key="fontDescription" name="DMSans-Regular" family="DM Sans" pointSize="20"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                             </textField>
-                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="[description]" textAlignment="center" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="b71-bp-t3y">
-                                                                <rect key="frame" x="0.0" y="120" width="374" height="50"/>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="[description]" textAlignment="center" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="b71-bp-t3y" customClass="SecondaryTextField" customModule="worddeposit" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="100" width="374" height="50"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="50" id="VZP-07-lY7"/>
                                                                 </constraints>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                <fontDescription key="fontDescription" name="DMSans-Regular" family="DM Sans" pointSize="16"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                             </textField>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EN0-4t-0qf" customClass="RoundedButton" customModule="worddeposit" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="180" width="374" height="50"/>
-                                                                <color key="backgroundColor" systemColor="systemFillColor"/>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ppC-dJ-vvB">
+                                                                <rect key="frame" x="0.0" y="150" width="374" height="60"/>
+                                                                <subviews>
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EN0-4t-0qf" customClass="PrimaryButton" customModule="worddeposit" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="10" width="374" height="50"/>
+                                                                        <color key="backgroundColor" systemColor="systemFillColor"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="height" constant="50" id="yXk-it-0iX"/>
+                                                                        </constraints>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                                        <state key="normal" title="Add word">
+                                                                            <color key="titleColor" systemColor="systemBlueColor"/>
+                                                                        </state>
+                                                                        <connections>
+                                                                            <action selector="onAddWordBtnPress:" destination="8x7-ml-O9y" eventType="touchUpInside" id="jOe-SD-Yh1"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                </subviews>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="height" constant="50" id="yXk-it-0iX"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="EN0-4t-0qf" secondAttribute="bottom" id="Gfq-wl-ELq"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="EN0-4t-0qf" secondAttribute="trailing" id="Gin-M7-c2Y"/>
+                                                                    <constraint firstItem="EN0-4t-0qf" firstAttribute="top" secondItem="ppC-dJ-vvB" secondAttribute="top" constant="10" id="bAV-AX-ENb"/>
+                                                                    <constraint firstAttribute="height" constant="60" id="sf9-K7-RNt"/>
+                                                                    <constraint firstItem="EN0-4t-0qf" firstAttribute="leading" secondItem="ppC-dJ-vvB" secondAttribute="leading" id="tXe-ku-qmE"/>
                                                                 </constraints>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                                                <state key="normal" title="Add word">
-                                                                    <color key="titleColor" systemColor="systemBlueColor"/>
-                                                                </state>
-                                                                <connections>
-                                                                    <action selector="onAddWordBtnPress:" destination="8x7-ml-O9y" eventType="touchUpInside" id="jOe-SD-Yh1"/>
-                                                                </connections>
-                                                            </button>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bhh-6m-fMG">
-                                                                <rect key="frame" x="0.0" y="240" width="374" height="30"/>
+                                                            </view>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bhh-6m-fMG" customClass="DefaultButton" customModule="worddeposit" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="210" width="374" height="50"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="50" id="4tB-fU-BLm"/>
+                                                                </constraints>
                                                                 <state key="normal" title="Clear All"/>
                                                                 <connections>
                                                                     <action selector="onClearAllBtnPress:" destination="8x7-ml-O9y" eventType="touchUpInside" id="5bg-bz-J3L"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </stackView>
                                                 </subviews>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="320" id="71p-hr-Z0T"/>
                                                     <constraint firstItem="GMM-oe-XGe" firstAttribute="top" secondItem="DkP-3p-CNm" secondAttribute="top" constant="20" id="SNy-if-s0o"/>
@@ -441,13 +461,13 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="YLl-Up-aaC" secondAttribute="height" multiplier="1:1" id="gyl-iI-SpU"/>
                                                 </constraints>
-                                                <state key="normal" image="logo"/>
+                                                <state key="normal" image="picture"/>
                                                 <connections>
                                                     <action selector="wordImagePickerBtnTapped:" destination="8x7-ml-O9y" eventType="touchUpInside" id="xi0-8W-hHR"/>
                                                 </connections>
                                             </button>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="YLl-Up-aaC" firstAttribute="top" secondItem="CAr-Nn-7oU" secondAttribute="top" id="Ati-AZ-BTc"/>
                                             <constraint firstAttribute="bottom" secondItem="DkP-3p-CNm" secondAttribute="bottom" id="Cd2-D3-s1D"/>
@@ -473,12 +493,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="u8a-OR-7Ws" firstAttribute="top" secondItem="0hT-VJ-UGF" secondAttribute="top" id="Lpp-iO-lVx"/>
-                            <constraint firstItem="u8a-OR-7Ws" firstAttribute="bottom" secondItem="pgB-dc-eSC" secondAttribute="bottom" id="OAw-Bg-eaj"/>
                             <constraint firstItem="u8a-OR-7Ws" firstAttribute="leading" secondItem="pgB-dc-eSC" secondAttribute="leading" id="Oiy-TQ-7uk"/>
                             <constraint firstItem="u8a-OR-7Ws" firstAttribute="trailing" secondItem="pgB-dc-eSC" secondAttribute="trailing" id="bPu-cJ-jKm"/>
+                            <constraint firstAttribute="bottom" secondItem="u8a-OR-7Ws" secondAttribute="bottom" id="uDQ-r3-4n7"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Add Word" image="plus" catalog="system" id="Mmj-xg-myp"/>
+                    <tabBarItem key="tabBarItem" title="Add Word" image="icon_plus" id="Mmj-xg-myp">
+                        <inset key="imageInsets" minX="0.0" minY="13" maxX="0.0" maxY="-13"/>
+                    </tabBarItem>
                     <connections>
                         <outlet property="clearAllButton" destination="bhh-6m-fMG" id="UqK-cM-eJE"/>
                         <outlet property="inputsView" destination="DkP-3p-CNm" id="uP8-Bm-DfH"/>
@@ -501,11 +523,12 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="insetGrouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="jMX-1c-XEb">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <sections>
-                            <tableViewSection id="etR-T0-ymd">
+                            <tableViewSection headerTitle="User Info" id="etR-T0-ymd">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="SG3-LR-KhG" detailTextLabel="Zmk-Ak-3ki" rowHeight="80" style="IBUITableViewCellStyleSubtitle" id="RfK-Cq-ZO2">
-                                        <rect key="frame" x="20" y="18" width="374" height="80"/>
+                                        <rect key="frame" x="20" y="55.5" width="374" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RfK-Cq-ZO2" id="RNy-NH-Mu8">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="80"/>
@@ -532,7 +555,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="BvH-gX-4oE" detailTextLabel="ryT-Q9-CiL" style="IBUITableViewCellStyleValue1" id="Krz-Hx-NTQ">
-                                        <rect key="frame" x="20" y="98" width="374" height="43.5"/>
+                                        <rect key="frame" x="20" y="135.5" width="374" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Krz-Hx-NTQ" id="sSE-fi-OoU">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="43.5"/>
@@ -558,39 +581,12 @@
                                             <segue destination="p8a-RE-aLZ" kind="show" identifier="NativeLanguage" id="0BZ-k3-ByQ"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="0Mq-Ad-oO8" detailTextLabel="1Em-4w-mDB" style="IBUITableViewCellStyleValue1" id="v4i-TF-Cze">
-                                        <rect key="frame" x="20" y="141.5" width="374" height="43.5"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="v4i-TF-Cze" id="IAG-tb-R33">
-                                            <rect key="frame" x="0.0" y="0.0" width="343" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Account plan" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0Mq-Ad-oO8">
-                                                    <rect key="frame" x="20" y="12" width="100" height="20.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" systemColor="systemGrayColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Regular" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1Em-4w-mDB">
-                                                    <rect key="frame" x="277" y="12" width="58" height="20.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" systemColor="systemGrayColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="p8a-RE-aLZ" kind="show" identifier="AccountType" id="wQV-jD-p7z"/>
-                                        </connections>
-                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Statistics" id="2v9-yk-UUm">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" textLabel="rcF-2n-cBL" detailTextLabel="89D-Ty-Dbo" style="IBUITableViewCellStyleValue1" id="ibu-7s-qgL">
-                                        <rect key="frame" x="20" y="241" width="374" height="43.5"/>
+                                        <rect key="frame" x="20" y="235" width="374" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ibu-7s-qgL" id="E9p-yD-nST">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
@@ -614,7 +610,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" textLabel="tqz-x1-YzZ" detailTextLabel="u00-bo-AlO" style="IBUITableViewCellStyleValue1" id="kyH-b6-JEr">
-                                        <rect key="frame" x="20" y="284.5" width="374" height="43.5"/>
+                                        <rect key="frame" x="20" y="278.5" width="374" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kyH-b6-JEr" id="1Ih-x3-kPn">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
@@ -638,7 +634,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" textLabel="opB-2n-65q" detailTextLabel="jO8-jm-e6G" style="IBUITableViewCellStyleValue1" id="bik-DO-G7l">
-                                        <rect key="frame" x="20" y="328" width="374" height="43.5"/>
+                                        <rect key="frame" x="20" y="322" width="374" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bik-DO-G7l" id="6ZF-uc-wUo">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
@@ -665,8 +661,8 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="General" id="jog-mD-axE">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="60" id="DOE-aq-oB3">
-                                        <rect key="frame" x="20" y="427.5" width="374" height="60"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="9" rowHeight="60" id="DOE-aq-oB3">
+                                        <rect key="frame" x="20" y="421.5" width="374" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="DOE-aq-oB3" id="gMA-VA-KME">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="60"/>
@@ -695,7 +691,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="h89-ZI-wHl" style="IBUITableViewCellStyleDefault" id="BFa-97-u8v">
-                                        <rect key="frame" x="20" y="487.5" width="374" height="43.5"/>
+                                        <rect key="frame" x="20" y="481.5" width="374" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BFa-97-u8v" id="sx9-9S-5r8">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="43.5"/>
@@ -715,7 +711,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="qSK-lk-Qfw" style="IBUITableViewCellStyleDefault" id="wJh-ti-40E">
-                                        <rect key="frame" x="20" y="531" width="374" height="43.5"/>
+                                        <rect key="frame" x="20" y="525" width="374" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wJh-ti-40E" id="h9y-5c-CpL">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="43.5"/>
@@ -735,7 +731,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="Kxt-mS-fMa" style="IBUITableViewCellStyleDefault" id="p7T-qZ-lLr">
-                                        <rect key="frame" x="20" y="574.5" width="374" height="43.5"/>
+                                        <rect key="frame" x="20" y="568.5" width="374" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="p7T-qZ-lLr" id="lji-Ne-B3a">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="43.5"/>
@@ -759,7 +755,7 @@
                             <tableViewSection footerTitle="Version 2.0.0" id="IhG-qZ-K1t">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="Ar3-pw-sL2">
-                                        <rect key="frame" x="20" y="654" width="374" height="43.5"/>
+                                        <rect key="frame" x="20" y="648" width="374" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ar3-pw-sL2" id="0MU-ZD-2NZ">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
@@ -795,7 +791,9 @@
                     <navigationItem key="navigationItem" title="Profile" id="28z-Na-XoR"/>
                     <connections>
                         <outlet property="correctAnswersLabel" destination="jO8-jm-e6G" id="Vxb-U3-WlE"/>
+                        <outlet property="logoutButton" destination="myT-j0-kXP" id="SQs-gV-Sdp"/>
                         <outlet property="nativeLanguage" destination="ryT-Q9-CiL" id="HGt-x7-OhP"/>
+                        <outlet property="notificationsLabel" destination="w6e-NL-Anc" id="QHz-eP-zQf"/>
                         <outlet property="notificationsSwitch" destination="FU1-ab-6hR" id="U9v-s3-EbO"/>
                         <outlet property="userEmail" destination="Zmk-Ak-3ki" id="97v-X4-D7t"/>
                         <outlet property="userFullName" destination="SG3-LR-KhG" id="CW4-eg-Aiu"/>
@@ -954,9 +952,13 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="deleteAccountButton" destination="fQg-p5-3ve" id="FjR-XU-4Ij"/>
                         <outlet property="doneButton" destination="csU-tv-Eev" id="6lb-N0-Nee"/>
+                        <outlet property="firstNameLabel" destination="BGz-3c-jIK" id="7uL-Rh-d6m"/>
                         <outlet property="firstNameTextField" destination="XeH-88-fk6" id="z67-xI-oX7"/>
+                        <outlet property="lastNameLabel" destination="47K-uk-AGH" id="HWN-Eh-wsr"/>
                         <outlet property="lastNameTextField" destination="Cyt-nF-HyN" id="jXU-V4-J4t"/>
+                        <outlet property="resetPasswordButton" destination="QhY-s2-Hgj" id="n4e-yr-6Z7"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uVC-LW-nZg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1021,13 +1023,18 @@
         <scene sceneID="B5u-h6-MZb">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="eSR-CY-Dzt" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Vocabulary" image="list.dash" catalog="system" id="yLS-d6-QEP"/>
+                    <tabBarItem key="tabBarItem" title="Vocabulary" image="icon_vocabulary" id="yLS-d6-QEP">
+                        <inset key="imageInsets" minX="0.0" minY="13" maxX="0.0" maxY="-13"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="JJ9-1V-Ut2">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="mN9-sV-96K">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="yvr-8f-efO" kind="relationship" relationship="rootViewController" id="R3z-jY-o4I"/>
                     </connections>
@@ -1060,10 +1067,12 @@
         <scene sceneID="WLh-AX-HSn">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Q6o-nl-XP1" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Practice" image="pencil.and.outline" catalog="system" id="Kck-HL-rmo"/>
+                    <tabBarItem key="tabBarItem" title="Practice" image="icon_practice" id="Kck-HL-rmo">
+                        <inset key="imageInsets" minX="0.0" minY="13" maxX="0.0" maxY="-13"/>
+                    </tabBarItem>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="oty-tH-WAA">
-                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="oty-tH-WAA">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1099,20 +1108,21 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="cIB-pM-tsi"/>
-        <segue reference="L4V-Nc-46o"/>
+        <segue reference="khA-EK-dTJ"/>
+        <segue reference="JpH-Z0-vxD"/>
         <segue reference="cT5-yM-GyM"/>
-        <segue reference="wQV-jD-p7z"/>
+        <segue reference="0BZ-k3-ByQ"/>
         <segue reference="FgU-uN-MIW"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="list.dash" catalog="system" width="128" height="85"/>
-        <image name="logo" width="64" height="64"/>
-        <image name="pencil.and.outline" catalog="system" width="128" height="128"/>
+        <image name="icon_add_vocabulary" width="24" height="24"/>
+        <image name="icon_plus" width="24" height="24"/>
+        <image name="icon_practice" width="24" height="24"/>
+        <image name="icon_profile" width="24" height="24"/>
+        <image name="icon_vocabularies" width="24" height="24"/>
+        <image name="icon_vocabulary" width="24" height="24"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
-        <image name="plus" catalog="system" width="128" height="113"/>
-        <image name="rectangle.stack.person.crop.fill" catalog="system" width="128" height="122"/>
-        <image name="tray.2.fill" catalog="system" width="128" height="114"/>
+        <image name="picture" width="86" height="86"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

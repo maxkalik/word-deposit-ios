@@ -4,8 +4,6 @@ class CollectionViewRow {
     var attributes = [UICollectionViewLayoutAttributes]()
     var spacing: CGFloat = 0
 
-
-
     init(spacing: CGFloat) {
         self.spacing = spacing
     }

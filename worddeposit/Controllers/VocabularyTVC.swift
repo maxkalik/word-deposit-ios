@@ -28,10 +28,10 @@ class VocabularyTVC: UITableViewController {
         // Setup Table View
         setupTableView()
         setupResultsTableController()
+        setupMessage()
         
         // Setup message
         view.addSubview(messageView)
-
         
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(Keys.vocabulariesSwitchNotificationKey), object: nil)
@@ -43,25 +43,16 @@ class VocabularyTVC: UITableViewController {
     }
     
     @objc func vocabularyDidSwitch() {
-        self.words.removeAll()
-        self.tableView.reloadData()
-        self.setupContent(words: UserService.shared.words)
-        self.isVocabularySwitched = true
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        print("vocabulary will appear")
-        
-        setupMessage()
-        messageView.hide()
+        words.removeAll()
+        tableView.reloadData()
+        setupContent(words: UserService.shared.words)
+        isVocabularySwitched = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if !isVocabularySwitched {
+        if isVocabularySwitched == false {
             setupContent(words: UserService.shared.words) // <-- TODO: Bug
         }
         messageView.frame.origin.y = tableView.contentOffset.y
@@ -98,10 +89,15 @@ class VocabularyTVC: UITableViewController {
     }
     
     func setupTableView() {
+        
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
+        tableView.contentInset = insets
+        
         let nib = UINib(nibName: XIBs.VocabularyTVCell, bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: XIBs.VocabularyTVCell)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: ReusableIdentifiers.MessageView)
         navigationItem.title = ""
+        tableView.backgroundColor = Colors.silver
     }
     
     func setupResultsTableController() {
@@ -118,7 +114,21 @@ class VocabularyTVC: UITableViewController {
         searchController.definesPresentationContext = true
         searchController.searchBar.delegate = self // Monitor when the search button is tapped
         
-        navigationController?.navigationBar.prefersLargeTitles = true
+        // Custom icons
+        let searchIcon = UIImage(named: "icon_search")
+        let closeIcon = UIImage(named: "icon_close")
+        
+        searchController.searchBar.setImage(searchIcon, for: .search, state: .normal)
+        searchController.searchBar.setImage(closeIcon, for: .clear, state: .normal)
+        
+        searchController.searchBar.setPositionAdjustment(UIOffset(horizontal: 8, vertical: .zero), for: .search)
+        searchController.searchBar.setPositionAdjustment(UIOffset(horizontal: -5, vertical: .zero), for: .clear)
+        searchController.searchBar.searchTextPositionAdjustment = UIOffset(horizontal: 4, vertical: .zero)
+        
+        
+        // Cusom font
+        let attributes = [NSAttributedString.Key.font: UIFont(name: Fonts.medium, size: 16), NSAttributedString.Key.foregroundColor: UIColor.black]
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = attributes as [NSAttributedString.Key : Any]
         
         // Place the search bar in the nav bar
         navigationItem.searchController = searchController
@@ -136,9 +146,9 @@ class VocabularyTVC: UITableViewController {
         
         // Check words
         if words.isEmpty {
-            self.messageView.show()
+            messageView.show()
         } else {
-            self.messageView.hide()
+            messageView.hide()
             for index in 0..<words.count {
                 self.words.append(words[index])
                 self.tableView.insertRows(at: [IndexPath(item: index, section: 0)], with: .fade)
@@ -188,6 +198,7 @@ extension VocabularyTVC {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: XIBs.VocabularyTVCell, for: indexPath) as? VocabularyTVCell {
+            cell.backgroundColor = .clear
             cell.configureCell(word: words[indexPath.row])
             return cell
         }

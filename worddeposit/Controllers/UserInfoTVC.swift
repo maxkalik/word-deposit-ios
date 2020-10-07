@@ -8,7 +8,11 @@ class UserInfoTVC: UITableViewController {
     
     // MARK: - IBOutlets
     
+    @IBOutlet weak var firstNameLabel: UILabel!
+    @IBOutlet weak var lastNameLabel: UILabel!
     @IBOutlet weak var doneButton: UIBarButtonItem!
+    @IBOutlet weak var resetPasswordButton: UIButton!
+    @IBOutlet weak var deleteAccountButton: UIButton!
     @IBOutlet weak var firstNameTextField: CellTextField!
     @IBOutlet weak var lastNameTextField: CellTextField!
     @IBOutlet weak var oldPasswordTextField: CellTextField!
@@ -60,14 +64,43 @@ class UserInfoTVC: UITableViewController {
     // MARK: - Methods
     
     private func setupUI() {
+        
+        // Titles
+        let titleFont = UIFont(name: Fonts.medium, size: 16)
+        let titleColor = Colors.dark
+        
+        firstNameLabel.font = titleFont
+        lastNameLabel.font = titleFont
+        
+        firstNameLabel.textColor = titleColor
+        lastNameLabel.textColor = titleColor
+        
+        // Text fields
+        let textFieldFont = UIFont(name: Fonts.medium, size: 16)
+        let textFieldTextColor = Colors.dark
+        
+        firstNameTextField.font = textFieldFont
+        firstNameTextField.textColor = textFieldTextColor
+        
+        lastNameTextField.font = textFieldFont
+        lastNameTextField.textColor = textFieldTextColor
+        
+        let buttonsFont = UIFont(name: Fonts.bold, size: 16)
+        
+        resetPasswordButton.titleLabel?.font = buttonsFont
+        deleteAccountButton.titleLabel?.font = buttonsFont
+        resetPasswordButton.titleLabel?.addCharactersSpacing(spacing: -0.4, text: "Reset Password")
+        deleteAccountButton.titleLabel?.addCharactersSpacing(spacing: -0.4, text: "Delete Account")
+        
         firstNameTextField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
         lastNameTextField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
-        firstNameTextField.delegate = self
-        lastNameTextField.delegate = self
+
         firstNameTextField.text = firstName
         lastNameTextField.text = lastName
         doneButton.isEnabled = false
         view.superview?.addSubview(progressHUD)
+        
+        
     }
     
     // MARK: - IBActions
@@ -117,6 +150,6 @@ class UserInfoTVC: UITableViewController {
 
 extension UserInfoTVC: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        TextFieldLimit.checkMaxLength(textField, range: range, string: string, limit: Limits.vocabularyTitle)
+        TextFieldLimit.checkMaxLength(textField, range: range, string: string, limit: Limits.name)
     }
 }

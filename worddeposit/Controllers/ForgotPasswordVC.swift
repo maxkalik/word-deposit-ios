@@ -8,6 +8,7 @@ class ForgotPasswordVC: UIViewController {
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var stackViewCenterY: NSLayoutConstraint!
+    @IBOutlet weak var resetPasswordButton: PrimaryButton!
     
     // Custom
     private var isKeyboardShowing = false
@@ -20,6 +21,11 @@ class ForgotPasswordVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         hideKeyboardWhenTappedAround()
+        setupNavigationBar()
+
+        view.backgroundColor = Colors.silver
+        resetPasswordButton.setTitleColor(Colors.silver, for: .normal)
+        resetPasswordButton.isEnabled = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -30,14 +36,24 @@ class ForgotPasswordVC: UIViewController {
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         nc.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        emailTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self)
+        emailTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
     // MARK: - @objc Methods
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        guard let email = emailTextField.text else { return }
+        let validator = Validator()
+        let validEmail = validator.validate(text: email, with: [.email, .notEmpty])
+        resetPasswordButton.isEnabled = validEmail
+    }
     
     @objc func keyboardWillShow(_ notification: NSNotification) {
         // check if keyboard already is on the screen
@@ -54,9 +70,9 @@ class ForgotPasswordVC: UIViewController {
             
             // Using centerY constrains and changing it allow to save the position of the stackview at the center
             // even if we accidently touch (and drag) uiViewController.
-             UIView.animate(withDuration: 0.3) {
-                self.stackViewCenterY.constant -= (self.keyboardHeight - self.stackView.frame.size.height)
-                self.view.layoutIfNeeded()
+             UIView.animate(withDuration: 0.3) { [self] in
+                stackViewCenterY.constant -= (keyboardHeight - stackView.frame.size.height)
+                view.layoutIfNeeded()
              }
         }
     }
@@ -69,30 +85,43 @@ class ForgotPasswordVC: UIViewController {
         titleLabel.alpha = 1
         cancelButton.alpha = 1
         
-        self.stackView.frame.origin.y += (keyboardHeight - self.stackView.frame.height)
+        stackView.frame.origin.y += (keyboardHeight - stackView.frame.height)
         
-         UIView.animate(withDuration: 0.3) {
-            self.stackViewCenterY.constant += (self.keyboardHeight - self.stackView.frame.size.height)
-            self.view.layoutIfNeeded()
+         UIView.animate(withDuration: 0.3) { [self] in
+            stackViewCenterY.constant += (keyboardHeight - stackView.frame.size.height)
+            view.layoutIfNeeded()
          }
+    }
+    
+    @objc func backToMain() {
+        self.navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Methods
     
+    func setupNavigationBar() {
+        self.navigationItem.setHidesBackButton(true, animated: false)
+        
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 42, height: 42))
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 10, width: 24, height: 24))
+
+        if let imgBackArrow = UIImage(named: "icon_back") {
+            let tintedImage = imgBackArrow.withRenderingMode(.alwaysTemplate)
+            imageView.image = tintedImage
+            imageView.tintColor = Colors.blue
+        }
+        view.addSubview(imageView)
+
+        let backTap = UITapGestureRecognizer(target: self, action: #selector(backToMain))
+        view.addGestureRecognizer(backTap)
+
+        let leftBarButtonItem = UIBarButtonItem(customView: view)
+        navigationItem.leftBarButtonItem = leftBarButtonItem
+    }
+    
     // MARK: - IBActions
     @IBAction func onResetPasswordBtnPress(_ sender: UIButton) {
-        guard let email = emailTextField.text, email.isNotEmpty else {
-            simpleAlert(title: "Error", msg: "Fill email field out")
-            return
-        }
-        
-        let validator = Validator()
-        let emailValidMessage = validator.validate(text: email, with: [.email])
-        if emailValidMessage != nil {
-            guard let message = emailValidMessage else { return }
-            simpleAlert(title: "Error", msg: message)
-            return
-        }
+        guard let email = emailTextField.text, email.isNotEmpty else { return }
         
         progressHUD.show()
         

@@ -5,8 +5,20 @@ class VocabularyTVCell: UITableViewCell {
 
     // Outlets
     @IBOutlet weak var preview: UIImageView!
-    @IBOutlet weak var wordExampleLabel: UILabel!
-    @IBOutlet weak var wordTranslationLabel: UILabel!
+    @IBOutlet weak var wordExampleLabel: UILabel! {
+        didSet {
+            wordExampleLabel.font = UIFont(name: Fonts.bold, size: 16)
+            guard let text = wordExampleLabel.text else { return }
+            wordExampleLabel.addCharactersSpacing(spacing: -0.6, text: text)
+        }
+    }
+    @IBOutlet weak var wordTranslationLabel: UILabel! {
+        didSet {
+            wordTranslationLabel.font = UIFont(name: Fonts.medium, size: 16)
+            guard let text = wordTranslationLabel.text else { return }
+            wordTranslationLabel.addCharactersSpacing(spacing: -0.6, text: text)
+        }
+    }
     
     // Variables
     private var word: Word!
@@ -34,8 +46,7 @@ class VocabularyTVCell: UITableViewCell {
         if let url = URL(string: word.imgUrl) {
             preview.kf.indicatorType = .activity
             let options: KingfisherOptionsInfo = [KingfisherOptionsInfoItem.transition(.fade(0.2))]
-            let placeholder = UIImage(named: Placeholders.Logo)
-            preview.kf.setImage(with: url, placeholder: placeholder, options: options)
+            preview.kf.setImage(with: url, options: options)
         }
         
         wordExampleLabel.text = word.example

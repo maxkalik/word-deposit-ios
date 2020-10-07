@@ -31,6 +31,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(Keys.vocabulariesSwitchNotificationKey), object: nil)
         
@@ -50,6 +51,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         setupMessage()
         messageView.hide()
         checkVocabulariesExist()
+        print("(!) - VOCABULARIES View Will Appear")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -97,13 +99,15 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     }
     
     func vocabularyDidUpdate(_ vocabulary: Vocabulary, index: Int) {
-        self.vocabularies[index] = vocabulary // index out of range
+        vocabularies[index] = vocabulary // index out of range
         tableView.reloadRows(at: [IndexPath(item: index, section: 0)], with: .fade)
     }
     
     func vocabularyDidRemove(_ vocabulary: Vocabulary, index: Int) {
-        self.vocabularies.remove(at: index)
-        self.tableView.deleteRows(at: [IndexPath(item: index, section: 0)], with: .fade)
+        print("02 - VOCABULARY BUG INVISTIGATION. Vocabularies before delete: \(vocabularies)")
+        vocabularies.remove(at: index)
+        tableView.deleteRows(at: [IndexPath(item: index, section: 0)], with: .fade)
+        print("03 - VOCABULARY BUG INVISTIGATION. Vocabularies after delete: \(vocabularies)")
         // TODO: - Bug - attempt to delete row 2 from section 0 which only contains 2 rows before the update
     }
     
@@ -135,6 +139,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         let nib = UINib(nibName: XIBs.VocabulariesTVCell, bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: XIBs.VocabulariesTVCell)
         tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+        tableView.backgroundColor = Colors.silver
     }
     
     @objc func vocabularyDidSwitch() {
@@ -180,6 +185,9 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: XIBs.VocabulariesTVCell, for: indexPath) as? VocabulariesTVCell {
+            
+            cell.backgroundColor = .clear
+            
             let vocabulary = vocabularies[indexPath.row]
             cell.configureCell(vocabulary: vocabulary)
             cell.isSelectedVocabulary = false
@@ -203,7 +211,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            
+            // TODO: - BUG - deleting out of the range of the array
             let vocabulary = vocabularies[indexPath.row]
             
             if vocabulary.isSelected {
@@ -216,6 +224,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
                             self.simpleAlert(title: "Error", msg: "Cannot remove vocabulary. Try to reload an app")
                             return
                         }
+                        print("01 - VOCABULARY BUG INVISTIGATION. Complition Delete. Index for local removing: \(indexPath.row)")
                         self.vocabularyDidRemove(vocabulary, index: indexPath.row)
                     }
                 }))

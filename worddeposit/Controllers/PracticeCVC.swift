@@ -20,15 +20,17 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         trainers = PracticeTrainers().data
         registerViews()
         setupUI()
-
+        
+        disableInteractingWithUI()
         let userService = UserService.shared
         userService.fetchCurrentUser { error, user in
             if let error = error {
                 self.simpleAlert(title: "Error", msg: error.localizedDescription)
+                showLoginVC(view: self.view)
                 return
             }
             guard let _ = user else {
@@ -45,6 +47,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                 guard let vocabularies = vocabularies else { return }
                 if vocabularies.isEmpty {
                     self.presentVocabulariesVC()
+                    self.allowInteractingWithUI()
                     self.progressHUD.hide()
                 } else {
                     userService.getCurrentVocabulary()
@@ -56,6 +59,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                         }
                         guard let words = words else { return }
                         self.progressHUD.hide()
+                        self.allowInteractingWithUI()
                         self.setupContent(words: words)
                     }
                 }
@@ -70,8 +74,20 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         messageView.frame.origin.y = collectionView.contentOffset.y
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // show tab bar after finishing practice
+        guard let tabBarController = tabBarController else { return }
+        if tabBarController.tabBar.isHidden {
+            tabBarController.tabBar.isHidden = false
+            navigationController?.setup(isClear: true)
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         if UserService.shared.vocabulary != nil && !isVocabularySwitched {
             setupContent(words: UserService.shared.words)
         }
@@ -85,6 +101,16 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     }
     
     // MARK: - Setup Views
+    
+    private func allowInteractingWithUI() {
+        navigationController?.navigationBar.isUserInteractionEnabled = true
+        tabBarController?.tabBar.isUserInteractionEnabled = true
+    }
+    
+    private func disableInteractingWithUI() {
+        navigationController?.navigationBar.isUserInteractionEnabled = false
+        tabBarController?.tabBar.isUserInteractionEnabled = false
+    }
     
     private func setupContent(words: [Word]) {
         self.words.removeAll()
@@ -108,6 +134,10 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     }
     
     private func setupUI() {
+        
+        // background
+        collectionView.backgroundView?.backgroundColor = Colors.silver
+        collectionView.backgroundColor = Colors.silver
         
         // setup loading view
         self.view.addSubview(progressHUD)
@@ -140,7 +170,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
             flowlayout.minimumLineSpacing = 20
         }
         collectionView!.isPrefetchingEnabled = false
-        view.backgroundColor = UIColor.systemBackground
+        // view.backgroundColor = UIColor.systemBackground
     }
     
     private func presentVocabulariesVC() {
@@ -190,25 +220,17 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Segues.PracticeRead {
             self.practiceReadVC = segue.destination as? PracticeReadVC
+
             if let sender = (sender as? PracticeTrainer) {
                 
-                // Hide the tabbar during this segue
-                hidesBottomBarWhenPushed = true
+                tabBarController?.tabBar.isHidden = true
 
                 // Restore the tabbar when it's popped in the future
-                DispatchQueue.main.async { self.hidesBottomBarWhenPushed = false }
                 
-                self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-                self.navigationController?.navigationBar.shadowImage = UIImage()
-                self.navigationController?.navigationBar.isTranslucent = true
-                self.navigationController?.view.backgroundColor = .clear
-                
-                let backItem = UIBarButtonItem()
-                backItem.title = ""
-                self.navigationItem.backBarButtonItem = backItem
-                self.navigationController?.navigationBar.tintColor = UIColor.white
+                navigationController?.setup(isClear: true)
                 
                 practiceReadVC?.delegate = self
+
                 // worddesk
                 updatePracticeVC()
                 

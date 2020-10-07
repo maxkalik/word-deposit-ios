@@ -11,13 +11,13 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var stackViewCenterY: NSLayoutConstraint!
     @IBOutlet weak var stackView: UIStackView!
     
-    @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var titleTextField: PrimaryTextField!
     @IBOutlet weak var languageTextField: UITextField!
     
-    @IBOutlet weak var languageButton: UIButton!
+    @IBOutlet weak var languageButton: ButtonSelector!
     @IBOutlet weak var buttonsStackView: UIStackView!
-    @IBOutlet weak var cancelButton: UIButton!
-    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var cancelButton: SecondaryButton!
+    @IBOutlet weak var saveButton: SecondaryButton!
     
     private var progressHUD = ProgressHUD(title: "Saving")
     private var messageView = MessageView()
@@ -58,14 +58,14 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = Colors.silver
+        
         // Primary setting up UI
         getLanguages()
         setupUI()
         disableAllButtons()
         
         if vocabulary != nil {
-            titleTextField.borderStyle = .none
-            languageTextField.borderStyle = .none
             buttonsStackView.alpha = 0
         } else {
             // Vocabularies limit
@@ -114,9 +114,9 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
                         
             // Using centerY constrains and changing it allow to save the position of the stackview at the center
             // even if we accidently touch (and drag) uiViewController.
-            UIView.animate(withDuration: 0.3) {
-                self.stackViewCenterY.constant -= self.keyboardHeight - self.stackView.frame.size.height
-                self.view.layoutIfNeeded()
+            UIView.animate(withDuration: 0.3) { [self] in
+                stackViewCenterY.constant -= keyboardHeight - stackView.frame.size.height
+                view.layoutIfNeeded()
             }
         }
         buttonsStackView.alpha = 1
@@ -126,9 +126,9 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         if !isKeyboardShowing { return }
         isKeyboardShowing = false
         
-        UIView.animate(withDuration: 0.3) {
-            self.stackViewCenterY.constant += self.keyboardHeight - self.stackView.frame.size.height
-            self.view.layoutIfNeeded()
+        UIView.animate(withDuration: 0.3) { [self] in
+            stackViewCenterY.constant += keyboardHeight - stackView.frame.size.height
+            view.layoutIfNeeded()
         }
         
         if vocabulary != nil { buttonsStackView.alpha = 0 }
@@ -206,17 +206,12 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     private func setupUI() {
         hideKeyboardWhenTappedAround()
         
-        // Typing Limits
-        titleTextField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
-        languageTextField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
-        titleTextField.delegate = self
-        languageTextField.delegate = self
+        // Limits of text in the text intput comes from extension
+        titleTextField.limitOfString = Limits.vocabularyTitle
         
-        // spinner
+        // Spinner
         view.addSubview(progressHUD)
         progressHUD.hide()
-        titleTextField?.autocorrectionType = .no
-        languageTextField?.autocorrectionType = .no
         
         setupContent()
     }
@@ -264,6 +259,8 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     private func onCancel() {
         dismissKeyboard()
         isKeyboardShowing = false
+        languageButton.isHidden = false
+        
         if vocabulary != nil {
             setupContent()
             buttonsStackView.alpha = 0
@@ -358,11 +355,15 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
             tvc.title = "Select language"
             
             guard let vocabulary = self.vocabulary else { return }
-            if vocabulary.language.isNotEmpty {
-                if languages.contains(where: {$0 == vocabulary.language}) {
-                    tvc.selected = languages.firstIndex(where: {$0 == vocabulary.language})
-                } else {
-                    tvc.selected = languages.count - 1
+            if languageIndex != nil {
+                tvc.selected = languageIndex
+            } else {
+                if vocabulary.language.isNotEmpty {
+                    if languages.contains(where: {$0 == vocabulary.language}) {
+                        tvc.selected = languages.firstIndex(where: {$0 == vocabulary.language})
+                    } else {
+                        tvc.selected = languages.count - 1
+                    }
                 }
             }
         }
@@ -376,10 +377,12 @@ extension VocabularyDetailsVC: CheckmarkListTVCDelegate {
             self.languageIndex = index
             
             if index == languages.count - 1 {
+                languageButton.isHidden = true
                 languageTextField.isHidden = false
                 languageTextField.becomeFirstResponder()
             } else {
                 languageTextField.isHidden = true
+                languageButton.isHidden = false
             }
         }
         
@@ -400,11 +403,5 @@ extension VocabularyDetailsVC {
     private func disableOnlySaveButton() {
         saveButton.isEnabled = false
         cancelButton.isEnabled = true
-    }
-}
-
-extension VocabularyDetailsVC: UITextFieldDelegate {
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        TextFieldLimit.checkMaxLength(textField, range: range, string: string, limit: Limits.vocabularyTitle)
     }
 }

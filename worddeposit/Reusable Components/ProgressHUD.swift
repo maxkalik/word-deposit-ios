@@ -16,6 +16,9 @@ class ProgressHUD: UIVisualEffectView {
     let blurEffect = UIBlurEffect(style: .dark)
     let vibrancyView: UIVisualEffectView
     
+    let successIcon = UIImage(named: "icon_checkmark_large")
+    lazy var imageView = UIImageView(image: successIcon)
+    
     init(title: String? = nil) {
         self.title = title
         self.vibrancyView = UIVisualEffectView(effect: UIVibrancyEffect(blurEffect: blurEffect))
@@ -34,50 +37,72 @@ class ProgressHUD: UIVisualEffectView {
         contentView.addSubview(vibrancyView)
         contentView.addSubview(activityIndictor)
         contentView.addSubview(label)
+        contentView.addSubview(imageView)
+        imageView.isHidden = true
         activityIndictor.startAnimating()
+        activityIndictor.hidesWhenStopped = true
     }
     
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
         setupOnSuperView()
+        
+        layer.masksToBounds = true
+        layer.cornerRadius = Radiuses.large
+        clipsToBounds = true
     }
     
     private func setupTitle() {
-        self.layer.cornerRadius = 8.0
-        self.clipsToBounds = true
+        label.text = title
+        label.textAlignment = NSTextAlignment.center
+        label.frame = CGRect(x: 10,
+                             y: 26,
+                             width: width - 20,
+                             height: height)
+        label.textColor = UIColor.white
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+    }
+    
+    private func setupActivityIndicator() {
+        activityIndictor.color = .white
         if title != nil {
             let activityIndicatorSize = activityIndictor.frame.size.width
             activityIndictor.frame = CGRect(x: (width - activityIndicatorSize) / 2,
                                             y: 26,
                                             width: activityIndicatorSize,
                                             height: activityIndicatorSize)
-            layer.masksToBounds = true
-            label.text = title
-            label.textAlignment = NSTextAlignment.center
-            label.frame = CGRect(x: 10,
-                                 y: 26,
-                                 width: width - 20,
-                                 height: height)
-            label.textColor = UIColor.white
-            label.font = UIFont.boldSystemFont(ofSize: 14)
+            setupTitle()
         } else {
             activityIndictor.center = contentView.center
         }
+    }
+    
+    private func setupImage() {
+        imageView.image = imageView.image?.withRenderingMode(.alwaysTemplate)
+        imageView.tintColor = Colors.silver
+        if title != nil {
+            imageView.frame = CGRect(x: (width - 48) / 2, y: 16, width: 48, height: 48)
+            setupTitle()
+        } else {
+            imageView.center = contentView.center
+        }
+        
     }
     
     private func setupOnSuperView() {
         if let superview = self.superview {
             superview.isUserInteractionEnabled = false
            
-            self.frame = CGRect(x: 0,
+            frame = CGRect(x: 0,
                                 y: 0,
                                 width: width,
                                 height: height)
-            self.center = superview.center
+            center = superview.center
             vibrancyView.frame = self.bounds
             
-            activityIndictor.color = .white
             setupTitle()
+            setupActivityIndicator()
+            setupImage()
         }
     }
     
@@ -85,16 +110,24 @@ class ProgressHUD: UIVisualEffectView {
         if let superview = self.superview {
             superview.isUserInteractionEnabled = false
         }
-        self.isHidden = false
+        isHidden = false
     }
     
-    func success() {
-        print("show success")
+    func success(with title: String) {
+        activityIndictor.stopAnimating()
+        imageView.isHidden = false
+        self.title = title
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.hide()
+            self.imageView.isHidden = true
+            self.activityIndictor.isHidden = false
+            self.activityIndictor.startAnimating()
+        }
     }
     
     func setTitle(title: String) {
         self.title = title
-        print(title)
         setupTitle()
     }
     
@@ -102,6 +135,7 @@ class ProgressHUD: UIVisualEffectView {
         if let superview = self.superview {
             superview.isUserInteractionEnabled = true
         }
-        self.isHidden = true
+        
+        isHidden = true
     }
 }

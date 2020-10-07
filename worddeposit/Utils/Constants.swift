@@ -43,11 +43,26 @@ struct ReusableIdentifiers {
 }
 
 struct Colors {
-    static let black = UIColor.black.cgColor
+    static let dark = #colorLiteral(red: 0.01088568699, green: 0.06228606028, blue: 0.06561407343, alpha: 1)
+    static let shadow = #colorLiteral(red: 0.002289562985, green: 0.009225011557, blue: 0.1488199301, alpha: 1)
+    static let yellow = #colorLiteral(red: 1, green: 0.7058823529, blue: 0.007843137255, alpha: 1)
+    static let orange = #colorLiteral(red: 1, green: 0.4645918398, blue: 0, alpha: 1)
+    static let silver = #colorLiteral(red: 0.93099447, green: 0.9588879667, blue: 0.9599677666, alpha: 1)
+    static let grey = #colorLiteral(red: 0.6468691242, green: 0.6480719886, blue: 0.6009513889, alpha: 1)
+    static let darkGrey = #colorLiteral(red: 0.457353078, green: 0.457353078, blue: 0.457353078, alpha: 1)
+    static let blue = #colorLiteral(red: 0, green: 0.3176470588, blue: 0.6117647059, alpha: 1)
+    static let green = #colorLiteral(red: 0, green: 0.6042719415, blue: 0, alpha: 1)
 }
 
-struct Placeholders {
-    static let Logo = "logo"
+struct Fonts {
+    static let regular = "DMSans-Regular"
+    static let medium = "DMSans-Medium"
+    static let bold = "DMSans-Bold"
+}
+
+struct Icons {
+    static let Picture = "picture"
+    static let Close = "icon_close"
 }
 
 struct Images {
@@ -61,10 +76,16 @@ struct Keys {
 }
 
 struct Limits {
+    static let name = 60
     static let vocabularies = 10
     static let words = 300
     static let vocabularyTitle = 26
     static let wordExample = 60
     static let wordTranslation = 60
     static let wordDescription = 80
+}
+
+struct Radiuses {
+    static let huge: CGFloat = 20
+    static let large: CGFloat = 10
 }

@@ -25,11 +25,11 @@ class AddWordVC: UIViewController {
         }
     }
     
-    @IBOutlet weak var wordSaveButton: RoundedButton!
-    @IBOutlet weak var clearAllButton: UIButton!
-    @IBOutlet weak var wordExampleTextField: UITextField!
-    @IBOutlet weak var wordTranslationTextField: UITextField!
-    @IBOutlet weak var wordDescriptionTextField: UITextField!
+    @IBOutlet weak var wordSaveButton: PrimaryButton!
+    @IBOutlet weak var clearAllButton: DefaultButton!
+    @IBOutlet weak var wordExampleTextField: PrimaryTextField!
+    @IBOutlet weak var wordTranslationTextField: SecondaryTextField!
+    @IBOutlet weak var wordDescriptionTextField: SecondaryTextField!
     
     // MARK: - Instances
     
@@ -44,6 +44,11 @@ class AddWordVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupImagePlaceholder()
+        wordExampleTextField.limitOfString = Limits.wordExample
+        wordTranslationTextField.limitOfString = Limits.wordTranslation
+        wordDescriptionTextField.limitOfString = Limits.wordDescription
+        
         setupUI()
         hideKeyboardWhenTappedAround()
     }
@@ -103,21 +108,20 @@ class AddWordVC: UIViewController {
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
-        
-        TextFieldLimit.checkMaxLength(textField: wordExampleTextField, maxLength: Limits.wordExample)
-        TextFieldLimit.checkMaxLength(textField: wordTranslationTextField, maxLength: Limits.wordTranslation)
-        TextFieldLimit.checkMaxLength(textField: wordDescriptionTextField, maxLength: Limits.wordDescription)
-        
-        textFieldValidation()
-    }
-    
-    // MARK: - Support Methods
-    
-    private func textFieldValidation() {
         guard let wordExample = wordExampleTextField.text,
               let wordTranslation = wordTranslationTextField.text else { return }
         wordSaveButton.isEnabled = !(wordExample.isEmpty || wordTranslation.isEmpty)
         clearAllButton.isEnabled = !(wordExample.isEmpty && wordTranslation.isEmpty)
+        wordDescriptionTextField.isHidden = wordExample.isEmpty || wordTranslation.isEmpty
+    }
+    
+    // MARK: - Support Methods
+    
+    private func setupImagePlaceholder() {
+        wordImagePickerBtn.backgroundColor = UIColor.black
+        let image = UIImage(named: Icons.Picture)?.withRenderingMode(.alwaysTemplate)
+        wordImagePickerBtn.setImage(image, for: .normal)
+        wordImagePickerBtn.tintColor = Colors.grey.withAlphaComponent(0.3)
     }
     
     private func setupMessage() {
@@ -135,18 +139,23 @@ class AddWordVC: UIViewController {
         view.addSubview(messageView)
         progressHUD.hide()
         messageView.hide()
+        
+        view.backgroundColor = Colors.silver
+        
+        wordDescriptionTextField.isHidden = true
         wordExampleTextField.autocorrectionType = .no
         wordTranslationTextField.autocorrectionType = .no
         wordDescriptionTextField.autocorrectionType = .no
         wordSaveButton.isEnabled = false
         clearAllButton.isEnabled = false
+        
+        wordSaveButton.setTitleColor(UIColor.white, for: .normal)
     }
     
     private func successComplition(word: Word?) {
         guard let word = word else { return }
-        self.updateUI()
-        self.simpleAlert(title: "Success", msg: "Word has been added")
-        self.delegate?.wordDidCreate(word)
+        updateUI()
+        delegate?.wordDidCreate(word)
     }
     
     private func setImageData() -> Data? {
@@ -183,11 +192,12 @@ class AddWordVC: UIViewController {
             translation: translation,
             description: wordDescriptionTextField.text
         ) { error, word in
-            self.progressHUD.hide()
             if error != nil {
+                self.progressHUD.hide()
                 self.simpleAlert(title: "Error", msg: "Something went wrong. Cannot add the word")
                 return
             }
+            self.progressHUD.success(with: "Added")
             self.successComplition(word: word)
         }
     }
@@ -196,8 +206,17 @@ class AddWordVC: UIViewController {
     func updateUI() {
         // TODO: - not showing message while adding
         
-        self.dismissKeyboard()
-        self.isKeyboardShowing = false
+        dismissKeyboard()
+        
+        isKeyboardShowing = false
+        
+        wordExampleTextField.resignFirstResponder()
+        wordTranslationTextField.resignFirstResponder()
+        wordDescriptionTextField.resignFirstResponder()
+        
+        view.endEditing(true)
+        
+        wordDescriptionTextField.isHidden = true
         
         if UserService.shared.words.count > Limits.words {
             DispatchQueue.main.async {
@@ -206,10 +225,13 @@ class AddWordVC: UIViewController {
             }
         }
         
-        self.wordImagePickerBtn.setImage(UIImage(named: Placeholders.Logo), for: .normal)
+        setupImagePlaceholder()
         wordExampleTextField.text = ""
         wordTranslationTextField.text = ""
         wordDescriptionTextField.text = ""
+        
+        
+        
         isImageSet = false
         wordSaveButton.isEnabled = false
         clearAllButton.isEnabled = false
