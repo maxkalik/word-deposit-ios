@@ -27,6 +27,8 @@ class SuccessMessageVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        isModalInPresentation = true
+        
         answersStackView.layer.cornerRadius = Radiuses.large
         answersStackView.clipsToBounds = true
         
