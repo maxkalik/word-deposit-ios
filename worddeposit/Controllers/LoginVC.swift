@@ -121,9 +121,9 @@ class LoginVC: UIViewController {
     
     private func showHomeVC() {
         let storyboard = UIStoryboard(name: Storyboards.Home, bundle: nil)
-        let homeViewController = storyboard.instantiateViewController(identifier: Storyboards.Home) as? UITabBarController
-        self.view.window?.rootViewController = homeViewController
-        self.view.window?.makeKeyAndVisible()
+        let homeTabBarController = storyboard.instantiateViewController(identifier: Storyboards.Home) as? UITabBarController
+        view.window?.rootViewController = homeTabBarController
+        view.window?.makeKeyAndVisible()
     }
     
     private func hideSecondaryButtons() {
@@ -150,7 +150,19 @@ class LoginVC: UIViewController {
                 UserService.shared.auth.handleFireAuthError(error, viewController: self)
                 return
             }
-            self.showHomeVC()
+            UserService.shared.fetchCurrentUser { error, user in
+                if let error = error {
+                    self.simpleAlert(title: "Error", msg: error.localizedDescription)
+                    return
+                } else {
+                    guard let _ = user else {
+                        self.simpleAlert(title: "Error", msg: "User was deleted or not exist. Please register new one")
+                        return
+                    }
+                    self.showHomeVC()
+                }
+            }
+            
         }
     }
 }

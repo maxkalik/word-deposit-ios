@@ -27,6 +27,8 @@ class SuccessMessageVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        isModalInPresentation = true
+        
         answersStackView.layer.cornerRadius = Radiuses.large
         answersStackView.clipsToBounds = true
         
@@ -67,18 +69,24 @@ class SuccessMessageVC: UIViewController {
         
         if rightAnswers > wrongAnswers {
             if precentageOfCorrectAnswers > 70 {
+                imageView.image = UIImage(named: "rocker")
                 return "Perfect!"
             } else if precentageOfCorrectAnswers > 90 {
+                imageView.image = UIImage(named: "skater")
                 return "Excelent!"
             } else {
+                imageView.image = UIImage(named: "social")
                 return "Great!"
             }
         } else {
             if precentageOfCorrectAnswers < 30 {
+                imageView.image = UIImage(named: "sitting")
                 return "It's not your the best result."
             } else if precentageOfCorrectAnswers < 10 {
+                imageView.image = UIImage(named: "standing")
                 return "You can do better!"
             } else {
+                imageView.image = UIImage(named: "walking")
                 return "Mistakes are ok."
             }
         }

@@ -8,7 +8,7 @@ final class UserService {
     static let shared = UserService() // global constant
     
     // Variables
-    private(set) var user = User()
+    private(set) var user: User?
     private(set) var vocabularies = [Vocabulary]()
     private(set) var words = [Word]() // did set should triger updating words amount
     private(set) var vocabulary: Vocabulary?
@@ -74,11 +74,24 @@ final class UserService {
     
     // Logout
     func logout(complition: @escaping (Error?) -> Void) {
+        signOut { error in
+            if let error = error {
+                debugPrint(error.localizedDescription)
+                complition(error)
+                return
+            } else {
+                self.user = nil
+                self.words.removeAll()
+                self.vocabularies.removeAll()
+                self.vocabulary = nil
+                complition(nil)
+            }
+        }
+    }
+    
+    private func signOut(complition: @escaping (Error?) -> Void) {
         do {
             try auth.signOut()
-            self.words.removeAll()
-            self.vocabularies.removeAll()
-            self.vocabulary = nil
             complition(nil)
         } catch let error as NSError {
             complition(error)
@@ -93,19 +106,25 @@ final class UserService {
     func fetchCurrentUser(complition: @escaping (Error?, User?) -> Void) {
         guard let currentUser = auth.currentUser else { return }
         userRef = self.db.collection("users").document(currentUser.uid)
-        
         userRef.getDocument { (document, error) in
             if let error = error {
                 debugPrint(error.localizedDescription)
                 complition(error, nil)
                 return
             }
+            
             if let document = document, document.exists {
                 guard let data = document.data() else { return }
                 self.user = User.init(data: data)
                 complition(nil, self.user)
             } else {
-                complition(nil, nil)
+                self.signOut { error in
+                    if let error = error {
+                        debugPrint(error.localizedDescription)
+                        return
+                    }
+                    complition(nil, nil)
+                }
             }
         }
     }
@@ -288,7 +307,7 @@ final class UserService {
     
     // Set word image data to the storage user_id/vocabulary_id/word_id.jpg
     func setWordImage(data: Data?, id: String, complition: @escaping (Error?, URL?) -> Void) {
-        guard let vocabulary = self.vocabulary, let data = data else { return }
+        guard let user = self.user, let vocabulary = self.vocabulary, let data = data else { return }
         let ref: StorageReference = Storage.storage().reference().child("/\(user.id)/\(vocabulary.id)/\(id).jpg")
         let metadata: StorageMetadata = StorageMetadata()
         metadata.contentType = "image/jpg"
@@ -621,10 +640,10 @@ final class UserService {
     
     // Remove word image from storage of particular vocabulary
     func removeWordImageFrom(vocabularyId: String? = nil, wordId: String, complition: (() -> Void)? = nil ) {
-        guard let vocabulary = self.vocabulary else { return }
+        guard let user = self.user, let vocabulary = self.vocabulary else { return }
         let ref = self.storage.reference()
         /// vocabularyId ?? vocabulary.id - if vocabulary id is nil then will try to find in the current vocabulary
-        ref.child("/\(self.user.id)/\(vocabularyId ?? vocabulary.id)/\(wordId).jpg").delete { (error) in
+        ref.child("/\(user.id)/\(vocabularyId ?? vocabulary.id)/\(wordId).jpg").delete { (error) in
             if let error = error {
                 debugPrint(error.localizedDescription)
                 return

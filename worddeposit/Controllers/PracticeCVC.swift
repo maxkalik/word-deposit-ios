@@ -3,6 +3,7 @@ import UIKit
 private let reuseIdentifier = XIBs.PracticeCVCell
 private let minWordsAmount = 10
 
+
 class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIPopoverPresentationControllerDelegate {
 
     // MARK: - Instances
@@ -14,7 +15,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     var progressHUD = ProgressHUD(title: "Welcome")
     var messageView = MessageView()
     
-    var isVocabularySwitched = false
+    private var isVocabularySwitched = false
     
     // MARK: - Lifecycle
     
@@ -26,42 +27,21 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         setupUI()
         
         disableInteractingWithUI()
-        let userService = UserService.shared
-        userService.fetchCurrentUser { error, user in
-            if let error = error {
-                self.simpleAlert(title: "Error", msg: error.localizedDescription)
-                showLoginVC(view: self.view)
-                return
-            }
-            guard let _ = user else {
-                self.simpleAlert(title: "Error", msg: "Cannot find a user")
-                showLoginVC(view: self.view)
-                return
-            }
-            userService.fetchVocabularies { error, vocabularies in
+        
+        if UserService.shared.user != nil {
+            fetchUserData()
+        } else {
+            UserService.shared.fetchCurrentUser { error, user in
                 if let error = error {
-                    UserService.shared.db.handleFirestoreError(error, viewController: self)
-                    self.progressHUD.hide()
+                    self.simpleAlert(title: "Error", msg: error.localizedDescription)
+                    showLoginVC(view: self.view)
                     return
-                }
-                guard let vocabularies = vocabularies else { return }
-                if vocabularies.isEmpty {
-                    self.presentVocabulariesVC()
-                    self.allowInteractingWithUI()
-                    self.progressHUD.hide()
                 } else {
-                    userService.getCurrentVocabulary()
-                    userService.fetchWords { error, words  in
-                        if let error = error {
-                            userService.db.handleFirestoreError(error, viewController: self)
-                            self.progressHUD.hide()
-                            return
-                        }
-                        guard let words = words else { return }
-                        self.progressHUD.hide()
-                        self.allowInteractingWithUI()
-                        self.setupContent(words: words)
+                    guard let _ = user else {
+                        showLoginVC(view: self.view)
+                        return
                     }
+                    self.fetchUserData()
                 }
             }
         }
@@ -101,6 +81,35 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     }
     
     // MARK: - Setup Views
+    
+    private func fetchUserData() {
+        UserService.shared.fetchVocabularies { error, vocabularies in
+            if let error = error {
+                UserService.shared.db.handleFirestoreError(error, viewController: self)
+                self.progressHUD.hide()
+                return
+            }
+            guard let vocabularies = vocabularies else { return }
+            if vocabularies.isEmpty {
+                self.presentVocabulariesVC()
+                self.allowInteractingWithUI()
+                self.progressHUD.hide()
+            } else {
+                UserService.shared.getCurrentVocabulary()
+                UserService.shared.fetchWords { error, words  in
+                    if let error = error {
+                        UserService.shared.db.handleFirestoreError(error, viewController: self)
+                        self.progressHUD.hide()
+                        return
+                    }
+                    guard let words = words else { return }
+                    self.progressHUD.hide()
+                    self.allowInteractingWithUI()
+                    self.setupContent(words: words)
+                }
+            }
+        }
+    }
     
     private func allowInteractingWithUI() {
         navigationController?.navigationBar.isUserInteractionEnabled = true
