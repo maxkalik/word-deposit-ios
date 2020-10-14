@@ -60,8 +60,15 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         // show tab bar after finishing practice
         guard let tabBarController = tabBarController else { return }
         if tabBarController.tabBar.isHidden {
-            tabBarController.tabBar.isHidden = false
-            navigationController?.setup(isClear: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                tabBarController.tabBar.alpha = 0
+                tabBarController.tabBar.isHidden = false
+                self.navigationController?.setup(isClear: true)
+                UIView.animate(withDuration: 0.3) { [self] in
+                    tabBarController.tabBar.alpha = 1
+                    view.layoutIfNeeded()
+                }
+            }
         }
     }
     

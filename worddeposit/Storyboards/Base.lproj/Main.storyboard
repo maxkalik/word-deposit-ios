@@ -26,16 +26,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="01T-X9-a2a">
-                                <rect key="frame" x="60" y="277.5" width="294" height="341"/>
+                                <rect key="frame" x="60" y="167.5" width="294" height="561"/>
                                 <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login" translatesAutoresizingMaskIntoConstraints="NO" id="nN0-Oh-rj3">
+                                        <rect key="frame" x="0.0" y="0.0" width="294" height="200"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="200" id="qCR-Nh-qNe"/>
+                                        </constraints>
+                                    </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e07-Zq-yaq" customClass="LoginTitle" customModule="worddeposit" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="294" height="29"/>
+                                        <rect key="frame" x="0.0" y="220" width="294" height="29"/>
                                         <fontDescription key="fontDescription" name="DMSans-Medium" family="DM Sans" pointSize="22"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="FPu-eK-7w6" customClass="LoginTextField" customModule="worddeposit" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="49" width="294" height="50"/>
+                                        <rect key="frame" x="0.0" y="269" width="294" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="9b3-sw-HMp"/>
                                         </constraints>
@@ -43,7 +49,7 @@
                                         <textInputTraits key="textInputTraits" textContentType="email"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z9B-Rr-O8r" customClass="LoginTextField" customModule="worddeposit" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="119" width="294" height="50"/>
+                                        <rect key="frame" x="0.0" y="339" width="294" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="etL-QT-Bha"/>
                                         </constraints>
@@ -51,7 +57,7 @@
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k1B-my-CoV" customClass="PrimaryButton" customModule="worddeposit" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="189" width="294" height="50"/>
+                                        <rect key="frame" x="0.0" y="409" width="294" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="Ur2-Yl-bgU"/>
                                         </constraints>
@@ -64,7 +70,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a4c-sX-kdq" customClass="DefaultButton" customModule="worddeposit" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="259" width="294" height="31"/>
+                                        <rect key="frame" x="0.0" y="479" width="294" height="31"/>
                                         <fontDescription key="fontDescription" name="DMSans-Medium" family="DM Sans" pointSize="14"/>
                                         <state key="normal" title="Create new Account"/>
                                         <connections>
@@ -72,7 +78,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rdf-CM-1lM" customClass="DefaultButton" customModule="worddeposit" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="310" width="294" height="31"/>
+                                        <rect key="frame" x="0.0" y="530" width="294" height="31"/>
                                         <fontDescription key="fontDescription" name="DMSans-Medium" family="DM Sans" pointSize="14"/>
                                         <state key="normal" title="Forgot Password"/>
                                         <connections>
@@ -96,6 +102,7 @@
                         <outlet property="emailTextField" destination="FPu-eK-7w6" id="HjB-Q8-d7i"/>
                         <outlet property="forgotPasswordButton" destination="rdf-CM-1lM" id="3Mz-gc-DB2"/>
                         <outlet property="loginButton" destination="k1B-my-CoV" id="Ho4-ZA-bjz"/>
+                        <outlet property="loginImageView" destination="nN0-Oh-rj3" id="KsH-lY-Xxx"/>
                         <outlet property="passwordTextField" destination="Z9B-Rr-O8r" id="rHY-Wp-VUB"/>
                         <outlet property="stackView" destination="01T-X9-a2a" id="i87-od-FvZ"/>
                         <outlet property="stackViewCenterY" destination="10Z-Qm-xmm" id="REB-rX-MUH"/>
@@ -115,16 +122,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="k1A-ET-bVF">
-                                <rect key="frame" x="60" y="302.5" width="294" height="291"/>
+                                <rect key="frame" x="60" y="192.5" width="294" height="511"/>
                                 <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="signup" translatesAutoresizingMaskIntoConstraints="NO" id="9jo-yK-c5l">
+                                        <rect key="frame" x="0.0" y="0.0" width="294" height="200"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="200" id="S9e-7c-Uwo"/>
+                                        </constraints>
+                                    </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Registration" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BFm-ed-JJO" customClass="LoginTitle" customModule="worddeposit" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="294" height="30"/>
+                                        <rect key="frame" x="0.0" y="220" width="294" height="30"/>
                                         <fontDescription key="fontDescription" name="DMSans-Medium" family="DM Sans" pointSize="23"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="kb4-ry-iGt" customClass="LoginTextField" customModule="worddeposit" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="294" height="50"/>
+                                        <rect key="frame" x="0.0" y="270" width="294" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="Aot-0q-FIO"/>
                                         </constraints>
@@ -132,7 +145,7 @@
                                         <textInputTraits key="textInputTraits" textContentType="email"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z8D-Xl-CGP" customClass="LoginTextField" customModule="worddeposit" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="120" width="294" height="50"/>
+                                        <rect key="frame" x="0.0" y="340" width="294" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="hcD-N6-JWm"/>
                                         </constraints>
@@ -140,7 +153,7 @@
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Bx-VB-muo" customClass="PrimaryButton" customModule="worddeposit" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="190" width="294" height="50"/>
+                                        <rect key="frame" x="0.0" y="410" width="294" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="Zj9-cl-h5V"/>
                                         </constraints>
@@ -152,7 +165,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tqS-aX-VeA" customClass="DefaultButton" customModule="worddeposit" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="260" width="294" height="31"/>
+                                        <rect key="frame" x="0.0" y="480" width="294" height="31"/>
                                         <fontDescription key="fontDescription" name="DMSans-Medium" family="DM Sans" pointSize="14"/>
                                         <state key="normal" title="Do you have an account already?"/>
                                         <connections>
@@ -176,6 +189,7 @@
                         <outlet property="loginButton" destination="tqS-aX-VeA" id="PgO-Fc-uLN"/>
                         <outlet property="passwordTextField" destination="Z8D-Xl-CGP" id="Fu9-zO-Xkc"/>
                         <outlet property="signUpButton" destination="0Bx-VB-muo" id="v88-4f-HKn"/>
+                        <outlet property="signupImageView" destination="9jo-yK-c5l" id="Oad-dI-ZH9"/>
                         <outlet property="stackView" destination="k1A-ET-bVF" id="HyI-bA-lXy"/>
                         <outlet property="stackViewCenterY" destination="7NS-pr-Dv8" id="mkG-nq-hqe"/>
                         <outlet property="titleLabel" destination="BFm-ed-JJO" id="hG7-wJ-4T5"/>
@@ -276,6 +290,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="login" width="271" height="296"/>
+        <image name="signup" width="410.5" height="320"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

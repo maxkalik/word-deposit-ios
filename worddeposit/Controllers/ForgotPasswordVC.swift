@@ -85,8 +85,6 @@ class ForgotPasswordVC: UIViewController {
         titleLabel.alpha = 1
         cancelButton.alpha = 1
         
-        stackView.frame.origin.y += (keyboardHeight - stackView.frame.height)
-        
          UIView.animate(withDuration: 0.3) { [self] in
             stackViewCenterY.constant += (keyboardHeight - stackView.frame.size.height)
             view.layoutIfNeeded()

@@ -5,6 +5,7 @@ class LoginVC: UIViewController {
     // MARK: - Outlets
     
     // Views
+    @IBOutlet weak var loginImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var stackViewCenterY: NSLayoutConstraint!
     @IBOutlet weak var stackView: UIStackView!
@@ -78,8 +79,6 @@ class LoginVC: UIViewController {
         if isKeyboardShowing { return }
         isKeyboardShowing = true
         
-        
-        // titleLabel.isHidden = true
         titleLabel.alpha = 0
         hideSecondaryButtons()
         
@@ -89,7 +88,8 @@ class LoginVC: UIViewController {
             // Using centerY constrains and changing it allow to save the position of the stackview at the center
             // even if we accidently touch (and drag) uiViewController.
              UIView.animate(withDuration: 0.3) { [self] in
-                stackViewCenterY.constant -= (keyboardHeight - stackView.frame.size.height / 2)
+                stackViewCenterY.constant -= (keyboardHeight - stackView.frame.size.height / 2) + loginImageView.frame.size.height
+                loginImageView.alpha = 0
                 view.layoutIfNeeded()
              }
         }
@@ -103,10 +103,9 @@ class LoginVC: UIViewController {
         titleLabel.alpha = 1
         showSecondaryButtons()
         
-        self.stackView.frame.origin.y += (keyboardHeight - self.stackView.frame.height / 2)
-        
          UIView.animate(withDuration: 0.3) { [self] in
-            stackViewCenterY.constant += (keyboardHeight - stackView.frame.size.height / 2)
+            stackViewCenterY.constant += (keyboardHeight - stackView.frame.size.height / 2) + loginImageView.frame.size.height
+            loginImageView.alpha = 1
             view.layoutIfNeeded()
          }
     }
@@ -141,16 +140,20 @@ class LoginVC: UIViewController {
         
         guard let email = emailTextField.text, email.isNotEmpty,
               let password = passwordTextField.text, password.isNotEmpty else { return }
-
+        
+        dismissKeyboard()
         progressHUD.show()
         
         UserService.shared.signIn(withEmail: email, password: password) { error in
-            self.progressHUD.hide()
+            
             if let error = error {
+                self.progressHUD.hide()
                 UserService.shared.auth.handleFireAuthError(error, viewController: self)
                 return
             }
+            
             UserService.shared.fetchCurrentUser { error, user in
+                self.progressHUD.hide()
                 if let error = error {
                     self.simpleAlert(title: "Error", msg: error.localizedDescription)
                     return
