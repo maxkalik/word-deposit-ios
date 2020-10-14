@@ -29,7 +29,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         disableInteractingWithUI()
         
         if UserService.shared.user != nil {
-            fetchUserData()
+            fetchData()
         } else {
             UserService.shared.fetchCurrentUser { error, user in
                 if let error = error {
@@ -41,7 +41,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                         showLoginVC(view: self.view)
                         return
                     }
-                    self.fetchUserData()
+                    self.fetchData()
                 }
             }
         }
@@ -82,7 +82,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     
     // MARK: - Setup Views
     
-    private func fetchUserData() {
+    private func fetchData() {
         UserService.shared.fetchVocabularies { error, vocabularies in
             if let error = error {
                 UserService.shared.db.handleFirestoreError(error, viewController: self)

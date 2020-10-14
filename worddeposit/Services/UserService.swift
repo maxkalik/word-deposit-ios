@@ -161,15 +161,10 @@ final class UserService {
                 return
             } else {
                 guard let snap = snapshot else { return }
-                
-                if vocabulary.wordsAmount != snap.count && !vocabulary.isSelected {
+                if vocabulary.wordsAmount != snap.count {
                     /// Update vocabulary words amount
-                    ref.updateData(["words_amount": snap.count]) { error in
-                        if let error = error {
-                            debugPrint(error.localizedDescription)
-                            return
-                        }
-                        complition(snap.count)
+                    self.updateAmountOfWords(for: vocabulary, amount: snap.count, in: ref) { amount in
+                        complition(amount)
                     }
                 } else {
                     complition(snap.count)
@@ -300,7 +295,7 @@ final class UserService {
                 return
             }
             self.words.insert(word, at: 0)
-            self.updateAmountOfWords()
+            self.updateAmountOfWordsInSelectedVocabulary()
             complition(nil)
         }
     }
@@ -427,9 +422,24 @@ final class UserService {
         }
     }
     
+    // Update amount of words in any vocabulary
+    private func updateAmountOfWords(for vocabulary: Vocabulary, amount: Int, in ref: DocumentReference, complition: @escaping (Int?) -> Void) {
+        ref.updateData(["words_amount": amount]) { error in
+            if let error = error {
+                debugPrint(error.localizedDescription)
+                return
+            }
+            
+            if let index: Int = self.vocabularies.firstIndex(matching: vocabulary) {
+                self.vocabularies[index].wordsAmount = amount
+                complition(amount)
+            }
+        }
+    }
+    
     // Update amount of words of currrent vocabulary
     /* It should be called each time when we set (add) or remove word from the vocabulary */
-    private func updateAmountOfWords() {
+    private func updateAmountOfWordsInSelectedVocabulary() {
         vocabularyRef.updateData(["words_amount": words.count]) { error in
             if let error = error {
                 debugPrint(error.localizedDescription)
@@ -625,7 +635,7 @@ final class UserService {
             self.words.remove(at: index)
             
             /// Updating words amount in current vocabulary
-            self.updateAmountOfWords()
+            self.updateAmountOfWordsInSelectedVocabulary()
             
             /// Checking if word had an image url
             if word.imgUrl.isNotEmpty {
