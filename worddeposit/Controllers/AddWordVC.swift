@@ -157,7 +157,7 @@ class AddWordVC: UIViewController {
     }
     
     private func setImageData() -> Data? {
-        if self.isImageSet {
+        if isImageSet {
             guard let image = wordImagePickerBtn.imageView?.image else { return nil }
             let resizedImg = image.resized(toWidth: 400.0)
             return resizedImg?.jpegData(compressionQuality: 0.5)
@@ -246,6 +246,7 @@ class AddWordVC: UIViewController {
             if let photo = items.singlePhoto {
                 self.wordImagePickerBtn.setImage(photo.image, for: .normal)
                 self.isImageSet = true
+                self.clearAllButton.isEnabled = true
             }
             picker.dismiss(animated: true, completion: nil)
         }
