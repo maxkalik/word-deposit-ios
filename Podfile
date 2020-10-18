@@ -9,13 +9,10 @@ target 'worddeposit' do
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
-  # pod 'FirebaseFirestoreSwift'
   pod 'Firebase/Storage'
   pod 'IQKeyboardManagerSwift'
   pod 'Kingfisher'
-  #  pod 'CodableFirebase'
   pod 'YPImagePicker'
-  #  pod 'PryntTrimmerView', :git => 'https://github.com/HHK1/PryntTrimmerView.git'
   
 end
 

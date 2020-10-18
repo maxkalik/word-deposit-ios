@@ -29,7 +29,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         disableInteractingWithUI()
         
         if UserService.shared.user != nil {
-            fetchUserData()
+            fetchData()
         } else {
             UserService.shared.fetchCurrentUser { error, user in
                 if let error = error {
@@ -41,7 +41,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                         showLoginVC(view: self.view)
                         return
                     }
-                    self.fetchUserData()
+                    self.fetchData()
                 }
             }
         }
@@ -60,8 +60,15 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         // show tab bar after finishing practice
         guard let tabBarController = tabBarController else { return }
         if tabBarController.tabBar.isHidden {
-            tabBarController.tabBar.isHidden = false
-            navigationController?.setup(isClear: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                tabBarController.tabBar.alpha = 0
+                tabBarController.tabBar.isHidden = false
+                self.navigationController?.setup(isClear: true)
+                UIView.animate(withDuration: 0.3) { [self] in
+                    tabBarController.tabBar.alpha = 1
+                    view.layoutIfNeeded()
+                }
+            }
         }
     }
     
@@ -82,7 +89,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     
     // MARK: - Setup Views
     
-    private func fetchUserData() {
+    private func fetchData() {
         UserService.shared.fetchVocabularies { error, vocabularies in
             if let error = error {
                 UserService.shared.db.handleFirestoreError(error, viewController: self)

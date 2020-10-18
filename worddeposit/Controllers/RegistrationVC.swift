@@ -5,6 +5,7 @@ class RegistrationVC: UIViewController {
     // MARK: - IBOutlets
     
     // Views
+    @IBOutlet weak var signupImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signUpButton: PrimaryButton!
@@ -85,7 +86,8 @@ class RegistrationVC: UIViewController {
             // Using centerY constrains and changing it allow to save the position of the stackview at the center
             // even if we accidently touch (and drag) uiViewController.
             UIView.animate(withDuration: 0.3) { [self] in
-                stackViewCenterY.constant -= (keyboardHeight - stackView.frame.size.height / 2)
+                stackViewCenterY.constant -= (keyboardHeight - stackView.frame.size.height / 2) + signupImageView.frame.size.height
+                signupImageView.alpha = 0
                 view.layoutIfNeeded()
             }
         }
@@ -99,10 +101,9 @@ class RegistrationVC: UIViewController {
         titleLabel.alpha = 1
         showSecondaryButtons()
         
-        stackView.frame.origin.y += (keyboardHeight - stackView.frame.height / 2)
-        
         UIView.animate(withDuration: 0.3) { [self] in
-            stackViewCenterY.constant += (keyboardHeight - stackView.frame.size.height / 2)
+            stackViewCenterY.constant += (keyboardHeight - stackView.frame.size.height / 2) + signupImageView.frame.size.height
+            signupImageView.alpha = 1
             view.layoutIfNeeded()
         }
     }
@@ -175,8 +176,9 @@ class RegistrationVC: UIViewController {
             if let error = error {
                 UserService.shared.auth.handleFireAuthError(error, viewController: self)
                 return
+            } else {
+                self.setupApp()                
             }
-            self.setupApp()
         }
     }
     
