@@ -894,7 +894,7 @@
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QhY-s2-Hgj">
                                                     <rect key="frame" x="20" y="7" width="334" height="30"/>
-                                                    <state key="normal" title="Reset Passoword"/>
+                                                    <state key="normal" title="Reset Password"/>
                                                     <connections>
                                                         <action selector="resetPasswordTouched:" destination="bSy-fF-0Nz" eventType="touchUpInside" id="BXx-zu-sXu"/>
                                                     </connections>
