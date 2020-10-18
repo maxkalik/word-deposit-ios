@@ -359,9 +359,9 @@
 				1158D30C24917B9B0087DC96 /* VocabularyTVCell.swift */,
 				1171E70424981CDD00805D35 /* VocabularyCardCVCell.swift */,
 				15A7E04724D8B322006804FD /* VocabulariesTVCell.swift */,
+				156C80B624D8D27E0077905D /* VocabularyDetailsVC.swift */,
 				11B20D6824C8DF2E00C1CB4E /* PracticeAnswerItem.swift */,
 				112F9C7324F6F201007E92D8 /* SuccessMessageVC.swift */,
-				156C80B624D8D27E0077905D /* VocabularyDetailsVC.swift */,
 				1147B608252B1F420078A296 /* CheckmarkListTVC.swift */,
 			);
 			path = "Reusable Components";

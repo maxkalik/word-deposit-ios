@@ -49,6 +49,7 @@ class AddWordVC: UIViewController {
         wordTranslationTextField.limitOfString = Limits.wordTranslation
         wordDescriptionTextField.limitOfString = Limits.wordDescription
         
+        
         setupUI()
         hideKeyboardWhenTappedAround()
     }
@@ -143,9 +144,6 @@ class AddWordVC: UIViewController {
         view.backgroundColor = Colors.silver
         
         wordDescriptionTextField.isHidden = true
-        wordExampleTextField.autocorrectionType = .no
-        wordTranslationTextField.autocorrectionType = .no
-        wordDescriptionTextField.autocorrectionType = .no
         wordSaveButton.isEnabled = false
         clearAllButton.isEnabled = false
         
