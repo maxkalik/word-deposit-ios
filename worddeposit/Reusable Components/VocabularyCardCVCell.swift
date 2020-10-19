@@ -17,7 +17,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
     @IBOutlet weak var wordPictureButton: UIButton!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var wordExampleTextField: PrimaryTextField!
-    @IBOutlet weak var wordTranslationTextField: SecondaryTextField!
+    @IBOutlet weak var wordTranslationTextField: PrimaryTextField!
     @IBOutlet weak var wordDescriptionTextField: SecondaryTextField!
     @IBOutlet weak var saveChangingButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
@@ -125,6 +125,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
     private func setupUI() {
         cardView.layer.backgroundColor = Colors.silver.cgColor
         removePictureButton.isHidden = true
+        wordDescriptionTextField.textColor = Colors.darkGrey
         
         hideAllButtons()
         disableAllButtons()

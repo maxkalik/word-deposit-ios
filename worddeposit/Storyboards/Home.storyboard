@@ -390,7 +390,7 @@
                                                                 <fontDescription key="fontDescription" name="DMSans-Regular" family="DM Sans" pointSize="25"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                             </textField>
-                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="and translation" textAlignment="center" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="VKL-sr-heo" customClass="SecondaryTextField" customModule="worddeposit" customModuleProvider="target">
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="and translation" textAlignment="center" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="VKL-sr-heo" customClass="PrimaryTextField" customModule="worddeposit" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="50" width="374" height="50"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="50" id="wYH-fG-ATm"/>
@@ -398,7 +398,7 @@
                                                                 <fontDescription key="fontDescription" name="DMSans-Regular" family="DM Sans" pointSize="20"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                             </textField>
-                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="[description]" textAlignment="center" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="b71-bp-t3y" customClass="SecondaryTextField" customModule="worddeposit" customModuleProvider="target">
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Description" textAlignment="center" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="b71-bp-t3y" customClass="SecondaryTextField" customModule="worddeposit" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="100" width="374" height="50"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="50" id="VZP-07-lY7"/>

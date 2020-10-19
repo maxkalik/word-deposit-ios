@@ -32,7 +32,7 @@ class PrimaryTextField: UITextField, UITextFieldDelegate {
         attributedPlaceholder = NSAttributedString(
             string: self.placeholder != nil ? self.placeholder! : "",
             attributes: [
-                NSAttributedString.Key.foregroundColor: Colors.dark.withAlphaComponent(0.4),
+                NSAttributedString.Key.foregroundColor: Colors.dark.withAlphaComponent(0.2),
                 NSAttributedString.Key.kern: -0.4
             ]
         )
@@ -79,6 +79,7 @@ class PrimaryTextField: UITextField, UITextFieldDelegate {
 class SecondaryTextField: UITextField, UITextFieldDelegate {
     
     var limitOfString: Int?
+    var symbolAtTheEnd: String?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -96,7 +97,7 @@ class SecondaryTextField: UITextField, UITextFieldDelegate {
         attributedPlaceholder = NSAttributedString(
             string: self.placeholder != nil ? self.placeholder! : "",
             attributes: [
-                NSAttributedString.Key.foregroundColor: Colors.dark.withAlphaComponent(0.4),
+                NSAttributedString.Key.foregroundColor: Colors.dark.withAlphaComponent(0.2),
                 NSAttributedString.Key.kern: -0.4
             ]
         )
@@ -171,7 +172,7 @@ class LoginTextField: UITextField, UITextFieldDelegate {
         textColor = Colors.dark
         
         // Placeholder
-        attributedPlaceholder = NSAttributedString(string: self.placeholder != nil ? self.placeholder! : "", attributes: [NSAttributedString.Key.foregroundColor: Colors.dark.withAlphaComponent(0.4)])
+        attributedPlaceholder = NSAttributedString(string: self.placeholder != nil ? self.placeholder! : "", attributes: [NSAttributedString.Key.foregroundColor: Colors.dark.withAlphaComponent(0.2)])
         
         applyCustomClearButton()
     }

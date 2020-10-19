@@ -28,7 +28,7 @@ class AddWordVC: UIViewController {
     @IBOutlet weak var wordSaveButton: PrimaryButton!
     @IBOutlet weak var clearAllButton: DefaultButton!
     @IBOutlet weak var wordExampleTextField: PrimaryTextField!
-    @IBOutlet weak var wordTranslationTextField: SecondaryTextField!
+    @IBOutlet weak var wordTranslationTextField: PrimaryTextField!
     @IBOutlet weak var wordDescriptionTextField: SecondaryTextField!
     
     // MARK: - Instances
@@ -144,6 +144,7 @@ class AddWordVC: UIViewController {
         view.backgroundColor = Colors.silver
         
         wordDescriptionTextField.isHidden = true
+        wordDescriptionTextField.textColor = Colors.darkGrey
         wordSaveButton.isEnabled = false
         clearAllButton.isEnabled = false
         
@@ -227,8 +228,6 @@ class AddWordVC: UIViewController {
         wordExampleTextField.text = ""
         wordTranslationTextField.text = ""
         wordDescriptionTextField.text = ""
-        
-        
         
         isImageSet = false
         wordSaveButton.isEnabled = false

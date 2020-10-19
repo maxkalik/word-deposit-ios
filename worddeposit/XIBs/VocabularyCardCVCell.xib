@@ -35,7 +35,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Translation" textAlignment="center" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="N7c-oH-trs" customClass="SecondaryTextField" customModule="worddeposit" customModuleProvider="target">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Translation" textAlignment="center" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="N7c-oH-trs" customClass="PrimaryTextField" customModule="worddeposit" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="50" width="209" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="8LJ-Nw-oyj"/>
@@ -43,7 +43,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="[description]" textAlignment="center" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="0hr-gr-S4R" customClass="SecondaryTextField" customModule="worddeposit" customModuleProvider="target">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Description" textAlignment="center" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="0hr-gr-S4R" customClass="SecondaryTextField" customModule="worddeposit" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="100" width="209" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="LmG-pL-e0h"/>
