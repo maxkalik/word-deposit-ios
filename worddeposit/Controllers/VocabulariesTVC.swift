@@ -152,6 +152,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         
         if vocabularies.count == 1 {
             sender.isOn = true
+            simpleAlert(title: "Vocabulary alert", msg: "You cannot turn off actived vocabulary.")
         } else {
             let newSelectedVocabularyIndex = sender.tag
             if newSelectedVocabularyIndex != selectedVocabularyIndex {
@@ -179,6 +180,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
                 }
             } else {
                 sender.isOn = true
+                simpleAlert(title: "Vocabulary alert", msg: "You cannot turn off actived vocabulary. Just turn on another one.")
             }
         }
         
