@@ -31,7 +31,6 @@ class CheckmarkListTVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ReusableIdentifiers.CheckedCell, for: indexPath)
-//        cell.backgroundColor = UIColor
         cell.backgroundColor = UIColor.clear
         cell.textLabel?.font = UIFont(name: Fonts.regular, size: 16)
         cell.textLabel?.text = data[indexPath.row]
@@ -49,6 +48,8 @@ class CheckmarkListTVC: UITableViewController {
         self.selected = indexPath.row
         tableView.deselectRow(at: indexPath, animated: true)
         delegate?.getCheckmared(index: indexPath.row)
+        // dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
