@@ -14,6 +14,20 @@ class CheckmarkListTVC: UITableViewController {
     }
     weak var delegate: CheckmarkListTVCDelegate?
     
+    var filteredData = [String]()
+    let searchController = UISearchController(searchResultsController: nil)
+    
+    // MARK: - Lifecycle methods
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        searchController.searchResultsUpdater = self
+        searchController.definesPresentationContext = true
+        searchController.searchBar.sizeToFit()
+        
+        tableView.tableHeaderView = searchController.searchBar
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         guard let selected = self.selected else { return }
@@ -24,6 +38,9 @@ class CheckmarkListTVC: UITableViewController {
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if searchController.isActive && searchController.searchBar.text != "" {
+            return filteredData.count
+        }
         // #warning Incomplete implementation, return the number of rows
         return data.count
     }
@@ -33,12 +50,23 @@ class CheckmarkListTVC: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: ReusableIdentifiers.CheckedCell, for: indexPath)
         cell.backgroundColor = UIColor.clear
         cell.textLabel?.font = UIFont(name: Fonts.regular, size: 16)
-        cell.textLabel?.text = data[indexPath.row]
-        if indexPath.row == selected {
-            cell.accessoryType = .checkmark
+        
+        if searchController.isActive && searchController.searchBar.text != "" {
+            cell.textLabel?.text = filteredData[indexPath.row]
+            if indexPath.row == selected {
+                cell.accessoryType = .checkmark
+            } else {
+                cell.accessoryType = .none
+            }
         } else {
-            cell.accessoryType = .none
+            cell.textLabel?.text = data[indexPath.row]
+            if indexPath.row == selected {
+                cell.accessoryType = .checkmark
+            } else {
+                cell.accessoryType = .none
+            }
         }
+        
         return cell
     }
 
@@ -48,7 +76,6 @@ class CheckmarkListTVC: UITableViewController {
         self.selected = indexPath.row
         tableView.deselectRow(at: indexPath, animated: true)
         delegate?.getCheckmared(index: indexPath.row)
-        // dismiss(animated: true, completion: nil)
         navigationController?.popViewController(animated: true)
     }
     
@@ -57,5 +84,14 @@ class CheckmarkListTVC: UITableViewController {
             return CGFloat.leastNormalMagnitude
         }
         return tableView.sectionHeaderHeight
+    }
+}
+
+extension CheckmarkListTVC: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        filteredData = data.filter { it in
+            return it.lowercased().contains(searchController.searchBar.text ?? "")
+        }
+        tableView.reloadData()
     }
 }

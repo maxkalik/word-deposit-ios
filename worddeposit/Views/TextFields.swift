@@ -15,6 +15,8 @@ class CellTextField: UITextField {
 class PrimaryTextField: UITextField, UITextFieldDelegate {
     
     var limitOfString: Int?
+    var isContainer = false
+    var textPadding = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,6 +29,8 @@ class PrimaryTextField: UITextField, UITextFieldDelegate {
         
         // Remove Default Border
         borderStyle = .none
+        
+        layer.backgroundColor = isContainer ? Colors.orange.cgColor : UIColor.clear.cgColor
         
         // Placeholder
         attributedPlaceholder = NSAttributedString(
@@ -42,7 +46,7 @@ class PrimaryTextField: UITextField, UITextFieldDelegate {
         let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = NSTextAlignment.center
         defaultTextAttributes = [
-            NSAttributedString.Key.foregroundColor: Colors.dark,
+            NSAttributedString.Key.foregroundColor: isContainer ? UIColor.white : Colors.dark,
             NSAttributedString.Key.kern: -0.8,
             NSAttributedString.Key.font: font!,
             NSAttributedString.Key.paragraphStyle: paragraphStyle
@@ -50,14 +54,18 @@ class PrimaryTextField: UITextField, UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        UIView.animate(withDuration: 0.3) {
-            self.backgroundColor = Colors.dark.withAlphaComponent(0.1)
+        if !isContainer {
+            UIView.animate(withDuration: 0.3) {
+                    self.backgroundColor = Colors.dark.withAlphaComponent(0.1)
+            }
         }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
-        UIView.animate(withDuration: 0.3) {
-            self.backgroundColor = .clear
+        if !isContainer {
+            UIView.animate(withDuration: 0.3) {
+                self.backgroundColor = .clear
+            }            
         }
     }
     
@@ -73,6 +81,16 @@ class PrimaryTextField: UITextField, UITextFieldDelegate {
                 self.backgroundColor = .clear
             }
         }
+    }
+    
+    override func textRect(forBounds bounds: CGRect) -> CGRect {
+        let rect = super.textRect(forBounds: bounds)
+        return rect.inset(by: textPadding)
+    }
+    
+    override func editingRect(forBounds bounds: CGRect) -> CGRect {
+        let rect = super.editingRect(forBounds: bounds)
+        return rect.inset(by: textPadding)
     }
 }
 

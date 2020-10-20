@@ -24,27 +24,38 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tIz-zy-KYF">
                                 <rect key="frame" x="0.0" y="249" width="249" height="189"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="dby-dI-Ln7">
-                                        <rect key="frame" x="20" y="19.5" width="209" height="150"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="dby-dI-Ln7">
+                                        <rect key="frame" x="20" y="14.5" width="209" height="160"/>
                                         <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Example" textAlignment="center" minimumFontSize="22" translatesAutoresizingMaskIntoConstraints="NO" id="bYr-Ab-Q6M" customClass="PrimaryTextField" customModule="worddeposit" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="209" height="50"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f6a-WD-rBL">
+                                                <rect key="frame" x="0.0" y="0.0" width="209" height="60"/>
+                                                <subviews>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Word" textAlignment="center" minimumFontSize="22" translatesAutoresizingMaskIntoConstraints="NO" id="bYr-Ab-Q6M" customClass="PrimaryTextField" customModule="worddeposit" customModuleProvider="target">
+                                                        <rect key="frame" x="77" y="0.0" width="55.5" height="50"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="50" id="qqE-e9-DSs"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="qqE-e9-DSs"/>
+                                                    <constraint firstItem="bYr-Ab-Q6M" firstAttribute="centerX" secondItem="f6a-WD-rBL" secondAttribute="centerX" id="RMT-cw-UxS"/>
+                                                    <constraint firstAttribute="height" constant="60" id="TWX-11-96H"/>
+                                                    <constraint firstItem="bYr-Ab-Q6M" firstAttribute="top" secondItem="f6a-WD-rBL" secondAttribute="top" id="gSW-iQ-LFF"/>
+                                                </constraints>
+                                            </view>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Word" textAlignment="center" minimumFontSize="22" translatesAutoresizingMaskIntoConstraints="NO" id="N7c-oH-trs" customClass="PrimaryTextField" customModule="worddeposit" customModuleProvider="target">
+                                                <rect key="frame" x="77" y="60" width="55.5" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="8LJ-Nw-oyj"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Translation" textAlignment="center" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="N7c-oH-trs" customClass="PrimaryTextField" customModule="worddeposit" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="50" width="209" height="50"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="8LJ-Nw-oyj"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Description" textAlignment="center" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="0hr-gr-S4R" customClass="SecondaryTextField" customModule="worddeposit" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="100" width="209" height="50"/>
+                                                <rect key="frame" x="0.0" y="110" width="209" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="LmG-pL-e0h"/>
                                                 </constraints>
@@ -53,6 +64,12 @@
                                             </textField>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="f6a-WD-rBL" secondAttribute="trailing" id="dwN-mg-SOC"/>
+                                            <constraint firstItem="f6a-WD-rBL" firstAttribute="leading" secondItem="dby-dI-Ln7" secondAttribute="leading" id="iAR-FV-xCd"/>
+                                            <constraint firstAttribute="trailing" secondItem="0hr-gr-S4R" secondAttribute="trailing" id="sNf-xn-sKQ"/>
+                                            <constraint firstItem="0hr-gr-S4R" firstAttribute="leading" secondItem="dby-dI-Ln7" secondAttribute="leading" id="x7n-dn-Ffi"/>
+                                        </constraints>
                                     </stackView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
