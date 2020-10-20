@@ -139,6 +139,14 @@ class VocabularyCardCVCell: UICollectionViewCell {
     private func setupUI() {
         cardView.layer.backgroundColor = Colors.silver.cgColor
         wordExampleTextField.isContainer = true
+        
+        wordExampleTextField.clipsToBounds = false
+        wordExampleTextField.layer.shadowOpacity = 1
+        wordExampleTextField.layer.shadowOffset = CGSize(width: 0, height: 3)
+        wordExampleTextField.layer.shadowRadius = 0
+        wordExampleTextField.layer.shadowColor = Colors.darkBlue.cgColor
+        wordExampleTextField.tintColor = UIColor.white
+        
         removePictureButton.isHidden = true
         hideAllButtons()
         disableAllButtons()

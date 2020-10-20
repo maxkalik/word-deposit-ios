@@ -47,10 +47,12 @@ struct Colors {
     static let shadow = #colorLiteral(red: 0.002289562985, green: 0.009225011557, blue: 0.1488199301, alpha: 1)
     static let yellow = #colorLiteral(red: 1, green: 0.7058823529, blue: 0.007843137255, alpha: 1)
     static let orange = #colorLiteral(red: 1, green: 0.4645918398, blue: 0, alpha: 1)
+    static let darkOrange = #colorLiteral(red: 0.521568656, green: 0.1098039225, blue: 0.05098039284, alpha: 1)
     static let silver = #colorLiteral(red: 0.93099447, green: 0.9588879667, blue: 0.9599677666, alpha: 1)
     static let grey = #colorLiteral(red: 0.6468691242, green: 0.6480719886, blue: 0.6009513889, alpha: 1)
     static let darkGrey = #colorLiteral(red: 0.457353078, green: 0.457353078, blue: 0.457353078, alpha: 1)
     static let blue = #colorLiteral(red: 0, green: 0.3176470588, blue: 0.6117647059, alpha: 1)
+    static let darkBlue = #colorLiteral(red: 0, green: 0.181510762, blue: 0.5298818211, alpha: 1)
     static let green = #colorLiteral(red: 0, green: 0.6042719415, blue: 0, alpha: 1)
 }
 

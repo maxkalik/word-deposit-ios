@@ -30,7 +30,7 @@ class PrimaryTextField: UITextField, UITextFieldDelegate {
         // Remove Default Border
         borderStyle = .none
         
-        layer.backgroundColor = isContainer ? Colors.orange.cgColor : UIColor.clear.cgColor
+        layer.backgroundColor = isContainer ? Colors.blue.cgColor : UIColor.clear.cgColor
         
         // Placeholder
         attributedPlaceholder = NSAttributedString(
