@@ -57,6 +57,10 @@ class CheckmarkListTVC: UITableViewController {
     func setupResultsTableController() {
         resultsTableController = storyboard?.instantiateViewController(withIdentifier: Storyboards.CheckmarkListTVCResults) as? CheckmarkListTVCResults
         resultsTableController.tableView.delegate = self
+        if selected != nil {
+            guard let index = selected else { return }
+            resultsTableController.selected = data[index]
+        }
         
         searchController = UISearchController(searchResultsController: resultsTableController)
         searchController.searchResultsUpdater = self

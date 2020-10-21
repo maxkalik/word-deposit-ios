@@ -12,25 +12,22 @@ class CheckmarkListTVCResults: UITableViewController {
     
     // MARK: - Instances
     
-    var filteredData = [String]()
+    var filteredData = [String]() {
+        didSet {
+            if !filteredData.isEmpty {
+                guard let selectedStr = selected else { return }
+                selectedIndex = filteredData.firstIndex(of: selectedStr)
+            }
+        }
+    }
+    private var selectedIndex: Int?
+    var selected: String?
     
     // MARK: - Lifecycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupTableView()
-    }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         filteredData.removeAll()
-    }
-    
-    // MARK: - Methods
-    
-    func setupTableView() {
-        let nib = UINib(nibName: XIBs.VocabularyTVCell, bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: XIBs.VocabularyTVCell)
     }
 
     // MARK: - UITableViewDataSource
@@ -44,11 +41,11 @@ class CheckmarkListTVCResults: UITableViewController {
         cell.backgroundColor = UIColor.clear
         cell.textLabel?.font = UIFont(name: Fonts.regular, size: 16)
         cell.textLabel?.text = filteredData[indexPath.row]
-//        if indexPath.row == selected {
-//            cell.accessoryType = .checkmark
-//        } else {
-//            cell.accessoryType = .none
-//        }
+        if indexPath.row == selectedIndex {
+            cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
+        }
         
         return cell
     }
