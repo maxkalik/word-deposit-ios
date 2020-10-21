@@ -47,6 +47,9 @@
 		1181BBF32498060F00DB682E /* VocabularyCardsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1181BBF12498060F00DB682E /* VocabularyCardsVC.swift */; };
 		1181BBF42498060F00DB682E /* VocabularyCardsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1181BBF22498060F00DB682E /* VocabularyCardsVC.xib */; };
 		1192355024BFB66C00E76403 /* TextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1192354F24BFB66C00E76403 /* TextFields.swift */; };
+		119D786B2540BBAF009260D4 /* CheckmarkListTVCResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D786A2540BBAF009260D4 /* CheckmarkListTVCResults.swift */; };
+		119D786E2540BBC8009260D4 /* CheckmarkListTVC+Restore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D786D2540BBC8009260D4 /* CheckmarkListTVC+Restore.swift */; };
+		119D78712540BBD8009260D4 /* CheckmarkListTVC+Updating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D78702540BBD8009260D4 /* CheckmarkListTVC+Updating.swift */; };
 		119DBF5724ACCFBF009124B7 /* Configurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119DBF5624ACCFBF009124B7 /* Configurations.swift */; };
 		11B20D6A24C8DF2E00C1CB4E /* PracticeAnswerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B20D6824C8DF2E00C1CB4E /* PracticeAnswerItem.swift */; };
 		11B20D6B24C8DF2E00C1CB4E /* PracticeAnswerItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 11B20D6924C8DF2E00C1CB4E /* PracticeAnswerItem.xib */; };
@@ -127,6 +130,9 @@
 		1181BBF12498060F00DB682E /* VocabularyCardsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyCardsVC.swift; sourceTree = "<group>"; };
 		1181BBF22498060F00DB682E /* VocabularyCardsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VocabularyCardsVC.xib; sourceTree = "<group>"; };
 		1192354F24BFB66C00E76403 /* TextFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFields.swift; sourceTree = "<group>"; };
+		119D786A2540BBAF009260D4 /* CheckmarkListTVCResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkListTVCResults.swift; sourceTree = "<group>"; };
+		119D786D2540BBC8009260D4 /* CheckmarkListTVC+Restore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CheckmarkListTVC+Restore.swift"; sourceTree = "<group>"; };
+		119D78702540BBD8009260D4 /* CheckmarkListTVC+Updating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CheckmarkListTVC+Updating.swift"; sourceTree = "<group>"; };
 		119DBF5624ACCFBF009124B7 /* Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
 		11B20D6824C8DF2E00C1CB4E /* PracticeAnswerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PracticeAnswerItem.swift; path = "worddeposit/Reusable Components/PracticeAnswerItem.swift"; sourceTree = SOURCE_ROOT; };
 		11B20D6924C8DF2E00C1CB4E /* PracticeAnswerItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = PracticeAnswerItem.xib; path = worddeposit/XIBs/PracticeAnswerItem.xib; sourceTree = SOURCE_ROOT; };
@@ -363,6 +369,9 @@
 				11B20D6824C8DF2E00C1CB4E /* PracticeAnswerItem.swift */,
 				112F9C7324F6F201007E92D8 /* SuccessMessageVC.swift */,
 				1147B608252B1F420078A296 /* CheckmarkListTVC.swift */,
+				119D786D2540BBC8009260D4 /* CheckmarkListTVC+Restore.swift */,
+				119D78702540BBD8009260D4 /* CheckmarkListTVC+Updating.swift */,
+				119D786A2540BBAF009260D4 /* CheckmarkListTVCResults.swift */,
 			);
 			path = "Reusable Components";
 			sourceTree = "<group>";
@@ -524,6 +533,7 @@
 				1128423B248E83ED00A014E9 /* ForgotPasswordVC.swift in Sources */,
 				15CEBC6124D71A0300D48C0E /* ProgressHUD.swift in Sources */,
 				1128423D248E840000A014E9 /* RoundedViews.swift in Sources */,
+				119D786B2540BBAF009260D4 /* CheckmarkListTVCResults.swift in Sources */,
 				116BC94C249182BD00968DA6 /* Constants.swift in Sources */,
 				11B20D6D24C8E00800C1CB4E /* PracticeReadVC.swift in Sources */,
 				11F0327024C8272700BD6350 /* PracticeCVC.swift in Sources */,
@@ -534,6 +544,7 @@
 				118162EF24BFB08E0088C0E1 /* UserInfoTVC.swift in Sources */,
 				1128423F248E845900A014E9 /* User.swift in Sources */,
 				151F2F29251EB193002D292B /* DefaultButton.swift in Sources */,
+				119D786E2540BBC8009260D4 /* CheckmarkListTVC+Restore.swift in Sources */,
 				15D5190E251C076900590073 /* Validator.swift in Sources */,
 				11284235248E83C800A014E9 /* ProfileTVC.swift in Sources */,
 				11F32A5324AF46D00097BF39 /* VocabularyResultsTVC.swift in Sources */,
@@ -545,6 +556,7 @@
 				11284211248E7C5700A014E9 /* AppDelegate.swift in Sources */,
 				112EA43324C83B7200FA55E3 /* PracticeTrainer.swift in Sources */,
 				116BC94E2491836B00968DA6 /* UIViewController.swift in Sources */,
+				119D78712540BBD8009260D4 /* CheckmarkListTVC+Updating.swift in Sources */,
 				1171E70624981CDD00805D35 /* VocabularyCardCVCell.swift in Sources */,
 				11F32A5924AF49DB0097BF39 /* VocabularyTVC+Updating.swift in Sources */,
 				11ECE4B424EB0FA100B7884B /* VocabulariesTVC.swift in Sources */,
