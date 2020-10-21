@@ -17,7 +17,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
     @IBOutlet weak var wordPictureButton: UIButton!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var wordExampleTextField: PrimaryTextField!
-    @IBOutlet weak var wordTranslationTextField: SecondaryTextField!
+    @IBOutlet weak var wordTranslationTextField: PrimaryTextField!
     @IBOutlet weak var wordDescriptionTextField: SecondaryTextField!
     @IBOutlet weak var saveChangingButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
@@ -93,14 +93,22 @@ class VocabularyCardCVCell: UICollectionViewCell {
         if isKeyboardShowing { return }
         isKeyboardShowing = true
         
+        if (wordDescriptionTextField.text!.isEmpty) {
+            wordDescriptionTextField.isHidden = false
+        }
+        
+        
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardHeight: CGFloat = keyboardFrame.cgRectValue.height
             showAllButtons()
             frame.origin.y -= keyboardHeight
         }
         
-        UIView.animate(withDuration: 0.3) {
-            self.wordPictureButton.alpha = 0.2
+        UIView.animate(withDuration: 0.3) { [self] in
+            wordPictureButton.alpha = 0.2
+            if (wordDescriptionTextField.text!.isEmpty) {
+                wordDescriptionTextField.alpha = 1
+            }
         }
         
         delegate?.disableEnableScroll(isKeyboardShow: true)
@@ -111,10 +119,16 @@ class VocabularyCardCVCell: UICollectionViewCell {
         if !isKeyboardShowing { return }
         isKeyboardShowing = false
         frame.origin.y = 0
-        hideAllButtons()
         
-        UIView.animate(withDuration: 0.3) {
-            self.wordPictureButton.alpha = 1
+        if !cancelButton.isEnabled && !saveChangingButton.isEnabled {
+            hideAllButtons()
+        }
+        
+        UIView.animate(withDuration: 0.3) { [self] in
+            if (wordDescriptionTextField.text!.isEmpty) {
+                hideWordDescriptionTextField()
+            }
+            wordPictureButton.alpha = 1
         }
         
         delegate?.disableEnableScroll(isKeyboardShow: false)
@@ -124,11 +138,40 @@ class VocabularyCardCVCell: UICollectionViewCell {
     
     private func setupUI() {
         cardView.layer.backgroundColor = Colors.silver.cgColor
-        removePictureButton.isHidden = true
+        wordExampleTextField.isContainer = true
         
+        wordExampleTextField.clipsToBounds = false
+        wordExampleTextField.layer.shadowOpacity = 1
+        wordExampleTextField.layer.shadowOffset = CGSize(width: 0, height: 3)
+        wordExampleTextField.layer.shadowRadius = 0
+        wordExampleTextField.layer.shadowColor = Colors.darkBlue.cgColor
+        wordExampleTextField.tintColor = UIColor.white
+        
+        removePictureButton.isHidden = true
         hideAllButtons()
         disableAllButtons()
         setupImagePlaceholder()
+    }
+    
+    private func setupDescriptionTextField() {
+        wordDescriptionTextField.textColor = Colors.darkGrey
+        guard let text = wordDescriptionTextField.text else { return }
+        
+        if text.isEmpty {
+            hideWordDescriptionTextField()
+        } else {
+            showWordDescriptionTextField()
+        }
+    }
+    
+    private func showWordDescriptionTextField() {
+        wordDescriptionTextField.alpha = 1
+        wordDescriptionTextField.isHidden = false
+    }
+    
+    private func hideWordDescriptionTextField() {
+        wordDescriptionTextField.alpha = 0
+        wordDescriptionTextField.isHidden = true
     }
     
     private func setupImagePlaceholder() {
@@ -156,6 +199,8 @@ class VocabularyCardCVCell: UICollectionViewCell {
         wordExampleTextField.text = word.example
         wordTranslationTextField.text = word.translation
         wordDescriptionTextField.text = word.description
+        
+        setupDescriptionTextField()
     }
     
     // MARK: - IBActions

@@ -28,7 +28,7 @@ class AddWordVC: UIViewController {
     @IBOutlet weak var wordSaveButton: PrimaryButton!
     @IBOutlet weak var clearAllButton: DefaultButton!
     @IBOutlet weak var wordExampleTextField: PrimaryTextField!
-    @IBOutlet weak var wordTranslationTextField: SecondaryTextField!
+    @IBOutlet weak var wordTranslationTextField: PrimaryTextField!
     @IBOutlet weak var wordDescriptionTextField: SecondaryTextField!
     
     // MARK: - Instances
@@ -48,6 +48,7 @@ class AddWordVC: UIViewController {
         wordExampleTextField.limitOfString = Limits.wordExample
         wordTranslationTextField.limitOfString = Limits.wordTranslation
         wordDescriptionTextField.limitOfString = Limits.wordDescription
+        
         
         setupUI()
         hideKeyboardWhenTappedAround()
@@ -143,9 +144,7 @@ class AddWordVC: UIViewController {
         view.backgroundColor = Colors.silver
         
         wordDescriptionTextField.isHidden = true
-        wordExampleTextField.autocorrectionType = .no
-        wordTranslationTextField.autocorrectionType = .no
-        wordDescriptionTextField.autocorrectionType = .no
+        wordDescriptionTextField.textColor = Colors.darkGrey
         wordSaveButton.isEnabled = false
         clearAllButton.isEnabled = false
         
@@ -159,7 +158,7 @@ class AddWordVC: UIViewController {
     }
     
     private func setImageData() -> Data? {
-        if self.isImageSet {
+        if isImageSet {
             guard let image = wordImagePickerBtn.imageView?.image else { return nil }
             let resizedImg = image.resized(toWidth: 400.0)
             return resizedImg?.jpegData(compressionQuality: 0.5)
@@ -230,8 +229,6 @@ class AddWordVC: UIViewController {
         wordTranslationTextField.text = ""
         wordDescriptionTextField.text = ""
         
-        
-        
         isImageSet = false
         wordSaveButton.isEnabled = false
         clearAllButton.isEnabled = false
@@ -248,6 +245,7 @@ class AddWordVC: UIViewController {
             if let photo = items.singlePhoto {
                 self.wordImagePickerBtn.setImage(photo.image, for: .normal)
                 self.isImageSet = true
+                self.clearAllButton.isEnabled = true
             }
             picker.dismiss(animated: true, completion: nil)
         }

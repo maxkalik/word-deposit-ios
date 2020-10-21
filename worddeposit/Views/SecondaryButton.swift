@@ -4,7 +4,7 @@ class SecondaryButton: UIButton {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        titleLabel?.font = UIFont(name: Fonts.bold, size: 16)
+        titleLabel?.font = UIFont(name: Fonts.bold, size: 14)
         guard let text = title(for: .normal) else { return }
         titleLabel?.addCharactersSpacing(spacing: -0.6, text: text)
         layer.cornerRadius = Radiuses.large

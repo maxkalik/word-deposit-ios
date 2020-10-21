@@ -28,10 +28,11 @@ class VocabularyTVC: UITableViewController {
         // Setup Table View
         setupTableView()
         setupResultsTableController()
-        setupMessage()
         
         // Setup message
+        setupMessage()
         view.addSubview(messageView)
+        messageView.hide()
         
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(Keys.vocabulariesSwitchNotificationKey), object: nil)

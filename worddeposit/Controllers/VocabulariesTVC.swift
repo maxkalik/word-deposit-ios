@@ -147,34 +147,43 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     }
     
     @objc func switchChaged(sender: UISwitch) {
+        // exception without vocabularies.count == 1
+        // 'attempt to delete row 1 from section 0 which only contains 1 rows before the update'
         
-        let newSelectedVocabularyIndex = sender.tag
-        if newSelectedVocabularyIndex != selectedVocabularyIndex {
-            guard let oldIndex = selectedVocabularyIndex else { return }
-            selectedVocabularyIndex = newSelectedVocabularyIndex
-            tableView.reloadRows(at: [IndexPath(item: oldIndex, section: 0), IndexPath(item: newSelectedVocabularyIndex, section: 0)], with: .fade)
-            // update vocabularies request
-            UserService.shared.switchSelectedVocabulary(from: vocabularies[oldIndex], to: vocabularies[newSelectedVocabularyIndex]) { error in
-                
-                if let error = error {
-                    UserService.shared.db.handleFirestoreError(error, viewController: self)
-                    return
-                }
-                
-                UserService.shared.getCurrentVocabulary()
-                
-                UserService.shared.fetchWords { error, _ in
+        if vocabularies.count == 1 {
+            sender.isOn = true
+            simpleAlert(title: "Vocabulary alert", msg: "You cannot turn off actived vocabulary.")
+        } else {
+            let newSelectedVocabularyIndex = sender.tag
+            if newSelectedVocabularyIndex != selectedVocabularyIndex {
+                guard let oldIndex = selectedVocabularyIndex else { return }
+                selectedVocabularyIndex = newSelectedVocabularyIndex
+                tableView.reloadRows(at: [IndexPath(item: oldIndex, section: 0), IndexPath(item: newSelectedVocabularyIndex, section: 0)], with: .fade)
+                // update vocabularies request
+                UserService.shared.switchSelectedVocabulary(from: vocabularies[oldIndex], to: vocabularies[newSelectedVocabularyIndex]) { error in
+                    
                     if let error = error {
                         UserService.shared.db.handleFirestoreError(error, viewController: self)
                         return
                     }
-                    /// Post notification for Practice and Vocabulary views
-                    NotificationCenter.default.post(name: Notification.Name(Keys.vocabulariesSwitchNotificationKey), object: nil)
+                    
+                    UserService.shared.getCurrentVocabulary()
+                    
+                    UserService.shared.fetchWords { error, _ in
+                        if let error = error {
+                            UserService.shared.db.handleFirestoreError(error, viewController: self)
+                            return
+                        }
+                        /// Post notification for Practice and Vocabulary views
+                        NotificationCenter.default.post(name: Notification.Name(Keys.vocabulariesSwitchNotificationKey), object: nil)
+                    }
                 }
+            } else {
+                sender.isOn = true
+                simpleAlert(title: "Vocabulary alert", msg: "You cannot turn off actived vocabulary. Just turn on another one.")
             }
-        } else {
-            sender.isOn = true
         }
+        
     }
 
     // MARK: - Table view data source
