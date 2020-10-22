@@ -135,7 +135,8 @@ class ProfileTVC: UITableViewController {
             versionLabel.font = UIFont(name: Fonts.medium, size: 15)
             versionLabel.textColor = Colors.grey
             versionLabel.textAlignment = .center
-            versionLabel.text = "Version 2.1"
+            let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+            versionLabel.text = appVersion ?? ""
             footerView.addSubview(versionLabel)
         }
         return footerView
