@@ -95,9 +95,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         super.viewDidAppear(animated)
         
         // Become first responder here because the view has to be drawed before (to calculate frame size and position in keyboard will show)
-        if vocabulary == nil {
-            titleTextField.becomeFirstResponder()
-        }
+        titleTextField.becomeFirstResponder()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
