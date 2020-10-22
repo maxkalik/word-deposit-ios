@@ -180,6 +180,7 @@ class ProfileTVC: UITableViewController {
                 let currentLanguage = user.nativeLanguage.isNotEmpty ? user.nativeLanguage : defaultLanguage
                 guard let selected = languages.firstIndex(of: currentLanguage) else { return }
                 
+                tvc.navigationItem.rightBarButtonItem = nil
                 tvc.data = languages
                 tvc.selected = selected
                 tvc.title = "Native Language"
