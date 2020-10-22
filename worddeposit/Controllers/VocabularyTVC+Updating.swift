@@ -3,7 +3,7 @@ import UIKit
 extension VocabularyTVC: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         let whitespaceCharacterSet = CharacterSet.whitespaces
-        let strippedString = searchController.searchBar.text!.trimmingCharacters(in: whitespaceCharacterSet)
+        let strippedString = searchController.searchBar.text!.trimmingCharacters(in: whitespaceCharacterSet).lowercased()
         
         let searchResults = words.filter { (word) -> Bool in
             word.example.lowercased().range(of: strippedString) != nil ||

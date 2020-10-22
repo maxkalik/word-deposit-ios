@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11049CB42541E4E9009F324F /* UISearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11049CB32541E4E9009F324F /* UISearchController.swift */; };
 		110C3F87252DEFC600FE5667 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110C3F86252DEFC600FE5667 /* UITextField.swift */; };
 		110F5E3724FD673D00C463A4 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110F5E3624FD673D00C463A4 /* UserService.swift */; };
 		11108C02252356BC00A44945 /* DMSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 11108BFF252356BC00A44945 /* DMSans-Medium.ttf */; };
@@ -88,6 +89,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		11049CB32541E4E9009F324F /* UISearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISearchController.swift; sourceTree = "<group>"; };
 		110C3F86252DEFC600FE5667 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		110F5E3624FD673D00C463A4 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		11108BFF252356BC00A44945 /* DMSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DMSans-Medium.ttf"; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 				155F39E72523D69400EC63B9 /* UINavigationController.swift */,
 				15E7741B2529205400EC57D0 /* UILabel.swift */,
 				110C3F86252DEFC600FE5667 /* UITextField.swift */,
+				11049CB32541E4E9009F324F /* UISearchController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -533,6 +536,7 @@
 				1128423B248E83ED00A014E9 /* ForgotPasswordVC.swift in Sources */,
 				15CEBC6124D71A0300D48C0E /* ProgressHUD.swift in Sources */,
 				1128423D248E840000A014E9 /* RoundedViews.swift in Sources */,
+				11049CB42541E4E9009F324F /* UISearchController.swift in Sources */,
 				119D786B2540BBAF009260D4 /* CheckmarkListTVCResults.swift in Sources */,
 				116BC94C249182BD00968DA6 /* Constants.swift in Sources */,
 				11B20D6D24C8E00800C1CB4E /* PracticeReadVC.swift in Sources */,
@@ -733,6 +737,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = worddeposit/worddeposit.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = P353H6D448;
 				INFOPLIST_FILE = worddeposit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -740,7 +745,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.maxkalik.worddeposit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -755,6 +760,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = worddeposit/worddeposit.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = P353H6D448;
 				INFOPLIST_FILE = worddeposit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -762,7 +768,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.maxkalik.worddeposit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
