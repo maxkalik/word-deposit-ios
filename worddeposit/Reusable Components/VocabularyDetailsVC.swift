@@ -206,7 +206,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         // Add custom languages from created vocabularies to the beginning of the array
         for vocabulary in UserService.shared.vocabularies {
             if !languages.contains(vocabulary.language) {
-                languages.insert(vocabulary.language, at: 0)                
+                languages.insert(vocabulary.language, at: 0)
             }
         }
         
@@ -385,9 +385,10 @@ extension VocabularyDetailsVC: CheckmarkListTVCDelegate {
     func getCheckmared(index: Int) {
         if languageIndex != index {
             languageButton.setTitle(languages[index], for: .normal)
-            self.languageIndex = index
+            languageIndex = index
             
             if index == languages.count - 1 {
+                // OTHER CASE
                 languageButton.isHidden = true
                 languageTextField.isHidden = false
                 languageTextField.becomeFirstResponder()

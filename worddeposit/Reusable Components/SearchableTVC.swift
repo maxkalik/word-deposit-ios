@@ -11,15 +11,33 @@ import UIKit
 class SearchableTVC: UITableViewController {
 
     /// Search controller to help us with filtering items in the table view
-    var searchController: UISearchController!
+    var searchController: UISearchController! {
+        didSet {
+            searchController.searchBar.autocapitalizationType = .none
+            searchController.searchBar.placeholder = "Search"
+            searchController.searchBar.sizeToFit()
+            searchController.searchBar.searchBarStyle = .minimal
+            searchController.definesPresentationContext = true
+            
+            // custom icons
+            let searchIcon = UIImage(named: "icon_search")
+            let closeIcon = UIImage(named: "icon_close")
+            
+            searchController.searchBar.setImage(searchIcon, for: .search, state: .normal)
+            searchController.searchBar.setImage(closeIcon, for: .clear, state: .normal)
+            
+            searchController.searchBar.setPositionAdjustment(UIOffset(horizontal: 8, vertical: .zero), for: .search)
+            searchController.searchBar.setPositionAdjustment(UIOffset(horizontal: -5, vertical: .zero), for: .clear)
+            searchController.searchBar.searchTextPositionAdjustment = UIOffset(horizontal: 4, vertical: .zero)
+            
+            // Cusom font
+            let attributes = [NSAttributedString.Key.font: UIFont(name: Fonts.medium, size: 16), NSAttributedString.Key.foregroundColor: UIColor.black]
+            UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = attributes as [NSAttributedString.Key : Any]
+        }
+    }
     
     /// Restoration state for UISearchController
     var restoredState = SearchControllerRestorableState()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

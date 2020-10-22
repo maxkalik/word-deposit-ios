@@ -36,17 +36,12 @@ class CheckmarkListTVCResults: UITableViewController {
         return filteredData.count
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ReusableIdentifiers.CheckedCell, for: indexPath)
-        cell.backgroundColor = UIColor.clear
-        cell.textLabel?.font = UIFont(name: Fonts.regular, size: 16)
-        cell.textLabel?.text = filteredData[indexPath.row]
-        if indexPath.row == selectedIndex {
-            cell.accessoryType = .checkmark
-        } else {
-            cell.accessoryType = .none
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {        
+        if let cell = tableView.dequeueReusableCell(withIdentifier: ReusableIdentifiers.CheckedCell, for: indexPath) as? CheckmarkListTVCell {
+            cell.configure(title: filteredData[indexPath.row], isMarked: indexPath.row == selectedIndex)
+            return cell
         }
-        
-        return cell
+
+        return UITableViewCell()
     }
 }

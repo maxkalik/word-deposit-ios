@@ -61,17 +61,12 @@ class CheckmarkListTVC: SearchableTVC {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ReusableIdentifiers.CheckedCell, for: indexPath)
-        cell.backgroundColor = UIColor.clear
-        cell.textLabel?.font = UIFont(name: Fonts.regular, size: 16)
-        cell.textLabel?.text = data[indexPath.row]
-        if indexPath.row == selected {
-            cell.accessoryType = .checkmark
-        } else {
-            cell.accessoryType = .none
+        if let cell = tableView.dequeueReusableCell(withIdentifier: ReusableIdentifiers.CheckedCell, for: indexPath) as? CheckmarkListTVCell {
+            cell.configure(title: data[indexPath.row], isMarked: indexPath.row == selected)
+            return cell
         }
-        
-        return cell
+
+        return UITableViewCell()
     }
     
     private func selectCell(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -100,6 +95,14 @@ class CheckmarkListTVC: SearchableTVC {
         }
         return tableView.sectionHeaderHeight
     }
+    
+    // MARK: - Outlets
+    
+    @IBAction func addBarButtonTapped(_ sender: UIBarButtonItem) {
+        delegate?.getCheckmared(index: data.count - 1)
+        navigationController?.popViewController(animated: true)
+    }
+    
 }
 
 extension CheckmarkListTVC: UISearchBarDelegate {
