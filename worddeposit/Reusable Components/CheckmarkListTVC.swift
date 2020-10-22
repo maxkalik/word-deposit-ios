@@ -14,14 +14,8 @@ class CheckmarkListTVC: SearchableTVC {
     }
     weak var delegate: CheckmarkListTVCDelegate?
     
-    /// Search controller to help us with filtering items in the table view
-//    var searchController: UISearchController!
-    
     /// Search results table view
     private var resultsTableController: CheckmarkListTVCResults!
-    
-    /// Restoration state for UISearchController
-//    var restoredState = SearchControllerRestorableState()
     
     // MARK: - Lifecycle methods
     
