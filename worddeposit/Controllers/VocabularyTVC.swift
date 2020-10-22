@@ -1,6 +1,6 @@
 import UIKit
 
-class VocabularyTVC: UITableViewController {
+class VocabularyTVC: SearchableTVC {
     
     // MARK: - Instances
     
@@ -8,14 +8,8 @@ class VocabularyTVC: UITableViewController {
     var words = [Word]()
     var messageView = MessageView()
     
-    /// Search controller to help us with filtering items in the table view
-    var searchController: UISearchController!
-    
     /// Search results table view
     private var resultsTableController: VocabularyResultsTVC!
-    
-    /// Restoration state for UISearchController
-    var restoredState = SearchControllerRestorableState()
     
     /// Flag for current vocabulary
     var isVocabularySwitched = false
@@ -57,17 +51,6 @@ class VocabularyTVC: UITableViewController {
             setupContent(words: UserService.shared.words) // <-- TODO: Bug
         }
         messageView.frame.origin.y = tableView.contentOffset.y
-        
-        // Restore the searchController's active state.
-        if restoredState.wasActive {
-            searchController.isActive = restoredState.wasActive
-            restoredState.wasActive = false
-            
-            if restoredState.wasFirstResponder {
-                searchController.searchBar.becomeFirstResponder()
-                restoredState.wasFirstResponder = false
-            }
-        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {

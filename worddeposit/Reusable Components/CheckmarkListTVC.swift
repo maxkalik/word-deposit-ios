@@ -4,7 +4,7 @@ protocol CheckmarkListTVCDelegate: AnyObject {
     func getCheckmared(index: Int)
 }
 
-class CheckmarkListTVC: UITableViewController {
+class CheckmarkListTVC: SearchableTVC {
 
     var data: [String]!
     var selected: Int? {
@@ -15,13 +15,13 @@ class CheckmarkListTVC: UITableViewController {
     weak var delegate: CheckmarkListTVCDelegate?
     
     /// Search controller to help us with filtering items in the table view
-    var searchController: UISearchController!
+//    var searchController: UISearchController!
     
     /// Search results table view
     private var resultsTableController: CheckmarkListTVCResults!
     
     /// Restoration state for UISearchController
-    var restoredState = SearchControllerRestorableState()
+//    var restoredState = SearchControllerRestorableState()
     
     // MARK: - Lifecycle methods
     
@@ -35,21 +35,6 @@ class CheckmarkListTVC: UITableViewController {
         guard let selected = self.selected else { return }
         tableView.scrollToRow(at: IndexPath(item: selected, section: 0), at: .middle, animated: false)
         tableView.backgroundColor = Colors.silver
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        // Restore the searchController's active state.
-        if restoredState.wasActive {
-            searchController.isActive = restoredState.wasActive
-            restoredState.wasActive = false
-            
-            if restoredState.wasFirstResponder {
-                searchController.searchBar.becomeFirstResponder()
-                restoredState.wasFirstResponder = false
-            }
-        }
     }
 
     // MARK: - Local methods

@@ -1,6 +1,6 @@
 import UIKit
 
-extension VocabularyTVC {
+extension SearchableTVC {
     
     /// State restoration values
     enum RestorationKeys: String {

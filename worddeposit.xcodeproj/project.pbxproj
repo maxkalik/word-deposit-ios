@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		11049CB42541E4E9009F324F /* UISearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11049CB32541E4E9009F324F /* UISearchController.swift */; };
+		11049CB82541FD3D009F324F /* SearchableTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11049CB72541FD3D009F324F /* SearchableTVC.swift */; };
+		11049CBB2541FDD7009F324F /* SearchableTVC+Restore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11049CBA2541FDD7009F324F /* SearchableTVC+Restore.swift */; };
 		110C3F87252DEFC600FE5667 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110C3F86252DEFC600FE5667 /* UITextField.swift */; };
 		110F5E3724FD673D00C463A4 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110F5E3624FD673D00C463A4 /* UserService.swift */; };
 		11108C02252356BC00A44945 /* DMSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 11108BFF252356BC00A44945 /* DMSans-Medium.ttf */; };
@@ -49,7 +51,6 @@
 		1181BBF42498060F00DB682E /* VocabularyCardsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1181BBF22498060F00DB682E /* VocabularyCardsVC.xib */; };
 		1192355024BFB66C00E76403 /* TextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1192354F24BFB66C00E76403 /* TextFields.swift */; };
 		119D786B2540BBAF009260D4 /* CheckmarkListTVCResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D786A2540BBAF009260D4 /* CheckmarkListTVCResults.swift */; };
-		119D786E2540BBC8009260D4 /* CheckmarkListTVC+Restore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D786D2540BBC8009260D4 /* CheckmarkListTVC+Restore.swift */; };
 		119D78712540BBD8009260D4 /* CheckmarkListTVC+Updating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D78702540BBD8009260D4 /* CheckmarkListTVC+Updating.swift */; };
 		119DBF5724ACCFBF009124B7 /* Configurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119DBF5624ACCFBF009124B7 /* Configurations.swift */; };
 		11B20D6A24C8DF2E00C1CB4E /* PracticeAnswerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B20D6824C8DF2E00C1CB4E /* PracticeAnswerItem.swift */; };
@@ -60,7 +61,6 @@
 		11F0326E24C8267E00BD6350 /* PracticeCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 11F0326C24C8267E00BD6350 /* PracticeCVCell.xib */; };
 		11F0327024C8272700BD6350 /* PracticeCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F0326F24C8272700BD6350 /* PracticeCVC.swift */; };
 		11F32A5324AF46D00097BF39 /* VocabularyResultsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F32A5224AF46D00097BF39 /* VocabularyResultsTVC.swift */; };
-		11F32A5524AF49C30097BF39 /* VocabularyTVC+Restore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F32A5424AF49C30097BF39 /* VocabularyTVC+Restore.swift */; };
 		11F32A5924AF49DB0097BF39 /* VocabularyTVC+Updating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F32A5824AF49DB0097BF39 /* VocabularyTVC+Updating.swift */; };
 		150FA46124D8B6E40083D653 /* Vocabulary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150FA46024D8B6E40083D653 /* Vocabulary.swift */; };
 		15122F5825213FF900DB0E8F /* TabBarConroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15122F5725213FF900DB0E8F /* TabBarConroller.swift */; };
@@ -90,6 +90,8 @@
 
 /* Begin PBXFileReference section */
 		11049CB32541E4E9009F324F /* UISearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISearchController.swift; sourceTree = "<group>"; };
+		11049CB72541FD3D009F324F /* SearchableTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchableTVC.swift; sourceTree = "<group>"; };
+		11049CBA2541FDD7009F324F /* SearchableTVC+Restore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchableTVC+Restore.swift"; sourceTree = "<group>"; };
 		110C3F86252DEFC600FE5667 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		110F5E3624FD673D00C463A4 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		11108BFF252356BC00A44945 /* DMSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DMSans-Medium.ttf"; sourceTree = "<group>"; };
@@ -133,7 +135,6 @@
 		1181BBF22498060F00DB682E /* VocabularyCardsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VocabularyCardsVC.xib; sourceTree = "<group>"; };
 		1192354F24BFB66C00E76403 /* TextFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFields.swift; sourceTree = "<group>"; };
 		119D786A2540BBAF009260D4 /* CheckmarkListTVCResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkListTVCResults.swift; sourceTree = "<group>"; };
-		119D786D2540BBC8009260D4 /* CheckmarkListTVC+Restore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CheckmarkListTVC+Restore.swift"; sourceTree = "<group>"; };
 		119D78702540BBD8009260D4 /* CheckmarkListTVC+Updating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CheckmarkListTVC+Updating.swift"; sourceTree = "<group>"; };
 		119DBF5624ACCFBF009124B7 /* Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
 		11B20D6824C8DF2E00C1CB4E /* PracticeAnswerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PracticeAnswerItem.swift; path = "worddeposit/Reusable Components/PracticeAnswerItem.swift"; sourceTree = SOURCE_ROOT; };
@@ -145,7 +146,6 @@
 		11F0326C24C8267E00BD6350 /* PracticeCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PracticeCVCell.xib; sourceTree = "<group>"; };
 		11F0326F24C8272700BD6350 /* PracticeCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeCVC.swift; sourceTree = "<group>"; };
 		11F32A5224AF46D00097BF39 /* VocabularyResultsTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyResultsTVC.swift; sourceTree = "<group>"; };
-		11F32A5424AF49C30097BF39 /* VocabularyTVC+Restore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VocabularyTVC+Restore.swift"; sourceTree = "<group>"; };
 		11F32A5824AF49DB0097BF39 /* VocabularyTVC+Updating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VocabularyTVC+Updating.swift"; sourceTree = "<group>"; };
 		150FA46024D8B6E40083D653 /* Vocabulary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vocabulary.swift; sourceTree = "<group>"; };
 		15122F5725213FF900DB0E8F /* TabBarConroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarConroller.swift; sourceTree = "<group>"; };
@@ -261,7 +261,6 @@
 				1128422E248E839D00A014E9 /* AddWordVC.swift */,
 				11284232248E83BB00A014E9 /* VocabularyTVC.swift */,
 				11F32A5224AF46D00097BF39 /* VocabularyResultsTVC.swift */,
-				11F32A5424AF49C30097BF39 /* VocabularyTVC+Restore.swift */,
 				11F32A5824AF49DB0097BF39 /* VocabularyTVC+Updating.swift */,
 				1181BBF12498060F00DB682E /* VocabularyCardsVC.swift */,
 				11284234248E83C800A014E9 /* ProfileTVC.swift */,
@@ -372,9 +371,10 @@
 				11B20D6824C8DF2E00C1CB4E /* PracticeAnswerItem.swift */,
 				112F9C7324F6F201007E92D8 /* SuccessMessageVC.swift */,
 				1147B608252B1F420078A296 /* CheckmarkListTVC.swift */,
-				119D786D2540BBC8009260D4 /* CheckmarkListTVC+Restore.swift */,
 				119D78702540BBD8009260D4 /* CheckmarkListTVC+Updating.swift */,
 				119D786A2540BBAF009260D4 /* CheckmarkListTVCResults.swift */,
+				11049CB72541FD3D009F324F /* SearchableTVC.swift */,
+				11049CBA2541FDD7009F324F /* SearchableTVC+Restore.swift */,
 			);
 			path = "Reusable Components";
 			sourceTree = "<group>";
@@ -535,6 +535,7 @@
 				110C3F87252DEFC600FE5667 /* UITextField.swift in Sources */,
 				1128423B248E83ED00A014E9 /* ForgotPasswordVC.swift in Sources */,
 				15CEBC6124D71A0300D48C0E /* ProgressHUD.swift in Sources */,
+				11049CB82541FD3D009F324F /* SearchableTVC.swift in Sources */,
 				1128423D248E840000A014E9 /* RoundedViews.swift in Sources */,
 				11049CB42541E4E9009F324F /* UISearchController.swift in Sources */,
 				119D786B2540BBAF009260D4 /* CheckmarkListTVCResults.swift in Sources */,
@@ -548,15 +549,14 @@
 				118162EF24BFB08E0088C0E1 /* UserInfoTVC.swift in Sources */,
 				1128423F248E845900A014E9 /* User.swift in Sources */,
 				151F2F29251EB193002D292B /* DefaultButton.swift in Sources */,
-				119D786E2540BBC8009260D4 /* CheckmarkListTVC+Restore.swift in Sources */,
 				15D5190E251C076900590073 /* Validator.swift in Sources */,
 				11284235248E83C800A014E9 /* ProfileTVC.swift in Sources */,
 				11F32A5324AF46D00097BF39 /* VocabularyResultsTVC.swift in Sources */,
+				11049CBB2541FDD7009F324F /* SearchableTVC+Restore.swift in Sources */,
 				11621A2724C25EFA003087AB /* WKWebVC.swift in Sources */,
 				15D51907251C069F00590073 /* UIImage.swift in Sources */,
 				158B1095251BE29A0003C3A9 /* TextFieldLimit.swift in Sources */,
 				11284237248E83D400A014E9 /* LoginVC.swift in Sources */,
-				11F32A5524AF49C30097BF39 /* VocabularyTVC+Restore.swift in Sources */,
 				11284211248E7C5700A014E9 /* AppDelegate.swift in Sources */,
 				112EA43324C83B7200FA55E3 /* PracticeTrainer.swift in Sources */,
 				116BC94E2491836B00968DA6 /* UIViewController.swift in Sources */,
