@@ -95,7 +95,9 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         super.viewDidAppear(animated)
         
         // Become first responder here because the view has to be drawed before (to calculate frame size and position in keyboard will show)
-        titleTextField.becomeFirstResponder()
+        if languageIndex != languages.count - 1 {
+            titleTextField.becomeFirstResponder()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -389,6 +391,7 @@ extension VocabularyDetailsVC: CheckmarkListTVCDelegate {
                 // OTHER CASE
                 languageButton.isHidden = true
                 languageTextField.isHidden = false
+                titleTextField.resignFirstResponder()
                 languageTextField.becomeFirstResponder()
             } else {
                 languageTextField.isHidden = true

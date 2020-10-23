@@ -89,13 +89,6 @@ class CheckmarkListTVC: SearchableTVC {
         }
     }
     
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 {
-            return CGFloat.leastNormalMagnitude
-        }
-        return tableView.sectionHeaderHeight
-    }
-    
     // MARK: - Outlets
     
     @IBAction func addBarButtonTapped(_ sender: UIBarButtonItem) {

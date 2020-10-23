@@ -192,7 +192,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="DNU-r9-0JB">
-                                <rect key="frame" x="20" y="327" width="374" height="242"/>
+                                <rect key="frame" x="20" y="362" width="374" height="172"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="New Vocabulary" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZD9-di-RMR" customClass="PrimaryTextField" customModule="worddeposit" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
@@ -210,8 +210,8 @@
                                             <segue destination="p8a-RE-aLZ" kind="show" id="YiF-nd-0zQ"/>
                                         </connections>
                                     </button>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Other" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4fs-rZ-Sqq" customClass="SecondaryTextField" customModule="worddeposit" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="122" width="374" height="50"/>
+                                    <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Other" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4fs-rZ-Sqq" customClass="SecondaryTextField" customModule="worddeposit" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="112" width="374" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="9P7-hp-Qfd"/>
                                         </constraints>
@@ -219,7 +219,7 @@
                                         <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                     </textField>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="2Mi-Ca-bAs">
-                                        <rect key="frame" x="0.0" y="192" width="374" height="50"/>
+                                        <rect key="frame" x="0.0" y="122" width="374" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tzx-Zg-Hh5" customClass="SecondaryButton" customModule="worddeposit" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="182" height="50"/>
