@@ -27,10 +27,10 @@ class ProgressHUD: UIVisualEffectView {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.title = ""
-        self.vibrancyView = UIVisualEffectView(effect: UIVibrancyEffect(blurEffect: blurEffect))
+        title = ""
+        vibrancyView = UIVisualEffectView(effect: UIVibrancyEffect(blurEffect: blurEffect))
         super.init(coder: aDecoder)
-        self.setup()
+        setup()
     }
     
     func setup() {

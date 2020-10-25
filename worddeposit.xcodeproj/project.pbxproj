@@ -36,6 +36,7 @@
 		112F9C7524F6F201007E92D8 /* SuccessMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112F9C7324F6F201007E92D8 /* SuccessMessageVC.swift */; };
 		112F9C7624F6F201007E92D8 /* SuccessMessageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 112F9C7424F6F201007E92D8 /* SuccessMessageVC.xib */; };
 		1147B609252B1F420078A296 /* CheckmarkListTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1147B608252B1F420078A296 /* CheckmarkListTVC.swift */; };
+		1151BBA025462CF300A6A84F /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1151BB9F25462CF300A6A84F /* Checkbox.swift */; };
 		1158D30E24917B9B0087DC96 /* VocabularyTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1158D30C24917B9B0087DC96 /* VocabularyTVCell.swift */; };
 		1158D30F24917B9B0087DC96 /* VocabularyTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1158D30D24917B9B0087DC96 /* VocabularyTVCell.xib */; };
 		11621A2724C25EFA003087AB /* WKWebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11621A2624C25EFA003087AB /* WKWebVC.swift */; };
@@ -121,6 +122,7 @@
 		112F9C7324F6F201007E92D8 /* SuccessMessageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessMessageVC.swift; sourceTree = "<group>"; };
 		112F9C7424F6F201007E92D8 /* SuccessMessageVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SuccessMessageVC.xib; sourceTree = "<group>"; };
 		1147B608252B1F420078A296 /* CheckmarkListTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkListTVC.swift; sourceTree = "<group>"; };
+		1151BB9F25462CF300A6A84F /* Checkbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checkbox.swift; sourceTree = "<group>"; };
 		1158D30C24917B9B0087DC96 /* VocabularyTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyTVCell.swift; sourceTree = "<group>"; };
 		1158D30D24917B9B0087DC96 /* VocabularyTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VocabularyTVCell.xib; sourceTree = "<group>"; };
 		11621A2624C25EFA003087AB /* WKWebVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WKWebVC.swift; path = worddeposit/Controllers/WKWebVC.swift; sourceTree = SOURCE_ROOT; };
@@ -365,6 +367,7 @@
 			children = (
 				15CEBC6024D71A0300D48C0E /* ProgressHUD.swift */,
 				15BD0C0124DE0631007E8D27 /* MessageView.swift */,
+				1151BB9F25462CF300A6A84F /* Checkbox.swift */,
 				11F0326B24C8267E00BD6350 /* PracticeCVCell.swift */,
 				1158D30C24917B9B0087DC96 /* VocabularyTVCell.swift */,
 				1171E70424981CDD00805D35 /* VocabularyCardCVCell.swift */,
@@ -579,6 +582,7 @@
 				15BD0C0224DE0631007E8D27 /* MessageView.swift in Sources */,
 				151F2F0C251E97D5002D292B /* LoginTitle.swift in Sources */,
 				15A7E04924D8B322006804FD /* VocabulariesTVCell.swift in Sources */,
+				1151BBA025462CF300A6A84F /* Checkbox.swift in Sources */,
 				15D51954251E7F2500590073 /* PrimaryButton.swift in Sources */,
 				1158D30E24917B9B0087DC96 /* VocabularyTVCell.swift in Sources */,
 				156C80B724D8D27E0077905D /* VocabularyDetailsVC.swift in Sources */,

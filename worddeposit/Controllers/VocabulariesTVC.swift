@@ -146,13 +146,14 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         print("vocabularies -- notification is called")
     }
     
-    @objc func switchChaged(sender: UISwitch) {
+    @objc func checkboxChanged(sender: Checkbox) {
+        print(sender)
         // exception without vocabularies.count == 1
         // 'attempt to delete row 1 from section 0 which only contains 1 rows before the update'
         
         if vocabularies.count == 1 {
             sender.isOn = true
-            simpleAlert(title: "Vocabulary alert", msg: "You cannot turn off actived vocabulary.")
+            simpleAlert(title: "Vocabulary alert", msg: "You cannot unmarked actived vocabulary.")
         } else {
             let newSelectedVocabularyIndex = sender.tag
             if newSelectedVocabularyIndex != selectedVocabularyIndex {
@@ -180,7 +181,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
                 }
             } else {
                 sender.isOn = true
-                simpleAlert(title: "Vocabulary alert", msg: "You cannot turn off actived vocabulary. Just turn on another one.")
+                simpleAlert(title: "Vocabulary alert", msg: "You cannot unmarked actived vocabulary. Mark another one.")
             }
         }
         
@@ -204,8 +205,8 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
                 cell.isSelectedVocabulary = true
                 selectedVocabularyIndex = indexPath.row
             }
-            cell.selectionSwitch.tag = indexPath.row
-            cell.selectionSwitch.addTarget(self, action: #selector(switchChaged(sender:)), for: .valueChanged)
+            cell.checkbox.tag = indexPath.row
+            cell.checkbox.addTarget(self, action: #selector(checkboxChanged(sender:)), for: .touchUpInside)
             
             return cell
         }
