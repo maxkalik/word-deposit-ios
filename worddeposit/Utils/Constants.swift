@@ -64,6 +64,7 @@ struct Fonts {
 }
 
 struct Icons {
+    static let Photo = "photo"
     static let Picture = "picture"
     static let Close = "icon_close"
 }

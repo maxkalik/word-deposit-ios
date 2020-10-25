@@ -136,7 +136,7 @@ class AddWordVC: UIViewController {
     
     private func setupImagePlaceholder() {
         wordImagePickerBtn.backgroundColor = UIColor.black
-        let image = UIImage(named: Icons.Picture)?.withRenderingMode(.alwaysTemplate)
+        let image = UIImage(named: Icons.Photo)?.withRenderingMode(.alwaysTemplate)
         wordImagePickerBtn.setImage(image, for: .normal)
         wordImagePickerBtn.tintColor = Colors.grey.withAlphaComponent(0.3)
     }
