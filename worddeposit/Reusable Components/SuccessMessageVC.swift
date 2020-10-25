@@ -67,27 +67,35 @@ class SuccessMessageVC: UIViewController {
         let answersSum = rightAnswers + wrongAnswers
         let precentageOfCorrectAnswers = (rightAnswers * 100) / answersSum
         
-        if rightAnswers > wrongAnswers {
-            if precentageOfCorrectAnswers > 70 {
-                imageView.image = UIImage(named: "rocker")
-                return "Perfect!"
-            } else if precentageOfCorrectAnswers > 90 {
-                imageView.image = UIImage(named: "skater")
-                return "Excelent!"
-            } else {
-                imageView.image = UIImage(named: "social")
-                return "Great!"
-            }
+        if wordsAmount < 5 {
+            imageView.image = UIImage(named: "walking")
+            return "You could practice more words"
+        } else if wordsAmount >= 5 && wordsAmount < 10 {
+            imageView.image = UIImage(named: "standing")
+            return "Why did you stoped?"
         } else {
-            if precentageOfCorrectAnswers < 30 {
-                imageView.image = UIImage(named: "sitting")
-                return "It's not your the best result."
-            } else if precentageOfCorrectAnswers < 10 {
-                imageView.image = UIImage(named: "standing")
-                return "You can do better!"
+            if rightAnswers > wrongAnswers {
+                if precentageOfCorrectAnswers > 70 {
+                    imageView.image = UIImage(named: "rocker")
+                    return "Perfect!"
+                } else if precentageOfCorrectAnswers > 90 {
+                    imageView.image = UIImage(named: "skater")
+                    return "Excelent!"
+                } else {
+                    imageView.image = UIImage(named: "social")
+                    return "Great!"
+                }
             } else {
-                imageView.image = UIImage(named: "walking")
-                return "Mistakes are ok."
+                if precentageOfCorrectAnswers < 30 {
+                    imageView.image = UIImage(named: "sitting")
+                    return "It's not your the best result."
+                } else if precentageOfCorrectAnswers < 10 {
+                    imageView.image = UIImage(named: "standing")
+                    return "You can do better!"
+                } else {
+                    imageView.image = UIImage(named: "walking")
+                    return "Mistakes are ok."
+                }
             }
         }
     }

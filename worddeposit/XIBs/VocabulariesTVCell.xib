@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -22,41 +22,39 @@
                         <rect key="frame" x="20" y="10" width="498" height="107"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="DHp-d8-H9x">
-                                <rect key="frame" x="20" y="55" width="458" height="32"/>
+                                <rect key="frame" x="20" y="66.5" width="458" height="20.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Language" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qgF-H7-8Ne">
-                                        <rect key="frame" x="0.0" y="0.0" width="364" height="32"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="364" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yyE-G3-p92">
-                                        <rect key="frame" x="373" y="0.0" width="85" height="32"/>
+                                        <rect key="frame" x="373" y="0.0" width="85" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" systemColor="systemGrayColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="x2h-5k-6Ag">
-                                <rect key="frame" x="20" y="16" width="458" height="31"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="x2h-5k-6Ag">
+                                <rect key="frame" x="20" y="16" width="458" height="42.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="22" translatesAutoresizingMaskIntoConstraints="NO" id="hVN-64-Wyy">
-                                        <rect key="frame" x="0.0" y="0.0" width="399" height="31"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="49" height="42.5"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Y5A-D7-qRy">
-                                        <rect key="frame" x="409" y="0.0" width="51" height="31"/>
-                                    </switch>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fqL-sX-vLJ" customClass="Checkbox" customModule="worddeposit" customModuleProvider="target">
+                                        <rect key="frame" x="434" y="0.0" width="24" height="42.5"/>
+                                        <state key="normal" image="icon_checkbox_off"/>
+                                    </button>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="Y5A-D7-qRy" secondAttribute="trailing" id="dVc-Bd-O45"/>
-                                </constraints>
                             </stackView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="ajA-dt-T0k">
-                                <rect key="frame" x="458" y="61" width="20" height="20"/>
+                                <rect key="frame" x="458" y="67" width="20" height="20"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -82,9 +80,9 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="checkbox" destination="fqL-sX-vLJ" id="F27-Kg-kAl"/>
                 <outlet property="containerView" destination="pbn-JH-aVJ" id="Flo-wi-7GK"/>
                 <outlet property="languageLabel" destination="qgF-H7-8Ne" id="juZ-Xh-CHD"/>
-                <outlet property="selectionSwitch" destination="Y5A-D7-qRy" id="ajv-OG-ujf"/>
                 <outlet property="titleLabel" destination="hVN-64-Wyy" id="M2d-P2-M6y"/>
                 <outlet property="wordsAmountActivityIndicator" destination="ajA-dt-T0k" id="ihn-6X-nC1"/>
                 <outlet property="wordsAmountLabel" destination="yyE-G3-p92" id="6hC-hI-6eq"/>
@@ -93,6 +91,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="icon_checkbox_off" width="24" height="24"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

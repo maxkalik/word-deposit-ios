@@ -8,7 +8,6 @@ protocol VocabularyDetailsVCDelegate: AnyObject {
 
 class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     
-    @IBOutlet weak var stackViewCenterY: NSLayoutConstraint!
     @IBOutlet weak var stackView: UIStackView!
     
     @IBOutlet weak var titleTextField: PrimaryTextField!
@@ -58,6 +57,8 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print("VOCABULARY DETAILS VC View Did Load")
+        
         view.backgroundColor = Colors.silver
         
         // Primary setting up UI
@@ -95,7 +96,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         super.viewDidAppear(animated)
         
         // Become first responder here because the view has to be drawed before (to calculate frame size and position in keyboard will show)
-        if vocabulary == nil {
+        if languageIndex != languages.count - 1 {
             titleTextField.becomeFirstResponder()
         }
     }
@@ -118,13 +119,15 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         if isKeyboardShowing { return }
         isKeyboardShowing = true
         
+        print("> KEYBOARD WILL SHOW")
+        
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             keyboardHeight = keyboardFrame.cgRectValue.height
                         
             // Using centerY constrains and changing it allow to save the position of the stackview at the center
             // even if we accidently touch (and drag) uiViewController.
             UIView.animate(withDuration: 0.3) { [self] in
-                stackViewCenterY.constant -= keyboardHeight - stackView.frame.size.height
+                stackView.frame.origin.y -= keyboardHeight - stackView.frame.size.height
                 view.layoutIfNeeded()
             }
         }
@@ -135,8 +138,10 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         if !isKeyboardShowing { return }
         isKeyboardShowing = false
         
+        print("> KEYBOARD WILL HIDE")
+        
         UIView.animate(withDuration: 0.3) { [self] in
-            stackViewCenterY.constant += keyboardHeight - stackView.frame.size.height
+            stackView.frame.origin.y += keyboardHeight - stackView.frame.size.height
             view.layoutIfNeeded()
         }
         
@@ -205,7 +210,9 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         
         // Add custom languages from created vocabularies to the beginning of the array
         for vocabulary in UserService.shared.vocabularies {
-            languages.insert(vocabulary.language, at: 0)
+            if !languages.contains(vocabulary.language) {
+                languages.insert(vocabulary.language, at: 0)
+            }
         }
         
         // Add "Other" to the end of the array
@@ -383,11 +390,13 @@ extension VocabularyDetailsVC: CheckmarkListTVCDelegate {
     func getCheckmared(index: Int) {
         if languageIndex != index {
             languageButton.setTitle(languages[index], for: .normal)
-            self.languageIndex = index
+            languageIndex = index
             
             if index == languages.count - 1 {
+                // OTHER CASE
                 languageButton.isHidden = true
                 languageTextField.isHidden = false
+                titleTextField.resignFirstResponder()
                 languageTextField.becomeFirstResponder()
             } else {
                 languageTextField.isHidden = true

@@ -6,20 +6,20 @@ class VocabulariesTVCell: UITableViewCell {
     @IBOutlet weak var languageLabel: UILabel!
     @IBOutlet weak var wordsAmountActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var wordsAmountLabel: UILabel!
-    @IBOutlet weak var selectionSwitch: UISwitch!
+//    @IBOutlet weak var selectionSwitch: UISwitch!
+    @IBOutlet weak var checkbox: Checkbox!
     @IBOutlet weak var containerView: ShadowView!
     
     // MARK: - Istances
     
     var isSelectedVocabulary: Bool! {
         didSet {
-            selectionSwitch.isOn = isSelectedVocabulary
+            checkbox.isOn = isSelectedVocabulary
             if isSelectedVocabulary {
                 containerView.layer.borderWidth = 2
                 containerView.layer.borderColor = Colors.orange.cgColor
                 containerView.layer.backgroundColor = UIColor.white.cgColor
                 titleLabel.textColor = Colors.orange
-                selectionSwitch.onTintColor = Colors.orange
             }
         }
     }
@@ -44,7 +44,7 @@ class VocabulariesTVCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        selectionSwitch.isOn = false
+        checkbox.isOn = false
         titleLabel.textColor = Colors.dark
     }
     

@@ -12,7 +12,7 @@ class MessageView: UIView {
 
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var primaryButton: PrimaryButton!
-    @IBOutlet weak var secondaryButton: UIButton!
+    @IBOutlet weak var secondaryButton: DefaultButton!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,7 +34,7 @@ class MessageView: UIView {
         
         secondaryButton.isHidden = true
         
-        self.addSubview(view)
+        addSubview(view)
         contentView = view
         contentView.layer.backgroundColor = Colors.silver.cgColor
         

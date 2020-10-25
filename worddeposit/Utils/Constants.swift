@@ -64,8 +64,12 @@ struct Fonts {
 }
 
 struct Icons {
+    static let Photo = "photo"
     static let Picture = "picture"
     static let Close = "icon_close"
+    static let CheckmarkSmall = "icon_checkmark_small"
+    static let CheckboxOn = "icon_checkbox_on"
+    static let CheckboxOff = "icon_checkbox_off"
 }
 
 struct Images {
@@ -80,8 +84,8 @@ struct Keys {
 
 struct Limits {
     static let name = 60
-    static let vocabularies = 10
-    static let words = 300
+    static let vocabularies = 5
+    static let words = 500
     static let vocabularyTitle = 26
     static let wordExample = 60
     static let wordTranslation = 60

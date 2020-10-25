@@ -135,7 +135,8 @@ class ProfileTVC: UITableViewController {
             versionLabel.font = UIFont(name: Fonts.medium, size: 15)
             versionLabel.textColor = Colors.grey
             versionLabel.textAlignment = .center
-            versionLabel.text = "Version 2.1"
+            let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+            versionLabel.text = appVersion ?? ""
             footerView.addSubview(versionLabel)
         }
         return footerView
@@ -180,6 +181,7 @@ class ProfileTVC: UITableViewController {
                 let currentLanguage = user.nativeLanguage.isNotEmpty ? user.nativeLanguage : defaultLanguage
                 guard let selected = languages.firstIndex(of: currentLanguage) else { return }
                 
+                tvc.navigationItem.rightBarButtonItem = nil
                 tvc.data = languages
                 tvc.selected = selected
                 tvc.title = "Native Language"
