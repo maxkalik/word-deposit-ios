@@ -129,10 +129,10 @@ class PracticeReadVC: UIViewController {
         if let i = trainedWords.firstIndex(where: { $0.id == trainedWord.id }) {
             if answer == true {
                 sessionRightAnswersSum += 1
-                self.trainedWords[i].rightAnswers += 1
+                trainedWords[i].rightAnswers += 1
             } else {
                 sessionWrongAnswersSum += 1
-                self.trainedWords[i].wrongAnswers += 1
+                trainedWords[i].wrongAnswers += 1
             }
         } else {
             var word = trainedWord
@@ -143,7 +143,7 @@ class PracticeReadVC: UIViewController {
                 sessionWrongAnswersSum += 1
                 word.wrongAnswers += 1
             }
-            self.trainedWords.append(word)
+            trainedWords.append(word)
         }
     }
     
@@ -189,16 +189,16 @@ class PracticeReadVC: UIViewController {
             self.spinner.stopAnimating()
         }
         
-        self.collectionView.reloadData()
+        collectionView.reloadData()
     }
     
     private func updateUI() {
-        self.delegate?.updatePracticeVC()
-        self.selectedIndex = nil
-        self.isSelected = false
-        self.collectionView.isUserInteractionEnabled = true
-        self.setupTrainedWord()
-        self.collectionView.reloadData()
+        delegate?.updatePracticeVC()
+        selectedIndex = nil
+        isSelected = false
+        collectionView.isUserInteractionEnabled = true
+        setupTrainedWord()
+        collectionView.reloadData()
     }
     
     // MARK: - IBActions
