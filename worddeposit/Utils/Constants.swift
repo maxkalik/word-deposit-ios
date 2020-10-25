@@ -85,7 +85,7 @@ struct Keys {
 struct Limits {
     static let name = 60
     static let vocabularies = 5
-    static let words = 300
+    static let words = 500
     static let vocabularyTitle = 26
     static let wordExample = 60
     static let wordTranslation = 60
