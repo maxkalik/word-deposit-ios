@@ -17,7 +17,7 @@ class SearchableTVC: UITableViewController {
             searchController.searchBar.placeholder = "Search"
             searchController.searchBar.sizeToFit()
             searchController.searchBar.searchBarStyle = .minimal
-            searchController.definesPresentationContext = true
+            definesPresentationContext = true
             
             // custom icons
             let searchIcon = UIImage(named: "icon_search")

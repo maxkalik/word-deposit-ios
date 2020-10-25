@@ -40,6 +40,9 @@ class AddWordVC: UIViewController {
     
     weak var delegate: AddWordVCDelegate?
     
+    private var inputViewOriginY: CGFloat!
+    private var wordImagePickerBtnOriginY: CGFloat!
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -48,7 +51,6 @@ class AddWordVC: UIViewController {
         wordExampleTextField.limitOfString = Limits.wordExample
         wordTranslationTextField.limitOfString = Limits.wordTranslation
         wordDescriptionTextField.limitOfString = Limits.wordDescription
-        
         
         setupUI()
         hideKeyboardWhenTappedAround()
@@ -86,13 +88,22 @@ class AddWordVC: UIViewController {
         isKeyboardShowing = true
         
         let topSafeArea: CGFloat = view.safeAreaInsets.top
-            
-        inputsView.frame.origin.y = topSafeArea + 20
+        
+        // Set initial values
+        inputViewOriginY = inputsView.frame.origin.y
+        wordImagePickerBtnOriginY = wordImagePickerBtn.frame.origin.y
+        
+        // Disable scroll to prevent breaking layout
         scrollView.isScrollEnabled = false
-
-        UIView.animate(withDuration: 0.3) {
-            self.wordImagePickerBtn.alpha = 0
-        }
+        
+        // Scale WordImagePickerBtn
+        wordImagePickerBtn.transform = CGAffineTransform(scaleX: 0.3, y: 0.3);
+        wordImagePickerBtn.imageView?.layer.transform = CATransform3DScale(CATransform3DIdentity, 2.0, 2.0, 2.0)
+        wordImagePickerBtn.layer.cornerRadius = 50.0
+        wordImagePickerBtn.frame.origin.y = topSafeArea + 20
+        
+        // Move inputsView close to wordImagePickerBtn
+        inputsView.frame.origin.y = topSafeArea + wordImagePickerBtn.frame.size.height + 20
     }
     
     @objc func keyboardWillHide(_ notification: NSNotification) {
@@ -100,12 +111,17 @@ class AddWordVC: UIViewController {
         if !isKeyboardShowing { return }
         isKeyboardShowing = false
         
-        inputsView.frame.origin.y = 375
-        scrollView.isScrollEnabled = true
+        // Return default state of wordImagePickerBtn
+        wordImagePickerBtn.transform = CGAffineTransform(scaleX: 1, y: 1);
+        wordImagePickerBtn.imageView?.layer.transform = CATransform3DIdentity
+        wordImagePickerBtn.layer.cornerRadius = 0.0
+        wordImagePickerBtn.frame.origin.y = wordImagePickerBtnOriginY
 
-        UIView.animate(withDuration: 0.3) {
-            self.wordImagePickerBtn.alpha = 1
-        }
+        // Return default Y value of inputsView
+        inputsView.frame.origin.y = inputViewOriginY
+        
+        // Enabe scrollView
+        scrollView.isScrollEnabled = true
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {

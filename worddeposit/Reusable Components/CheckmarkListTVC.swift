@@ -35,6 +35,7 @@ class CheckmarkListTVC: SearchableTVC {
     
     func setupResultsTableController() {
         resultsTableController = storyboard?.instantiateViewController(withIdentifier: Storyboards.CheckmarkListTVCResults) as? CheckmarkListTVCResults
+ 
         resultsTableController.tableView.delegate = self
         if selected != nil {
             guard let index = selected else { return }

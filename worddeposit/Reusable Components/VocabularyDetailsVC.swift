@@ -8,7 +8,6 @@ protocol VocabularyDetailsVCDelegate: AnyObject {
 
 class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     
-    @IBOutlet weak var stackViewCenterY: NSLayoutConstraint!
     @IBOutlet weak var stackView: UIStackView!
     
     @IBOutlet weak var titleTextField: PrimaryTextField!
@@ -57,6 +56,8 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print("VOCABULARY DETAILS VC View Did Load")
         
         view.backgroundColor = Colors.silver
         
@@ -118,13 +119,15 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         if isKeyboardShowing { return }
         isKeyboardShowing = true
         
+        print("> KEYBOARD WILL SHOW")
+        
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             keyboardHeight = keyboardFrame.cgRectValue.height
                         
             // Using centerY constrains and changing it allow to save the position of the stackview at the center
             // even if we accidently touch (and drag) uiViewController.
             UIView.animate(withDuration: 0.3) { [self] in
-                stackViewCenterY.constant -= keyboardHeight - stackView.frame.size.height
+                stackView.frame.origin.y -= keyboardHeight - stackView.frame.size.height
                 view.layoutIfNeeded()
             }
         }
@@ -135,8 +138,10 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         if !isKeyboardShowing { return }
         isKeyboardShowing = false
         
+        print("> KEYBOARD WILL HIDE")
+        
         UIView.animate(withDuration: 0.3) { [self] in
-            stackViewCenterY.constant += keyboardHeight - stackView.frame.size.height
+            stackView.frame.origin.y += keyboardHeight - stackView.frame.size.height
             view.layoutIfNeeded()
         }
         

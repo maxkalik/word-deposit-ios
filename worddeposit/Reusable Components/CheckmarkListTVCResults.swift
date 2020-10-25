@@ -31,6 +31,10 @@ class CheckmarkListTVCResults: UITableViewController {
     }
 
     // MARK: - UITableViewDataSource
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(indexPath)
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredData.count
