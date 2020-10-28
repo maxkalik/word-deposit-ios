@@ -259,6 +259,9 @@ class AddWordVC: UIViewController {
     
     @IBAction func wordImagePickerBtnTapped(_ sender: UIButton) {
         let ypConfig = YPImagePickerConfig()
+        if isImageSet == true {
+            ypConfig.config.startOnScreen = YPPickerScreen.library
+        }
         let picker = YPImagePicker(configuration: ypConfig.defaultConfig())
 
         // unowned picker will help to avoid memory leak on each action
