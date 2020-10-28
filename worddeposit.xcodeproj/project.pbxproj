@@ -144,7 +144,6 @@
 		11B20D6924C8DF2E00C1CB4E /* PracticeAnswerItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = PracticeAnswerItem.xib; path = worddeposit/XIBs/PracticeAnswerItem.xib; sourceTree = SOURCE_ROOT; };
 		11B20D6C24C8E00800C1CB4E /* PracticeReadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PracticeReadVC.swift; path = worddeposit/Controllers/PracticeReadVC.swift; sourceTree = SOURCE_ROOT; };
 		11B335D72542250C00F2D7DA /* CheckmarkListTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkListTVCell.swift; sourceTree = "<group>"; };
-		11D879B12494170B00FF7BA3 /* worddeposit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = worddeposit.entitlements; sourceTree = "<group>"; };
 		11ECE4B324EB0FA100B7884B /* VocabulariesTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabulariesTVC.swift; sourceTree = "<group>"; };
 		11F0326B24C8267E00BD6350 /* PracticeCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeCVCell.swift; sourceTree = "<group>"; };
 		11F0326C24C8267E00BD6350 /* PracticeCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PracticeCVCell.xib; sourceTree = "<group>"; };
@@ -236,7 +235,6 @@
 		1128420F248E7C5700A014E9 /* worddeposit */ = {
 			isa = PBXGroup;
 			children = (
-				11D879B12494170B00FF7BA3 /* worddeposit.entitlements */,
 				1117D08D2502365B000D864F /* Extensions */,
 				110F5E3524FD670500C463A4 /* Services */,
 				156C80BA24DDFEB10077905D /* Reusable Components */,
@@ -743,7 +741,7 @@
 			baseConfigurationReference = 64D79D641400D9D1E19CC310 /* Pods-worddeposit.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = worddeposit/worddeposit.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = P353H6D448;
@@ -766,7 +764,7 @@
 			baseConfigurationReference = E2568201BEE4DB94972CDA34 /* Pods-worddeposit.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = worddeposit/worddeposit.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = P353H6D448;
