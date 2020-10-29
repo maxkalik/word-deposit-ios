@@ -9,14 +9,14 @@ class VocabularyTVCell: UITableViewCell {
         didSet {
             wordExampleLabel.font = UIFont(name: Fonts.bold, size: 16)
             guard let text = wordExampleLabel.text else { return }
-            wordExampleLabel.addCharactersSpacing(spacing: -0.6, text: text)
+            wordExampleLabel.addCharactersSpacing(spacing: -0.4, text: text)
         }
     }
     @IBOutlet weak var wordTranslationLabel: UILabel! {
         didSet {
             wordTranslationLabel.font = UIFont(name: Fonts.medium, size: 16)
             guard let text = wordTranslationLabel.text else { return }
-            wordTranslationLabel.addCharactersSpacing(spacing: -0.6, text: text)
+            wordTranslationLabel.addCharactersSpacing(spacing: -0.4, text: text)
         }
     }
     
@@ -33,7 +33,7 @@ class VocabularyTVCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         preview.makeRounded()
-        wordTranslationLabel.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+        wordTranslationLabel.textColor = Colors.darkGrey
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -47,6 +47,8 @@ class VocabularyTVCell: UITableViewCell {
             preview.kf.indicatorType = .activity
             let options: KingfisherOptionsInfo = [KingfisherOptionsInfoItem.transition(.fade(0.2))]
             preview.kf.setImage(with: url, options: options)
+        } else {
+            preview.image = .none
         }
         
         wordExampleLabel.text = word.example
