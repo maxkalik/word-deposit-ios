@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		11049CB42541E4E9009F324F /* UISearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11049CB32541E4E9009F324F /* UISearchController.swift */; };
 		11049CB82541FD3D009F324F /* SearchableTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11049CB72541FD3D009F324F /* SearchableTVC.swift */; };
 		11049CBB2541FDD7009F324F /* SearchableTVC+Restore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11049CBA2541FDD7009F324F /* SearchableTVC+Restore.swift */; };
 		110C3F87252DEFC600FE5667 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110C3F86252DEFC600FE5667 /* UITextField.swift */; };
@@ -91,7 +90,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		11049CB32541E4E9009F324F /* UISearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISearchController.swift; sourceTree = "<group>"; };
 		11049CB72541FD3D009F324F /* SearchableTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchableTVC.swift; sourceTree = "<group>"; };
 		11049CBA2541FDD7009F324F /* SearchableTVC+Restore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchableTVC+Restore.swift"; sourceTree = "<group>"; };
 		110C3F86252DEFC600FE5667 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
@@ -209,7 +207,6 @@
 				155F39E72523D69400EC63B9 /* UINavigationController.swift */,
 				15E7741B2529205400EC57D0 /* UILabel.swift */,
 				110C3F86252DEFC600FE5667 /* UITextField.swift */,
-				11049CB32541E4E9009F324F /* UISearchController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -541,7 +538,6 @@
 				15CEBC6124D71A0300D48C0E /* ProgressHUD.swift in Sources */,
 				11049CB82541FD3D009F324F /* SearchableTVC.swift in Sources */,
 				1128423D248E840000A014E9 /* RoundedViews.swift in Sources */,
-				11049CB42541E4E9009F324F /* UISearchController.swift in Sources */,
 				119D786B2540BBAF009260D4 /* CheckmarkListTVCResults.swift in Sources */,
 				116BC94C249182BD00968DA6 /* Constants.swift in Sources */,
 				11B20D6D24C8E00800C1CB4E /* PracticeReadVC.swift in Sources */,
