@@ -153,7 +153,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         
         if vocabularies.count == 1 {
             sender.isOn = true
-            simpleAlert(title: "Vocabulary alert", msg: "You cannot unmarked actived vocabulary.")
+            simpleAlert(title: "You cannot unmarked actived vocabulary.", msg: "Create another one for swithing between them.")
         } else {
             let newSelectedVocabularyIndex = sender.tag
             if newSelectedVocabularyIndex != selectedVocabularyIndex {

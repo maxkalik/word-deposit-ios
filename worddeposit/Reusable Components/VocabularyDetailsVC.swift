@@ -210,7 +210,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         
         // Add custom languages from created vocabularies to the beginning of the array
         for vocabulary in UserService.shared.vocabularies {
-            if !languages.contains(vocabulary.language) {
+            if vocabulary.language.isNotEmpty && !languages.contains(vocabulary.language) {
                 languages.insert(vocabulary.language, at: 0)
             }
         }
