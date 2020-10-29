@@ -113,7 +113,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     
     private func setupMessage() {
         messageView.setTitles(
-            messageTxt: "You have no any vocabularies yet.\nPlease add them.",
+            messageTxt: "You haven't created any vocabularies yet.\nPlease add them.",
             buttonTitle: "+ Add vocabulary",
             secondaryButtonTitle: "Logout"
         )
