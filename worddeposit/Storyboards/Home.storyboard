@@ -49,7 +49,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="icon_profile" id="Y9D-hn-rYG">
                             <connections>
-                                <segue destination="5Oc-vH-7SN" kind="show" id="JpH-Z0-vxD"/>
+                                <segue destination="5Oc-vH-7SN" kind="show" identifier="Profile" id="JpH-Z0-vxD"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1165,8 +1165,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="cIB-pM-tsi"/>
-        <segue reference="L4V-Nc-46o"/>
+        <segue reference="khA-EK-dTJ"/>
+        <segue reference="JpH-Z0-vxD"/>
         <segue reference="cT5-yM-GyM"/>
         <segue reference="0BZ-k3-ByQ"/>
         <segue reference="FgU-uN-MIW"/>

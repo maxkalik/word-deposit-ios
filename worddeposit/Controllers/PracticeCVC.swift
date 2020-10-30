@@ -14,6 +14,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     var practiceReadVC: PracticeReadVC?
     var progressHUD = ProgressHUD(title: "Welcome")
     var messageView = MessageView()
+    var topBarItem = TopBarItem()
     
     private var isVocabularySwitched = false
     
@@ -166,6 +167,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         collectionView.addSubview(messageView)
         messageView.hide()
         setupMessage(wordsCount: words.count)
+        setNavigationBar()
     }
     
     private func setupMessage(wordsCount: Int) {
@@ -199,7 +201,20 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         self.present(vc, animated: true)
     }
     
-    // MARK: -
+    // MARK: - Tests
+    
+    private func setNavigationBar() {
+        topBarItem.setIcon(name: Icons.Profile)
+        let rightBarButtonItem = UIBarButtonItem(customView: topBarItem)
+        self.navigationItem.rightBarButtonItem = rightBarButtonItem
+    }
+    
+    @objc func backToMain() {
+        // self.navigationController?.popViewController(animated: true)
+        performSegue(withIdentifier: Segues.Profile, sender: self)
+    }
+    
+    // MARK: - IBActions
     
     @IBAction func vocabulariesBarButtonPressed(_ sender: Any) {
         print("vocabularies tapped")

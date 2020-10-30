@@ -120,10 +120,10 @@ class RegistrationVC: UIViewController {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 42, height: 42))
         let imageView = UIImageView(frame: CGRect(x: 0, y: 10, width: 24, height: 24))
 
-        if let imgBackArrow = UIImage(named: "icon_back") {
+        if let imgBackArrow = UIImage(named: Icons.Back) {
             let tintedImage = imgBackArrow.withRenderingMode(.alwaysTemplate)
             imageView.image = tintedImage
-            imageView.tintColor = Colors.blue
+            imageView.tintColor = Colors.dark
         }
 
         view.addSubview(imageView)
