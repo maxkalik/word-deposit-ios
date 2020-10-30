@@ -37,31 +37,7 @@ class VocabularyTVC: SearchableTVC {
         nc.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(Keys.vocabulariesSwitchNotificationKey), object: nil)
         nc.addObserver(self, selector: #selector(vocabularyDidUpdate), name: Notification.Name(Keys.currentVocabularyDidUpdateKey), object: nil)
         
-        let title = "Some vocabulary dkjasld lsdf"
-        button.setTitle(title, for: .normal)
-        let icon = UIImage(named: Icons.Arrow)
-        button.setImage(icon, for: .normal)
-        button.tintColor = Colors.dark
-        button.setTitleColor(Colors.dark, for: .normal)
-        button.titleLabel?.font = UIFont(name: Fonts.medium, size: 22)
-        button.titleLabel?.addCharactersSpacing(spacing: -0.8, text: title)
-
-        button.semanticContentAttribute = .forceRightToLeft
-        
-        let buttonWidth = button.frame.width
-        let imageWidth = button.imageView!.frame.width
-        let spacing: CGFloat = 8.0 / 2
-        
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: buttonWidth - imageWidth + spacing, bottom: 0, right: -(buttonWidth-imageWidth) - spacing)
-        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: -imageWidth - spacing, bottom: 0, right: imageWidth + spacing)
-        button.contentEdgeInsets = UIEdgeInsets(top: 4, left: spacing + 14, bottom: 4, right: spacing + 14)
-        button.layer.cornerRadius = Radiuses.large
-        
-        button.addTarget(self, action: #selector(clickOnButton(sender:)), for: .touchUpInside)
-        
-        
-        
-        navigationItem.titleView = button
+        setupTitleView()
     }
     
     @objc func clickOnButton(sender: UIButton) {
@@ -107,20 +83,38 @@ class VocabularyTVC: SearchableTVC {
     
     // MARK: - View setups
     
+    private func setupTitleView() {
+        
+        setupTitle()
+        
+        let icon = UIImage(named: Icons.Arrow)
+        button.setImage(icon, for: .normal)
+        button.tintColor = Colors.dark
+        button.setTitleColor(Colors.dark, for: .normal)
+        button.titleLabel?.font = UIFont(name: Fonts.bold, size: 22)
+        button.semanticContentAttribute = .forceRightToLeft
+        
+        let buttonWidth = button.frame.width
+        let imageWidth = button.imageView!.frame.width
+        let spacing: CGFloat = 8.0 / 2
+        
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: buttonWidth - imageWidth + spacing, bottom: 0, right: -(buttonWidth-imageWidth) - spacing)
+        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: -imageWidth - spacing, bottom: 0, right: imageWidth + spacing)
+        button.contentEdgeInsets = UIEdgeInsets(top: 4, left: spacing + 14, bottom: 4, right: spacing + 14)
+        button.layer.cornerRadius = Radiuses.large
+        
+        button.addTarget(self, action: #selector(clickOnButton(sender:)), for: .touchUpInside)
+        
+        navigationItem.titleView = button
+    }
+    
     private func setupTitle() {
         guard let vocabulary = UserService.shared.vocabulary else { return }
-        navigationItem.title = vocabulary.title
+        button.setTitle(vocabulary.title, for: .normal)
+        button.titleLabel?.addCharactersSpacing(spacing: -0.8, text: vocabulary.title)
     }
     
     private func setupNavigationBar() {
-//        // Left Bar Button Item
-//        leftBarItem.setIcon(name: Icons.Vocabularies)
-//        leftBarItem.onBarButtonTap {
-//            self.performSegue(withIdentifier: Segues.Vocabularies, sender: self)
-//        }
-//        let leftBarButtonItem = UIBarButtonItem(customView: leftBarItem)
-//        navigationItem.leftBarButtonItem = leftBarButtonItem
-        
         // Right Bar Button Item
         rightBarItem.setIcon(name: Icons.Profile)
         rightBarItem.onBarButtonTap {
