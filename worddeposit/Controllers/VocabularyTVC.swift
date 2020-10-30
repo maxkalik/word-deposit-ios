@@ -7,6 +7,8 @@ class VocabularyTVC: SearchableTVC {
     /// Data model for the table view
     var words = [Word]()
     var messageView = MessageView()
+    var rightBarItem = TopBarItem()
+    var leftBarItem = TopBarItem()
     
     /// Search results table view
     private var resultsTableController: VocabularyResultsTVC!
@@ -22,6 +24,7 @@ class VocabularyTVC: SearchableTVC {
         // Setup Table View
         setupTableView()
         setupResultsTableController()
+        setupNavigationBar()
         
         // Setup message
         setupMessage()
@@ -65,6 +68,24 @@ class VocabularyTVC: SearchableTVC {
     private func setupTitle() {
         guard let vocabulary = UserService.shared.vocabulary else { return }
         navigationItem.title = vocabulary.title
+    }
+    
+    private func setupNavigationBar() {
+        // Left Bar Button Item
+        leftBarItem.setIcon(name: Icons.Vocabularies)
+        leftBarItem.onBarButtonTap {
+            self.performSegue(withIdentifier: Segues.Vocabularies, sender: self)
+        }
+        let leftBarButtonItem = UIBarButtonItem(customView: leftBarItem)
+        navigationItem.leftBarButtonItem = leftBarButtonItem
+        
+        // Right Bar Button Item
+        rightBarItem.setIcon(name: Icons.Profile)
+        rightBarItem.onBarButtonTap {
+            self.performSegue(withIdentifier: Segues.Profile, sender: self)
+        }
+        let rightBarButtonItem = UIBarButtonItem(customView: rightBarItem)
+        navigationItem.rightBarButtonItem = rightBarButtonItem
     }
     
     func setupMessage() {

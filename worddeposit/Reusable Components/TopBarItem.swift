@@ -3,7 +3,8 @@ import UIKit
 class TopBarItem: UIView {
     
     var iconName: String?
-
+    var action: (() -> Void)?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -48,6 +49,10 @@ class TopBarItem: UIView {
     }
     
     @objc func opTap() {
-        print("tapped")
+        action?()
+    }
+    
+    func onBarButtonTap(action: @escaping () -> Void) {
+        self.action = action
     }
 }

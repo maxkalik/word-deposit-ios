@@ -14,7 +14,8 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     var practiceReadVC: PracticeReadVC?
     var progressHUD = ProgressHUD(title: "Welcome")
     var messageView = MessageView()
-    var topBarItem = TopBarItem()
+    var leftBarItem = TopBarItem()
+    var rightBarItem = TopBarItem()
     
     private var isVocabularySwitched = false
     
@@ -167,7 +168,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         collectionView.addSubview(messageView)
         messageView.hide()
         setupMessage(wordsCount: words.count)
-        setNavigationBar()
+        setupNavigationBar()
     }
     
     private func setupMessage(wordsCount: Int) {
@@ -203,15 +204,22 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     
     // MARK: - Tests
     
-    private func setNavigationBar() {
-        topBarItem.setIcon(name: Icons.Profile)
-        let rightBarButtonItem = UIBarButtonItem(customView: topBarItem)
+    private func setupNavigationBar() {
+        // Left Bar Button Item
+        leftBarItem.setIcon(name: Icons.Vocabularies)
+        leftBarItem.onBarButtonTap {
+            self.performSegue(withIdentifier: Segues.Vocabularies, sender: self)
+        }
+        let leftBarButtonItem = UIBarButtonItem(customView: leftBarItem)
+        navigationItem.leftBarButtonItem = leftBarButtonItem
+        
+        // Right Bar Button Item
+        rightBarItem.setIcon(name: Icons.Profile)
+        rightBarItem.onBarButtonTap {
+            self.performSegue(withIdentifier: Segues.Profile, sender: self)
+        }
+        let rightBarButtonItem = UIBarButtonItem(customView: rightBarItem)
         self.navigationItem.rightBarButtonItem = rightBarButtonItem
-    }
-    
-    @objc func backToMain() {
-        // self.navigationController?.popViewController(animated: true)
-        performSegue(withIdentifier: Segues.Profile, sender: self)
     }
     
     // MARK: - IBActions
