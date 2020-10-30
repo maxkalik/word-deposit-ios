@@ -70,6 +70,7 @@ struct Icons {
     static let Photo = "photo"
     static let Picture = "picture"
     static let Back = "icon_back"
+    static let Arrow = "icon_arrow"
     static let Close = "icon_close"
     static let CheckmarkSmall = "icon_checkmark_small"
     static let CheckboxOn = "icon_checkbox_on"

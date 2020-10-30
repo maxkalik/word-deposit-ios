@@ -8,13 +8,15 @@ class VocabularyTVC: SearchableTVC {
     var words = [Word]()
     var messageView = MessageView()
     var rightBarItem = TopBarItem()
-    var leftBarItem = TopBarItem()
+//    var leftBarItem = TopBarItem()
     
     /// Search results table view
     private var resultsTableController: VocabularyResultsTVC!
     
     /// Flag for current vocabulary
     var isVocabularySwitched = false
+    
+    var button = UIButton(type: .custom)
 
     // MARK: - View Lifecycle
     
@@ -34,6 +36,46 @@ class VocabularyTVC: SearchableTVC {
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(Keys.vocabulariesSwitchNotificationKey), object: nil)
         nc.addObserver(self, selector: #selector(vocabularyDidUpdate), name: Notification.Name(Keys.currentVocabularyDidUpdateKey), object: nil)
+        
+        let title = "Some vocabulary dkjasld lsdf"
+        button.setTitle(title, for: .normal)
+        let icon = UIImage(named: Icons.Arrow)
+        button.setImage(icon, for: .normal)
+        button.tintColor = Colors.dark
+        button.setTitleColor(Colors.dark, for: .normal)
+        button.titleLabel?.font = UIFont(name: Fonts.medium, size: 22)
+        button.titleLabel?.addCharactersSpacing(spacing: -0.8, text: title)
+
+        button.semanticContentAttribute = .forceRightToLeft
+        
+        let buttonWidth = button.frame.width
+        let imageWidth = button.imageView!.frame.width
+        let spacing: CGFloat = 8.0 / 2
+        
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: buttonWidth - imageWidth + spacing, bottom: 0, right: -(buttonWidth-imageWidth) - spacing)
+        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: -imageWidth - spacing, bottom: 0, right: imageWidth + spacing)
+        button.contentEdgeInsets = UIEdgeInsets(top: 4, left: spacing + 14, bottom: 4, right: spacing + 14)
+        button.layer.cornerRadius = Radiuses.large
+        
+        button.addTarget(self, action: #selector(clickOnButton(sender:)), for: .touchUpInside)
+        
+        
+        
+        navigationItem.titleView = button
+    }
+    
+    @objc func clickOnButton(sender: UIButton) {
+        performSegue(withIdentifier: Segues.Vocabularies, sender: self)        
+        self.button.imageView?.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let navigationController = segue.destination as? UINavigationController{
+            if let tvc = navigationController.topViewController as? VocabulariesTVC {
+                tvc.delegate = self
+            }
+        }
     }
     
     @objc func vocabularyDidUpdate() {
@@ -71,13 +113,13 @@ class VocabularyTVC: SearchableTVC {
     }
     
     private func setupNavigationBar() {
-        // Left Bar Button Item
-        leftBarItem.setIcon(name: Icons.Vocabularies)
-        leftBarItem.onBarButtonTap {
-            self.performSegue(withIdentifier: Segues.Vocabularies, sender: self)
-        }
-        let leftBarButtonItem = UIBarButtonItem(customView: leftBarItem)
-        navigationItem.leftBarButtonItem = leftBarButtonItem
+//        // Left Bar Button Item
+//        leftBarItem.setIcon(name: Icons.Vocabularies)
+//        leftBarItem.onBarButtonTap {
+//            self.performSegue(withIdentifier: Segues.Vocabularies, sender: self)
+//        }
+//        let leftBarButtonItem = UIBarButtonItem(customView: leftBarItem)
+//        navigationItem.leftBarButtonItem = leftBarButtonItem
         
         // Right Bar Button Item
         rightBarItem.setIcon(name: Icons.Profile)
@@ -240,5 +282,13 @@ extension VocabularyTVC: VocabularyResultsTVCDelegate {
     func resultsWordDidRemove(word: Word) {
         guard let index = words.firstIndex(matching: word) else { return }
         self.wordDidRemove(word, index: index)
+    }
+}
+
+extension VocabularyTVC: VocabulariesTVCDelegate {
+    func onVocabulariesTVCDismiss() {
+        UIView.animate(withDuration: 0.5) {
+            self.button.imageView?.transform = .identity
+        }
     }
 }

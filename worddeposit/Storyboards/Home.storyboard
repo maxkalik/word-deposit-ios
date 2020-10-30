@@ -41,12 +41,6 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="Practice" id="0Cu-Qy-S6P">
-                        <barButtonItem key="leftBarButtonItem" image="icon_vocabularies" id="Bmx-e7-52X">
-                            <connections>
-                                <action selector="vocabulariesBarButtonPressed:" destination="cyQ-JK-l0X" id="bkS-g5-n7P"/>
-                                <segue destination="12l-q6-uD8" kind="show" identifier="Vocabularies" id="khA-EK-dTJ"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="icon_profile" id="Y9D-hn-rYG">
                             <connections>
                                 <segue destination="5Oc-vH-7SN" kind="show" identifier="Profile" id="JpH-Z0-vxD"/>
@@ -55,6 +49,7 @@
                     </navigationItem>
                     <connections>
                         <segue destination="XGr-ab-fSU" kind="show" identifier="PracticeRead" id="maD-IU-10B"/>
+                        <segue destination="12l-q6-uD8" kind="show" identifier="Vocabularies" id="sKm-uq-jUP"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wOH-sQ-2z1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -319,17 +314,15 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Vocabulary" id="uKz-c3-4M2">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="icon_vocabularies" id="UuC-Hs-bwX">
-                            <connections>
-                                <segue destination="12l-q6-uD8" kind="show" identifier="Vocabularies" id="cIB-pM-tsi"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="User" image="icon_profile" id="lcJ-ix-GSG">
                             <connections>
                                 <segue destination="5Oc-vH-7SN" kind="show" identifier="Profile" id="L4V-Nc-46o"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="12l-q6-uD8" kind="show" identifier="Vocabularies" id="Ld8-d9-cy5"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IEH-8u-IiS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1165,7 +1158,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="cIB-pM-tsi"/>
+        <segue reference="Ld8-d9-cy5"/>
         <segue reference="L4V-Nc-46o"/>
         <segue reference="cT5-yM-GyM"/>
         <segue reference="YiF-nd-0zQ"/>
@@ -1176,7 +1169,6 @@
         <image name="icon_plus" width="24" height="24"/>
         <image name="icon_practice" width="24" height="24"/>
         <image name="icon_profile" width="24" height="24"/>
-        <image name="icon_vocabularies" width="24" height="24"/>
         <image name="icon_vocabulary" width="24" height="24"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="photo" width="86" height="86"/>

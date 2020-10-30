@@ -14,7 +14,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     var practiceReadVC: PracticeReadVC?
     var progressHUD = ProgressHUD(title: "Welcome")
     var messageView = MessageView()
-    var leftBarItem = TopBarItem()
+//    var leftBarItem = TopBarItem()
     var rightBarItem = TopBarItem()
     
     private var isVocabularySwitched = false
@@ -205,13 +205,13 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     // MARK: - Tests
     
     private func setupNavigationBar() {
-        // Left Bar Button Item
-        leftBarItem.setIcon(name: Icons.Vocabularies)
-        leftBarItem.onBarButtonTap {
-            self.performSegue(withIdentifier: Segues.Vocabularies, sender: self)
-        }
-        let leftBarButtonItem = UIBarButtonItem(customView: leftBarItem)
-        navigationItem.leftBarButtonItem = leftBarButtonItem
+//        // Left Bar Button Item
+//        leftBarItem.setIcon(name: Icons.Vocabularies)
+//        leftBarItem.onBarButtonTap {
+//            self.performSegue(withIdentifier: Segues.Vocabularies, sender: self)
+//        }
+//        let leftBarButtonItem = UIBarButtonItem(customView: leftBarItem)
+//        navigationItem.leftBarButtonItem = leftBarButtonItem
         
         // Right Bar Button Item
         rightBarItem.setIcon(name: Icons.Profile)

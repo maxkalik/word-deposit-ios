@@ -1,5 +1,9 @@
 import UIKit
 
+protocol VocabulariesTVCDelegate: VocabularyTVC {
+    func onVocabulariesTVCDismiss()
+}
+
 class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
 
     // MARK: - Instances
@@ -23,6 +27,8 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
             }
         }
     }
+    
+    weak var delegate: VocabulariesTVCDelegate?
     
     private var messageView = MessageView()
     private var progressHUD = ProgressHUD()
@@ -57,6 +63,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.removeObserver(self)
+        delegate?.onVocabulariesTVCDismiss()
     }
     
     // MARK: - Methods
