@@ -3,6 +3,7 @@ import UIKit
 class TopBarItem: UIView {
     
     var iconName: String?
+    var imageView: UIImageView!
     var action: (() -> Void)?
     
     override init(frame: CGRect) {
@@ -19,20 +20,30 @@ class TopBarItem: UIView {
         iconName = name
     }
     
-    override func didMoveToSuperview() {
-        super.didMoveToSuperview()
+//    override func didMoveToSuperview() {
+//        super.didMoveToSuperview()
+//        setupOnSuperView()
+//    }
+    
+    override func layoutSubviews() {
+        print("layout subviews")
         setupOnSuperView()
     }
     
     private func commonInit() {
         frame = CGRect(x: 0, y: 0, width: 38, height: 38)
+        imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+    }
+    
+    func circled() {
+        imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 18, height: 18))
         layer.backgroundColor = Colors.lightGrey.cgColor
         layer.cornerRadius = 19
     }
     
     private func setupOnSuperView() {
         guard let icon = iconName else { return }
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 18, height: 18))
+        
         imageView.center = center
         
         if let image = UIImage(named: icon) {
@@ -51,7 +62,19 @@ class TopBarItem: UIView {
         action?()
     }
     
-    func onBarButtonTap(action: @escaping () -> Void) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.alpha = 0.3
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        alpha = 1
+    }
+    
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        alpha = 1
+    }
+    
+    func onPress(action: @escaping () -> Void) {
         self.action = action
     }
 }

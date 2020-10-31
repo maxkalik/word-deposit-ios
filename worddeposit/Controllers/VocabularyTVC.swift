@@ -8,7 +8,6 @@ class VocabularyTVC: SearchableTVC {
     var words = [Word]()
     var messageView = MessageView()
     var rightBarItem = TopBarItem()
-//    var leftBarItem = TopBarItem()
     
     /// Search results table view
     private var resultsTableController: VocabularyResultsTVC!
@@ -58,12 +57,6 @@ class VocabularyTVC: SearchableTVC {
     
     // MARK: - objc Methods
     
-    @objc func clickOnButton(sender: UIButton) {
-        performSegue(withIdentifier: Segues.Vocabularies, sender: self)
-        self.buttonNavTitleView.imageView?.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let navigationController = segue.destination as? UINavigationController{
             if let tvc = navigationController.topViewController as? VocabulariesTVC {
@@ -87,7 +80,9 @@ class VocabularyTVC: SearchableTVC {
     
     private func setupTitleView() {
         setupTitle()
-        buttonNavTitleView.addTarget(self, action: #selector(clickOnButton(sender:)), for: .touchUpInside)
+        buttonNavTitleView.onPress {
+            self.performSegue(withIdentifier: Segues.Vocabularies, sender: self)
+        }
         navigationItem.titleView = buttonNavTitleView
     }
     
@@ -100,7 +95,8 @@ class VocabularyTVC: SearchableTVC {
     private func setupNavigationBar() {
         // Right Bar Button Item
         rightBarItem.setIcon(name: Icons.Profile)
-        rightBarItem.onBarButtonTap {
+        rightBarItem.circled()
+        rightBarItem.onPress {
             self.performSegue(withIdentifier: Segues.Profile, sender: self)
         }
         let rightBarButtonItem = UIBarButtonItem(customView: rightBarItem)
@@ -264,8 +260,6 @@ extension VocabularyTVC: VocabularyResultsTVCDelegate {
 
 extension VocabularyTVC: VocabulariesTVCDelegate {
     func onVocabulariesTVCDismiss() {
-        UIView.animate(withDuration: 0.5) {
-            self.buttonNavTitleView.imageView?.transform = .identity
-        }
+        self.buttonNavTitleView.initialState()
     }
 }
