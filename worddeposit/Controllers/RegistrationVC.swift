@@ -117,9 +117,7 @@ class RegistrationVC: UIViewController {
         leftBarItem.onPress {
             self.navigationController?.popViewController(animated: true)
         }
-        
-        let button = UIButton()
-        button.addSubview(leftBarItem)
+
         let leftBarButtonItem = UIBarButtonItem(customView: leftBarItem)
         self.navigationItem.leftBarButtonItem = leftBarButtonItem
     }

@@ -40,7 +40,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(Keys.vocabulariesSwitchNotificationKey), object: nil)
-        
+        nc.addObserver(self, selector: #selector(vocabularySwitchBegan), name: Notification.Name(Keys.vocabulariesSwitchBeganNotificationKey), object: nil)
         setupTableView()
         view.addSubview(messageView)
         view.superview?.addSubview(progressHUD)
@@ -153,6 +153,10 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         print("vocabularies -- notification is called")
     }
     
+    @objc func vocabularySwitchBegan() {
+        print("vocabularies -- notification switch began is called")
+    }
+    
     @objc func checkboxChanged(sender: Checkbox) {
         // exception without vocabularies.count == 1
         // 'attempt to delete row 1 from section 0 which only contains 1 rows before the update'
@@ -161,6 +165,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
             sender.isOn = true
             simpleAlert(title: "You cannot unmarked actived vocabulary.", msg: "Create another one for swithing between them.")
         } else {
+            NotificationCenter.default.post(name: Notification.Name(Keys.vocabulariesSwitchBeganNotificationKey), object: nil)
             let newSelectedVocabularyIndex = sender.tag
             if newSelectedVocabularyIndex != selectedVocabularyIndex {
                 guard let oldIndex = selectedVocabularyIndex else { return }

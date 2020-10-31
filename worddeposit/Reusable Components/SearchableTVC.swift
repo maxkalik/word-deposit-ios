@@ -39,6 +39,8 @@ class SearchableTVC: UITableViewController {
     /// Restoration state for UISearchController
     var restoredState = SearchControllerRestorableState()
     
+    // MARK: - Lifecycle methods
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // Restore the searchController's active state.

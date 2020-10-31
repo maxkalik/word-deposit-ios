@@ -2,12 +2,22 @@ import UIKit
 import Foundation
 
 class PrimaryButton: UIButton {
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    
+    var titleColor: UIColor?
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
         layer.cornerRadius = Radiuses.large
-        setTitleColor(Colors.yellow, for: .normal)
-        titleLabel?.font = UIFont(name: Fonts.medium, size: 16)
+        titleLabel?.font = UIFont(name: Fonts.medium, size: 16 )
         layer.backgroundColor = Colors.dark.cgColor
+        contentEdgeInsets.left = 20
+        contentEdgeInsets.right = 20
+        
+        if titleColor == nil {
+            setTitleColor(Colors.yellow, for: .normal)
+        } else {
+            setTitleColor(titleColor, for: .normal)
+        }
     }
     
     override var isEnabled: Bool {

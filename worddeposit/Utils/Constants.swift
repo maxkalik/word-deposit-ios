@@ -86,6 +86,7 @@ struct Images {
 
 struct Keys {
     static let vocabulariesSwitchNotificationKey = "com.maxkalik.worddeposit.vocabulariesSwitchNotificationKey"
+    static let vocabulariesSwitchBeganNotificationKey = "com.maxkalik.worddeposit.vocabulariesSwitchBeganNotificationKey"
     static let currentVocabularyDidUpdateKey = "com.maxkalik.worddeposit.currentVocabularyDidUpdateKey"
 }
 

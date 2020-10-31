@@ -15,7 +15,9 @@ class VocabularyTVC: SearchableTVC {
     /// Flag for current vocabulary
     var isVocabularySwitched = false
     
-    var buttonNavTitleView = ButtonNavTitleView(type: .custom)
+    private var buttonNavTitleView = ButtonNavTitleView(type: .custom)
+    private var progressHUD = ProgressHUD()
+    private var withLoader: Bool = false
 
     // MARK: - View Lifecycle
     
@@ -28,15 +30,27 @@ class VocabularyTVC: SearchableTVC {
         setupNavigationBar()
         
         // Setup message
-        setupMessage()
         view.addSubview(messageView)
         messageView.hide()
+        setupMessage()
         
         let nc = NotificationCenter.default
+        nc.addObserver(self, selector: #selector(vocabularySwitchBegan), name: NSNotification.Name(Keys.vocabulariesSwitchBeganNotificationKey), object: nil)
         nc.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(Keys.vocabulariesSwitchNotificationKey), object: nil)
         nc.addObserver(self, selector: #selector(vocabularyDidUpdate), name: Notification.Name(Keys.currentVocabularyDidUpdateKey), object: nil)
         
         setupTitleView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Setup progressHUD
+        if !withLoader {
+            view.superview?.addSubview(progressHUD)
+            progressHUD.setTitle(title: "Fetching words")
+            progressHUD.hide()
+            withLoader = true
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -64,16 +78,26 @@ class VocabularyTVC: SearchableTVC {
             }
         }
     }
-    
+        
     @objc func vocabularyDidUpdate() {
         setupTitle()
     }
     
+    @objc func vocabularySwitchBegan() {
+        if !messageView.isHidden {
+            messageView.isHidden = true
+        }
+        progressHUD.show()
+    }
+    
     @objc func vocabularyDidSwitch() {
+        progressHUD.hide()
         words.removeAll()
         tableView.reloadData()
         setupContent(words: UserService.shared.words)
         isVocabularySwitched = true
+        
+        // loader end
     }
     
     // MARK: - View setups

@@ -20,13 +20,8 @@ class TopBarItem: UIView {
         iconName = name
     }
     
-//    override func didMoveToSuperview() {
-//        super.didMoveToSuperview()
-//        setupOnSuperView()
-//    }
-    
-    override func layoutSubviews() {
-        print("layout subviews")
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
         setupOnSuperView()
     }
     
