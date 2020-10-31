@@ -154,7 +154,6 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     }
     
     @objc func checkboxChanged(sender: Checkbox) {
-        print(sender)
         // exception without vocabularies.count == 1
         // 'attempt to delete row 1 from section 0 which only contains 1 rows before the update'
         

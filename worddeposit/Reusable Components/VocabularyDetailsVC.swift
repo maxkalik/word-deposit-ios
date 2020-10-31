@@ -119,8 +119,6 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         if isKeyboardShowing { return }
         isKeyboardShowing = true
         
-        print("> KEYBOARD WILL SHOW")
-        
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             keyboardHeight = keyboardFrame.cgRectValue.height
                         
@@ -137,8 +135,6 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     @objc func keyboardWillHide(_ notification: NSNotification) {
         if !isKeyboardShowing { return }
         isKeyboardShowing = false
-        
-        print("> KEYBOARD WILL HIDE")
         
         UIView.animate(withDuration: 0.3) { [self] in
             stackView.frame.origin.y += keyboardHeight - stackView.frame.size.height

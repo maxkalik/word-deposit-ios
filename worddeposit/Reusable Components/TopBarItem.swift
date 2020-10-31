@@ -16,7 +16,6 @@ class TopBarItem: UIView {
     }
     
     func setIcon(name: String) {
-        print(name)
         iconName = name
     }
     

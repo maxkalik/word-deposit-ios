@@ -134,10 +134,10 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         self.words.removeAll()
         self.words = words
         
-        print("-------")
-        words.forEach { word in
-            print(word.example)
-        }
+//        print("-------")
+//        words.forEach { word in
+//            print(word.example)
+//        }
         
         if words.count < minWordsAmount {
             setupMessage(wordsCount: words.count)

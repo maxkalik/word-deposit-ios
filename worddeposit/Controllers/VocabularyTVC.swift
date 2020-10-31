@@ -16,7 +16,7 @@ class VocabularyTVC: SearchableTVC {
     /// Flag for current vocabulary
     var isVocabularySwitched = false
     
-    var button = UIButton(type: .custom)
+    var buttonNavTitleView = ButtonNavTitleView(type: .custom)
 
     // MARK: - View Lifecycle
     
@@ -40,9 +40,27 @@ class VocabularyTVC: SearchableTVC {
         setupTitleView()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if isVocabularySwitched == false {
+            setupContent(words: UserService.shared.words) // <-- TODO: Bug
+        }
+        messageView.frame.origin.y = tableView.contentOffset.y
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        words.removeAll()
+        tableView.reloadData()
+        isVocabularySwitched = false
+    }
+    
+    // MARK: - objc Methods
+    
     @objc func clickOnButton(sender: UIButton) {
-        performSegue(withIdentifier: Segues.Vocabularies, sender: self)        
-        self.button.imageView?.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+        performSegue(withIdentifier: Segues.Vocabularies, sender: self)
+        self.buttonNavTitleView.imageView?.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
 
     }
     
@@ -65,53 +83,18 @@ class VocabularyTVC: SearchableTVC {
         isVocabularySwitched = true
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        if isVocabularySwitched == false {
-            setupContent(words: UserService.shared.words) // <-- TODO: Bug
-        }
-        messageView.frame.origin.y = tableView.contentOffset.y
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        words.removeAll()
-        tableView.reloadData()
-        isVocabularySwitched = false
-    }
-    
     // MARK: - View setups
     
     private func setupTitleView() {
-        
         setupTitle()
-        
-        let icon = UIImage(named: Icons.Arrow)
-        button.setImage(icon, for: .normal)
-        button.tintColor = Colors.dark
-        button.setTitleColor(Colors.dark, for: .normal)
-        button.titleLabel?.font = UIFont(name: Fonts.bold, size: 22)
-        button.semanticContentAttribute = .forceRightToLeft
-        
-        let buttonWidth = button.frame.width
-        let imageWidth = button.imageView!.frame.width
-        let spacing: CGFloat = 8.0 / 2
-        
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: buttonWidth - imageWidth + spacing, bottom: 0, right: -(buttonWidth-imageWidth) - spacing)
-        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: -imageWidth - spacing, bottom: 0, right: imageWidth + spacing)
-        button.contentEdgeInsets = UIEdgeInsets(top: 4, left: spacing + 14, bottom: 4, right: spacing + 14)
-        button.layer.cornerRadius = Radiuses.large
-        
-        button.addTarget(self, action: #selector(clickOnButton(sender:)), for: .touchUpInside)
-        
-        navigationItem.titleView = button
+        buttonNavTitleView.addTarget(self, action: #selector(clickOnButton(sender:)), for: .touchUpInside)
+        navigationItem.titleView = buttonNavTitleView
     }
     
     private func setupTitle() {
         guard let vocabulary = UserService.shared.vocabulary else { return }
-        button.setTitle(vocabulary.title, for: .normal)
-        button.titleLabel?.addCharactersSpacing(spacing: -0.8, text: vocabulary.title)
+        buttonNavTitleView.setTitle(vocabulary.title, for: .normal)
+        buttonNavTitleView.titleLabel?.addCharactersSpacing(spacing: -0.8, text: vocabulary.title)
     }
     
     private func setupNavigationBar() {
@@ -282,7 +265,7 @@ extension VocabularyTVC: VocabularyResultsTVCDelegate {
 extension VocabularyTVC: VocabulariesTVCDelegate {
     func onVocabulariesTVCDismiss() {
         UIView.animate(withDuration: 0.5) {
-            self.button.imageView?.transform = .identity
+            self.buttonNavTitleView.imageView?.transform = .identity
         }
     }
 }
