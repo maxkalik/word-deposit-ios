@@ -85,6 +85,14 @@ extension VocabularyCardsVC: VocabularyCardCVCellDelegate {
         self.simpleAlert(title: title, msg: message)
     }
     
+    typealias Handler = ((UIAlertAction) -> Void)?
+    func showFullAlert(title: String, message: String, okTitle: String, cancelTitle: String, okHandler: Handler = nil) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: okTitle, style: .default, handler: okHandler))
+        alert.addAction(UIAlertAction(title: cancelTitle, style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+    
     func presentVC(_ viewControllerToPresent: UIViewController) {
         present(viewControllerToPresent, animated: true, completion: nil)
     }

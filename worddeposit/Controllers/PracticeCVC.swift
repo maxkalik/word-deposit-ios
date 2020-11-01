@@ -12,7 +12,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     private var trainers = [PracticeTrainer]()
     
     var practiceReadVC: PracticeReadVC?
-    var progressHUD = ProgressHUD(title: "Fetching words")
+    var progressHUD = ProgressHUD(title: "Fetching...")
     var messageView = MessageView()
     var rightBarItem = TopBarItem()
     

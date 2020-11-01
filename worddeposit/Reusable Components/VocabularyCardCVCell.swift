@@ -235,11 +235,13 @@ class VocabularyCardCVCell: UICollectionViewCell {
     }
     
     @IBAction func removePictureTouched(_ sender: UIButton) {
-        pictureLoader.startAnimating()
-        word.imgUrl = ""
-        UserService.shared.removeWordImageFrom(wordId: word.id) {
-            self.updateWordImageUrl(isRemove: true)
-        }
+        delegate?.showFullAlert(title: "Remove this picture?", message: "", okTitle: "Yes", cancelTitle: "No", okHandler: { _ in
+            self.pictureLoader.startAnimating()
+            self.word.imgUrl = ""
+            UserService.shared.removeWordImageFrom(wordId: self.word.id) {
+                self.updateWordImageUrl(isRemove: true)
+            }
+        })
     }
     
     // MARK: - Uploading Methods
