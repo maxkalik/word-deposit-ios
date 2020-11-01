@@ -60,9 +60,9 @@ extension FirestoreErrorCode {
     var message: String {
         switch self {
         case .notFound:
-            return "There is no "
+            return "Can't find"
         default:
-            return "Sorry, something went wrong.c"
+            return "Sorry, something went wrong"
         }
     }
 }

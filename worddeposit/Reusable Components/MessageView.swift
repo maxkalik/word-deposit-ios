@@ -8,7 +8,6 @@ class MessageView: UIView {
     var contentView: UIView!
     var action: (() -> Void)?
     var secondaryAction: (() -> Void)?
-    
 
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var primaryButton: PrimaryButton!
@@ -28,10 +27,6 @@ class MessageView: UIView {
         guard let view = loadViewFromNib() else { return }
         view.frame = self.bounds
         
-        primaryButton.contentEdgeInsets.left = 20
-        primaryButton.contentEdgeInsets.right = 20
-        primaryButton.setTitleColor(UIColor.white, for: .normal)
-        
         secondaryButton.isHidden = true
         
         addSubview(view)
@@ -47,12 +42,9 @@ class MessageView: UIView {
     
     func setTitles(messageTxt: String, buttonTitle: String, secondaryButtonTitle: String? = nil) {
         label.text  = messageTxt
-        label.addCharactersSpacing(spacing: -0.8, text: messageTxt)
+        label.addCharactersSpacing(spacing: -0.6, text: messageTxt)
         primaryButton.setTitle(buttonTitle, for: .normal)
-        // primaryButton.addTarget(self, action: #selector(secondaryButtonTapped), for: .touchUpInside)
-        
         secondaryButton.setTitle(secondaryButtonTitle, for: .normal)
-        
     }
     
     /*

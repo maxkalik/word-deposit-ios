@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -121,15 +121,15 @@
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="VgD-DV-qMQ">
                                 <rect key="frame" x="106" y="106" width="37" height="37"/>
                             </activityIndicatorView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mC1-dx-JNe">
-                                <rect key="frame" x="209" y="10" width="30" height="30"/>
+                            <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mC1-dx-JNe">
+                                <rect key="frame" x="203" y="203" width="36" height="36"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="30" id="aTn-ir-QYX"/>
-                                    <constraint firstAttribute="height" constant="30" id="o89-pt-CV4"/>
+                                    <constraint firstAttribute="width" constant="36" id="aTn-ir-QYX"/>
+                                    <constraint firstAttribute="height" constant="36" id="o89-pt-CV4"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <color key="tintColor" white="0.0" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="icon_close_circle">
+                                <state key="normal" image="icon_trash_circle">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
@@ -145,11 +145,11 @@
                             <constraint firstItem="qEf-66-3td" firstAttribute="top" secondItem="NG3-UZ-tdL" secondAttribute="top" id="Agx-zj-gdf"/>
                             <constraint firstItem="KK2-6x-PG2" firstAttribute="leading" secondItem="NG3-UZ-tdL" secondAttribute="leading" constant="20" id="Aul-Zo-u5m"/>
                             <constraint firstItem="tIz-zy-KYF" firstAttribute="leading" secondItem="NG3-UZ-tdL" secondAttribute="leading" id="DhI-lr-DSf"/>
-                            <constraint firstItem="mC1-dx-JNe" firstAttribute="top" secondItem="NG3-UZ-tdL" secondAttribute="top" constant="10" id="ZXK-BZ-9HU"/>
                             <constraint firstAttribute="trailing" secondItem="mC1-dx-JNe" secondAttribute="trailing" constant="10" id="ceW-BI-fpo"/>
                             <constraint firstAttribute="trailing" secondItem="qEf-66-3td" secondAttribute="trailing" id="dFB-Eg-Aw6"/>
                             <constraint firstAttribute="trailing" secondItem="KK2-6x-PG2" secondAttribute="trailing" constant="20" id="gp8-Bb-pNa"/>
                             <constraint firstItem="VgD-DV-qMQ" firstAttribute="centerX" secondItem="qEf-66-3td" secondAttribute="centerX" id="ozu-ln-sa9"/>
+                            <constraint firstItem="tIz-zy-KYF" firstAttribute="top" secondItem="mC1-dx-JNe" secondAttribute="bottom" constant="10" id="pRn-rT-jUQ"/>
                             <constraint firstItem="KK2-6x-PG2" firstAttribute="top" secondItem="tIz-zy-KYF" secondAttribute="bottom" id="qfD-Vz-GIR"/>
                             <constraint firstItem="tIz-zy-KYF" firstAttribute="top" secondItem="qEf-66-3td" secondAttribute="bottom" id="zGZ-1f-7Si"/>
                             <constraint firstItem="qEf-66-3td" firstAttribute="leading" secondItem="NG3-UZ-tdL" secondAttribute="leading" id="zbw-Ka-SQE"/>
@@ -181,7 +181,7 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="icon_close_circle" width="26" height="26"/>
+        <image name="icon_trash_circle" width="32" height="32"/>
         <image name="picture" width="86" height="86"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

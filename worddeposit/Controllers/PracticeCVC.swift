@@ -12,8 +12,9 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     private var trainers = [PracticeTrainer]()
     
     var practiceReadVC: PracticeReadVC?
-    var progressHUD = ProgressHUD(title: "Welcome")
+    var progressHUD = ProgressHUD(title: "Fetching...")
     var messageView = MessageView()
+    var rightBarItem = TopBarItem()
     
     private var isVocabularySwitched = false
     
@@ -132,11 +133,6 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         self.words.removeAll()
         self.words = words
         
-        print("-------")
-        words.forEach { word in
-            print(word.example)
-        }
-        
         if words.count < minWordsAmount {
             setupMessage(wordsCount: words.count)
             messageView.show()
@@ -166,6 +162,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         collectionView.addSubview(messageView)
         messageView.hide()
         setupMessage(wordsCount: words.count)
+        setupNavigationBar()
     }
     
     private func setupMessage(wordsCount: Int) {
@@ -199,7 +196,20 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         self.present(vc, animated: true)
     }
     
-    // MARK: -
+    // MARK: - Tests
+    
+    private func setupNavigationBar() {
+        // Right Bar Button Item
+        rightBarItem.setIcon(name: Icons.Profile)
+        rightBarItem.circled()
+        rightBarItem.onPress {
+            self.performSegue(withIdentifier: Segues.Profile, sender: self)
+        }
+        let rightBarButtonItem = UIBarButtonItem(customView: rightBarItem)
+        self.navigationItem.rightBarButtonItem = rightBarButtonItem
+    }
+    
+    // MARK: - IBActions
     
     @IBAction func vocabulariesBarButtonPressed(_ sender: Any) {
         print("vocabularies tapped")

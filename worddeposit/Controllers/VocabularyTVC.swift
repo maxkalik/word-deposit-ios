@@ -7,12 +7,17 @@ class VocabularyTVC: SearchableTVC {
     /// Data model for the table view
     var words = [Word]()
     var messageView = MessageView()
+    var rightBarItem = TopBarItem()
     
     /// Search results table view
     private var resultsTableController: VocabularyResultsTVC!
     
     /// Flag for current vocabulary
     var isVocabularySwitched = false
+    
+    private var buttonNavTitleView = ButtonNavTitleView(type: .custom)
+    private var progressHUD = ProgressHUD()
+    private var withLoader: Bool = false
 
     // MARK: - View Lifecycle
     
@@ -22,26 +27,30 @@ class VocabularyTVC: SearchableTVC {
         // Setup Table View
         setupTableView()
         setupResultsTableController()
+        setupNavigationBar()
         
         // Setup message
-        setupMessage()
         view.addSubview(messageView)
         messageView.hide()
+        setupMessage()
         
         let nc = NotificationCenter.default
+        nc.addObserver(self, selector: #selector(vocabularySwitchBegan), name: NSNotification.Name(Keys.vocabulariesSwitchBeganNotificationKey), object: nil)
         nc.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(Keys.vocabulariesSwitchNotificationKey), object: nil)
         nc.addObserver(self, selector: #selector(vocabularyDidUpdate), name: Notification.Name(Keys.currentVocabularyDidUpdateKey), object: nil)
+        
+        setupTitleView()
     }
     
-    @objc func vocabularyDidUpdate() {
-        setupTitle()
-    }
-    
-    @objc func vocabularyDidSwitch() {
-        words.removeAll()
-        tableView.reloadData()
-        setupContent(words: UserService.shared.words)
-        isVocabularySwitched = true
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Setup progressHUD
+        if !withLoader {
+            view.superview?.addSubview(progressHUD)
+            progressHUD.setTitle(title: "Fetching words")
+            progressHUD.hide()
+            withLoader = true
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -60,11 +69,62 @@ class VocabularyTVC: SearchableTVC {
         isVocabularySwitched = false
     }
     
+    // MARK: - objc Methods
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let navigationController = segue.destination as? UINavigationController{
+            if let tvc = navigationController.topViewController as? VocabulariesTVC {
+                tvc.delegate = self
+            }
+        }
+    }
+        
+    @objc func vocabularyDidUpdate() {
+        setupTitle()
+    }
+    
+    @objc func vocabularySwitchBegan() {
+        if !messageView.isHidden {
+            messageView.isHidden = true
+        }
+        progressHUD.show()
+    }
+    
+    @objc func vocabularyDidSwitch() {
+        progressHUD.hide()
+        words.removeAll()
+        tableView.reloadData()
+        setupContent(words: UserService.shared.words)
+        isVocabularySwitched = true
+        
+        // loader end
+    }
+    
     // MARK: - View setups
+    
+    private func setupTitleView() {
+        setupTitle()
+        buttonNavTitleView.onPress {
+            self.performSegue(withIdentifier: Segues.Vocabularies, sender: self)
+        }
+        navigationItem.titleView = buttonNavTitleView
+    }
     
     private func setupTitle() {
         guard let vocabulary = UserService.shared.vocabulary else { return }
-        navigationItem.title = vocabulary.title
+        buttonNavTitleView.setTitle(vocabulary.title, for: .normal)
+        buttonNavTitleView.titleLabel?.addCharactersSpacing(spacing: -0.8, text: vocabulary.title)
+    }
+    
+    private func setupNavigationBar() {
+        // Right Bar Button Item
+        rightBarItem.setIcon(name: Icons.Profile)
+        rightBarItem.circled()
+        rightBarItem.onPress {
+            self.performSegue(withIdentifier: Segues.Profile, sender: self)
+        }
+        let rightBarButtonItem = UIBarButtonItem(customView: rightBarItem)
+        navigationItem.rightBarButtonItem = rightBarButtonItem
     }
     
     func setupMessage() {
@@ -219,5 +279,11 @@ extension VocabularyTVC: VocabularyResultsTVCDelegate {
     func resultsWordDidRemove(word: Word) {
         guard let index = words.firstIndex(matching: word) else { return }
         self.wordDidRemove(word, index: index)
+    }
+}
+
+extension VocabularyTVC: VocabulariesTVCDelegate {
+    func onVocabulariesTVCDismiss() {
+        self.buttonNavTitleView.initialState()
     }
 }

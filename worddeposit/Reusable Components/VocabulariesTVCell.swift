@@ -48,6 +48,21 @@ class VocabulariesTVCell: UITableViewCell {
         titleLabel.textColor = Colors.dark
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        UIView.animate(withDuration: 0.3) {
+            self.alpha = 0.3
+        }
+    }
+
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        UIView.animate(withDuration: 0.3) {
+            self.alpha = 1
+        }
+    }
+
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         titleLabel.font = UIFont(name: Fonts.bold, size: 22)

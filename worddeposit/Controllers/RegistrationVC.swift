@@ -20,6 +20,7 @@ class RegistrationVC: UIViewController {
     var progressHUD = ProgressHUD()
     private var isKeyboardShowing = false
     private var keyboardHeight: CGFloat!
+    private var leftBarItem = TopBarItem()
     
     // MARK: - Lifecycle
     
@@ -27,6 +28,7 @@ class RegistrationVC: UIViewController {
         super.viewDidLoad()
         
         // Disable login button
+        signUpButton.titleColor = Colors.yellow
         signUpButton.isEnabled = false
         
         // Spinner
@@ -108,30 +110,16 @@ class RegistrationVC: UIViewController {
         }
     }
     
-    @objc func backToMain() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
     // MARK: - Methods
     
     private func setNavigationBar() {
         self.navigationItem.setHidesBackButton(true, animated: false)
-
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 42, height: 42))
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 10, width: 24, height: 24))
-
-        if let imgBackArrow = UIImage(named: "icon_back") {
-            let tintedImage = imgBackArrow.withRenderingMode(.alwaysTemplate)
-            imageView.image = tintedImage
-            imageView.tintColor = Colors.blue
+        leftBarItem.setIcon(name: Icons.Back)
+        leftBarItem.onPress {
+            self.navigationController?.popViewController(animated: true)
         }
 
-        view.addSubview(imageView)
-
-        let backTap = UITapGestureRecognizer(target: self, action: #selector(backToMain))
-        view.addGestureRecognizer(backTap)
-
-        let leftBarButtonItem = UIBarButtonItem(customView: view)
+        let leftBarButtonItem = UIBarButtonItem(customView: leftBarItem)
         self.navigationItem.leftBarButtonItem = leftBarButtonItem
     }
     

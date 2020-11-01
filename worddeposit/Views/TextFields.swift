@@ -1,14 +1,34 @@
 import UIKit
 import Foundation
 
-class CellTextField: UITextField {
+class DefaultTextField: UITextField {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        // weird but we need to clear background
+        for view in subviews {
+            if let button = view as? UIButton {
+                button.setImage(button.image(for: .normal)?.withRenderingMode(.alwaysTemplate), for: .normal)
+                button.tintColor = .clear
+            }
+        }
+    }
+    
+    override func clearButtonRect(forBounds bounds: CGRect) -> CGRect {
+        var originalRect = super.clearButtonRect(forBounds: bounds)
+        originalRect.size.width = 16
+        originalRect.size.height = 16
+        return originalRect.offsetBy(dx: 10, dy: 0)
+    }
+}
+
+class CellTextField: DefaultTextField {
     override func awakeFromNib() {
         super.awakeFromNib()
         layer.borderWidth = 0
         layer.backgroundColor = .none
         font = UIFont(name: "System", size: 17.0)
         clearButtonMode = .whileEditing
-        applyCustomClearButton()
+        // applyCustomClearButton()
     }
 }
 
@@ -17,7 +37,7 @@ class PrimaryTextField: UITextField, UITextFieldDelegate {
     var limitOfString: Int?
     var isContainer = false
     var textPadding = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
             
@@ -159,10 +179,10 @@ class SecondaryTextField: UITextField, UITextFieldDelegate {
     }
 }
 
-class LoginTextField: UITextField, UITextFieldDelegate {
+class LoginTextField: DefaultTextField, UITextFieldDelegate {
     
     var bottomBorder = UIView()
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -192,7 +212,7 @@ class LoginTextField: UITextField, UITextFieldDelegate {
         // Placeholder
         attributedPlaceholder = NSAttributedString(string: self.placeholder != nil ? self.placeholder! : "", attributes: [NSAttributedString.Key.foregroundColor: Colors.dark.withAlphaComponent(0.2)])
         
-        applyCustomClearButton()
+        clearButtonMode = .whileEditing
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {

@@ -136,7 +136,7 @@ class ProfileTVC: UITableViewController {
             versionLabel.textColor = Colors.grey
             versionLabel.textAlignment = .center
             let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-            versionLabel.text = appVersion ?? ""
+            versionLabel.text = "Version \(appVersion ?? "")"
             footerView.addSubview(versionLabel)
         }
         return footerView
@@ -175,15 +175,9 @@ class ProfileTVC: UITableViewController {
             switch segue.identifier {
             case Segues.NativeLanguage:
                 
-                let currentLanguageCode = NSLocale.current.languageCode ?? "en"
-                let defaultLanguage = NSLocale(localeIdentifier: currentLanguageCode).displayName(forKey: NSLocale.Key.identifier, value: currentLanguageCode) ?? "English"
-                
-                let currentLanguage = user.nativeLanguage.isNotEmpty ? user.nativeLanguage : defaultLanguage
-                guard let selected = languages.firstIndex(of: currentLanguage) else { return }
-                
                 tvc.navigationItem.rightBarButtonItem = nil
                 tvc.data = languages
-                tvc.selected = selected
+                tvc.selected = languages.firstIndex(of: user.nativeLanguage)
                 tvc.title = "Native Language"
             default:
                 break

@@ -13,6 +13,7 @@ class ForgotPasswordVC: UIViewController {
     // Custom
     private var isKeyboardShowing = false
     private var keyboardHeight: CGFloat!
+    private var leftBarItem = TopBarItem()
     
     // MARK: - IBOutlets
     @IBOutlet weak var emailTextField: UITextField!
@@ -24,7 +25,7 @@ class ForgotPasswordVC: UIViewController {
         setupNavigationBar()
 
         view.backgroundColor = Colors.silver
-        resetPasswordButton.setTitleColor(Colors.silver, for: .normal)
+        resetPasswordButton.titleColor = Colors.silver
         resetPasswordButton.isEnabled = false
     }
     
@@ -91,29 +92,16 @@ class ForgotPasswordVC: UIViewController {
          }
     }
     
-    @objc func backToMain() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
     // MARK: - Methods
     
     func setupNavigationBar() {
-        self.navigationItem.setHidesBackButton(true, animated: false)
-        
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 42, height: 42))
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 10, width: 24, height: 24))
-
-        if let imgBackArrow = UIImage(named: "icon_back") {
-            let tintedImage = imgBackArrow.withRenderingMode(.alwaysTemplate)
-            imageView.image = tintedImage
-            imageView.tintColor = Colors.blue
+        navigationItem.setHidesBackButton(true, animated: false)
+        leftBarItem.setIcon(name: Icons.Back)
+        leftBarItem.onPress {
+            self.navigationController?.popViewController(animated: true)
         }
-        view.addSubview(imageView)
 
-        let backTap = UITapGestureRecognizer(target: self, action: #selector(backToMain))
-        view.addGestureRecognizer(backTap)
-
-        let leftBarButtonItem = UIBarButtonItem(customView: view)
+        let leftBarButtonItem = UIBarButtonItem(customView: leftBarItem)
         navigationItem.leftBarButtonItem = leftBarButtonItem
     }
     

@@ -51,6 +51,7 @@ class VocabularyResultsTVC: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: XIBs.VocabularyTVCell, for: indexPath) as? VocabularyTVCell {
+            cell.backgroundColor = .clear
             cell.configureCell(word: filteredWords[indexPath.row])
             return cell
         }
