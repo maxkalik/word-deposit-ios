@@ -8,7 +8,6 @@ class CellTextField: UITextField {
         layer.backgroundColor = .none
         font = UIFont(name: "System", size: 17.0)
         clearButtonMode = .whileEditing
-        applyCustomClearButton()
     }
 }
 
@@ -192,7 +191,7 @@ class LoginTextField: UITextField, UITextFieldDelegate {
         // Placeholder
         attributedPlaceholder = NSAttributedString(string: self.placeholder != nil ? self.placeholder! : "", attributes: [NSAttributedString.Key.foregroundColor: Colors.dark.withAlphaComponent(0.2)])
         
-        applyCustomClearButton()
+        clearButtonMode = .whileEditing
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {

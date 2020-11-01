@@ -25,7 +25,7 @@ class ForgotPasswordVC: UIViewController {
         setupNavigationBar()
 
         view.backgroundColor = Colors.silver
-        resetPasswordButton.setTitleColor(Colors.silver, for: .normal)
+        resetPasswordButton.titleColor = Colors.silver
         resetPasswordButton.isEnabled = false
     }
     
