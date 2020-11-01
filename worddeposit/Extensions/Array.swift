@@ -25,6 +25,29 @@ extension Array where Element: Identifiable {
 }
 
 
+extension Array where Element: StringProtocol {
+    func sortBy(keyword: String) -> Array {
+        self.sorted {
+            if $0 == keyword && $1 != keyword  {
+                return true
+            }
+            else if $0.hasPrefix(keyword) && !$1.hasPrefix(keyword)  {
+                return true
+            }
+            else if $0.hasPrefix(keyword) && $1.hasPrefix(keyword) && $0.count < $1.count  {
+                return true
+            }
+            else if $0.contains(keyword) && !$1.contains(keyword) {
+                return true
+            }
+            else if $0.contains(keyword) && $1.contains(keyword) && $0.count < $1.count {
+                return true
+            }
+            return false
+        }.reversed()
+    }
+}
+
 extension Array where Element: Hashable {
     
     func difference(from other: [Element]) -> [Element] {

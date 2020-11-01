@@ -20,8 +20,8 @@ class SearchableTVC: UITableViewController {
             definesPresentationContext = true
             
             // custom icons
-            let searchIcon = UIImage(named: "icon_search")
-            let closeIcon = UIImage(named: "icon_close")
+            let searchIcon = UIImage(named: Icons.Search)
+            let closeIcon = UIImage(named: Icons.Close)
             
             searchController.searchBar.setImage(searchIcon, for: .search, state: .normal)
             searchController.searchBar.setImage(closeIcon, for: .clear, state: .normal)

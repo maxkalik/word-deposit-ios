@@ -15,6 +15,7 @@
 		11108C03252356BC00A44945 /* DMSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 11108C00252356BC00A44945 /* DMSans-Bold.ttf */; };
 		11108C04252356BC00A44945 /* DMSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 11108C01252356BC00A44945 /* DMSans-Regular.ttf */; };
 		11119631254CBA68006588D5 /* ButtonNavTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11119630254CBA68006588D5 /* ButtonNavTitleView.swift */; };
+		11119635254F0288006588D5 /* SortingForSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11119634254F0288006588D5 /* SortingForSearch.swift */; };
 		1117D08F25023675000D864F /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1117D08E25023675000D864F /* Array.swift */; };
 		11284211248E7C5700A014E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284210248E7C5700A014E9 /* AppDelegate.swift */; };
 		11284213248E7C5700A014E9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284212248E7C5700A014E9 /* SceneDelegate.swift */; };
@@ -100,6 +101,7 @@
 		11108C00252356BC00A44945 /* DMSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DMSans-Bold.ttf"; sourceTree = "<group>"; };
 		11108C01252356BC00A44945 /* DMSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DMSans-Regular.ttf"; sourceTree = "<group>"; };
 		11119630254CBA68006588D5 /* ButtonNavTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonNavTitleView.swift; sourceTree = "<group>"; };
+		11119634254F0288006588D5 /* SortingForSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingForSearch.swift; sourceTree = "<group>"; };
 		1117D08E25023675000D864F /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		1128420D248E7C5700A014E9 /* worddeposit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = worddeposit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11284210248E7C5700A014E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -339,6 +341,7 @@
 				15AFF8B5251692CB00BA6DAF /* ShowLogin.swift */,
 				158B1094251BE29A0003C3A9 /* TextFieldLimit.swift */,
 				15D5190D251C076900590073 /* Validator.swift */,
+				11119634254F0288006588D5 /* SortingForSearch.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -594,6 +597,7 @@
 				110F5E3724FD673D00C463A4 /* UserService.swift in Sources */,
 				11284213248E7C5700A014E9 /* SceneDelegate.swift in Sources */,
 				11119631254CBA68006588D5 /* ButtonNavTitleView.swift in Sources */,
+				11119635254F0288006588D5 /* SortingForSearch.swift in Sources */,
 				117FA4CC24CEEC350043024D /* PracticeDeskItemButton.swift in Sources */,
 				112F9C7524F6F201007E92D8 /* SuccessMessageVC.swift in Sources */,
 				15D5190A251C070100590073 /* String.swift in Sources */,
