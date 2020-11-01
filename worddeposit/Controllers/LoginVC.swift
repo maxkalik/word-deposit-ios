@@ -31,10 +31,12 @@ class LoginVC: UIViewController {
         super.viewDidLoad()
         
         // Disable login button
+        loginButton.titleColor = Colors.yellow
         loginButton.isEnabled = false
         
+        
         // Spinner
-        self.view.addSubview(progressHUD)
+        view.addSubview(progressHUD)
         
         // Hide keyboard when tapped around if keyboard on the screen
         hideKeyboardWhenTappedAround()

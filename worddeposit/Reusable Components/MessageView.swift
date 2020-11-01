@@ -27,8 +27,6 @@ class MessageView: UIView {
         guard let view = loadViewFromNib() else { return }
         view.frame = self.bounds
         
-        primaryButton.titleColor = Colors.silver
-        
         secondaryButton.isHidden = true
         
         addSubview(view)

@@ -28,6 +28,7 @@ class RegistrationVC: UIViewController {
         super.viewDidLoad()
         
         // Disable login button
+        signUpButton.titleColor = Colors.yellow
         signUpButton.isEnabled = false
         
         // Spinner

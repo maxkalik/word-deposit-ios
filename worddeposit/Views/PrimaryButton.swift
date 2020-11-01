@@ -14,19 +14,15 @@ class PrimaryButton: UIButton {
         contentEdgeInsets.right = 20
         
         if titleColor == nil {
-            setTitleColor(Colors.yellow, for: .normal)
+            setTitleColor(.white, for: .normal)
         } else {
             setTitleColor(titleColor, for: .normal)
         }
-    }
-    
-    override var isEnabled: Bool {
-        didSet {
-            if self.isEnabled {
-                layer.backgroundColor = Colors.dark.cgColor
-            } else {
-                layer.backgroundColor = Colors.dark.withAlphaComponent(0.4).cgColor
-            }
+        
+        if self.isEnabled {
+            layer.backgroundColor = Colors.dark.cgColor
+        } else {
+            layer.backgroundColor = Colors.dark.withAlphaComponent(0.4).cgColor
         }
     }
 }
