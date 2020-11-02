@@ -200,25 +200,25 @@ class AddWordVC: UIViewController {
                 self.wordExampleTextField.becomeFirstResponder()
                 self.progressHUD.hide()
             }
-            return
-        }
-        
-        // TODO: - try to make this process in background (without canceling on the dismissing view)
-        // TODO: - BUG - freazing while typing word
-        
-        UserService.shared.setWord(
-            imageData: setImageData(),
-            example: example,
-            translation: translation,
-            description: wordDescriptionTextField.text
-        ) { error, word in
-            if error != nil {
-                self.progressHUD.hide()
-                self.simpleAlert(title: "Error", msg: "Something went wrong. Cannot add the word")
-                return
+        } else {
+            // TODO: - try to make this process in background (without canceling on the dismissing view)
+            // TODO: - BUG - freazing while typing word
+            progressHUD.show()
+            
+            UserService.shared.setWord(
+                imageData: setImageData(),
+                example: example,
+                translation: translation,
+                description: wordDescriptionTextField.text
+            ) { error, word in
+                if error != nil {
+                    self.progressHUD.hide()
+                    self.simpleAlert(title: "Error", msg: "Something went wrong. Cannot add the word")
+                    return
+                }
+                self.progressHUD.success(with: "Added")
+                self.successComplition(word: word)
             }
-            self.progressHUD.success(with: "Added")
-            self.successComplition(word: word)
         }
     }
     
@@ -278,7 +278,6 @@ class AddWordVC: UIViewController {
     }
     
     @IBAction func onAddWordBtnPress(_ sender: UIButton) {
-        progressHUD.show()
         prepareForUpload()
     }
     
