@@ -370,7 +370,7 @@
         <!--Add Word-->
         <scene sceneID="Jhm-gw-kU6">
             <objects>
-                <viewController id="8x7-ml-O9y" customClass="AddWordVC" customModule="worddeposit" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddWordVC" id="8x7-ml-O9y" customClass="AddWordVC" customModule="worddeposit" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0hT-VJ-UGF">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

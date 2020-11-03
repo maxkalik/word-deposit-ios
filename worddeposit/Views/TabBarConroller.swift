@@ -8,13 +8,13 @@
 
 import UIKit
 
-class TabBarConroller: UITabBarController {
+class TabBarConroller: UITabBarController, UITabBarControllerDelegate {
     
     let layerGradient = CAGradientLayer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.delegate = self
         tabBar.backgroundColor = UIColor.clear
         tabBar.layer.borderWidth = 0
         tabBar.clipsToBounds = true
@@ -29,7 +29,6 @@ class TabBarConroller: UITabBarController {
         let tabBarItemApperance = UITabBarItem.appearance()
         tabBarItemApperance.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: Fonts.bold, size: 14)!], for: .normal)
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: Fonts.bold, size: 14)!], for: .selected)
-        
         
         layerGradient.colors = [
             Colors.silver.withAlphaComponent(0).cgColor,
@@ -46,6 +45,17 @@ class TabBarConroller: UITabBarController {
         
     }
     
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+
+        // If your view controller is emedded in a UINavigationController you will need to check if it's a UINavigationController and check that the root view controller is your desired controller (or subclass the navigation controller)
+        if viewController is AddWordVC {
+            PresentVC.addWordVC(from: self)
+            return false
+        }
+
+        // Tells the tab bar to select other view controller as normal
+        return true
+    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()

@@ -95,8 +95,6 @@ class VocabularyTVC: SearchableTVC {
         tableView.reloadData()
         setupContent(words: UserService.shared.words)
         isVocabularySwitched = true
-        
-        // loader end
     }
     
     // MARK: - View setups
@@ -128,7 +126,7 @@ class VocabularyTVC: SearchableTVC {
     
     func setupMessage() {
         messageView.setTitles(messageTxt: "You have no words yet", buttonTitle: "Add words")
-        messageView.onPrimaryButtonTap { self.tabBarController?.selectedIndex = 1 }
+        messageView.onPrimaryButtonTap { PresentVC.addWordVC(from: self) }
     }
     
     func setupTableView() {

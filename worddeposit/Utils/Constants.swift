@@ -8,6 +8,7 @@ struct Storyboards {
     static let VocabularyResults = "VocabularyResultsTVC"
     static let CheckmarkListTVCResults = "CheckmarkListTVCResults"
     static let PracticeReadVC = "PracticeReadVC"
+    static let AddWordVC = "AddWordVC"
 }
 
 struct Controllers {

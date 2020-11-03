@@ -150,7 +150,7 @@ class ProfileTVC: UITableViewController {
                 UserService.shared.auth.handleFireAuthError(error, viewController: self)
                 return
             }
-            showLoginVC(view: self.view)
+            PresentVC.loginVC(from: self.view)
         }
     }
     

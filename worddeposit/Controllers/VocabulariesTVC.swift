@@ -137,7 +137,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
                     return
                 }
                 self.progressHUD.hide()
-                showLoginVC(view: self.view)
+                PresentVC.loginVC(from: self.view)
             }
         }
     }
