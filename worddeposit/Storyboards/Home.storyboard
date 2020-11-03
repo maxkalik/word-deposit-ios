@@ -164,6 +164,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Vocabularies" id="iUH-cY-NBg">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="icon_arrow_large" id="xfk-20-VIT">
+                            <connections>
+                                <action selector="backButtonTaped:" destination="LHH-B4-HKM" id="JTc-Vq-Y3Q"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="icon_add_vocabulary" id="Sd8-2t-pyB">
                             <connections>
                                 <segue destination="qvX-RP-zC0" kind="show" id="FgU-uN-MIW"/>
@@ -370,7 +375,7 @@
         <!--Add Word-->
         <scene sceneID="Jhm-gw-kU6">
             <objects>
-                <viewController id="8x7-ml-O9y" customClass="AddWordVC" customModule="worddeposit" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddWordVC" id="8x7-ml-O9y" customClass="AddWordVC" customModule="worddeposit" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0hT-VJ-UGF">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -495,10 +500,21 @@
                                     <constraint firstAttribute="trailing" secondItem="CAr-Nn-7oU" secondAttribute="trailing" id="aF6-xR-OoH"/>
                                 </constraints>
                             </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="80L-7S-egC">
+                                <rect key="frame" x="20" y="64" width="26" height="26"/>
+                                <state key="normal" image="icon_close_large_bordered">
+                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="closeButtonPress:" destination="8x7-ml-O9y" eventType="touchUpInside" id="nsu-UO-ylD"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="pgB-dc-eSC"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="80L-7S-egC" firstAttribute="leading" secondItem="pgB-dc-eSC" secondAttribute="leading" constant="20" id="1Pt-dd-0NQ"/>
+                            <constraint firstItem="80L-7S-egC" firstAttribute="top" secondItem="pgB-dc-eSC" secondAttribute="top" constant="20" id="J9b-PL-VUu"/>
                             <constraint firstItem="u8a-OR-7Ws" firstAttribute="top" secondItem="0hT-VJ-UGF" secondAttribute="top" id="Lpp-iO-lVx"/>
                             <constraint firstItem="u8a-OR-7Ws" firstAttribute="leading" secondItem="pgB-dc-eSC" secondAttribute="leading" id="Oiy-TQ-7uk"/>
                             <constraint firstItem="u8a-OR-7Ws" firstAttribute="trailing" secondItem="pgB-dc-eSC" secondAttribute="trailing" id="bPu-cJ-jKm"/>
@@ -510,6 +526,7 @@
                     </tabBarItem>
                     <connections>
                         <outlet property="clearAllButton" destination="bhh-6m-fMG" id="UqK-cM-eJE"/>
+                        <outlet property="closeButton" destination="80L-7S-egC" id="4mV-2i-Z1y"/>
                         <outlet property="inputsView" destination="DkP-3p-CNm" id="ms0-9h-Pk0"/>
                         <outlet property="scrollView" destination="u8a-OR-7Ws" id="XI3-e4-p1B"/>
                         <outlet property="wordDescriptionTextField" destination="b71-bp-t3y" id="U3G-8J-EzF"/>
@@ -795,7 +812,13 @@
                             <outlet property="delegate" destination="XBC-gp-Ta8" id="Ni9-bo-qAP"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Profile" id="28z-Na-XoR"/>
+                    <navigationItem key="navigationItem" title="Profile" id="28z-Na-XoR">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="icon_arrow_large" id="jJ7-jx-CgR">
+                            <connections>
+                                <action selector="backButtonTaped:" destination="XBC-gp-Ta8" id="qY7-c8-yF4"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="correctAnswersLabel" destination="jO8-jm-e6G" id="Vxb-U3-WlE"/>
                         <outlet property="logoutButton" destination="myT-j0-kXP" id="SQs-gV-Sdp"/>
@@ -1158,14 +1181,16 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Ld8-d9-cy5"/>
+        <segue reference="sKm-uq-jUP"/>
         <segue reference="L4V-Nc-46o"/>
         <segue reference="cT5-yM-GyM"/>
-        <segue reference="YiF-nd-0zQ"/>
+        <segue reference="0BZ-k3-ByQ"/>
         <segue reference="FgU-uN-MIW"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="icon_add_vocabulary" width="24" height="24"/>
+        <image name="icon_arrow_large" width="26" height="26"/>
+        <image name="icon_close_large_bordered" width="26" height="26"/>
         <image name="icon_plus" width="24" height="24"/>
         <image name="icon_practice" width="24" height="24"/>
         <image name="icon_profile" width="24" height="24"/>

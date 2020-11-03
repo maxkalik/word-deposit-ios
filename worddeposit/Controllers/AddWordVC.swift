@@ -25,6 +25,7 @@ class AddWordVC: UIViewController {
         }
     }
     
+    @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var wordSaveButton: PrimaryButton!
     @IBOutlet weak var clearAllButton: DefaultButton!
     @IBOutlet weak var wordExampleTextField: PrimaryTextField!
@@ -92,6 +93,7 @@ class AddWordVC: UIViewController {
         if isKeyboardShowing { return }
         isKeyboardShowing = true
         
+        closeButton.setImage(UIImage(named: "icon_close_large"), for: .normal)
         let topSafeArea: CGFloat = view.safeAreaInsets.top
         
         // Set initial values
@@ -116,6 +118,7 @@ class AddWordVC: UIViewController {
         if !isKeyboardShowing { return }
         isKeyboardShowing = false
         
+        closeButton.setImage(UIImage(named: "icon_close_large_bordered"), for: .normal)
         // Return default state of wordImagePickerBtn
         wordImagePickerBtn.transform = CGAffineTransform(scaleX: 1, y: 1);
         wordImagePickerBtn.imageView?.layer.transform = CATransform3DIdentity
@@ -140,7 +143,7 @@ class AddWordVC: UIViewController {
     // MARK: - Support Methods
     
     private func setupImagePlaceholder() {
-        wordImagePickerBtn.backgroundColor = UIColor.black
+        wordImagePickerBtn.backgroundColor = Colors.lightDark
         let image = UIImage(named: Icons.Photo)?.withRenderingMode(.alwaysTemplate)
         wordImagePickerBtn.setImage(image, for: .normal)
         wordImagePickerBtn.tintColor = Colors.grey.withAlphaComponent(0.3)
@@ -200,25 +203,25 @@ class AddWordVC: UIViewController {
                 self.wordExampleTextField.becomeFirstResponder()
                 self.progressHUD.hide()
             }
-            return
-        }
-        
-        // TODO: - try to make this process in background (without canceling on the dismissing view)
-        // TODO: - BUG - freazing while typing word
-        
-        UserService.shared.setWord(
-            imageData: setImageData(),
-            example: example,
-            translation: translation,
-            description: wordDescriptionTextField.text
-        ) { error, word in
-            if error != nil {
-                self.progressHUD.hide()
-                self.simpleAlert(title: "Error", msg: "Something went wrong. Cannot add the word")
-                return
+        } else {
+            // TODO: - try to make this process in background (without canceling on the dismissing view)
+            // TODO: - BUG - freazing while typing word
+            progressHUD.show()
+            
+            UserService.shared.setWord(
+                imageData: setImageData(),
+                example: example,
+                translation: translation,
+                description: wordDescriptionTextField.text
+            ) { error, word in
+                if error != nil {
+                    self.progressHUD.hide()
+                    self.simpleAlert(title: "Error", msg: "Something went wrong. Cannot add the word")
+                    return
+                }
+                self.progressHUD.success(with: "Added")
+                self.successComplition(word: word)
             }
-            self.progressHUD.success(with: "Added")
-            self.successComplition(word: word)
         }
     }
     
@@ -278,12 +281,15 @@ class AddWordVC: UIViewController {
     }
     
     @IBAction func onAddWordBtnPress(_ sender: UIButton) {
-        progressHUD.show()
         prepareForUpload()
     }
     
     @IBAction func onClearAllBtnPress(_ sender: UIButton) {
         updateUI()
+    }
+    
+    @IBAction func closeButtonPress(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
     }
 }
 

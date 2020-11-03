@@ -150,7 +150,7 @@ class ProfileTVC: UITableViewController {
                 UserService.shared.auth.handleFireAuthError(error, viewController: self)
                 return
             }
-            showLoginVC(view: self.view)
+            PresentVC.loginVC(from: self.view)
         }
     }
     
@@ -158,6 +158,11 @@ class ProfileTVC: UITableViewController {
         user.notifications = sender.isOn
         updateUser(user)
     }
+    
+    @IBAction func backButtonTaped(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     
     // MARK: - Segue
     

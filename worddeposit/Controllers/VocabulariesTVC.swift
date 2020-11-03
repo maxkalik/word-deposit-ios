@@ -137,7 +137,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
                     return
                 }
                 self.progressHUD.hide()
-                showLoginVC(view: self.view)
+                PresentVC.loginVC(from: self.view)
             }
         }
     }
@@ -255,6 +255,11 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         }
     }
 
+    // MARK: - IBOutlets
+    
+    @IBAction func backButtonTaped(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
 
     // MARK: - Navigation
 

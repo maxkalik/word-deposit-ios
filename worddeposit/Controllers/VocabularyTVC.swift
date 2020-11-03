@@ -16,7 +16,7 @@ class VocabularyTVC: SearchableTVC {
     var isVocabularySwitched = false
     
     private var buttonNavTitleView = ButtonNavTitleView(type: .custom)
-    private var progressHUD = ProgressHUD()
+    private var progressHUD = ProgressHUD(title: "Fetching...")
     private var withLoader: Bool = false
 
     // MARK: - View Lifecycle
@@ -47,7 +47,6 @@ class VocabularyTVC: SearchableTVC {
         // Setup progressHUD
         if !withLoader {
             view.superview?.addSubview(progressHUD)
-            progressHUD.setTitle(title: "Fetching words")
             progressHUD.hide()
             withLoader = true
         }
@@ -96,8 +95,6 @@ class VocabularyTVC: SearchableTVC {
         tableView.reloadData()
         setupContent(words: UserService.shared.words)
         isVocabularySwitched = true
-        
-        // loader end
     }
     
     // MARK: - View setups
@@ -129,7 +126,7 @@ class VocabularyTVC: SearchableTVC {
     
     func setupMessage() {
         messageView.setTitles(messageTxt: "You have no words yet", buttonTitle: "Add words")
-        messageView.onPrimaryButtonTap { self.tabBarController?.selectedIndex = 1 }
+        messageView.onPrimaryButtonTap { PresentVC.addWordVC(from: self) }
     }
     
     func setupTableView() {

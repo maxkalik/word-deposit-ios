@@ -35,11 +35,11 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
             UserService.shared.fetchCurrentUser { error, user in
                 if let error = error {
                     self.simpleAlert(title: "Error", msg: error.localizedDescription)
-                    showLoginVC(view: self.view)
+                    PresentVC.loginVC(from: self.view)
                     return
                 } else {
                     guard let _ = user else {
-                        showLoginVC(view: self.view)
+                        PresentVC.loginVC(from: self.view)
                         return
                     }
                     self.fetchData()
@@ -167,8 +167,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     
     private func setupMessage(wordsCount: Int) {
         messageView.setTitles(messageTxt: "You have insufficient words amount for practice.", buttonTitle: "Add at least \(minWordsAmount - wordsCount) words")
-        // push to add word view
-        messageView.onPrimaryButtonTap { self.tabBarController?.selectedIndex = 1 }
+        messageView.onPrimaryButtonTap { PresentVC.addWordVC(from: self) }
     }
     
     private func registerViews() {
@@ -183,7 +182,6 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
             flowlayout.minimumLineSpacing = 20
         }
         collectionView!.isPrefetchingEnabled = false
-        // view.backgroundColor = UIColor.systemBackground
     }
     
     private func presentVocabulariesVC() {
@@ -252,7 +250,6 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                 tabBarController?.tabBar.isHidden = true
 
                 // Restore the tabbar when it's popped in the future
-                
                 navigationController?.setup(isClear: true)
                 
                 practiceReadVC?.delegate = self
