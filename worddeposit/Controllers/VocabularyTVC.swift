@@ -16,7 +16,7 @@ class VocabularyTVC: SearchableTVC {
     var isVocabularySwitched = false
     
     private var buttonNavTitleView = ButtonNavTitleView(type: .custom)
-    private var progressHUD = ProgressHUD()
+    private var progressHUD = ProgressHUD(title: "Fetching...")
     private var withLoader: Bool = false
 
     // MARK: - View Lifecycle
@@ -47,7 +47,6 @@ class VocabularyTVC: SearchableTVC {
         // Setup progressHUD
         if !withLoader {
             view.superview?.addSubview(progressHUD)
-            progressHUD.setTitle(title: "Fetching words")
             progressHUD.hide()
             withLoader = true
         }
