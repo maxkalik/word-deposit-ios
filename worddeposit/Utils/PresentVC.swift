@@ -34,7 +34,7 @@ class PresentVC {
     static func addWordVC(from viewController: UIViewController) {
         let storyboard = UIStoryboard(name: Storyboards.Home, bundle: nil)
         if let addWordVC = storyboard.instantiateViewController(withIdentifier: Storyboards.AddWordVC) as? AddWordVC {
-            addWordVC.modalPresentationStyle = .popover
+            addWordVC.modalPresentationStyle = .fullScreen
             viewController.present(addWordVC, animated: true, completion: nil)
         }
     }

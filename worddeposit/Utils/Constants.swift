@@ -47,7 +47,7 @@ struct ReusableIdentifiers {
 
 struct Colors {
     static let lightDark = #colorLiteral(red: 0.2002655295, green: 0.2168318651, blue: 0.2408986358, alpha: 1)
-    static let dark = #colorLiteral(red: 0.01088568699, green: 0.06228606028, blue: 0.06561407343, alpha: 1)
+    static let dark = #colorLiteral(red: 0.1019607843, green: 0.09019607843, blue: 0.03137254902, alpha: 1)
     static let shadow = #colorLiteral(red: 0.002289562985, green: 0.009225011557, blue: 0.1488199301, alpha: 1)
     static let yellow = #colorLiteral(red: 1, green: 0.7058823529, blue: 0.007843137255, alpha: 1)
     static let orange = #colorLiteral(red: 1, green: 0.4645918398, blue: 0, alpha: 1)

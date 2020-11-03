@@ -25,6 +25,7 @@ class AddWordVC: UIViewController {
         }
     }
     
+    @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var wordSaveButton: PrimaryButton!
     @IBOutlet weak var clearAllButton: DefaultButton!
     @IBOutlet weak var wordExampleTextField: PrimaryTextField!
@@ -92,6 +93,7 @@ class AddWordVC: UIViewController {
         if isKeyboardShowing { return }
         isKeyboardShowing = true
         
+        closeButton.setImage(UIImage(named: "icon_close_large"), for: .normal)
         let topSafeArea: CGFloat = view.safeAreaInsets.top
         
         // Set initial values
@@ -116,6 +118,7 @@ class AddWordVC: UIViewController {
         if !isKeyboardShowing { return }
         isKeyboardShowing = false
         
+        closeButton.setImage(UIImage(named: "icon_close_large_bordered"), for: .normal)
         // Return default state of wordImagePickerBtn
         wordImagePickerBtn.transform = CGAffineTransform(scaleX: 1, y: 1);
         wordImagePickerBtn.imageView?.layer.transform = CATransform3DIdentity
@@ -140,7 +143,7 @@ class AddWordVC: UIViewController {
     // MARK: - Support Methods
     
     private func setupImagePlaceholder() {
-        wordImagePickerBtn.backgroundColor = UIColor.black
+        wordImagePickerBtn.backgroundColor = Colors.lightDark
         let image = UIImage(named: Icons.Photo)?.withRenderingMode(.alwaysTemplate)
         wordImagePickerBtn.setImage(image, for: .normal)
         wordImagePickerBtn.tintColor = Colors.grey.withAlphaComponent(0.3)
@@ -283,6 +286,10 @@ class AddWordVC: UIViewController {
     
     @IBAction func onClearAllBtnPress(_ sender: UIButton) {
         updateUI()
+    }
+    
+    @IBAction func closeButtonPress(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
     }
 }
 
