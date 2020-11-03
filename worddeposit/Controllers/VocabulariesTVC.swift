@@ -255,6 +255,11 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         }
     }
 
+    // MARK: - IBOutlets
+    
+    @IBAction func backButtonTaped(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
 
     // MARK: - Navigation
 

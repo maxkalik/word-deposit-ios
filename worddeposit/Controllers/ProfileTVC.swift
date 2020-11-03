@@ -159,6 +159,11 @@ class ProfileTVC: UITableViewController {
         updateUser(user)
     }
     
+    @IBAction func backButtonTaped(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
     // MARK: - Segue
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
