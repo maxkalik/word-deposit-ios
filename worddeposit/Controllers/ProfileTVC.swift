@@ -17,6 +17,8 @@ class ProfileTVC: UITableViewController {
     
     // MARK: - Instances
     
+    private var progressHUD = ProgressHUD()
+    
     var user: User! {
         didSet {
             guard let user = user else { return }
@@ -51,6 +53,15 @@ class ProfileTVC: UITableViewController {
         notificationsLabel.textColor = Colors.dark
         
         logoutButton.titleLabel?.font = UIFont(name: Fonts.bold, size: 16)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        guard let superview = view.superview else { return }
+        if !progressHUD.isDescendant(of: superview) {
+            view.superview?.addSubview(progressHUD)
+            progressHUD.hide()
+        }
     }
     
     // MARK: - Methods
@@ -145,11 +156,13 @@ class ProfileTVC: UITableViewController {
     // MARK: - IBActions
     
     @IBAction func logOut(_ sender: UIButton) {
+        progressHUD.show()
         UserService.shared.logout { error in
             if let error = error {
                 UserService.shared.auth.handleFireAuthError(error, viewController: self)
                 return
             }
+            self.progressHUD.hide()
             PresentVC.loginVC(from: self.view)
         }
     }

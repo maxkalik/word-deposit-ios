@@ -40,8 +40,6 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(Keys.vocabulariesSwitchNotificationKey), object: nil)
         nc.addObserver(self, selector: #selector(vocabularySwitchBegan), name: Notification.Name(Keys.vocabulariesSwitchBeganNotificationKey), object: nil)
