@@ -60,7 +60,6 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         setupMessage()
         messageView.hide()
         checkVocabulariesExist()
-        print("(!) - VOCABULARIES View Will Appear")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -103,7 +102,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     
     func vocabularyDidCreate(_ vocabulary: Vocabulary) {
         vocabularies.insert(vocabulary, at: 0)
-        tableView.insertRows(at: [IndexPath(item: 0, section: 0)], with: .fade)
+        tableView.reloadData()
         if vocabularies.count == 1 {
             backButton.isEnabled = true
             UserService.shared.getCurrentVocabulary()
@@ -117,11 +116,8 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     }
     
     func vocabularyDidRemove(_ vocabulary: Vocabulary, index: Int) {
-        print("02 - VOCABULARY BUG INVISTIGATION. Vocabularies before delete: \(vocabularies)")
         vocabularies.remove(at: index)
-        tableView.deleteRows(at: [IndexPath(item: index, section: 0)], with: .fade)
-        print("03 - VOCABULARY BUG INVISTIGATION. Vocabularies after delete: \(vocabularies)")
-        // TODO: - Bug - attempt to delete row 2 from section 0 which only contains 2 rows before the update
+        tableView.reloadData()
     }
     
     private func setupMessage() {
@@ -164,9 +160,6 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     }
     
     @objc func checkboxChanged(sender: Checkbox) {
-        // exception without vocabularies.count == 1
-        // 'attempt to delete row 1 from section 0 which only contains 1 rows before the update'
-        
         if vocabularies.count == 1 {
             sender.isOn = true
             simpleAlert(title: "You cannot unmarked actived vocabulary.", msg: "Create another one for swithing between them.")
@@ -177,6 +170,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
                 guard let oldIndex = selectedVocabularyIndex else { return }
                 selectedVocabularyIndex = newSelectedVocabularyIndex
                 tableView.reloadRows(at: [IndexPath(item: oldIndex, section: 0), IndexPath(item: newSelectedVocabularyIndex, section: 0)], with: .fade)
+                
                 // update vocabularies request
                 UserService.shared.switchSelectedVocabulary(from: vocabularies[oldIndex], to: vocabularies[newSelectedVocabularyIndex]) { error in
                     
@@ -251,7 +245,6 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
                             self.simpleAlert(title: "Error", msg: "Cannot remove vocabulary. Try to reload an app")
                             return
                         }
-                        print("01 - VOCABULARY BUG INVISTIGATION. Complition Delete. Index for local removing: \(indexPath.row)")
                         self.vocabularyDidRemove(vocabulary, index: indexPath.row)
                     }
                 }))
