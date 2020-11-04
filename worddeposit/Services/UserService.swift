@@ -597,6 +597,7 @@ final class UserService {
     func removeAllWordImagesFrom(vocabulary: Vocabulary, complition: (() -> Void)? = nil) {
         let group = DispatchGroup()
         let ref: DocumentReference = vocabulariesRef.document(vocabulary.id)
+        
         /// Filtering all words with img_url
         ref.collection("words").order(by: "img_url").getDocuments { (snapshot, error) in
             if let error = error {
@@ -606,6 +607,10 @@ final class UserService {
             guard let documents = snapshot?.documents else { return }
             for document in documents {
                 group.enter()
+                if documents.isEmpty {
+                    group.leave()
+                    return
+                }
                 let data = document.data()
                 let word = Word.init(data: data)
                 if word.imgUrl.isNotEmpty {

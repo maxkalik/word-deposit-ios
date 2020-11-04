@@ -36,6 +36,9 @@ class UserInfoTVC: UITableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        view.superview?.addSubview(progressHUD)
+        progressHUD.hide()
+        
         firstNameTextField.addTarget(self, action: #selector(userNameDidChange), for: .editingChanged)
         lastNameTextField.addTarget(self, action: #selector(userNameDidChange), for: .editingChanged)
     }
@@ -98,9 +101,6 @@ class UserInfoTVC: UITableViewController {
         firstNameTextField.text = firstName
         lastNameTextField.text = lastName
         doneButton.isEnabled = false
-        view.superview?.addSubview(progressHUD)
-        
-        
     }
     
     // MARK: - IBActions
@@ -124,13 +124,13 @@ class UserInfoTVC: UITableViewController {
     }
     
     @IBAction func deleteAccountTouched(_ sender: UIButton) {
-        progressHUD.show()
         let alert = UIAlertController(title: "Are you sure?", message: "If you are sure your account, all vocabularies and words will be removed permanently", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Remove", style: .default, handler: { (action) in
+            self.progressHUD.show()
             UserService.shared.removeAccountData() { error in
-                self.progressHUD.hide()
                 if let error = error {
                     UserService.shared.db.handleFirestoreError(error, viewController: self)
+                    self.progressHUD.hide()
                     return
                 }
                 UserService.shared.deleteAccount { error in
