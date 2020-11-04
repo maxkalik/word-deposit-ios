@@ -190,7 +190,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
             buttonTitle: "Continue",
             secondaryButtonTitle: "Logout"
         )
-        messageView.onPrimaryButtonTap { self.dismiss(animated: true, completion: nil) }
+        messageView.onPrimaryButtonTap { self.navigationController?.popViewController(animated: true) }
     }
     
     private func getLanguages() {
