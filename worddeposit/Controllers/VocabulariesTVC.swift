@@ -28,16 +28,20 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         }
     }
     
+
     weak var delegate: VocabulariesTVCDelegate?
     
     private var messageView = MessageView()
     private var progressHUD = ProgressHUD()
+    
+    @IBOutlet weak var backButton: UIBarButtonItem!
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(Keys.vocabulariesSwitchNotificationKey), object: nil)
         nc.addObserver(self, selector: #selector(vocabularySwitchBegan), name: Notification.Name(Keys.vocabulariesSwitchBeganNotificationKey), object: nil)
@@ -54,6 +58,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         setupMessage()
         messageView.hide()
         checkVocabulariesExist()
@@ -73,14 +78,16 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         if UserService.shared.vocabularies.count > 0 {
             self.vocabularies.removeAll()
             self.tableView.reloadData()
-            
+            self.backButton.isEnabled = true
             /// main queue dispatching here because we need to avoid a warning UITableViewAlertForLayoutOutsideViewHierarchy
-             DispatchQueue.main.async {
+            DispatchQueue.main.async {
                 for index in 0..<UserService.shared.vocabularies.count {
                     self.vocabularies.append(UserService.shared.vocabularies[index])
                     self.tableView.insertRows(at: [IndexPath(item: index, section: 0)], with: .fade)
                 }
-             }
+            }
+        } else {
+            backButton.isEnabled = false
         }
     }
     
@@ -100,6 +107,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         vocabularies.insert(vocabulary, at: 0)
         tableView.insertRows(at: [IndexPath(item: 0, section: 0)], with: .fade)
         if vocabularies.count == 1 {
+            backButton.isEnabled = true
             UserService.shared.getCurrentVocabulary()
             NotificationCenter.default.post(name: Notification.Name(Keys.vocabulariesSwitchNotificationKey), object: nil)
         }
@@ -281,3 +289,4 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         }
     }
 }
+
