@@ -176,6 +176,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="backButton" destination="xfk-20-VIT" id="KFh-ls-qOx"/>
                         <segue destination="qvX-RP-zC0" kind="show" identifier="VocabularyDetails" id="75v-FD-7ZM"/>
                     </connections>
                 </tableViewController>
