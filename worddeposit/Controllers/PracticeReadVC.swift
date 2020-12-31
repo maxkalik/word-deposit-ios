@@ -2,7 +2,7 @@ import UIKit
 import Kingfisher
 
 protocol PracticeReadVCDelegate: AnyObject {
-    func updatePracticeVC()
+    func updatePracticeVC(except trainedWordIds: Set<String>?)
     func onFinishTrainer(with words: [Word])
 }
 
@@ -26,11 +26,11 @@ class PracticeReadVC: UIViewController {
         }
     }
     var wordsDesk = [Word]()
-    
     private var trainedWords = [Word]()
     private var selectedIndex: Int?
     private var isSelected = false
     
+    private var rightAnswerIds = Set<String>()
     private var sessionRightAnswersSum = 0
     private var sessionWrongAnswersSum = 0
     
@@ -138,6 +138,7 @@ class PracticeReadVC: UIViewController {
             var word = trainedWord
             if answer == true {
                 sessionRightAnswersSum += 1
+                rightAnswerIds.insert(trainedWord.id)
                 word.rightAnswers += 1
             } else {
                 sessionWrongAnswersSum += 1
@@ -193,7 +194,8 @@ class PracticeReadVC: UIViewController {
     }
     
     private func updateUI() {
-        delegate?.updatePracticeVC()
+        
+        delegate?.updatePracticeVC(except: rightAnswerIds)
         selectedIndex = nil
         isSelected = false
         collectionView.isUserInteractionEnabled = true

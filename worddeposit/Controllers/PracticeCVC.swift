@@ -255,7 +255,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                 practiceReadVC?.delegate = self
 
                 // worddesk
-                updatePracticeVC()
+                updatePracticeVC(except: nil)
                 
                 switch sender.controller {
                 case Controllers.TrainerWordToTranslate:
@@ -274,8 +274,16 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
 
 extension PracticeCVC: PracticeReadVCDelegate {
     
-    func updatePracticeVC() {
-        let wordsDesk = makeWordDesk(size: 5, wordsData: words)
+    func updatePracticeVC(except trainedWordIds: Set<String>?) {
+        let wordsDesk = makeWordDesk(size: 5, wordsData: words.filter {
+            guard let ids = trainedWordIds else { return true }
+            return !ids.contains($0.id)
+        })
+        print(words.count - Int(trainedWordIds?.count ?? 0))
+        let leftWordsCount = words.count - Int(trainedWordIds?.count ?? 0)
+        if leftWordsCount <= 5 {
+            practiceReadVC?.backToMain()
+        }
         practiceReadVC?.wordsDesk = wordsDesk
     }
     
