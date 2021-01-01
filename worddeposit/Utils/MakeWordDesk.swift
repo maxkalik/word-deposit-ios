@@ -8,7 +8,7 @@
 
 func makeWordDesk(size: Int, wordsData: [Word], _ result: [Word] = []) -> [Word] {
     var result = result
-    if wordsData.count < 5 {
+    if wordsData.isEmpty {
         return result
     }
     var tmpCount = size

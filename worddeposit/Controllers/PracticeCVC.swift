@@ -275,14 +275,30 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
 extension PracticeCVC: PracticeReadVCDelegate {
     
     func updatePracticeVC(except trainedWordIds: Set<String>?) {
-        let wordsDesk = makeWordDesk(size: 5, wordsData: words.filter {
+        let leftWordsCount = words.count - Int(trainedWordIds?.count ?? 0)
+        print(leftWordsCount)
+        
+        var wordsDesk = [Word]()
+        let filteredWordsFromVocabulary = words.filter {
             guard let ids = trainedWordIds else { return true }
             return !ids.contains($0.id)
-        })
-        print(words.count - Int(trainedWordIds?.count ?? 0))
-        let leftWordsCount = words.count - Int(trainedWordIds?.count ?? 0)
-        if leftWordsCount <= 5 {
-            practiceReadVC?.backToMain()
+        }
+        
+        if leftWordsCount <= 4 {
+            let trainedWords = words.filter {
+                guard let ids = trainedWordIds else { return true }
+                return ids.contains($0.id)
+            }
+            
+            wordsDesk = makeWordDesk(size: 5 - leftWordsCount, wordsData: trainedWords)
+            let restArr = makeWordDesk(size: leftWordsCount, wordsData: filteredWordsFromVocabulary)
+            wordsDesk.append(contentsOf: restArr)
+        } else {
+            wordsDesk = makeWordDesk(size: 5, wordsData: filteredWordsFromVocabulary)
+        }
+        
+        if leftWordsCount == 0 {
+            practiceReadVC?.prepareForQuit(isEmptyVocabulary: true)
         }
         practiceReadVC?.wordsDesk = wordsDesk
     }

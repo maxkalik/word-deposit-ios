@@ -19,6 +19,7 @@ class SuccessMessageVC: UIViewController {
     var wordsAmount: Int!
     var answersCorrect: Int!
     var answersWrong: Int!
+    var isVocabularyEmpty = false
     
     private var titleBtn: String = "Finish"
     
@@ -35,7 +36,7 @@ class SuccessMessageVC: UIViewController {
         separatorView.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
         
         let titleText = printTitle(with: answersCorrect, and: answersWrong)
-        let descriptionText = "You trained \(String(wordsAmount)) words"
+        let descriptionText = isVocabularyEmpty ? "You trained almost all (\(String(wordsAmount))) words" : "You trained \(String(wordsAmount)) words"
         
         contentView.layer.backgroundColor = Colors.yellow.cgColor
         
@@ -72,7 +73,8 @@ class SuccessMessageVC: UIViewController {
             return "You could practice more words"
         } else if wordsAmount >= 5 && wordsAmount < 10 {
             imageView.image = UIImage(named: "standing")
-            return "Why did you stoped?"
+            if isVocabularyEmpty { return "Better add more words" }
+            return "Already finished?"
         } else {
             if rightAnswers > wrongAnswers {
                 if precentageOfCorrectAnswers > 70 {

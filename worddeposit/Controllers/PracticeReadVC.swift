@@ -31,7 +31,12 @@ class PracticeReadVC: UIViewController {
     private var isSelected = false
     
     private var rightAnswerIds = Set<String>()
-    private var sessionRightAnswersSum = 0
+    private var sessionRightAnswersSum = 0 {
+        didSet {
+            guard let word = trainedWord else { return }
+            if !rightAnswerIds.contains(word.id) { rightAnswerIds.insert(word.id) }
+        }
+    }
     private var sessionWrongAnswersSum = 0
     
     private let successMessage = SuccessMessageVC()
@@ -115,11 +120,11 @@ class PracticeReadVC: UIViewController {
     }
     
     
-    @objc func backToMain() {
+    @objc private func backToMain() {
         if trainedWords.count == 0 {
             _ = navigationController?.popViewController(animated: true)
         } else {
-            prepareForQuit()
+            prepareForQuit(isEmptyVocabulary: false)
         }
     }
     
@@ -138,7 +143,6 @@ class PracticeReadVC: UIViewController {
             var word = trainedWord
             if answer == true {
                 sessionRightAnswersSum += 1
-                rightAnswerIds.insert(trainedWord.id)
                 word.rightAnswers += 1
             } else {
                 sessionWrongAnswersSum += 1
@@ -148,17 +152,15 @@ class PracticeReadVC: UIViewController {
         }
     }
     
-    private func prepareForQuit() {
+    func prepareForQuit(isEmptyVocabulary: Bool) {
+        successMessage.isVocabularyEmpty = isEmptyVocabulary
         successMessage.delegate = self
-        
         successMessage.wordsAmount = trainedWords.count
         successMessage.answersCorrect = sessionRightAnswersSum
         successMessage.answersWrong = sessionWrongAnswersSum
-        
         successMessage.modalTransitionStyle = .crossDissolve
         successMessage.modalPresentationStyle = .popover
-        
-        self.delegate?.onFinishTrainer(with: trainedWords)
+        delegate?.onFinishTrainer(with: trainedWords)
         present(successMessage, animated: true, completion: nil)
     }
     
