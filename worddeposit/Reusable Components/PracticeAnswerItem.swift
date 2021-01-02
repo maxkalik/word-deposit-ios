@@ -11,6 +11,9 @@ class PracticeAnswerItem: UICollectionViewCell {
             deskItemLabel.font = UIFont(name: Fonts.medium, size: 16)
             deskItemLabel.textColor = Colors.dark
             deskItemLabel.highlightedTextColor = Colors.grey
+            
+            // deskItemLabel.numberOfLines = 0
+            // deskItemLabel.lineBreakMode = .byWordWrapping
         }
     }
     
@@ -31,9 +34,10 @@ class PracticeAnswerItem: UICollectionViewCell {
         deskItemLabel.layer.cornerRadius = Radiuses.large
         deskItemLabel.layer.masksToBounds = true
         deskItemLabel.backgroundColor = Colors.silver
-
         layer.cornerRadius = Radiuses.large
         backgroundColor = Colors.dark.withAlphaComponent(0.3)
+        
+        
     }
     
     func configureCell(word: String) {

@@ -26,6 +26,7 @@ class PracticeReadVC: UIViewController {
         }
     }
     var wordsDesk = [Word]()
+    // var isWordCountsEnd = false
     private var trainedWords = [Word]()
     private var selectedIndex: Int?
     private var isSelected = false
@@ -170,7 +171,8 @@ class PracticeReadVC: UIViewController {
     }
     
     private func setupTrainedWord() {
-        trainedWord = wordsDesk.randomElement()
+        let filteredWordDesk = wordsDesk.filter { !rightAnswerIds.contains($0.id) }
+        trainedWord = filteredWordDesk.randomElement()
         guard let word = trainedWord else { return }
         // setup ui
         switch practiceType {

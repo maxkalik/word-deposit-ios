@@ -42,7 +42,7 @@
 		1158D30E24917B9B0087DC96 /* VocabularyTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1158D30C24917B9B0087DC96 /* VocabularyTVCell.swift */; };
 		1158D30F24917B9B0087DC96 /* VocabularyTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1158D30D24917B9B0087DC96 /* VocabularyTVCell.xib */; };
 		11621A2724C25EFA003087AB /* WKWebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11621A2624C25EFA003087AB /* WKWebVC.swift */; };
-		1164FB532508CE150023326A /* MakeWordDesk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1164FB522508CE150023326A /* MakeWordDesk.swift */; };
+		1164FB532508CE150023326A /* WordTrainerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1164FB522508CE150023326A /* WordTrainerHelper.swift */; };
 		116BC94C249182BD00968DA6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC94B249182BD00968DA6 /* Constants.swift */; };
 		116BC94E2491836B00968DA6 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC94D2491836B00968DA6 /* UIViewController.swift */; };
 		1171E70624981CDD00805D35 /* VocabularyCardCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1171E70424981CDD00805D35 /* VocabularyCardCVCell.swift */; };
@@ -130,7 +130,7 @@
 		1158D30C24917B9B0087DC96 /* VocabularyTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyTVCell.swift; sourceTree = "<group>"; };
 		1158D30D24917B9B0087DC96 /* VocabularyTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VocabularyTVCell.xib; sourceTree = "<group>"; };
 		11621A2624C25EFA003087AB /* WKWebVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WKWebVC.swift; path = worddeposit/Controllers/WKWebVC.swift; sourceTree = SOURCE_ROOT; };
-		1164FB522508CE150023326A /* MakeWordDesk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeWordDesk.swift; sourceTree = "<group>"; };
+		1164FB522508CE150023326A /* WordTrainerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordTrainerHelper.swift; sourceTree = "<group>"; };
 		116BC94B249182BD00968DA6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		116BC94D2491836B00968DA6 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		1171E70424981CDD00805D35 /* VocabularyCardCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyCardCVCell.swift; sourceTree = "<group>"; };
@@ -238,12 +238,12 @@
 		1128420F248E7C5700A014E9 /* worddeposit */ = {
 			isa = PBXGroup;
 			children = (
+				11284226248E7CF000A014E9 /* Models */,
 				1117D08D2502365B000D864F /* Extensions */,
 				110F5E3524FD670500C463A4 /* Services */,
 				156C80BA24DDFEB10077905D /* Reusable Components */,
 				116BC94A249182A500968DA6 /* Utils */,
 				1158D30B2491720C0087DC96 /* XIBs */,
-				11284226248E7CF000A014E9 /* Models */,
 				11284225248E7CE400A014E9 /* Views */,
 				11284224248E7CCD00A014E9 /* Controllers */,
 				11284227248E7CF900A014E9 /* Storyboards */,
@@ -337,7 +337,7 @@
 				117FA4C924CEE78A0043024D /* CollectionViewCenterLayout.swift */,
 				119DBF5624ACCFBF009124B7 /* Configurations.swift */,
 				116BC94B249182BD00968DA6 /* Constants.swift */,
-				1164FB522508CE150023326A /* MakeWordDesk.swift */,
+				1164FB522508CE150023326A /* WordTrainerHelper.swift */,
 				15AFF8B5251692CB00BA6DAF /* PresentVC.swift */,
 				158B1094251BE29A0003C3A9 /* TextFieldLimit.swift */,
 				15D5190D251C076900590073 /* Validator.swift */,
@@ -552,7 +552,7 @@
 				116BC94C249182BD00968DA6 /* Constants.swift in Sources */,
 				11B20D6D24C8E00800C1CB4E /* PracticeReadVC.swift in Sources */,
 				11F0327024C8272700BD6350 /* PracticeCVC.swift in Sources */,
-				1164FB532508CE150023326A /* MakeWordDesk.swift in Sources */,
+				1164FB532508CE150023326A /* WordTrainerHelper.swift in Sources */,
 				155F39E82523D69400EC63B9 /* UINavigationController.swift in Sources */,
 				112EA43524C84A2900FA55E3 /* PracticeTrainers.swift in Sources */,
 				150FA46124D8B6E40083D653 /* Vocabulary.swift in Sources */,

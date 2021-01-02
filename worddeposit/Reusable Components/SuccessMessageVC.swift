@@ -36,7 +36,7 @@ class SuccessMessageVC: UIViewController {
         separatorView.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
         
         let titleText = printTitle(with: answersCorrect, and: answersWrong)
-        let descriptionText = isVocabularyEmpty ? "You trained almost all (\(String(wordsAmount))) words" : "You trained \(String(wordsAmount)) words"
+        let descriptionText = isVocabularyEmpty ? "You trained all (\(String(wordsAmount))) words" : "You trained \(String(wordsAmount)) words"
         
         contentView.layer.backgroundColor = Colors.yellow.cgColor
         
