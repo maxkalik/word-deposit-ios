@@ -11,8 +11,8 @@ class PracticeReadVC: UIViewController {
     // MARK: - Instances
     @IBOutlet weak var scrollView: UIScrollView! {
         didSet {
+            scrollView.delegate = self
             scrollView.contentInsetAdjustmentBehavior = .always
-            // scrollView.contentInset.bottom += 100
         }
     }
     
@@ -51,7 +51,11 @@ class PracticeReadVC: UIViewController {
     
     // MARK: - IBOutlets
     
-    @IBOutlet weak var wordImage: RoundedImageView!
+    @IBOutlet weak var wordImage: RoundedImageView! {
+        didSet {
+            wordImage.contentMode = .scaleAspectFill
+        }
+    }
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var practiceLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView! {
@@ -298,5 +302,25 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
 extension PracticeReadVC: SuccessMessageVCDelegate {
     func onSuccessMessageButtonTap() {
         _ = navigationController?.popViewController(animated: true)
+    }
+}
+
+
+extension PracticeReadVC: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offset = scrollView.contentOffset
+        
+        if offset.y < 0.0 {
+            wordImage.layer.transform = CATransform3DIdentity
+        } else {
+            let scaleFactor = 1 + (-1 * offset.y / (wordImage.frame.size.height / 2))
+            var transform = CATransform3DTranslate(CATransform3DIdentity, 0, (offset.y), 0)
+            
+            if scaleFactor >= 0.5 {
+                transform = CATransform3DScale(transform, scaleFactor, scaleFactor, 1)
+                wordImage.layer.transform = transform
+                wordImage.layer.cornerRadius = (Radiuses.large + offset.y / 2)
+            }
+        }
     }
 }
