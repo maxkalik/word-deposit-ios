@@ -1,7 +1,7 @@
 import UIKit
 
 protocol PracticeAnswerItemDelegate: PracticeReadVC {
-    func practiceAnswerItemBeganLongPressed()
+    func practiceAnswerItemBeganLongPressed(with cellFrame: CGRect, and word: String)
     func practiceAnswerItemDidFinishLongPress()
 }
 
@@ -35,12 +35,21 @@ class PracticeAnswerItem: UICollectionViewCell {
     
     
     @objc private func longPressed(sender: UILongPressGestureRecognizer) {
-        if sender.state != .ended {
-            if sender.state == .began {
-                delegate?.practiceAnswerItemBeganLongPressed()
+        if word.count > 32 {
+            if sender.state != .ended {
+                UIView.animate(withDuration: 0.3) { [self] in
+                    deskItemLabel.alpha = 0.5
+                }
+                deskItemLabel.alpha = 0.5
+                if sender.state == .began {
+                    delegate?.practiceAnswerItemBeganLongPressed(with: frame, and: word)
+                }
+            } else {
+                UIView.animate(withDuration: 0.3) { [self] in
+                    deskItemLabel.alpha = 1
+                }
+                delegate?.practiceAnswerItemDidFinishLongPress()
             }
-        } else {
-            delegate?.practiceAnswerItemDidFinishLongPress()
         }
     }
     
@@ -60,8 +69,8 @@ class PracticeAnswerItem: UICollectionViewCell {
     func configureCell(word: String) {
         self.word = word
         
-        if word.count > 34 {
-            deskItemLabel.text = "\(String(word.prefix(34))).."
+        if word.count > 32 {
+            deskItemLabel.text = "\(String(word.prefix(26))) ..."
         } else {
             deskItemLabel.text = word
         }

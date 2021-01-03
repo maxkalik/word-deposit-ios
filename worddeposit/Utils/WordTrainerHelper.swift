@@ -34,7 +34,7 @@ class WordTrainerHelper {
         return makeDesk(size: count, result)
     }
 }
-
+//
 func makeWordDesk(size: Int, wordsData: [Word], _ result: [Word] = []) -> [Word] {
     var result = result
     if wordsData.isEmpty {

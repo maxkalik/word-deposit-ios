@@ -16,6 +16,7 @@ class PracticeReadVC: UIViewController {
         }
     }
     
+    let answerItemLabel = PracticeDeskItemLabel()
     var practiceType: String?
     var trainedWord: Word? {
         didSet {
@@ -96,6 +97,19 @@ class PracticeReadVC: UIViewController {
         super.viewWillAppear(animated)
         spinner.stopAnimating()
         setupTrainedWord()
+        
+        answerItemLabel.alpha = 0
+        answerItemLabel.backgroundColor = Colors.dark.withAlphaComponent(0.9)
+        answerItemLabel.layer.cornerRadius = Radiuses.large
+        answerItemLabel.layer.masksToBounds = true
+        answerItemLabel.lineBreakMode = .byTruncatingTail
+        answerItemLabel.numberOfLines = 0
+        answerItemLabel.font = UIFont(name: Fonts.bold, size: 16)
+        answerItemLabel.textAlignment = .center
+        answerItemLabel.textColor = .white
+        
+        view.addSubview(answerItemLabel)
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -298,12 +312,27 @@ extension PracticeReadVC: SuccessMessageVCDelegate {
 
 
 extension PracticeReadVC: PracticeAnswerItemDelegate {
-    func practiceAnswerItemBeganLongPressed() {
-        print("Long Pressed")
+    func practiceAnswerItemBeganLongPressed(with cellFrame: CGRect, and word: String) {
+        
+        
+        
+        answerItemLabel.frame = CGRect(x: 0, y: 0, width: collectionView.frame.size.width, height: 42)
+        answerItemLabel.center = view.center
+        answerItemLabel.frame.origin.y = collectionView.frame.origin.y - scrollView.contentOffset.y + cellFrame.origin.y - 56
+        answerItemLabel.text = word
+        answerItemLabel.frame.size.height += word.height(withConstrainedWidth: collectionView.frame.size.width - answerItemLabel.padding.left - answerItemLabel.padding.right, font: UIFont(name: Fonts.bold, size: 16)!)
+        
+        
+        UIView.animate(withDuration: 0.3) { [self] in
+            answerItemLabel.alpha = 1
+        }
     }
     
     func practiceAnswerItemDidFinishLongPress() {
-        print("did finish")
+        UIView.animate(withDuration: 0.3) { [self] in
+            answerItemLabel.alpha = 0
+        }
+        
     }
 }
 
