@@ -1,23 +1,20 @@
 import UIKit
 
+protocol PracticeAnswerItemDelegate: PracticeReadVC {
+    func practiceAnswerItemBeganLongPressed()
+    func practiceAnswerItemDidFinishLongPress()
+}
+
 class PracticeAnswerItem: UICollectionViewCell {
    
-//    let containerView = UIView()
+    weak var delegate: PracticeAnswerItemDelegate?
     @IBOutlet weak var deskItemLabel: UILabel!
 
     var word: String! {
         didSet {
-            
             deskItemLabel.font = UIFont(name: Fonts.medium, size: 16)
             deskItemLabel.textColor = Colors.dark
             deskItemLabel.highlightedTextColor = Colors.grey
-            
-            
-            // deskItemLabel.numberOfLines = 0
-            // deskItemLabel.lineBreakMode = .byTruncatingMiddle
-            
-            // deskItemLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.6)
-            // deskItemLabel.preferredMaxLayoutWidth = self.frame.size.width * 3
         }
     }
     
@@ -29,6 +26,22 @@ class PracticeAnswerItem: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setupCell()
+        
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressed))
+        longPress.minimumPressDuration = 0.5
+        longPress.delaysTouchesBegan = true
+        addGestureRecognizer(longPress)
+    }
+    
+    
+    @objc private func longPressed(sender: UILongPressGestureRecognizer) {
+        if sender.state != .ended {
+            if sender.state == .began {
+                delegate?.practiceAnswerItemBeganLongPressed()
+            }
+        } else {
+            delegate?.practiceAnswerItemDidFinishLongPress()
+        }
     }
     
     func setupCell() {

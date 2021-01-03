@@ -64,8 +64,6 @@ class PracticeReadVC: UIViewController {
             collectionView.dataSource = self
             collectionView.allowsMultipleSelection = false
             collectionView.contentInset.bottom = 100
-            // collectionView.contentSize.height += 140
-            // collectionView.frame.size.height += 140
         }
     }
     
@@ -87,13 +85,7 @@ class PracticeReadVC: UIViewController {
         
         setNavigationBarLeft()
         setNavgationBarRight()
-        
     }
-    
-    // override func viewDidLayoutSubviews() {
-    //     super.viewDidLayoutSubviews()
-    //     collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
-    // }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -201,7 +193,6 @@ class PracticeReadVC: UIViewController {
         // setup ui
         switch practiceType {
         case Controllers.TrainerWordToTranslate:
-            print(word.example)
             practiceLabel.text = word.example
         case Controllers.TrainerTranslateToWord:
             practiceLabel.text = word.translation
@@ -262,7 +253,6 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
     }
     
     private func setupPracticeCell(_ cell: PracticeAnswerItem, at index: Int) {
-        
         if selectedIndex == index {
             if wordsDesk[selectedIndex!].id == trainedWord!.id {
                 cell.correctAnswer()
@@ -286,6 +276,7 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: XIBs.PracticeAnswerItem, for: indexPath) as? PracticeAnswerItem {
             usePracticeType(for: cell, at: indexPath.row)
             setupPracticeCell(cell, at: indexPath.row)
+            cell.delegate = self
             return cell
         }
         return UICollectionViewCell()
@@ -305,6 +296,16 @@ extension PracticeReadVC: SuccessMessageVCDelegate {
     }
 }
 
+
+extension PracticeReadVC: PracticeAnswerItemDelegate {
+    func practiceAnswerItemBeganLongPressed() {
+        print("Long Pressed")
+    }
+    
+    func practiceAnswerItemDidFinishLongPress() {
+        print("did finish")
+    }
+}
 
 extension PracticeReadVC: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
