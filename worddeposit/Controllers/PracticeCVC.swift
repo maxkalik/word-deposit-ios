@@ -259,10 +259,10 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                 
                 switch sender.controller {
                 case Controllers.TrainerWordToTranslate:
-                    practiceReadVC?.view.backgroundColor = .purple
+                    practiceReadVC?.view.backgroundColor = Colors.purple
                     practiceReadVC?.practiceType = Controllers.TrainerWordToTranslate
                 case Controllers.TrainerTranslateToWord:
-                    practiceReadVC?.view.backgroundColor = .blue
+                    practiceReadVC?.view.backgroundColor = Colors.darkBlue
                     practiceReadVC?.practiceType = Controllers.TrainerTranslateToWord
                 default:
                     break

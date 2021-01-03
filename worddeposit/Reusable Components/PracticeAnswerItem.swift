@@ -9,7 +9,8 @@ class PracticeAnswerItem: UICollectionViewCell {
    
     weak var delegate: PracticeAnswerItemDelegate?
     @IBOutlet weak var deskItemLabel: UILabel!
-
+    
+    let generator = UIImpactFeedbackGenerator(style: .heavy)
     var word: String! {
         didSet {
             deskItemLabel.font = UIFont(name: Fonts.medium, size: 16)
@@ -43,6 +44,7 @@ class PracticeAnswerItem: UICollectionViewCell {
                 deskItemLabel.alpha = 0.5
                 if sender.state == .began {
                     delegate?.practiceAnswerItemBeganLongPressed(with: frame, and: word)
+                    generator.impactOccurred()
                 }
             } else {
                 UIView.animate(withDuration: 0.3) { [self] in
@@ -62,7 +64,7 @@ class PracticeAnswerItem: UICollectionViewCell {
         deskItemLabel.backgroundColor = Colors.silver
         layer.cornerRadius = Radiuses.large
         backgroundColor = Colors.dark.withAlphaComponent(0.3)
-        
+        deskItemLabel.textColor = Colors.blue
         
     }
     
@@ -70,7 +72,9 @@ class PracticeAnswerItem: UICollectionViewCell {
         self.word = word
         
         if word.count > 32 {
-            deskItemLabel.text = "\(String(word.prefix(26))) ..."
+            let mutableString = NSMutableAttributedString(string: "\(String(word.prefix(26))) •••")
+            mutableString.addAttribute(NSAttributedString.Key.foregroundColor as NSAttributedString.Key, value: Colors.orange, range: NSRange(location:26,length:4))
+            deskItemLabel.attributedText = mutableString
         } else {
             deskItemLabel.text = word
         }

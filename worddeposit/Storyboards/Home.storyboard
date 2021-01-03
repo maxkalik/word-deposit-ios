@@ -71,7 +71,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="959"/>
                                         <subviews>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Fie-T9-cv2">
-                                                <rect key="frame" x="20" y="329" width="374" height="610"/>
+                                                <rect key="frame" x="20" y="349" width="374" height="590"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="hx5-Nh-1rQ">
                                                     <size key="itemSize" width="128" height="128"/>
@@ -111,7 +111,7 @@
                                             <constraint firstItem="5e3-ty-oLk" firstAttribute="centerX" secondItem="Xgn-gY-Lyj" secondAttribute="centerX" id="ca7-bP-7oa"/>
                                             <constraint firstAttribute="bottom" secondItem="Fie-T9-cv2" secondAttribute="bottom" constant="20" id="f1Z-b9-sAZ"/>
                                             <constraint firstItem="HlN-VU-D6V" firstAttribute="centerX" secondItem="lXl-Rt-Lwp" secondAttribute="centerX" id="oUX-u9-BeK"/>
-                                            <constraint firstItem="Fie-T9-cv2" firstAttribute="top" secondItem="HlN-VU-D6V" secondAttribute="bottom" constant="20" id="qer-k5-9GZ"/>
+                                            <constraint firstItem="Fie-T9-cv2" firstAttribute="top" secondItem="HlN-VU-D6V" secondAttribute="bottom" constant="40" id="qer-k5-9GZ"/>
                                             <constraint firstItem="HlN-VU-D6V" firstAttribute="leading" secondItem="lXl-Rt-Lwp" secondAttribute="leading" constant="20" id="urN-AI-Wpx"/>
                                             <constraint firstItem="Fie-T9-cv2" firstAttribute="leading" secondItem="lXl-Rt-Lwp" secondAttribute="leading" constant="20" id="vDO-KG-D9Q"/>
                                             <constraint firstItem="HlN-VU-D6V" firstAttribute="top" secondItem="Xgn-gY-Lyj" secondAttribute="bottom" constant="20" id="vGc-iz-3Tp"/>

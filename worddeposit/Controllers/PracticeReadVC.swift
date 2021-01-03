@@ -17,6 +17,7 @@ class PracticeReadVC: UIViewController {
     }
     
     let answerItemLabel = PracticeDeskItemLabel()
+    
     var practiceType: String?
     var trainedWord: Word? {
         didSet {
@@ -326,6 +327,7 @@ extension PracticeReadVC: PracticeAnswerItemDelegate {
         UIView.animate(withDuration: 0.3) { [self] in
             answerItemLabel.alpha = 1
         }
+        
     }
     
     func practiceAnswerItemDidFinishLongPress() {
