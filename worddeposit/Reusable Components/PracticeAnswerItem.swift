@@ -7,13 +7,17 @@ class PracticeAnswerItem: UICollectionViewCell {
 
     var word: String! {
         didSet {
-            deskItemLabel.text = word
+            
             deskItemLabel.font = UIFont(name: Fonts.medium, size: 16)
             deskItemLabel.textColor = Colors.dark
             deskItemLabel.highlightedTextColor = Colors.grey
             
+            
             // deskItemLabel.numberOfLines = 0
-            // deskItemLabel.lineBreakMode = .byWordWrapping
+            // deskItemLabel.lineBreakMode = .byTruncatingMiddle
+            
+            // deskItemLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.6)
+            // deskItemLabel.preferredMaxLayoutWidth = self.frame.size.width * 3
         }
     }
     
@@ -42,6 +46,12 @@ class PracticeAnswerItem: UICollectionViewCell {
     
     func configureCell(word: String) {
         self.word = word
+        
+        if word.count > 34 {
+            deskItemLabel.text = "\(String(word.prefix(34))).."
+        } else {
+            deskItemLabel.text = word
+        }
     }
     
     func correctAnswer() {

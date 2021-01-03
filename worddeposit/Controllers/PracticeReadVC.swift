@@ -9,6 +9,12 @@ protocol PracticeReadVCDelegate: AnyObject {
 class PracticeReadVC: UIViewController {
     
     // MARK: - Instances
+    @IBOutlet weak var scrollView: UIScrollView! {
+        didSet {
+            scrollView.contentInsetAdjustmentBehavior = .always
+            // scrollView.contentInset.bottom += 100
+        }
+    }
     
     var practiceType: String?
     var trainedWord: Word? {
@@ -26,7 +32,6 @@ class PracticeReadVC: UIViewController {
         }
     }
     var wordsDesk = [Word]()
-    // var isWordCountsEnd = false
     private var trainedWords = [Word]()
     private var selectedIndex: Int?
     private var isSelected = false
@@ -54,6 +59,9 @@ class PracticeReadVC: UIViewController {
             collectionView.delegate = self
             collectionView.dataSource = self
             collectionView.allowsMultipleSelection = false
+            collectionView.contentInset.bottom = 100
+            // collectionView.contentSize.height += 140
+            // collectionView.frame.size.height += 140
         }
     }
     
@@ -66,14 +74,26 @@ class PracticeReadVC: UIViewController {
         setupTrainedWord()
         
         let layout = UICollectionViewCenterLayout()
-        layout.estimatedItemSize = CGSize(width: layout.itemSize.width, height: 40)
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        collectionView.collectionViewLayout = layout
         
         practiceLabel.font = UIFont(name: Fonts.bold, size: 28)
+        practiceLabel.lineBreakMode = .byWordWrapping
+        practiceLabel.numberOfLines = 0
         
-        collectionView.collectionViewLayout = layout
         setNavigationBarLeft()
         setNavgationBarRight()
         
+    }
+    
+    // override func viewDidLayoutSubviews() {
+    //     super.viewDidLayoutSubviews()
+    //     collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
+    // }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        collectionView.collectionViewLayout.invalidateLayout()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -177,6 +197,7 @@ class PracticeReadVC: UIViewController {
         // setup ui
         switch practiceType {
         case Controllers.TrainerWordToTranslate:
+            print(word.example)
             practiceLabel.text = word.example
         case Controllers.TrainerTranslateToWord:
             practiceLabel.text = word.translation
