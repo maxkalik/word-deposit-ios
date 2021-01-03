@@ -68,11 +68,14 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lXl-Rt-Lwp">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="959"/>
+                                        <rect key="frame" x="0.0" y="-14" width="414" height="910"/>
                                         <subviews>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Fie-T9-cv2">
-                                                <rect key="frame" x="20" y="349" width="374" height="590"/>
+                                                <rect key="frame" x="20" y="349" width="374" height="640"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="640" id="HJ5-gW-tYG"/>
+                                                </constraints>
                                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="hx5-Nh-1rQ">
                                                     <size key="itemSize" width="128" height="128"/>
                                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -109,7 +112,6 @@
                                             <constraint firstItem="Xgn-gY-Lyj" firstAttribute="top" secondItem="lXl-Rt-Lwp" secondAttribute="top" constant="20" id="WKG-cH-Qpi"/>
                                             <constraint firstItem="Xgn-gY-Lyj" firstAttribute="centerX" secondItem="lXl-Rt-Lwp" secondAttribute="centerX" id="cLn-Yy-eZS"/>
                                             <constraint firstItem="5e3-ty-oLk" firstAttribute="centerX" secondItem="Xgn-gY-Lyj" secondAttribute="centerX" id="ca7-bP-7oa"/>
-                                            <constraint firstAttribute="bottom" secondItem="Fie-T9-cv2" secondAttribute="bottom" constant="20" id="f1Z-b9-sAZ"/>
                                             <constraint firstItem="HlN-VU-D6V" firstAttribute="centerX" secondItem="lXl-Rt-Lwp" secondAttribute="centerX" id="oUX-u9-BeK"/>
                                             <constraint firstItem="Fie-T9-cv2" firstAttribute="top" secondItem="HlN-VU-D6V" secondAttribute="bottom" constant="40" id="qer-k5-9GZ"/>
                                             <constraint firstItem="HlN-VU-D6V" firstAttribute="leading" secondItem="lXl-Rt-Lwp" secondAttribute="leading" constant="20" id="urN-AI-Wpx"/>
@@ -122,9 +124,9 @@
                                     <constraint firstItem="lXl-Rt-Lwp" firstAttribute="width" secondItem="VOe-01-wKe" secondAttribute="width" id="4fd-EW-FxI"/>
                                     <constraint firstItem="lXl-Rt-Lwp" firstAttribute="leading" secondItem="VOe-01-wKe" secondAttribute="leading" id="Haz-ba-PKD"/>
                                     <constraint firstAttribute="bottom" secondItem="lXl-Rt-Lwp" secondAttribute="bottom" id="eoO-e3-OVb"/>
-                                    <constraint firstItem="lXl-Rt-Lwp" firstAttribute="height" secondItem="VOe-01-wKe" secondAttribute="height" priority="250" constant="63" id="i8h-3A-Api"/>
+                                    <constraint firstItem="lXl-Rt-Lwp" firstAttribute="height" secondItem="VOe-01-wKe" secondAttribute="height" priority="250" constant="14" id="i8h-3A-Api"/>
                                     <constraint firstAttribute="trailing" secondItem="lXl-Rt-Lwp" secondAttribute="trailing" id="qmy-sG-LxA"/>
-                                    <constraint firstItem="lXl-Rt-Lwp" firstAttribute="top" secondItem="VOe-01-wKe" secondAttribute="top" id="zYQ-IH-3a2"/>
+                                    <constraint firstItem="lXl-Rt-Lwp" firstAttribute="top" secondItem="VOe-01-wKe" secondAttribute="top" constant="-14" id="zYQ-IH-3a2"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
@@ -140,6 +142,7 @@
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="keS-6x-LG6"/>
                     <connections>
                         <outlet property="collectionView" destination="Fie-T9-cv2" id="gQb-jT-yce"/>
+                        <outlet property="contentView" destination="lXl-Rt-Lwp" id="jva-Ps-bHa"/>
                         <outlet property="practiceLabel" destination="HlN-VU-D6V" id="Xdh-y8-JQ5"/>
                         <outlet property="scrollView" destination="VOe-01-wKe" id="bs8-aL-tI4"/>
                         <outlet property="spinner" destination="5e3-ty-oLk" id="3sH-VB-9Jr"/>

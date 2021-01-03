@@ -8,15 +8,17 @@ protocol PracticeReadVCDelegate: AnyObject {
 
 class PracticeReadVC: UIViewController {
     
+    @IBOutlet weak var contentView: UIView!
     // MARK: - Instances
     @IBOutlet weak var scrollView: UIScrollView! {
         didSet {
             scrollView.delegate = self
             scrollView.contentInsetAdjustmentBehavior = .always
+            
         }
     }
     
-    let answerItemLabel = PracticeDeskItemLabel()
+    let answerItemBubbleLabel = BubbleLabel()
     
     var practiceType: String?
     var trainedWord: Word? {
@@ -65,7 +67,6 @@ class PracticeReadVC: UIViewController {
             collectionView.delegate = self
             collectionView.dataSource = self
             collectionView.allowsMultipleSelection = false
-            collectionView.contentInset.bottom = 100
         }
     }
     
@@ -89,27 +90,22 @@ class PracticeReadVC: UIViewController {
         setNavgationBarRight()
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        collectionView.collectionViewLayout.invalidateLayout()
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         spinner.stopAnimating()
         setupTrainedWord()
         
-        answerItemLabel.alpha = 0
-        answerItemLabel.backgroundColor = Colors.dark.withAlphaComponent(0.9)
-        answerItemLabel.layer.cornerRadius = Radiuses.large
-        answerItemLabel.layer.masksToBounds = true
-        answerItemLabel.lineBreakMode = .byTruncatingTail
-        answerItemLabel.numberOfLines = 0
-        answerItemLabel.font = UIFont(name: Fonts.bold, size: 16)
-        answerItemLabel.textAlignment = .center
-        answerItemLabel.textColor = .white
+        // answerItemLabel.alpha = 0
+        // answerItemLabel.backgroundColor = Colors.dark.withAlphaComponent(0.9)
+        // answerItemLabel.layer.cornerRadius = Radiuses.large
+        // answerItemLabel.layer.masksToBounds = true
+        // answerItemLabel.lineBreakMode = .byTruncatingTail
+        // answerItemLabel.numberOfLines = 0
+        // answerItemLabel.font = UIFont(name: Fonts.bold, size: 16)
+        // answerItemLabel.textAlignment = .center
+        // answerItemLabel.textColor = .white
         
-        view.addSubview(answerItemLabel)
+        view.addSubview(answerItemBubbleLabel)
         
     }
     
@@ -228,6 +224,17 @@ class PracticeReadVC: UIViewController {
         collectionView.reloadData()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        scrollView.setNeedsLayout()
+        scrollView.layoutIfNeeded()
+        
+        let labelHeight = practiceLabel.bounds.size.height
+        scrollView.contentSize.height = contentView.frame.size.height + labelHeight - 40
+        print(practiceLabel.bounds.size.height, contentView.frame.size.height)
+        
+    }
+    
     private func updateUI() {
         
         delegate?.updatePracticeVC(except: rightAnswerIds)
@@ -235,6 +242,9 @@ class PracticeReadVC: UIViewController {
         isSelected = false
         collectionView.isUserInteractionEnabled = true
         setupTrainedWord()
+        
+        
+        
         collectionView.reloadData()
     }
     
@@ -314,27 +324,19 @@ extension PracticeReadVC: SuccessMessageVCDelegate {
 
 extension PracticeReadVC: PracticeAnswerItemDelegate {
     func practiceAnswerItemBeganLongPressed(with cellFrame: CGRect, and word: String) {
+
+        answerItemBubbleLabel.frame = CGRect(x: 0, y: 0, width: collectionView.frame.size.width, height: 42)
+        answerItemBubbleLabel.center = view.center
+        answerItemBubbleLabel.frame.origin.y = collectionView.frame.origin.y - scrollView.contentOffset.y + cellFrame.origin.y - 56
+        answerItemBubbleLabel.text = word
+        answerItemBubbleLabel.frame.size.height += word.height(withConstrainedWidth: collectionView.frame.size.width - answerItemBubbleLabel.padding.left - answerItemBubbleLabel.padding.right, font: UIFont(name: Fonts.bold, size: 16)!)
         
-        
-        
-        answerItemLabel.frame = CGRect(x: 0, y: 0, width: collectionView.frame.size.width, height: 42)
-        answerItemLabel.center = view.center
-        answerItemLabel.frame.origin.y = collectionView.frame.origin.y - scrollView.contentOffset.y + cellFrame.origin.y - 56
-        answerItemLabel.text = word
-        answerItemLabel.frame.size.height += word.height(withConstrainedWidth: collectionView.frame.size.width - answerItemLabel.padding.left - answerItemLabel.padding.right, font: UIFont(name: Fonts.bold, size: 16)!)
-        
-        
-        UIView.animate(withDuration: 0.3) { [self] in
-            answerItemLabel.alpha = 1
-        }
+        answerItemBubbleLabel.onPress()
         
     }
     
     func practiceAnswerItemDidFinishLongPress() {
-        UIView.animate(withDuration: 0.3) { [self] in
-            answerItemLabel.alpha = 0
-        }
-        
+        answerItemBubbleLabel.onFinishPress()
     }
 }
 

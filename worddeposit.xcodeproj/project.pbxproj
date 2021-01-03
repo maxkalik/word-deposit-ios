@@ -42,6 +42,7 @@
 		1158D30E24917B9B0087DC96 /* VocabularyTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1158D30C24917B9B0087DC96 /* VocabularyTVCell.swift */; };
 		1158D30F24917B9B0087DC96 /* VocabularyTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1158D30D24917B9B0087DC96 /* VocabularyTVCell.xib */; };
 		11621A2724C25EFA003087AB /* WKWebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11621A2624C25EFA003087AB /* WKWebVC.swift */; };
+		1162E5F525A23B1100B6173A /* BubbleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1162E5F425A23B1100B6173A /* BubbleLabel.swift */; };
 		1164FB532508CE150023326A /* WordTrainerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1164FB522508CE150023326A /* WordTrainerHelper.swift */; };
 		116BC94C249182BD00968DA6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC94B249182BD00968DA6 /* Constants.swift */; };
 		116BC94E2491836B00968DA6 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC94D2491836B00968DA6 /* UIViewController.swift */; };
@@ -130,6 +131,7 @@
 		1158D30C24917B9B0087DC96 /* VocabularyTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyTVCell.swift; sourceTree = "<group>"; };
 		1158D30D24917B9B0087DC96 /* VocabularyTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VocabularyTVCell.xib; sourceTree = "<group>"; };
 		11621A2624C25EFA003087AB /* WKWebVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WKWebVC.swift; path = worddeposit/Controllers/WKWebVC.swift; sourceTree = SOURCE_ROOT; };
+		1162E5F425A23B1100B6173A /* BubbleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleLabel.swift; sourceTree = "<group>"; };
 		1164FB522508CE150023326A /* WordTrainerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordTrainerHelper.swift; sourceTree = "<group>"; };
 		116BC94B249182BD00968DA6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		116BC94D2491836B00968DA6 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 				15E77425252A2C7C00EC57D0 /* ButtonSelector.swift */,
 				15E77428252A3BF400EC57D0 /* SecondaryButton.swift */,
 				11119630254CBA68006588D5 /* ButtonNavTitleView.swift */,
+				1162E5F425A23B1100B6173A /* BubbleLabel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -550,6 +553,7 @@
 				11331B82254B8AC500FDB454 /* TopBarItem.swift in Sources */,
 				119D786B2540BBAF009260D4 /* CheckmarkListTVCResults.swift in Sources */,
 				116BC94C249182BD00968DA6 /* Constants.swift in Sources */,
+				1162E5F525A23B1100B6173A /* BubbleLabel.swift in Sources */,
 				11B20D6D24C8E00800C1CB4E /* PracticeReadVC.swift in Sources */,
 				11F0327024C8272700BD6350 /* PracticeCVC.swift in Sources */,
 				1164FB532508CE150023326A /* WordTrainerHelper.swift in Sources */,
