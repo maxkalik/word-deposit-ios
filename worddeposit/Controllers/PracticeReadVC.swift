@@ -98,8 +98,7 @@ class PracticeReadVC: UIViewController {
         setupTrainedWord()
         view.addSubview(answerItemBubbleLabel)
         collectionViewHeightConstraint.constant = collectionView.contentSize.height
-
-        
+ 
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -110,11 +109,12 @@ class PracticeReadVC: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        print(wordsDesk)
+        print("word desk", wordsDesk.count)
         collectionView.layoutIfNeeded()
         
-        collectionViewHeightConstraint.constant = collectionView.contentSize.height
+        collectionViewHeightConstraint.constant = collectionView.contentSize.height + 50
         print(collectionView.contentSize.height) // sometimes 202
+        print(collectionView.collectionViewLayout.collectionViewContentSize.height)
     }
 
     private func setNavigationBarLeft() {
@@ -203,6 +203,7 @@ class PracticeReadVC: UIViewController {
     private func setupTrainedWord() {
         let filteredWordDesk = wordsDesk.filter { !rightAnswerIds.contains($0.id) }
         trainedWord = filteredWordDesk.randomElement()
+        print("=== setup trained word ===")
         guard let word = trainedWord else { return }
         // setup ui
         switch practiceType {
@@ -223,8 +224,8 @@ class PracticeReadVC: UIViewController {
             self.updateUI()
             self.spinner.stopAnimating()
         }
-        
         collectionView.reloadData()
+        print("=== update screeen === <- collection reload data")
     }
     
     
@@ -236,10 +237,8 @@ class PracticeReadVC: UIViewController {
         isSelected = false
         collectionView.isUserInteractionEnabled = true
         setupTrainedWord()
-        
-        
-        
         collectionView.reloadData()
+        print("=== update UI === <- collection reload data")
     }
     
     // MARK: - IBActions
@@ -321,7 +320,7 @@ extension PracticeReadVC: PracticeAnswerItemDelegate {
 
         answerItemBubbleLabel.frame = CGRect(x: 0, y: 0, width: collectionView.frame.size.width, height: 42)
         answerItemBubbleLabel.center = view.center
-        answerItemBubbleLabel.frame.origin.y = collectionView.frame.origin.y - scrollView.contentOffset.y + cellFrame.origin.y - cellFrame.height
+        answerItemBubbleLabel.frame.origin.y = collectionView.frame.origin.y - scrollView.contentOffset.y + cellFrame.origin.y - cellFrame.height / 2
         answerItemBubbleLabel.text = word
         answerItemBubbleLabel.frame.size.height += word.height(withConstrainedWidth: collectionView.frame.size.width - answerItemBubbleLabel.padding.left - answerItemBubbleLabel.padding.right, font: UIFont(name: Fonts.bold, size: 16)!)
         
