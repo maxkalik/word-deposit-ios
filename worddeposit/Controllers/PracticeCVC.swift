@@ -255,14 +255,14 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                 practiceReadVC?.delegate = self
 
                 // worddesk
-                updatePracticeVC()
+                updatePracticeVC(except: nil)
                 
                 switch sender.controller {
                 case Controllers.TrainerWordToTranslate:
-                    practiceReadVC?.view.backgroundColor = .purple
+                    practiceReadVC?.view.backgroundColor = Colors.purple
                     practiceReadVC?.practiceType = Controllers.TrainerWordToTranslate
                 case Controllers.TrainerTranslateToWord:
-                    practiceReadVC?.view.backgroundColor = .blue
+                    practiceReadVC?.view.backgroundColor = Colors.darkBlue
                     practiceReadVC?.practiceType = Controllers.TrainerTranslateToWord
                 default:
                     break
@@ -274,8 +274,30 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
 
 extension PracticeCVC: PracticeReadVCDelegate {
     
-    func updatePracticeVC() {
-        let wordsDesk = makeWordDesk(size: 5, wordsData: words)
+    func updatePracticeVC(except trainedWordIds: Set<String>?) {
+        let leftWordsCount = words.count - Int(trainedWordIds?.count ?? 0)
+        var wordsDesk = [Word]()
+        let filteredWordsFromVocabulary = words.filter {
+            guard let ids = trainedWordIds else { return true }
+            return !ids.contains($0.id)
+        }
+        
+        if leftWordsCount <= 4 {
+            let trainedWords = words.filter {
+                guard let ids = trainedWordIds else { return true }
+                return ids.contains($0.id)
+            }
+            
+            wordsDesk = makeWordDesk(size: 5 - leftWordsCount, wordsData: trainedWords)
+            let restArr = makeWordDesk(size: leftWordsCount, wordsData: filteredWordsFromVocabulary)
+            wordsDesk.append(contentsOf: restArr)
+        } else {
+            wordsDesk = makeWordDesk(size: 5, wordsData: filteredWordsFromVocabulary)
+        }
+        
+        if leftWordsCount == 0 {
+            practiceReadVC?.prepareForQuit(isEmptyVocabulary: true)
+        }
         practiceReadVC?.wordsDesk = wordsDesk
     }
     

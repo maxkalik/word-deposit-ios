@@ -2,13 +2,23 @@ import UIKit
 import Kingfisher
 
 protocol PracticeReadVCDelegate: AnyObject {
-    func updatePracticeVC()
+    func updatePracticeVC(except trainedWordIds: Set<String>?)
     func onFinishTrainer(with words: [Word])
 }
 
 class PracticeReadVC: UIViewController {
     
+    @IBOutlet weak var contentView: UIView!
     // MARK: - Instances
+    @IBOutlet weak var scrollView: UIScrollView! {
+        didSet {
+            scrollView.delegate = self
+            // scrollView.contentInsetAdjustmentBehavior = .never
+            
+        }
+    }
+    
+    let answerItemBubbleLabel = BubbleLabel()
     
     var practiceType: String?
     var trainedWord: Word? {
@@ -26,12 +36,17 @@ class PracticeReadVC: UIViewController {
         }
     }
     var wordsDesk = [Word]()
-    
     private var trainedWords = [Word]()
     private var selectedIndex: Int?
     private var isSelected = false
     
-    private var sessionRightAnswersSum = 0
+    private var rightAnswerIds = Set<String>()
+    private var sessionRightAnswersSum = 0 {
+        didSet {
+            guard let word = trainedWord else { return }
+            if !rightAnswerIds.contains(word.id) { rightAnswerIds.insert(word.id) }
+        }
+    }
     private var sessionWrongAnswersSum = 0
     
     private let successMessage = SuccessMessageVC()
@@ -40,7 +55,11 @@ class PracticeReadVC: UIViewController {
     
     // MARK: - IBOutlets
     
-    @IBOutlet weak var wordImage: RoundedImageView!
+    @IBOutlet weak var wordImage: RoundedImageView! {
+        didSet {
+            wordImage.contentMode = .scaleAspectFill
+        }
+    }
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var practiceLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView! {
@@ -60,25 +79,42 @@ class PracticeReadVC: UIViewController {
         setupTrainedWord()
         
         let layout = UICollectionViewCenterLayout()
-        layout.estimatedItemSize = CGSize(width: layout.itemSize.width, height: 40)
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        collectionView.collectionViewLayout = layout
         
         practiceLabel.font = UIFont(name: Fonts.bold, size: 28)
+        practiceLabel.lineBreakMode = .byWordWrapping
+        practiceLabel.numberOfLines = 0
         
-        collectionView.collectionViewLayout = layout
         setNavigationBarLeft()
         setNavgationBarRight()
-        
     }
+    
+    @IBOutlet weak var collectionViewHeightConstraint: NSLayoutConstraint!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         spinner.stopAnimating()
         setupTrainedWord()
+        view.addSubview(answerItemBubbleLabel)
+        collectionViewHeightConstraint.constant = collectionView.contentSize.height
+ 
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBar.tintColor = Colors.dark
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        print("word desk", wordsDesk.count)
+        collectionView.layoutIfNeeded()
+        
+        collectionViewHeightConstraint.constant = collectionView.contentSize.height + 50
+        print(collectionView.contentSize.height) // sometimes 202
+        print(collectionView.collectionViewLayout.collectionViewContentSize.height)
     }
 
     private func setNavigationBarLeft() {
@@ -115,11 +151,11 @@ class PracticeReadVC: UIViewController {
     }
     
     
-    @objc func backToMain() {
+    @objc private func backToMain() {
         if trainedWords.count == 0 {
             _ = navigationController?.popViewController(animated: true)
         } else {
-            prepareForQuit()
+            prepareForQuit(isEmptyVocabulary: false)
         }
     }
     
@@ -147,17 +183,15 @@ class PracticeReadVC: UIViewController {
         }
     }
     
-    private func prepareForQuit() {
+    func prepareForQuit(isEmptyVocabulary: Bool) {
+        successMessage.isVocabularyEmpty = isEmptyVocabulary
         successMessage.delegate = self
-        
         successMessage.wordsAmount = trainedWords.count
         successMessage.answersCorrect = sessionRightAnswersSum
         successMessage.answersWrong = sessionWrongAnswersSum
-        
         successMessage.modalTransitionStyle = .crossDissolve
         successMessage.modalPresentationStyle = .popover
-        
-        self.delegate?.onFinishTrainer(with: trainedWords)
+        delegate?.onFinishTrainer(with: trainedWords)
         present(successMessage, animated: true, completion: nil)
     }
     
@@ -167,7 +201,9 @@ class PracticeReadVC: UIViewController {
     }
     
     private func setupTrainedWord() {
-        trainedWord = wordsDesk.randomElement()
+        let filteredWordDesk = wordsDesk.filter { !rightAnswerIds.contains($0.id) }
+        trainedWord = filteredWordDesk.randomElement()
+        print("=== setup trained word ===")
         guard let word = trainedWord else { return }
         // setup ui
         switch practiceType {
@@ -188,17 +224,21 @@ class PracticeReadVC: UIViewController {
             self.updateUI()
             self.spinner.stopAnimating()
         }
-        
         collectionView.reloadData()
+        print("=== update screeen === <- collection reload data")
     }
     
+    
+    
     private func updateUI() {
-        delegate?.updatePracticeVC()
+        
+        delegate?.updatePracticeVC(except: rightAnswerIds)
         selectedIndex = nil
         isSelected = false
         collectionView.isUserInteractionEnabled = true
         setupTrainedWord()
         collectionView.reloadData()
+        print("=== update UI === <- collection reload data")
     }
     
     // MARK: - IBActions
@@ -231,7 +271,6 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
     }
     
     private func setupPracticeCell(_ cell: PracticeAnswerItem, at index: Int) {
-        
         if selectedIndex == index {
             if wordsDesk[selectedIndex!].id == trainedWord!.id {
                 cell.correctAnswer()
@@ -255,6 +294,7 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: XIBs.PracticeAnswerItem, for: indexPath) as? PracticeAnswerItem {
             usePracticeType(for: cell, at: indexPath.row)
             setupPracticeCell(cell, at: indexPath.row)
+            cell.delegate = self
             return cell
         }
         return UICollectionViewCell()
@@ -271,5 +311,43 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
 extension PracticeReadVC: SuccessMessageVCDelegate {
     func onSuccessMessageButtonTap() {
         _ = navigationController?.popViewController(animated: true)
+    }
+}
+
+
+extension PracticeReadVC: PracticeAnswerItemDelegate {
+    func practiceAnswerItemBeganLongPressed(with cellFrame: CGRect, and word: String) {
+
+        answerItemBubbleLabel.frame = CGRect(x: 0, y: 0, width: collectionView.frame.size.width, height: 42)
+        answerItemBubbleLabel.center = view.center
+        answerItemBubbleLabel.frame.origin.y = collectionView.frame.origin.y - scrollView.contentOffset.y + cellFrame.origin.y - cellFrame.height / 2
+        answerItemBubbleLabel.text = word
+        answerItemBubbleLabel.frame.size.height += word.height(withConstrainedWidth: collectionView.frame.size.width - answerItemBubbleLabel.padding.left - answerItemBubbleLabel.padding.right, font: UIFont(name: Fonts.bold, size: 16)!)
+        
+        answerItemBubbleLabel.onPress()
+        
+    }
+    
+    func practiceAnswerItemDidFinishLongPress() {
+        answerItemBubbleLabel.onFinishPress()
+    }
+}
+
+extension PracticeReadVC: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offset = scrollView.contentOffset
+        
+        if offset.y < 0.0 {
+            wordImage.layer.transform = CATransform3DIdentity
+        } else {
+            let scaleFactor = 1 + (-1 * offset.y / (wordImage.frame.size.height / 2))
+            var transform = CATransform3DTranslate(CATransform3DIdentity, 0, (offset.y), 0)
+            
+            if scaleFactor >= 0.5 {
+                transform = CATransform3DScale(transform, scaleFactor, scaleFactor, 1)
+                wordImage.layer.transform = transform
+                wordImage.layer.cornerRadius = (Radiuses.large + offset.y / 2)
+            }
+        }
     }
 }

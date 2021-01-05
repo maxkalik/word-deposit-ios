@@ -1,13 +1,18 @@
 import UIKit
 
+protocol PracticeAnswerItemDelegate: PracticeReadVC {
+    func practiceAnswerItemBeganLongPressed(with cellFrame: CGRect, and word: String)
+    func practiceAnswerItemDidFinishLongPress()
+}
+
 class PracticeAnswerItem: UICollectionViewCell {
    
-//    let containerView = UIView()
+    weak var delegate: PracticeAnswerItemDelegate?
     @IBOutlet weak var deskItemLabel: UILabel!
-
+    
+    let generator = UIImpactFeedbackGenerator(style: .heavy)
     var word: String! {
         didSet {
-            deskItemLabel.text = word
             deskItemLabel.font = UIFont(name: Fonts.medium, size: 16)
             deskItemLabel.textColor = Colors.dark
             deskItemLabel.highlightedTextColor = Colors.grey
@@ -22,6 +27,32 @@ class PracticeAnswerItem: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setupCell()
+        
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressed))
+        longPress.minimumPressDuration = 0.5
+        longPress.delaysTouchesBegan = true
+        addGestureRecognizer(longPress)
+    }
+    
+    
+    @objc private func longPressed(sender: UILongPressGestureRecognizer) {
+        if word.count > 32 {
+            if sender.state != .ended {
+                UIView.animate(withDuration: 0.3) { [self] in
+                    deskItemLabel.alpha = 0.5
+                }
+                deskItemLabel.alpha = 0.5
+                if sender.state == .began {
+                    delegate?.practiceAnswerItemBeganLongPressed(with: frame, and: word)
+                    generator.impactOccurred()
+                }
+            } else {
+                UIView.animate(withDuration: 0.3) { [self] in
+                    deskItemLabel.alpha = 1
+                }
+                delegate?.practiceAnswerItemDidFinishLongPress()
+            }
+        }
     }
     
     func setupCell() {
@@ -31,13 +62,22 @@ class PracticeAnswerItem: UICollectionViewCell {
         deskItemLabel.layer.cornerRadius = Radiuses.large
         deskItemLabel.layer.masksToBounds = true
         deskItemLabel.backgroundColor = Colors.silver
-
         layer.cornerRadius = Radiuses.large
         backgroundColor = Colors.dark.withAlphaComponent(0.3)
+        deskItemLabel.textColor = Colors.blue
+        
     }
     
     func configureCell(word: String) {
         self.word = word
+        
+        if word.count > 32 {
+            let mutableString = NSMutableAttributedString(string: "\(String(word.prefix(26))) •••")
+            mutableString.addAttribute(NSAttributedString.Key.foregroundColor as NSAttributedString.Key, value: Colors.orange, range: NSRange(location:26,length:4))
+            deskItemLabel.attributedText = mutableString
+        } else {
+            deskItemLabel.text = word
+        }
     }
     
     func correctAnswer() {

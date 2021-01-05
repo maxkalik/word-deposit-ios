@@ -12,7 +12,6 @@ class AddWordVC: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView! {
         didSet {
             scrollView.delegate = self
-            // this will allow to put content view to the scroll without including safearea in the top
             scrollView.contentInsetAdjustmentBehavior = .never
         }
     }

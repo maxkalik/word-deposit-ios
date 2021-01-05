@@ -59,6 +59,8 @@ struct Colors {
     static let blue = #colorLiteral(red: 0, green: 0.3176470588, blue: 0.6117647059, alpha: 1)
     static let darkBlue = #colorLiteral(red: 0, green: 0.181510762, blue: 0.5298818211, alpha: 1)
     static let green = #colorLiteral(red: 0, green: 0.6042719415, blue: 0, alpha: 1)
+    static let lightPurple = #colorLiteral(red: 0.7653821244, green: 0.1509081417, blue: 0.7507963907, alpha: 1)
+    static let purple = #colorLiteral(red: 0.4392564819, green: 0.02478511338, blue: 0.6712026445, alpha: 1)
 }
 
 struct Fonts {
