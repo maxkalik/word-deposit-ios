@@ -64,17 +64,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VOe-01-wKe">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VOe-01-wKe">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lXl-Rt-Lwp">
-                                        <rect key="frame" x="0.0" y="-14" width="414" height="910"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="590"/>
                                         <subviews>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Fie-T9-cv2">
-                                                <rect key="frame" x="20" y="349" width="374" height="640"/>
+                                                <rect key="frame" x="20" y="370" width="374" height="180"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="640" id="HJ5-gW-tYG"/>
+                                                    <constraint firstAttribute="height" constant="180" id="eTn-nt-9Yu"/>
                                                 </constraints>
                                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="hx5-Nh-1rQ">
                                                     <size key="itemSize" width="128" height="128"/>
@@ -93,8 +93,11 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HlN-VU-D6V">
-                                                <rect key="frame" x="20" y="280" width="374" height="29"/>
+                                                <rect key="frame" x="20" y="280" width="374" height="50"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="6fW-iX-8Zr"/>
+                                                </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -114,6 +117,7 @@
                                             <constraint firstItem="5e3-ty-oLk" firstAttribute="centerX" secondItem="Xgn-gY-Lyj" secondAttribute="centerX" id="ca7-bP-7oa"/>
                                             <constraint firstItem="HlN-VU-D6V" firstAttribute="centerX" secondItem="lXl-Rt-Lwp" secondAttribute="centerX" id="oUX-u9-BeK"/>
                                             <constraint firstItem="Fie-T9-cv2" firstAttribute="top" secondItem="HlN-VU-D6V" secondAttribute="bottom" constant="40" id="qer-k5-9GZ"/>
+                                            <constraint firstAttribute="bottom" secondItem="Fie-T9-cv2" secondAttribute="bottom" constant="40" id="rVF-ne-aox"/>
                                             <constraint firstItem="HlN-VU-D6V" firstAttribute="leading" secondItem="lXl-Rt-Lwp" secondAttribute="leading" constant="20" id="urN-AI-Wpx"/>
                                             <constraint firstItem="Fie-T9-cv2" firstAttribute="leading" secondItem="lXl-Rt-Lwp" secondAttribute="leading" constant="20" id="vDO-KG-D9Q"/>
                                             <constraint firstItem="HlN-VU-D6V" firstAttribute="top" secondItem="Xgn-gY-Lyj" secondAttribute="bottom" constant="20" id="vGc-iz-3Tp"/>
@@ -124,9 +128,9 @@
                                     <constraint firstItem="lXl-Rt-Lwp" firstAttribute="width" secondItem="VOe-01-wKe" secondAttribute="width" id="4fd-EW-FxI"/>
                                     <constraint firstItem="lXl-Rt-Lwp" firstAttribute="leading" secondItem="VOe-01-wKe" secondAttribute="leading" id="Haz-ba-PKD"/>
                                     <constraint firstAttribute="bottom" secondItem="lXl-Rt-Lwp" secondAttribute="bottom" id="eoO-e3-OVb"/>
-                                    <constraint firstItem="lXl-Rt-Lwp" firstAttribute="height" secondItem="VOe-01-wKe" secondAttribute="height" priority="250" constant="14" id="i8h-3A-Api"/>
+                                    <constraint firstItem="lXl-Rt-Lwp" firstAttribute="height" secondItem="VOe-01-wKe" secondAttribute="height" priority="250" id="i8h-3A-Api"/>
                                     <constraint firstAttribute="trailing" secondItem="lXl-Rt-Lwp" secondAttribute="trailing" id="qmy-sG-LxA"/>
-                                    <constraint firstItem="lXl-Rt-Lwp" firstAttribute="top" secondItem="VOe-01-wKe" secondAttribute="top" constant="-14" id="zYQ-IH-3a2"/>
+                                    <constraint firstItem="lXl-Rt-Lwp" firstAttribute="top" secondItem="VOe-01-wKe" secondAttribute="top" id="zYQ-IH-3a2"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
@@ -142,6 +146,7 @@
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="keS-6x-LG6"/>
                     <connections>
                         <outlet property="collectionView" destination="Fie-T9-cv2" id="gQb-jT-yce"/>
+                        <outlet property="collectionViewHeightConstraint" destination="eTn-nt-9Yu" id="O3s-Jq-yH7"/>
                         <outlet property="contentView" destination="lXl-Rt-Lwp" id="jva-Ps-bHa"/>
                         <outlet property="practiceLabel" destination="HlN-VU-D6V" id="Xdh-y8-JQ5"/>
                         <outlet property="scrollView" destination="VOe-01-wKe" id="bs8-aL-tI4"/>

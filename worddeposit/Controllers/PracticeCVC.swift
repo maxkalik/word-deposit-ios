@@ -276,8 +276,6 @@ extension PracticeCVC: PracticeReadVCDelegate {
     
     func updatePracticeVC(except trainedWordIds: Set<String>?) {
         let leftWordsCount = words.count - Int(trainedWordIds?.count ?? 0)
-        print(leftWordsCount)
-        
         var wordsDesk = [Word]()
         let filteredWordsFromVocabulary = words.filter {
             guard let ids = trainedWordIds else { return true }

@@ -13,7 +13,7 @@ class PracticeReadVC: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView! {
         didSet {
             scrollView.delegate = self
-            scrollView.contentInsetAdjustmentBehavior = .always
+            // scrollView.contentInsetAdjustmentBehavior = .never
             
         }
     }
@@ -90,28 +90,31 @@ class PracticeReadVC: UIViewController {
         setNavgationBarRight()
     }
     
+    @IBOutlet weak var collectionViewHeightConstraint: NSLayoutConstraint!
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         spinner.stopAnimating()
         setupTrainedWord()
-        
-        // answerItemLabel.alpha = 0
-        // answerItemLabel.backgroundColor = Colors.dark.withAlphaComponent(0.9)
-        // answerItemLabel.layer.cornerRadius = Radiuses.large
-        // answerItemLabel.layer.masksToBounds = true
-        // answerItemLabel.lineBreakMode = .byTruncatingTail
-        // answerItemLabel.numberOfLines = 0
-        // answerItemLabel.font = UIFont(name: Fonts.bold, size: 16)
-        // answerItemLabel.textAlignment = .center
-        // answerItemLabel.textColor = .white
-        
         view.addSubview(answerItemBubbleLabel)
+        collectionViewHeightConstraint.constant = collectionView.contentSize.height
+
         
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBar.tintColor = Colors.dark
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        print(wordsDesk)
+        collectionView.layoutIfNeeded()
+        
+        collectionViewHeightConstraint.constant = collectionView.contentSize.height
+        print(collectionView.contentSize.height) // sometimes 202
     }
 
     private func setNavigationBarLeft() {
@@ -224,16 +227,7 @@ class PracticeReadVC: UIViewController {
         collectionView.reloadData()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        scrollView.setNeedsLayout()
-        scrollView.layoutIfNeeded()
-        
-        let labelHeight = practiceLabel.bounds.size.height
-        scrollView.contentSize.height = contentView.frame.size.height + labelHeight - 40
-        print(practiceLabel.bounds.size.height, contentView.frame.size.height)
-        
-    }
+    
     
     private func updateUI() {
         
@@ -327,7 +321,7 @@ extension PracticeReadVC: PracticeAnswerItemDelegate {
 
         answerItemBubbleLabel.frame = CGRect(x: 0, y: 0, width: collectionView.frame.size.width, height: 42)
         answerItemBubbleLabel.center = view.center
-        answerItemBubbleLabel.frame.origin.y = collectionView.frame.origin.y - scrollView.contentOffset.y + cellFrame.origin.y - 56
+        answerItemBubbleLabel.frame.origin.y = collectionView.frame.origin.y - scrollView.contentOffset.y + cellFrame.origin.y - cellFrame.height
         answerItemBubbleLabel.text = word
         answerItemBubbleLabel.frame.size.height += word.height(withConstrainedWidth: collectionView.frame.size.width - answerItemBubbleLabel.padding.left - answerItemBubbleLabel.padding.right, font: UIFont(name: Fonts.bold, size: 16)!)
         
