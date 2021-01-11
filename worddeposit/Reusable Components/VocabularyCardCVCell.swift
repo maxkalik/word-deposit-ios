@@ -24,6 +24,10 @@ class VocabularyCardCVCell: UICollectionViewCell {
     @IBOutlet weak var pictureLoader: UIActivityIndicatorView!
     @IBOutlet weak var removePictureButton: UIButton!
     
+    
+    @IBOutlet weak var wordExampleTextView: PrimaryTextView!
+    
+    
     // MARK: - Variables
 
     private var word: Word!
@@ -46,6 +50,8 @@ class VocabularyCardCVCell: UICollectionViewCell {
         
         setupUI()
         
+        wordExampleTextView.limitOfString = Limits.wordExample
+        
         wordExampleTextField.limitOfString = Limits.wordExample
         wordTranslationTextField.limitOfString = Limits.wordTranslation
         wordDescriptionTextField.limitOfString = Limits.wordDescription
@@ -57,6 +63,11 @@ class VocabularyCardCVCell: UICollectionViewCell {
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         nc.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        wordExampleTextField.isHidden = true
+        wordTranslationTextField.isHidden = true
+        wordDescriptionTextField.isHidden = true
+        
     }
     
     deinit {
@@ -140,6 +151,15 @@ class VocabularyCardCVCell: UICollectionViewCell {
         cardView.layer.backgroundColor = Colors.silver.cgColor
         wordExampleTextField.isContainer = true
         
+        
+        wordExampleTextView.clipsToBounds = false
+        wordExampleTextView.layer.shadowOpacity = 1
+        wordExampleTextView.layer.shadowOffset = CGSize(width: 0, height: 3)
+        wordExampleTextView.layer.shadowRadius = 0
+        wordExampleTextView.layer.shadowColor = Colors.darkBlue.cgColor
+        wordExampleTextView.tintColor = UIColor.white
+        
+        
         wordExampleTextField.clipsToBounds = false
         wordExampleTextField.layer.shadowOpacity = 1
         wordExampleTextField.layer.shadowOffset = CGSize(width: 0, height: 3)
@@ -196,6 +216,8 @@ class VocabularyCardCVCell: UICollectionViewCell {
             let imgRecourse = ImageResource(downloadURL: url, cacheKey: word.imgUrl)
             wordPictureButton.kf.setImage(with: imgRecourse, for: .normal, options: options)
         }
+        // wordExampleTextView.text = word.example
+        
         wordExampleTextField.text = word.example
         wordTranslationTextField.text = word.translation
         wordDescriptionTextField.text = word.description

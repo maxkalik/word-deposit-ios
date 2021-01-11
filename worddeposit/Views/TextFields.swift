@@ -32,6 +32,7 @@ class CellTextField: DefaultTextField {
     }
 }
 
+
 class PrimaryTextField: UITextField, UITextFieldDelegate {
     
     var limitOfString: Int?
