@@ -26,6 +26,8 @@ class VocabularyCardCVCell: UICollectionViewCell {
     
     
     @IBOutlet weak var wordExampleTextView: PrimaryTextView!
+    @IBOutlet weak var wordTranslationTextView: TranslationTextView!
+    @IBOutlet weak var wordDescriptionTextView: DescriptionTextView!
     
     
     // MARK: - Variables
@@ -149,16 +151,6 @@ class VocabularyCardCVCell: UICollectionViewCell {
     
     private func setupUI() {
         cardView.layer.backgroundColor = Colors.silver.cgColor
-        wordExampleTextField.isContainer = true
-        
-        
-        wordExampleTextView.clipsToBounds = false
-        wordExampleTextView.layer.shadowOpacity = 1
-        wordExampleTextView.layer.shadowOffset = CGSize(width: 0, height: 3)
-        wordExampleTextView.layer.shadowRadius = 0
-        wordExampleTextView.layer.shadowColor = Colors.darkBlue.cgColor
-        wordExampleTextView.tintColor = UIColor.white
-        
         
         wordExampleTextField.clipsToBounds = false
         wordExampleTextField.layer.shadowOpacity = 1

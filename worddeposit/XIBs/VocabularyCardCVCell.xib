@@ -22,13 +22,13 @@
                         <rect key="frame" x="10" y="10" width="249" height="508"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fMy-Da-NqV">
-                                <rect key="frame" x="2" y="2" width="245" height="504"/>
+                                <rect key="frame" x="0.0" y="0.0" width="249" height="508"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lGU-0G-zIr">
-                                        <rect key="frame" x="0.0" y="0.0" width="245" height="504"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="249" height="508"/>
                                         <subviews>
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tIz-zy-KYF">
-                                                <rect key="frame" x="22.5" y="152" width="200" height="200"/>
+                                                <rect key="frame" x="24.5" y="154" width="200" height="200"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="dby-dI-Ln7">
                                                         <rect key="frame" x="0.0" y="14.5" width="249" height="111.5"/>
@@ -66,7 +66,7 @@
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qEf-66-3td">
-                                                <rect key="frame" x="0.0" y="0.0" width="245" height="239"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="249" height="243"/>
                                                 <color key="backgroundColor" white="0.92711900680000003" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="qEf-66-3td" secondAttribute="height" multiplier="245:239" id="JLK-XI-aO6"/>
@@ -76,32 +76,39 @@
                                                     <action selector="wordPictureButtonTouched:" destination="gTV-IL-0wX" eventType="touchUpInside" id="2Uo-Ey-b62"/>
                                                 </connections>
                                             </button>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Word" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="0ld-NP-yjI" customClass="PrimaryTextView" customModule="worddeposit" customModuleProvider="target">
-                                                <rect key="frame" x="100.5" y="259" width="44.5" height="33"/>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Example" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="0ld-NP-yjI" customClass="PrimaryTextView" customModule="worddeposit" customModuleProvider="target">
+                                                <rect key="frame" x="92" y="283" width="65" height="33"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <color key="textColor" systemColor="labelColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Word" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="HIT-3L-pxH" customClass="PrimaryTextView" customModule="worddeposit" customModuleProvider="target">
-                                                <rect key="frame" x="100.5" y="312" width="44.5" height="33"/>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Translation" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="HIT-3L-pxH" customClass="TranslationTextView" customModule="worddeposit" customModuleProvider="target">
+                                                <rect key="frame" x="84" y="336" width="81" height="33"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <color key="textColor" systemColor="labelColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Description" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="xAX-5P-ihz" customClass="DescriptionTextView" customModule="worddeposit" customModuleProvider="target">
+                                                <rect key="frame" x="82.5" y="379" width="84" height="33"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <color key="textColor" systemColor="labelColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="KK2-6x-PG2">
-                                                <rect key="frame" x="20" y="434" width="205" height="50"/>
+                                                <rect key="frame" x="20" y="438" width="209" height="50"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tGQ-iE-CeE" customClass="SecondaryButton" customModule="worddeposit" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="97.5" height="50"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="99.5" height="50"/>
                                                         <state key="normal" title="Cancel"/>
                                                         <connections>
                                                             <action selector="onCancelTouched:" destination="gTV-IL-0wX" eventType="touchUpInside" id="LLp-db-Exu"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kmJ-5p-Gjf" customClass="SecondaryButton" customModule="worddeposit" customModuleProvider="target">
-                                                        <rect key="frame" x="107.5" y="0.0" width="97.5" height="50"/>
+                                                        <rect key="frame" x="109.5" y="0.0" width="99.5" height="50"/>
                                                         <state key="normal" title="Save"/>
                                                         <connections>
                                                             <action selector="onSaveChangingTouched:" destination="gTV-IL-0wX" eventType="touchUpInside" id="kDa-Z5-3Ul"/>
@@ -117,9 +124,8 @@
                                                 <rect key="frame" x="106" y="106" width="37" height="37"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             </activityIndicatorView>
-                                            <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mC1-dx-JNe">
-                                                <rect key="frame" x="183" y="203" width="36" height="36"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mC1-dx-JNe">
+                                                <rect key="frame" x="197" y="187" width="32" height="36"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                                 <color key="tintColor" white="0.0" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" image="icon_trash_circle">
@@ -133,20 +139,27 @@
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="qEf-66-3td" secondAttribute="trailing" id="2Tb-l4-clZ"/>
+                                            <constraint firstItem="xAX-5P-ihz" firstAttribute="centerX" secondItem="HIT-3L-pxH" secondAttribute="centerX" id="2vc-7T-1n4"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="HIT-3L-pxH" secondAttribute="trailing" constant="20" id="5dH-sI-AK0"/>
                                             <constraint firstItem="KK2-6x-PG2" firstAttribute="leading" secondItem="lGU-0G-zIr" secondAttribute="leading" constant="20" id="AZT-lV-5hp"/>
                                             <constraint firstItem="0ld-NP-yjI" firstAttribute="centerX" secondItem="lGU-0G-zIr" secondAttribute="centerX" id="H8Q-51-TDF"/>
                                             <constraint firstItem="HIT-3L-pxH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="lGU-0G-zIr" secondAttribute="leading" constant="20" id="Kzt-Y0-u3u"/>
-                                            <constraint firstAttribute="bottom" secondItem="KK2-6x-PG2" secondAttribute="bottom" constant="20" id="NA3-TQ-0Q6"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0ld-NP-yjI" secondAttribute="trailing" constant="20" id="QR9-MN-4PE"/>
+                                            <constraint firstItem="mC1-dx-JNe" firstAttribute="bottom" secondItem="qEf-66-3td" secondAttribute="bottom" constant="-20" id="Rji-od-uud"/>
+                                            <constraint firstAttribute="trailing" secondItem="mC1-dx-JNe" secondAttribute="trailing" constant="20" id="VbM-CM-unI"/>
                                             <constraint firstItem="tIz-zy-KYF" firstAttribute="centerX" secondItem="lGU-0G-zIr" secondAttribute="centerX" id="WKN-iT-IBk"/>
+                                            <constraint firstAttribute="bottom" secondItem="KK2-6x-PG2" secondAttribute="bottom" constant="20" id="b6Z-W3-0fM"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xAX-5P-ihz" secondAttribute="trailing" constant="20" id="cYe-qF-Iby"/>
                                             <constraint firstItem="qEf-66-3td" firstAttribute="leading" secondItem="lGU-0G-zIr" secondAttribute="leading" id="caN-9R-iAs"/>
                                             <constraint firstItem="qEf-66-3td" firstAttribute="top" secondItem="lGU-0G-zIr" secondAttribute="top" id="dFo-uL-ukS"/>
-                                            <constraint firstItem="0ld-NP-yjI" firstAttribute="top" secondItem="qEf-66-3td" secondAttribute="bottom" constant="20" id="eEp-PU-89a"/>
+                                            <constraint firstItem="0ld-NP-yjI" firstAttribute="top" secondItem="qEf-66-3td" secondAttribute="bottom" constant="40" id="eEp-PU-89a"/>
                                             <constraint firstItem="tIz-zy-KYF" firstAttribute="centerY" secondItem="lGU-0G-zIr" secondAttribute="centerY" id="fv5-YT-DZe"/>
                                             <constraint firstAttribute="trailing" secondItem="KK2-6x-PG2" secondAttribute="trailing" constant="20" id="hKV-HB-dBV"/>
                                             <constraint firstItem="HIT-3L-pxH" firstAttribute="centerX" secondItem="0ld-NP-yjI" secondAttribute="centerX" id="k9C-gb-JxE"/>
+                                            <constraint firstItem="xAX-5P-ihz" firstAttribute="top" secondItem="HIT-3L-pxH" secondAttribute="bottom" constant="10" id="lcv-Z7-G76"/>
                                             <constraint firstItem="0ld-NP-yjI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="lGU-0G-zIr" secondAttribute="leading" constant="20" id="nZk-je-obr"/>
+                                            <constraint firstItem="KK2-6x-PG2" firstAttribute="top" relation="greaterThanOrEqual" secondItem="xAX-5P-ihz" secondAttribute="bottom" constant="20" id="p1u-98-bVp"/>
+                                            <constraint firstItem="xAX-5P-ihz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="lGU-0G-zIr" secondAttribute="leading" constant="20" id="soU-Dc-ZBn"/>
                                             <constraint firstItem="HIT-3L-pxH" firstAttribute="top" secondItem="0ld-NP-yjI" secondAttribute="bottom" constant="20" id="vtL-zv-BaN"/>
                                         </constraints>
                                     </view>
@@ -163,10 +176,10 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="fMy-Da-NqV" secondAttribute="bottom" constant="2" id="Ax6-B4-Iai"/>
-                            <constraint firstItem="fMy-Da-NqV" firstAttribute="top" secondItem="NG3-UZ-tdL" secondAttribute="top" constant="2" id="NID-Df-hrb"/>
-                            <constraint firstAttribute="trailing" secondItem="fMy-Da-NqV" secondAttribute="trailing" constant="2" id="o77-eI-gTl"/>
-                            <constraint firstItem="fMy-Da-NqV" firstAttribute="leading" secondItem="NG3-UZ-tdL" secondAttribute="leading" constant="2" id="sam-2W-yP7"/>
+                            <constraint firstAttribute="bottom" secondItem="fMy-Da-NqV" secondAttribute="bottom" id="Ax6-B4-Iai"/>
+                            <constraint firstItem="fMy-Da-NqV" firstAttribute="top" secondItem="NG3-UZ-tdL" secondAttribute="top" id="NID-Df-hrb"/>
+                            <constraint firstAttribute="trailing" secondItem="fMy-Da-NqV" secondAttribute="trailing" id="o77-eI-gTl"/>
+                            <constraint firstItem="fMy-Da-NqV" firstAttribute="leading" secondItem="NG3-UZ-tdL" secondAttribute="leading" id="sam-2W-yP7"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -187,10 +200,12 @@
                 <outlet property="saveChangingButton" destination="kmJ-5p-Gjf" id="iUJ-ol-iCB"/>
                 <outlet property="stackView" destination="dby-dI-Ln7" id="6yr-ln-VZ0"/>
                 <outlet property="wordDescriptionTextField" destination="0hr-gr-S4R" id="EFR-eP-22e"/>
+                <outlet property="wordDescriptionTextView" destination="xAX-5P-ihz" id="xgx-KX-R8a"/>
                 <outlet property="wordExampleTextField" destination="bYr-Ab-Q6M" id="gCz-JX-ORL"/>
                 <outlet property="wordExampleTextView" destination="0ld-NP-yjI" id="92o-cT-Y9y"/>
                 <outlet property="wordPictureButton" destination="qEf-66-3td" id="PO7-Vx-shA"/>
                 <outlet property="wordTranslationTextField" destination="N7c-oH-trs" id="T2e-wl-5uN"/>
+                <outlet property="wordTranslationTextView" destination="HIT-3L-pxH" id="VBj-wi-7dk"/>
             </connections>
             <point key="canvasLocation" x="299.27536231884062" y="-1.3392857142857142"/>
         </collectionViewCell>
