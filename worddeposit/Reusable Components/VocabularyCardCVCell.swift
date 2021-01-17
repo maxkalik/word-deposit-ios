@@ -58,6 +58,7 @@ class VocabularyCardCVCell: UICollectionViewCell {
         wordTranslationTextField.limitOfString = Limits.wordTranslation
         wordDescriptionTextField.limitOfString = Limits.wordDescription
         
+        
         wordExampleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         wordTranslationTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         wordDescriptionTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
@@ -213,6 +214,10 @@ class VocabularyCardCVCell: UICollectionViewCell {
         wordExampleTextField.text = word.example
         wordTranslationTextField.text = word.translation
         wordDescriptionTextField.text = word.description
+        
+        wordExampleTextView.text = word.example
+        wordTranslationTextView.text = word.translation
+        wordDescriptionTextView.text = word.description
         
         setupDescriptionTextField()
     }

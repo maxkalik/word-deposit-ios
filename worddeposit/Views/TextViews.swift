@@ -8,181 +8,146 @@
 
 import UIKit
 
-class PrimaryTextView: UITextView, UITextViewDelegate {
-    var limitOfString: Int? // protocol
-    
+class PrimaryTextView: WordTextView {
     override func awakeFromNib() {
         super.awakeFromNib()
+        placeholder = "Example"
+        limitOfString = Limits.wordExample
+        backgroundColorOnFocus = Colors.blue
+        placeholderColor = UIColor.white.withAlphaComponent(0.5)
+        setupStyle(fontSize: 22, letterSpacing: -0.8, activeTextColor: .white, backgroundColor: Colors.blue, isInitialBackground: true)
+        setupShadow(with: Colors.darkBlue)
+    }
+}
+
+
+class TranslationTextView: WordTextView {
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        placeholder = "Translation"
+        limitOfString = Limits.wordTranslation
+        backgroundColorOnFocus = Colors.dark.withAlphaComponent(0.1)
+        placeholderColor = Colors.lightGrey
+        setupStyle(fontSize: 22, letterSpacing: -0.8, activeTextColor: Colors.dark, backgroundColor: .clear)
+    }
+}
+
+
+
+
+class DescriptionTextView: WordTextView {
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        placeholder = "Description"
+        limitOfString = Limits.wordDescription
+        backgroundColorOnFocus = Colors.dark.withAlphaComponent(0.1)
+        placeholderColor = Colors.lightGrey
+        setupStyle(fontSize: 18, letterSpacing: -0.6, activeTextColor: Colors.darkGrey, backgroundColor: .clear)
+    }
+}
+
+
+
+class WordTextView: UITextView, UITextViewDelegate {
+    
+    public var limitOfString: Int?
+    public var placeholder: String?
+    public var placeholderColor: UIColor?
+    public var activeTextColor: UIColor?
+    public var backgroundColorOnShow: UIColor?
+    public var backgroundColorOnFocus: UIColor?
+    
+    private var isPlaceholderSet = false
+    
+    override var text: String! {
+        didSet {
+            if text.isEmpty && !isPlaceholderSet {
+                setupPlaceholder()
+            } else {
+                textColor = activeTextColor
+            }
+        }
+    }
+    
+    override init(frame: CGRect, textContainer: NSTextContainer?) {
+        super.init(frame: frame, textContainer: textContainer)
+        common()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        common()
+    }
+    
+    func setupStyle(fontSize: CGFloat, letterSpacing: Double, activeTextColor: UIColor, backgroundColor: UIColor, isInitialBackground: Bool? = nil) {
+        font = UIFont(name: Fonts.bold, size: fontSize)
+        tintColor = activeTextColor
+        self.backgroundColorOnShow = backgroundColor
+        if isInitialBackground != nil {
+            self.backgroundColor = backgroundColor
+        }
         
-        delegate = self
-        autocorrectionType = .no
-        smartInsertDeleteType = .no
+        self.activeTextColor = activeTextColor
+      
+        let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = NSTextAlignment.center
         
-        textColor = .white
-        tintColor = .white
+        let textAttributes: [NSAttributedString.Key : Any] = [
+            .foregroundColor: activeTextColor,
+            .kern: letterSpacing,
+            .font: font!,
+            .paragraphStyle: paragraphStyle
+        ]
         
+        let attributedString = NSMutableAttributedString(string: text)
+        attributedString.addAttributes(textAttributes, range: NSRange(location: 0, length: text.count))
+        attributedText = attributedString
+    }
+    
+    func setupShadow(with color: UIColor) {
         clipsToBounds = false
         layer.shadowOpacity = 1
         layer.shadowOffset = CGSize(width: 0, height: 3)
         layer.shadowRadius = 0
-        layer.shadowColor = Colors.darkBlue.cgColor
-        
-        layer.cornerRadius = Radiuses.large
-        backgroundColor = Colors.blue
-        
-        font = UIFont(name: Fonts.bold, size: 22.0)
-        
-        textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        
-        let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = NSTextAlignment.center
-        
-        let textAttributes: [NSAttributedString.Key : Any] = [
-            NSAttributedString.Key.foregroundColor: UIColor.white,
-            NSAttributedString.Key.kern: -0.8,
-            NSAttributedString.Key.font: font!,
-            NSAttributedString.Key.paragraphStyle: paragraphStyle
-        ]
-        
-        let attributedString = NSMutableAttributedString(string: text)
-        attributedString.addAttributes(textAttributes, range: NSRange(location: 0, length: text.count))
-        attributedText = attributedString
+        layer.shadowColor = color.cgColor
     }
-    
-    // dinamic size of view
-    func textViewDidChange(_ textView: UITextView) {
-        let fixedWidth = textView.frame.size.width
-        let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
-        textView.frame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
-    }
-
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        backgroundColor = Colors.blue
-    }
-    
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        guard let limit = limitOfString else { return true }
-        return TextFieldLimit.checkMaxLength(from: self.text, range: range, string: text, limit: limit)
-    }
-}
-
-
-
-
-
-
-class TranslationTextView: UITextView, UITextViewDelegate {
-    var limitOfString: Int?
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         delegate = self
-        autocorrectionType = .no
-        smartInsertDeleteType = .no
-        
-        textColor = Colors.dark
-        layer.cornerRadius = Radiuses.large
-        backgroundColor = .clear
-        
-        font = UIFont(name: Fonts.bold, size: 22.0)
-        
-        textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        
-        let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = NSTextAlignment.center
-        
-        let textAttributes: [NSAttributedString.Key : Any] = [
-            NSAttributedString.Key.foregroundColor: Colors.dark,
-            NSAttributedString.Key.kern: -0.8,
-            NSAttributedString.Key.font: font!,
-            NSAttributedString.Key.paragraphStyle: paragraphStyle
-        ]
-        
-        let attributedString = NSMutableAttributedString(string: text)
-        attributedString.addAttributes(textAttributes, range: NSRange(location: 0, length: text.count))
-        attributedText = attributedString
     }
     
-    func textViewDidChange(_ textView: UITextView) {
-        let fixedWidth = textView.frame.size.width
-        let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
-        textView.frame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
+    private func common() {
+        autocorrectionType = .no
+        smartInsertDeleteType = .no
+        textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        layer.cornerRadius = Radiuses.large
     }
- 
+    
+    private func setupPlaceholder() {
+        text = placeholder
+        textColor = placeholderColor ?? Colors.lightGrey
+        isPlaceholderSet = true
+    }
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
-        UIView.animate(withDuration: 0.3) {
-            self.backgroundColor = Colors.dark.withAlphaComponent(0.1)
+        if textColor == placeholderColor ?? Colors.lightGrey { textView.text = "" }
+        UIView.animate(withDuration: 0.3) { [self] in
+            backgroundColor = backgroundColorOnFocus
         }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        UIView.animate(withDuration: 0.3) {
-            self.backgroundColor = .clear
+        if textView.text.isEmpty { setupPlaceholder() }
+        UIView.animate(withDuration: 0.3) { [self] in
+            backgroundColor = backgroundColorOnShow
         }
     }
-    
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        guard let limit = limitOfString else { return true }
-        return TextFieldLimit.checkMaxLength(from: self.text, range: range, string: text, limit: limit)
-    }
-}
 
-
-
-
-class DescriptionTextView: UITextView, UITextViewDelegate {
-    var limitOfString: Int?
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        delegate = self
-        autocorrectionType = .no
-        smartInsertDeleteType = .no
-        
-        textColor = Colors.darkGrey
-        tintColor = Colors.darkGrey
-        
-        layer.cornerRadius = Radiuses.large
-        backgroundColor = .clear
-        
-        font = UIFont(name: Fonts.bold, size: 18.0)
-        
-        textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        
-        let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = NSTextAlignment.center
-        
-        let textAttributes: [NSAttributedString.Key : Any] = [
-            NSAttributedString.Key.foregroundColor: Colors.darkGrey,
-            NSAttributedString.Key.kern: -0.6,
-            NSAttributedString.Key.font: font!,
-            NSAttributedString.Key.paragraphStyle: paragraphStyle
-        ]
-        
-        let attributedString = NSMutableAttributedString(string: text)
-        attributedString.addAttributes(textAttributes, range: NSRange(location: 0, length: text.count))
-        attributedText = attributedString
-    }
-    
     func textViewDidChange(_ textView: UITextView) {
-        let fixedWidth = textView.frame.size.width
-        let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
-        textView.frame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
-    }
- 
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        UIView.animate(withDuration: 0.3) {
-            self.backgroundColor = Colors.dark.withAlphaComponent(0.1)
-        }
-    }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        UIView.animate(withDuration: 0.3) {
-            self.backgroundColor = .clear
-        }
+        let fixedWidth = frame.size.width
+        let newSize = sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
+        frame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
