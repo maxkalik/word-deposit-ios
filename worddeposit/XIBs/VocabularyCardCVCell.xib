@@ -27,44 +27,6 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lGU-0G-zIr">
                                         <rect key="frame" x="0.0" y="0.0" width="249" height="508"/>
                                         <subviews>
-                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tIz-zy-KYF">
-                                                <rect key="frame" x="24.5" y="154" width="200" height="200"/>
-                                                <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="dby-dI-Ln7">
-                                                        <rect key="frame" x="0.0" y="14.5" width="249" height="111.5"/>
-                                                        <subviews>
-                                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f6a-WD-rBL">
-                                                                <rect key="frame" x="0.0" y="0.0" width="249" height="60"/>
-                                                                <subviews>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Word" textAlignment="center" minimumFontSize="22" translatesAutoresizingMaskIntoConstraints="NO" id="bYr-Ab-Q6M" customClass="PrimaryTextField" customModule="worddeposit" customModuleProvider="target">
-                                                                        <rect key="frame" x="97" y="0.0" width="55.5" height="50"/>
-                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                                                        <textInputTraits key="textInputTraits"/>
-                                                                    </textField>
-                                                                </subviews>
-                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            </view>
-                                                            <textField opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Word" textAlignment="center" minimumFontSize="22" translatesAutoresizingMaskIntoConstraints="NO" id="N7c-oH-trs" customClass="PrimaryTextField" customModule="worddeposit" customModuleProvider="target">
-                                                                <rect key="frame" x="97" y="60" width="55.5" height="30.5"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                                                <textInputTraits key="textInputTraits"/>
-                                                            </textField>
-                                                            <textField opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Description" textAlignment="center" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="0hr-gr-S4R" customClass="SecondaryTextField" customModule="worddeposit" customModuleProvider="target">
-                                                                <rect key="frame" x="83" y="90.5" width="83.5" height="21"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                                <textInputTraits key="textInputTraits"/>
-                                                            </textField>
-                                                        </subviews>
-                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </stackView>
-                                                </subviews>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="200" id="5Xo-zz-Vum"/>
-                                                    <constraint firstAttribute="height" constant="200" id="bbd-Xc-6UU"/>
-                                                </constraints>
-                                            </view>
                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qEf-66-3td">
                                                 <rect key="frame" x="0.0" y="0.0" width="249" height="243"/>
                                                 <color key="backgroundColor" white="0.92711900680000003" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -147,13 +109,11 @@
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0ld-NP-yjI" secondAttribute="trailing" constant="20" id="QR9-MN-4PE"/>
                                             <constraint firstItem="mC1-dx-JNe" firstAttribute="bottom" secondItem="qEf-66-3td" secondAttribute="bottom" constant="-20" id="Rji-od-uud"/>
                                             <constraint firstAttribute="trailing" secondItem="mC1-dx-JNe" secondAttribute="trailing" constant="20" id="VbM-CM-unI"/>
-                                            <constraint firstItem="tIz-zy-KYF" firstAttribute="centerX" secondItem="lGU-0G-zIr" secondAttribute="centerX" id="WKN-iT-IBk"/>
                                             <constraint firstAttribute="bottom" secondItem="KK2-6x-PG2" secondAttribute="bottom" constant="20" id="b6Z-W3-0fM"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xAX-5P-ihz" secondAttribute="trailing" constant="20" id="cYe-qF-Iby"/>
                                             <constraint firstItem="qEf-66-3td" firstAttribute="leading" secondItem="lGU-0G-zIr" secondAttribute="leading" id="caN-9R-iAs"/>
                                             <constraint firstItem="qEf-66-3td" firstAttribute="top" secondItem="lGU-0G-zIr" secondAttribute="top" id="dFo-uL-ukS"/>
                                             <constraint firstItem="0ld-NP-yjI" firstAttribute="top" secondItem="qEf-66-3td" secondAttribute="bottom" constant="40" id="eEp-PU-89a"/>
-                                            <constraint firstItem="tIz-zy-KYF" firstAttribute="centerY" secondItem="lGU-0G-zIr" secondAttribute="centerY" id="fv5-YT-DZe"/>
                                             <constraint firstAttribute="trailing" secondItem="KK2-6x-PG2" secondAttribute="trailing" constant="20" id="hKV-HB-dBV"/>
                                             <constraint firstItem="HIT-3L-pxH" firstAttribute="centerX" secondItem="0ld-NP-yjI" secondAttribute="centerX" id="k9C-gb-JxE"/>
                                             <constraint firstItem="xAX-5P-ihz" firstAttribute="top" secondItem="HIT-3L-pxH" secondAttribute="bottom" constant="10" id="lcv-Z7-G76"/>
@@ -198,13 +158,9 @@
                 <outlet property="pictureLoader" destination="VgD-DV-qMQ" id="mEQ-0a-4TG"/>
                 <outlet property="removePictureButton" destination="mC1-dx-JNe" id="z0u-7i-lNb"/>
                 <outlet property="saveChangingButton" destination="kmJ-5p-Gjf" id="iUJ-ol-iCB"/>
-                <outlet property="stackView" destination="dby-dI-Ln7" id="6yr-ln-VZ0"/>
-                <outlet property="wordDescriptionTextField" destination="0hr-gr-S4R" id="EFR-eP-22e"/>
                 <outlet property="wordDescriptionTextView" destination="xAX-5P-ihz" id="xgx-KX-R8a"/>
-                <outlet property="wordExampleTextField" destination="bYr-Ab-Q6M" id="gCz-JX-ORL"/>
                 <outlet property="wordExampleTextView" destination="0ld-NP-yjI" id="92o-cT-Y9y"/>
                 <outlet property="wordPictureButton" destination="qEf-66-3td" id="PO7-Vx-shA"/>
-                <outlet property="wordTranslationTextField" destination="N7c-oH-trs" id="T2e-wl-5uN"/>
                 <outlet property="wordTranslationTextView" destination="HIT-3L-pxH" id="VBj-wi-7dk"/>
             </connections>
             <point key="canvasLocation" x="299.27536231884062" y="-1.3392857142857142"/>

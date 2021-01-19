@@ -38,6 +38,7 @@ class TranslationTextView: WordTextView {
 class DescriptionTextView: WordTextView {
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         placeholder = "Description"
         limitOfString = Limits.wordDescription
         backgroundColorOnFocus = Colors.dark.withAlphaComponent(0.1)
@@ -48,7 +49,13 @@ class DescriptionTextView: WordTextView {
 
 
 
+protocol WordTextViewDelegate: AnyObject {
+    func editingChanged()
+}
+
 class WordTextView: UITextView, UITextViewDelegate {
+    
+    weak var actionsDelegate: WordTextViewDelegate?
     
     public var limitOfString: Int?
     public var placeholder: String?
@@ -145,6 +152,7 @@ class WordTextView: UITextView, UITextViewDelegate {
     }
 
     func textViewDidChange(_ textView: UITextView) {
+        actionsDelegate?.editingChanged()
         let fixedWidth = frame.size.width
         let newSize = sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
         frame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
