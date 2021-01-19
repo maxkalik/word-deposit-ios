@@ -40,21 +40,21 @@
                                             </button>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Example" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="0ld-NP-yjI" customClass="PrimaryTextView" customModule="worddeposit" customModuleProvider="target">
                                                 <rect key="frame" x="92" y="283" width="65" height="33"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="textColor" systemColor="labelColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Translation" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="HIT-3L-pxH" customClass="TranslationTextView" customModule="worddeposit" customModuleProvider="target">
                                                 <rect key="frame" x="84" y="336" width="81" height="33"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="textColor" systemColor="labelColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Description" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="xAX-5P-ihz" customClass="DescriptionTextView" customModule="worddeposit" customModuleProvider="target">
                                                 <rect key="frame" x="82.5" y="379" width="84" height="33"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="textColor" systemColor="labelColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -154,10 +154,10 @@
             <size key="customSize" width="269" height="528"/>
             <connections>
                 <outlet property="cancelButton" destination="tGQ-iE-CeE" id="78w-u4-B9K"/>
-                <outlet property="cardView" destination="NG3-UZ-tdL" id="qE3-ok-2QM"/>
                 <outlet property="pictureLoader" destination="VgD-DV-qMQ" id="mEQ-0a-4TG"/>
                 <outlet property="removePictureButton" destination="mC1-dx-JNe" id="z0u-7i-lNb"/>
                 <outlet property="saveChangingButton" destination="kmJ-5p-Gjf" id="iUJ-ol-iCB"/>
+                <outlet property="scrollView" destination="fMy-Da-NqV" id="Erc-Ht-maJ"/>
                 <outlet property="wordDescriptionTextView" destination="xAX-5P-ihz" id="xgx-KX-R8a"/>
                 <outlet property="wordExampleTextView" destination="0ld-NP-yjI" id="92o-cT-Y9y"/>
                 <outlet property="wordPictureButton" destination="qEf-66-3td" id="PO7-Vx-shA"/>

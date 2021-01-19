@@ -13,7 +13,7 @@ class VocabularyCardCVCell: UICollectionViewCell, WordTextViewDelegate {
 
     // MARK: - Outlets
 
-    @IBOutlet weak var cardView: RoundedView!
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var wordPictureButton: UIButton! {
         didSet {
             wordPictureButton.imageView?.contentMode = .scaleAspectFill
@@ -137,7 +137,7 @@ class VocabularyCardCVCell: UICollectionViewCell, WordTextViewDelegate {
     // MARK: - Other methods
     
     private func setupUI() {
-        cardView.layer.backgroundColor = Colors.silver.cgColor
+        scrollView.backgroundColor = Colors.silver
         removePictureButton.isHidden = true
         hideAllButtons()
         disableAllButtons()
@@ -213,6 +213,9 @@ class VocabularyCardCVCell: UICollectionViewCell, WordTextViewDelegate {
     @IBAction func onCancelTouched(_ sender: UIButton) {
         setupWord(word)
         disableAllButtons()
+        if !isKeyboardShowing {
+            hideAllButtons()
+        }
     }
     
     @IBAction func removePictureTouched(_ sender: UIButton) {
@@ -320,14 +323,20 @@ class VocabularyCardCVCell: UICollectionViewCell, WordTextViewDelegate {
 }
 
 extension VocabularyCardCVCell {
-    private func hideAllButtons() {
-        saveChangingButton.isHidden = true
-        cancelButton.isHidden = true
-    }
     
     private func showAllButtons() {
-        saveChangingButton.isHidden = false
-        cancelButton.isHidden = false
+        print("show all buttons")
+        UIView.animate(withDuration: 0.3) { [self] in
+            saveChangingButton.alpha = 1
+            cancelButton.alpha = 1
+        }
+    }
+    
+    private func hideAllButtons() {
+        UIView.animate(withDuration: 0.3) { [self] in
+            saveChangingButton.alpha = 0
+            cancelButton.alpha = 0
+        }
     }
     
     private func enableAllButtons() {
