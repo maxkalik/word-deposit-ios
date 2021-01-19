@@ -1,53 +1,12 @@
 //
-//  TextViews.swift
+//  WordTextView.swift
 //  worddeposit
 //
-//  Created by Maksim Kalik on 1/11/21.
+//  Created by Maksim Kalik on 1/19/21.
 //  Copyright © 2021 Maksim Kalik. All rights reserved.
 //
 
 import UIKit
-
-class PrimaryTextView: WordTextView {
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        placeholder = "Example"
-        limitOfString = Limits.wordExample
-        backgroundColorOnFocus = Colors.blue
-        placeholderColor = UIColor.white.withAlphaComponent(0.5)
-        setupStyle(fontSize: 22, letterSpacing: -0.8, activeTextColor: .white, backgroundColor: Colors.blue, isInitialBackground: true)
-        setupShadow(with: Colors.darkBlue)
-    }
-}
-
-
-class TranslationTextView: WordTextView {
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        placeholder = "Translation"
-        limitOfString = Limits.wordTranslation
-        backgroundColorOnFocus = Colors.dark.withAlphaComponent(0.1)
-        placeholderColor = Colors.lightGrey
-        setupStyle(fontSize: 22, letterSpacing: -0.8, activeTextColor: Colors.dark, backgroundColor: .clear)
-    }
-}
-
-
-
-
-class DescriptionTextView: WordTextView {
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        placeholder = "Description"
-        limitOfString = Limits.wordDescription
-        backgroundColorOnFocus = Colors.dark.withAlphaComponent(0.1)
-        placeholderColor = Colors.lightGrey
-        setupStyle(fontSize: 18, letterSpacing: -0.6, activeTextColor: Colors.darkGrey, backgroundColor: .clear)
-    }
-}
-
-
 
 protocol WordTextViewDelegate: AnyObject {
     func editingChanged()
@@ -64,7 +23,7 @@ class WordTextView: UITextView, UITextViewDelegate {
     public var backgroundColorOnShow: UIColor?
     public var backgroundColorOnFocus: UIColor?
     
-    private var isPlaceholderSet = false
+    var isPlaceholderSet = false
     
     override var text: String! {
         didSet {
@@ -138,7 +97,7 @@ class WordTextView: UITextView, UITextViewDelegate {
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textColor == placeholderColor ?? Colors.lightGrey { textView.text = "" }
+        if textColor == placeholderColor { textView.text = "" }
         UIView.animate(withDuration: 0.3) { [self] in
             backgroundColor = backgroundColorOnFocus
         }
@@ -150,7 +109,7 @@ class WordTextView: UITextView, UITextViewDelegate {
             backgroundColor = backgroundColorOnShow
         }
     }
-
+    
     func textViewDidChange(_ textView: UITextView) {
         actionsDelegate?.editingChanged()
         let fixedWidth = frame.size.width

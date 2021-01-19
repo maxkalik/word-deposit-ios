@@ -66,8 +66,6 @@ class VocabularyCardCVCell: UICollectionViewCell, WordTextViewDelegate {
     // WordTextViewDelegate
     
     func editingChanged() {
-        print("editing changed")
-        
         guard let wordExample = wordExampleTextView.text,
             let wordTranslation = wordTranslationTextView.text,
             let wordDescription = wordDescriptionTextView.text else { return }
@@ -95,9 +93,9 @@ class VocabularyCardCVCell: UICollectionViewCell, WordTextViewDelegate {
         if isKeyboardShowing { return }
         isKeyboardShowing = true
         
-        // if (wordDescriptionTextView.text!.isEmpty) {
-        //     wordDescriptionTextView.isHidden = false
-        // }
+        if word.description.isEmpty {
+            wordDescriptionTextView.isHidden = false
+        }
         
         
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
@@ -106,12 +104,12 @@ class VocabularyCardCVCell: UICollectionViewCell, WordTextViewDelegate {
             frame.origin.y -= keyboardHeight
         }
         
-        // UIView.animate(withDuration: 0.3) { [self] in
-        //     wordPictureButton.alpha = 0.2
-        //     if (wordDescriptionTextView.text!.isEmpty) {
-        //         wordDescriptionTextView.alpha = 1
-        //     }
-        // }
+        UIView.animate(withDuration: 0.3) { [self] in
+            wordPictureButton.alpha = 0.2
+            if word.description.isEmpty {
+                wordDescriptionTextView.alpha = 1
+            }
+        }
         
         delegate?.disableEnableScroll(isKeyboardShow: true)
     }
@@ -126,12 +124,12 @@ class VocabularyCardCVCell: UICollectionViewCell, WordTextViewDelegate {
             hideAllButtons()
         }
         
-        // UIView.animate(withDuration: 0.3) { [self] in
-        //     if (wordDescriptionTextView.text!.isEmpty) {
-        //         hideWordDescriptionTextView()
-        //     }
-        //     wordPictureButton.alpha = 1
-        // }
+        UIView.animate(withDuration: 0.3) { [self] in
+            if (word.description.isEmpty) {
+                wordDescriptionTextView.hide()
+            }
+            wordPictureButton.alpha = 1
+        }
         
         delegate?.disableEnableScroll(isKeyboardShow: false)
     }
@@ -146,26 +144,14 @@ class VocabularyCardCVCell: UICollectionViewCell, WordTextViewDelegate {
         setupImagePlaceholder()
     }
     
-    // private func setupDescriptionTextView() {
-    //     guard let text = wordDescriptionTextView.text else { return }
-    //
-    //     if text.isEmpty {
-    //         hideWordDescriptionTextView()
-    //     } else {
-    //         showWordDescriptionTextView()
-    //     }
-    // }
-    
-    private func showWordDescriptionTextView() {
-        wordDescriptionTextView.alpha = 1
-        wordDescriptionTextView.isHidden = false
+    private func setupDescriptionTextView() {
+        if word.description.isEmpty {
+            wordDescriptionTextView.hide()
+        } else {
+            wordDescriptionTextView.show()
+        }
     }
-    
-    private func hideWordDescriptionTextView() {
-        wordDescriptionTextView.alpha = 0
-        wordDescriptionTextView.isHidden = true
-    }
-    
+        
     private func setupImagePlaceholder() {
         wordPictureButton.backgroundColor = Colors.lightGrey
         let image = UIImage(named: Icons.Picture)?.withRenderingMode(.alwaysTemplate)
@@ -189,11 +175,13 @@ class VocabularyCardCVCell: UICollectionViewCell, WordTextViewDelegate {
             wordPictureButton.kf.setImage(with: imgRecourse, for: .normal, options: options)
         }
         
+        wordDescriptionTextView.isPlaceholderSet = false
+        
         wordExampleTextView.text = word.example
         wordTranslationTextView.text = word.translation
         wordDescriptionTextView.text = word.description
         
-        // setupDescriptionTextView()
+        setupDescriptionTextView()
     }
     
     // MARK: - IBActions

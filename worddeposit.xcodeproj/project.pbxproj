@@ -17,6 +17,7 @@
 		11119631254CBA68006588D5 /* ButtonNavTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11119630254CBA68006588D5 /* ButtonNavTitleView.swift */; };
 		11119635254F0288006588D5 /* SortingForSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11119634254F0288006588D5 /* SortingForSearch.swift */; };
 		1117D08F25023675000D864F /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1117D08E25023675000D864F /* Array.swift */; };
+		1120047F25B76F870000FCD7 /* WordTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1120047E25B76F860000FCD7 /* WordTextView.swift */; };
 		11284211248E7C5700A014E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284210248E7C5700A014E9 /* AppDelegate.swift */; };
 		11284213248E7C5700A014E9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284212248E7C5700A014E9 /* SceneDelegate.swift */; };
 		11284218248E7C5700A014E9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11284216248E7C5700A014E9 /* Main.storyboard */; };
@@ -53,7 +54,7 @@
 		118162EF24BFB08E0088C0E1 /* UserInfoTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118162EE24BFB08E0088C0E1 /* UserInfoTVC.swift */; };
 		1181BBF32498060F00DB682E /* VocabularyCardsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1181BBF12498060F00DB682E /* VocabularyCardsVC.swift */; };
 		1181BBF42498060F00DB682E /* VocabularyCardsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1181BBF22498060F00DB682E /* VocabularyCardsVC.xib */; };
-		118E34BA25ACEE8400025FFE /* TextViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118E34B925ACEE8400025FFE /* TextViews.swift */; };
+		118E34BA25ACEE8400025FFE /* WordTextViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118E34B925ACEE8400025FFE /* WordTextViews.swift */; };
 		1192355024BFB66C00E76403 /* TextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1192354F24BFB66C00E76403 /* TextFields.swift */; };
 		119D786B2540BBAF009260D4 /* CheckmarkListTVCResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D786A2540BBAF009260D4 /* CheckmarkListTVCResults.swift */; };
 		119D78712540BBD8009260D4 /* CheckmarkListTVC+Updating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D78702540BBD8009260D4 /* CheckmarkListTVC+Updating.swift */; };
@@ -105,6 +106,7 @@
 		11119630254CBA68006588D5 /* ButtonNavTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonNavTitleView.swift; sourceTree = "<group>"; };
 		11119634254F0288006588D5 /* SortingForSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingForSearch.swift; sourceTree = "<group>"; };
 		1117D08E25023675000D864F /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
+		1120047E25B76F860000FCD7 /* WordTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordTextView.swift; sourceTree = "<group>"; };
 		1128420D248E7C5700A014E9 /* worddeposit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = worddeposit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11284210248E7C5700A014E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		11284212248E7C5700A014E9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -143,7 +145,7 @@
 		118162EE24BFB08E0088C0E1 /* UserInfoTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoTVC.swift; sourceTree = "<group>"; };
 		1181BBF12498060F00DB682E /* VocabularyCardsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyCardsVC.swift; sourceTree = "<group>"; };
 		1181BBF22498060F00DB682E /* VocabularyCardsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VocabularyCardsVC.xib; sourceTree = "<group>"; };
-		118E34B925ACEE8400025FFE /* TextViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViews.swift; sourceTree = "<group>"; };
+		118E34B925ACEE8400025FFE /* WordTextViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordTextViews.swift; sourceTree = "<group>"; };
 		1192354F24BFB66C00E76403 /* TextFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFields.swift; sourceTree = "<group>"; };
 		119D786A2540BBAF009260D4 /* CheckmarkListTVCResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkListTVCResults.swift; sourceTree = "<group>"; };
 		119D78702540BBD8009260D4 /* CheckmarkListTVC+Updating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CheckmarkListTVC+Updating.swift"; sourceTree = "<group>"; };
@@ -295,7 +297,8 @@
 				15E77428252A3BF400EC57D0 /* SecondaryButton.swift */,
 				11119630254CBA68006588D5 /* ButtonNavTitleView.swift */,
 				1162E5F425A23B1100B6173A /* BubbleLabel.swift */,
-				118E34B925ACEE8400025FFE /* TextViews.swift */,
+				1120047E25B76F860000FCD7 /* WordTextView.swift */,
+				118E34B925ACEE8400025FFE /* WordTextViews.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -582,7 +585,7 @@
 				11F32A5924AF49DB0097BF39 /* VocabularyTVC+Updating.swift in Sources */,
 				11ECE4B424EB0FA100B7884B /* VocabulariesTVC.swift in Sources */,
 				15E7741F25292F0100EC57D0 /* ShadowView.swift in Sources */,
-				118E34BA25ACEE8400025FFE /* TextViews.swift in Sources */,
+				118E34BA25ACEE8400025FFE /* WordTextViews.swift in Sources */,
 				1128422F248E839D00A014E9 /* AddWordVC.swift in Sources */,
 				15E77426252A2C7C00EC57D0 /* ButtonSelector.swift in Sources */,
 				1181BBF32498060F00DB682E /* VocabularyCardsVC.swift in Sources */,
@@ -601,6 +604,7 @@
 				15E77429252A3BF400EC57D0 /* SecondaryButton.swift in Sources */,
 				15122F5825213FF900DB0E8F /* TabBarConroller.swift in Sources */,
 				11284233248E83BB00A014E9 /* VocabularyTVC.swift in Sources */,
+				1120047F25B76F870000FCD7 /* WordTextView.swift in Sources */,
 				1117D08F25023675000D864F /* Array.swift in Sources */,
 				110F5E3724FD673D00C463A4 /* UserService.swift in Sources */,
 				11284213248E7C5700A014E9 /* SceneDelegate.swift in Sources */,
