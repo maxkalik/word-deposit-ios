@@ -9,6 +9,11 @@ protocol VocabularyDetailsVCDelegate: AnyObject {
 class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var scrollView: UIScrollView! {
+        didSet {
+            scrollView.contentInsetAdjustmentBehavior = .never
+        }
+    }
     
     @IBOutlet weak var titleTextField: PrimaryTextField!
     @IBOutlet weak var languageTextField: UITextField!
@@ -36,9 +41,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
                 } else {
                     if index == languages.count - 1 {
                         guard let language = languageTextField.text else { return }
-                        if language.isEmpty {
-                            disableOnlySaveButton()
-                        }
+                        if language.isEmpty { disableOnlySaveButton() }
                     } else {
                         enableAllButtons()
                     }
@@ -63,7 +66,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         getLanguages()
         setupUI()
         disableAllButtons()
-        
+
         if vocabulary != nil {
             buttonsStackView.alpha = 0
         } else {
@@ -119,26 +122,15 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             keyboardHeight = keyboardFrame.cgRectValue.height
-                        
-            // Using centerY constrains and changing it allow to save the position of the stackview at the center
-            // even if we accidently touch (and drag) uiViewController.
-            UIView.animate(withDuration: 0.3) { [self] in
-                stackView.frame.origin.y -= keyboardHeight - stackView.frame.size.height
-                view.layoutIfNeeded()
-            }
+            scrollView.contentOffset.y = keyboardHeight
         }
+        
         buttonsStackView.alpha = 1
     }
     
     @objc func keyboardWillHide(_ notification: NSNotification) {
         if !isKeyboardShowing { return }
         isKeyboardShowing = false
-        
-        UIView.animate(withDuration: 0.3) { [self] in
-            stackView.frame.origin.y += keyboardHeight - stackView.frame.size.height
-            view.layoutIfNeeded()
-        }
-        
         if vocabulary != nil { buttonsStackView.alpha = 0 }
     }
     
