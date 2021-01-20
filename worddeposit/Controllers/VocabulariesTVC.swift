@@ -56,7 +56,6 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         setupMessage()
         messageView.hide()
         checkVocabulariesExist()
@@ -151,15 +150,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         tableView.backgroundColor = Colors.silver
     }
     
-    @objc func vocabularyDidSwitch() {
-        print("vocabularies -- notification is called")
-    }
-    
-    @objc func vocabularySwitchBegan() {
-        print("vocabularies -- notification switch began is called")
-    }
-    
-    @objc func checkboxChanged(sender: Checkbox) {
+    private func checkboxChanged(sender: Checkbox) {
         if vocabularies.count == 1 {
             sender.isOn = true
             simpleAlert(title: "You cannot unmarked actived vocabulary.", msg: "Create another one for swithing between them.")
@@ -170,17 +161,14 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
                 guard let oldIndex = selectedVocabularyIndex else { return }
                 selectedVocabularyIndex = newSelectedVocabularyIndex
                 tableView.reloadRows(at: [IndexPath(item: oldIndex, section: 0), IndexPath(item: newSelectedVocabularyIndex, section: 0)], with: .fade)
-                
-                // update vocabularies request
+
                 UserService.shared.switchSelectedVocabulary(from: vocabularies[oldIndex], to: vocabularies[newSelectedVocabularyIndex]) { error in
-                    
                     if let error = error {
                         UserService.shared.db.handleFirestoreError(error, viewController: self)
                         return
                     }
                     
                     UserService.shared.getCurrentVocabulary()
-                    
                     UserService.shared.fetchWords { error, _ in
                         if let error = error {
                             UserService.shared.db.handleFirestoreError(error, viewController: self)
@@ -195,12 +183,18 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
                 simpleAlert(title: "Vocabulary alert", msg: "You cannot unmarked actived vocabulary. Mark another one.")
             }
         }
-        
     }
-
+    
+    @objc func vocabularyDidSwitch() {
+        print("vocabularies -- notification is called")
+    }
+    
+    @objc func vocabularySwitchBegan() {
+        print("vocabularies -- notification switch began is called")
+    }
+    
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return vocabularies.count
     }
 
@@ -216,9 +210,6 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
                 cell.isSelectedVocabulary = true
                 selectedVocabularyIndex = indexPath.row
             }
-            cell.checkbox.tag = indexPath.row
-            cell.checkbox.addTarget(self, action: #selector(checkboxChanged(sender:)), for: .touchUpInside)
-            
             return cell
         }
         return UITableViewCell()
@@ -231,10 +222,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
-            // TODO: - BUG - deleting out of the range of the array
             let vocabulary = vocabularies[indexPath.row]
-            
             if vocabulary.isSelected {
                 simpleAlert(title: "You cannot delete", msg: "Before removing vocabulary, please switch to another vocabulary")
             } else {
@@ -253,6 +241,14 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
             }
         }
     }
+    
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let edit = UIContextualAction(style: .normal, title: "Edit") { (_, _, success) in
+            self.performSegue(withIdentifier: Segues.VocabularyDetails, sender: indexPath.row)
+        }
+        edit.backgroundColor = Colors.dark
+        return UISwipeActionsConfiguration(actions: [edit])
+    }
 
     // MARK: - IBOutlets
     
@@ -263,17 +259,18 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     // MARK: - Navigation
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: Segues.VocabularyDetails, sender: indexPath.row)
+        if let cell = tableView.dequeueReusableCell(withIdentifier: XIBs.VocabulariesTVCell, for: indexPath) as? VocabulariesTVCell {
+            cell.checkbox.tag = indexPath.row
+            self.checkboxChanged(sender: cell.checkbox)
+        }
     }
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vocabularyDetailsVC = segue.destination as? VocabularyDetailsVC {
             vocabularyDetailsVC.delegate = self
             if let index = sender as? Int {
                 vocabularyDetailsVC.vocabulary = vocabularies[index]
             }
-            // we need to set very first created vocabulary is selected = true
             if vocabularies.count > 0 {
                 vocabularyDetailsVC.isFirstSelected = false
             }
