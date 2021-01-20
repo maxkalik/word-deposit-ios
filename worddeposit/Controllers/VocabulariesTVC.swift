@@ -150,7 +150,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         tableView.backgroundColor = Colors.silver
     }
     
-    private func checkboxChanged(sender: Checkbox) {
+    @objc private func checkboxChanged(sender: Checkbox) {
         if vocabularies.count == 1 {
             sender.isOn = true
             simpleAlert(title: "You cannot unmarked actived vocabulary.", msg: "Create another one for swithing between them.")
@@ -210,6 +210,8 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
                 cell.isSelectedVocabulary = true
                 selectedVocabularyIndex = indexPath.row
             }
+            cell.checkbox.tag = indexPath.row
+            cell.checkbox.addTarget(self, action: #selector(checkboxChanged(sender:)), for: .touchUpInside)
             return cell
         }
         return UITableViewCell()

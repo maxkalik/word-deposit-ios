@@ -6,7 +6,6 @@ class VocabulariesTVCell: UITableViewCell {
     @IBOutlet weak var languageLabel: UILabel!
     @IBOutlet weak var wordsAmountActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var wordsAmountLabel: UILabel!
-//    @IBOutlet weak var selectionSwitch: UISwitch!
     @IBOutlet weak var checkbox: Checkbox!
     @IBOutlet weak var containerView: ShadowView!
     
@@ -47,21 +46,6 @@ class VocabulariesTVCell: UITableViewCell {
         checkbox.isOn = false
         titleLabel.textColor = Colors.dark
     }
-    
-    // override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    //     super.touchesBegan(touches, with: event)
-    //     UIView.animate(withDuration: 0.3) {
-    //         self.alpha = 0.3
-    //     }
-    // }
-    // 
-    // override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-    //     super.touchesEnded(touches, with: event)
-    //     UIView.animate(withDuration: 0.3) {
-    //         self.alpha = 1
-    //     }
-    // }
-
     
     override func awakeFromNib() {
         super.awakeFromNib()
