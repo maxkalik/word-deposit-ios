@@ -18,9 +18,9 @@ class AddWordVC: UIViewController {
     
     @IBOutlet weak var inputsView: UIView!
     
-    @IBOutlet weak var wordImagePickerBtn: UIButton! {
+    @IBOutlet weak var wordImageButton: UIButton! {
         didSet {
-            wordImagePickerBtn.imageView?.contentMode = .scaleAspectFill
+            wordImageButton.imageView?.contentMode = .scaleAspectFill
         }
     }
     
@@ -97,19 +97,19 @@ class AddWordVC: UIViewController {
         
         // Set initial values
         inputViewOriginY = inputsView.frame.origin.y
-        wordImagePickerBtnOriginY = wordImagePickerBtn.frame.origin.y
+        wordImagePickerBtnOriginY = wordImageButton.frame.origin.y
         
         // Disable scroll to prevent breaking layout
         scrollView.isScrollEnabled = false
         
         // Scale WordImagePickerBtn
-        wordImagePickerBtn.transform = CGAffineTransform(scaleX: 0.3, y: 0.3);
-        wordImagePickerBtn.imageView?.layer.transform = CATransform3DScale(CATransform3DIdentity, 2.0, 2.0, 2.0)
-        wordImagePickerBtn.layer.cornerRadius = 50.0
-        wordImagePickerBtn.frame.origin.y = topSafeArea + 20
+        wordImageButton.transform = CGAffineTransform(scaleX: 0.3, y: 0.3);
+        wordImageButton.imageView?.layer.transform = CATransform3DScale(CATransform3DIdentity, 2.0, 2.0, 2.0)
+        wordImageButton.layer.cornerRadius = 50.0
+        wordImageButton.frame.origin.y = topSafeArea + 20
         
         // Move inputsView close to wordImagePickerBtn
-        inputsView.frame.origin.y = topSafeArea + wordImagePickerBtn.frame.size.height + 20
+        inputsView.frame.origin.y = topSafeArea + wordImageButton.frame.size.height + 20
     }
     
     @objc func keyboardWillHide(_ notification: NSNotification) {
@@ -119,10 +119,10 @@ class AddWordVC: UIViewController {
         
         closeButton.setImage(UIImage(named: "icon_close_large_bordered"), for: .normal)
         // Return default state of wordImagePickerBtn
-        wordImagePickerBtn.transform = CGAffineTransform(scaleX: 1, y: 1);
-        wordImagePickerBtn.imageView?.layer.transform = CATransform3DIdentity
-        wordImagePickerBtn.layer.cornerRadius = 0.0
-        wordImagePickerBtn.frame.origin.y = wordImagePickerBtnOriginY
+        wordImageButton.transform = CGAffineTransform(scaleX: 1, y: 1);
+        wordImageButton.imageView?.layer.transform = CATransform3DIdentity
+        wordImageButton.layer.cornerRadius = 0.0
+        wordImageButton.frame.origin.y = wordImagePickerBtnOriginY
 
         // Return default Y value of inputsView
         inputsView.frame.origin.y = inputViewOriginY
@@ -142,10 +142,10 @@ class AddWordVC: UIViewController {
     // MARK: - Support Methods
     
     private func setupImagePlaceholder() {
-        wordImagePickerBtn.backgroundColor = Colors.lightDark
+        wordImageButton.backgroundColor = Colors.lightDark
         let image = UIImage(named: Icons.Photo)?.withRenderingMode(.alwaysTemplate)
-        wordImagePickerBtn.setImage(image, for: .normal)
-        wordImagePickerBtn.tintColor = Colors.grey.withAlphaComponent(0.3)
+        wordImageButton.setImage(image, for: .normal)
+        wordImageButton.tintColor = Colors.grey.withAlphaComponent(0.3)
     }
     
     private func setupMessage() {
@@ -182,7 +182,7 @@ class AddWordVC: UIViewController {
     
     private func setImageData() -> Data? {
         if isImageSet {
-            guard let image = wordImagePickerBtn.imageView?.image else { return nil }
+            guard let image = wordImageButton.imageView?.image else { return nil }
             let resizedImg = image.resized(toWidth: 400.0)
             return resizedImg?.jpegData(compressionQuality: 0.5)
         }
@@ -269,7 +269,7 @@ class AddWordVC: UIViewController {
         // unowned picker will help to avoid memory leak on each action
         picker.didFinishPicking { [unowned picker] items, _ in
             if let photo = items.singlePhoto {
-                self.wordImagePickerBtn.setImage(photo.image, for: .normal)
+                self.wordImageButton.setImage(photo.image, for: .normal)
                 self.isImageSet = true
                 self.clearAllButton.isEnabled = true
             }
@@ -296,17 +296,7 @@ class AddWordVC: UIViewController {
 
 extension AddWordVC: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        // make image scale on scroll
-        let offset = scrollView.contentOffset
-
-        if offset.y < 0.0 {
-            var transform = CATransform3DTranslate(CATransform3DIdentity, 0, (offset.y), 0)
-            let scaleFactor = 1 + (-1 * offset.y / (wordImagePickerBtn.frame.size.height / 2))
-            transform = CATransform3DScale(transform, scaleFactor, scaleFactor, 1)
-            wordImagePickerBtn.layer.transform = transform
-        } else {
-            wordImagePickerBtn.layer.transform = CATransform3DIdentity
-        }
+        let transform = WordImageButtonHelper.shared.transformOnScroll(with: scrollView.contentOffset, and: wordImageButton.frame.size.height)
+        wordImageButton.layer.transform = transform
     }
 }

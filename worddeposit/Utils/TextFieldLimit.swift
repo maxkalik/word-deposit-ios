@@ -23,4 +23,11 @@ class TextFieldLimit {
         let count = text.count - substringToReplace.count + string.count
         return count <= limit
     }
+    
+    static func checkMaxLength(from text: String, range: NSRange, string: String, limit: Int) -> Bool {
+        guard let rangeOfTextToReplace = Range(range, in: text) else { return false }
+        let substringToReplace = text[rangeOfTextToReplace]
+        let count = text.count - substringToReplace.count + string.count
+        return count <= limit
+    }
 }
