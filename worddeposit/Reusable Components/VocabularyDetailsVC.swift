@@ -57,8 +57,6 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("VOCABULARY DETAILS VC View Did Load")
-        
         view.backgroundColor = Colors.silver
         
         // Primary setting up UI

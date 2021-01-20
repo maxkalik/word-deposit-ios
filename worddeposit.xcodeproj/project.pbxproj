@@ -16,6 +16,7 @@
 		11108C04252356BC00A44945 /* DMSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 11108C01252356BC00A44945 /* DMSans-Regular.ttf */; };
 		11119631254CBA68006588D5 /* ButtonNavTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11119630254CBA68006588D5 /* ButtonNavTitleView.swift */; };
 		11119635254F0288006588D5 /* SortingForSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11119634254F0288006588D5 /* SortingForSearch.swift */; };
+		1111FDA025B8B24B00799B0F /* WordImageButtonHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1111FD9F25B8B24B00799B0F /* WordImageButtonHelper.swift */; };
 		1117D08F25023675000D864F /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1117D08E25023675000D864F /* Array.swift */; };
 		1120047F25B76F870000FCD7 /* WordTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1120047E25B76F860000FCD7 /* WordTextView.swift */; };
 		11284211248E7C5700A014E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284210248E7C5700A014E9 /* AppDelegate.swift */; };
@@ -105,6 +106,7 @@
 		11108C01252356BC00A44945 /* DMSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DMSans-Regular.ttf"; sourceTree = "<group>"; };
 		11119630254CBA68006588D5 /* ButtonNavTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonNavTitleView.swift; sourceTree = "<group>"; };
 		11119634254F0288006588D5 /* SortingForSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingForSearch.swift; sourceTree = "<group>"; };
+		1111FD9F25B8B24B00799B0F /* WordImageButtonHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordImageButtonHelper.swift; sourceTree = "<group>"; };
 		1117D08E25023675000D864F /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		1120047E25B76F860000FCD7 /* WordTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordTextView.swift; sourceTree = "<group>"; };
 		1128420D248E7C5700A014E9 /* worddeposit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = worddeposit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -208,6 +210,14 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		1111FD9E25B8B1F400799B0F /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				1111FD9F25B8B24B00799B0F /* WordImageButtonHelper.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		1117D08D2502365B000D864F /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -244,6 +254,7 @@
 		1128420F248E7C5700A014E9 /* worddeposit */ = {
 			isa = PBXGroup;
 			children = (
+				1111FD9E25B8B1F400799B0F /* Helpers */,
 				11284226248E7CF000A014E9 /* Models */,
 				1117D08D2502365B000D864F /* Extensions */,
 				110F5E3524FD670500C463A4 /* Services */,
@@ -583,6 +594,7 @@
 				119D78712540BBD8009260D4 /* CheckmarkListTVC+Updating.swift in Sources */,
 				1171E70624981CDD00805D35 /* VocabularyCardCVCell.swift in Sources */,
 				11F32A5924AF49DB0097BF39 /* VocabularyTVC+Updating.swift in Sources */,
+				1111FDA025B8B24B00799B0F /* WordImageButtonHelper.swift in Sources */,
 				11ECE4B424EB0FA100B7884B /* VocabulariesTVC.swift in Sources */,
 				15E7741F25292F0100EC57D0 /* ShadowView.swift in Sources */,
 				118E34BA25ACEE8400025FFE /* WordTextViews.swift in Sources */,
