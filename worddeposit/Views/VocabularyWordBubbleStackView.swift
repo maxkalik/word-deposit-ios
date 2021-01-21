@@ -9,36 +9,6 @@
 import UIKit
 import Kingfisher
 
-class VocabularyWordBubbleLabel: UILabel {
-    
-    var fontSize: CGFloat? {
-        didSet {
-            font = UIFont(name: Fonts.bold, size: fontSize ?? 16)
-        }
-    }
-    var fontColor: UIColor? {
-        didSet {
-            textColor = fontColor
-        }
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonSetup()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        commonSetup()
-    }
-    
-    func commonSetup() {
-        lineBreakMode = .byWordWrapping
-        numberOfLines = 0
-        textColor = .white
-    }
-}
-
 class VocabularyWordBubbleView: UIView {
     
     @IBOutlet weak var wordImageView: UIImageView!
@@ -88,8 +58,8 @@ class VocabularyWordBubbleView: UIView {
         layer.cornerRadius = Radiuses.huge
         layer.masksToBounds = true
         
-        wordExampleLabel.fontSize = 18
-        wordExampleLabel.fontColor = Colors.orange
+        wordExampleLabel.fontSize = 22
+        // wordExampleLabel.fontColor = Colors.orange
         wordTranslationLabel.fontSize = 18
         wordDescriptionLabel.fontColor = Colors.grey
         wordImageView.layer.cornerRadius = Radiuses.large

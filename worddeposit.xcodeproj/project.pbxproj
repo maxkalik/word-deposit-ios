@@ -57,6 +57,7 @@
 		118162EF24BFB08E0088C0E1 /* UserInfoTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118162EE24BFB08E0088C0E1 /* UserInfoTVC.swift */; };
 		1181BBF32498060F00DB682E /* VocabularyCardsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1181BBF12498060F00DB682E /* VocabularyCardsVC.swift */; };
 		1181BBF42498060F00DB682E /* VocabularyCardsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1181BBF22498060F00DB682E /* VocabularyCardsVC.xib */; };
+		1186959925BA1B22002E5305 /* VocabularyWordBubbleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1186959825BA1B22002E5305 /* VocabularyWordBubbleLabel.swift */; };
 		118E34BA25ACEE8400025FFE /* WordTextViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118E34B925ACEE8400025FFE /* WordTextViews.swift */; };
 		1192355024BFB66C00E76403 /* TextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1192354F24BFB66C00E76403 /* TextFields.swift */; };
 		119D786B2540BBAF009260D4 /* CheckmarkListTVCResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D786A2540BBAF009260D4 /* CheckmarkListTVCResults.swift */; };
@@ -151,6 +152,7 @@
 		118162EE24BFB08E0088C0E1 /* UserInfoTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoTVC.swift; sourceTree = "<group>"; };
 		1181BBF12498060F00DB682E /* VocabularyCardsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyCardsVC.swift; sourceTree = "<group>"; };
 		1181BBF22498060F00DB682E /* VocabularyCardsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VocabularyCardsVC.xib; sourceTree = "<group>"; };
+		1186959825BA1B22002E5305 /* VocabularyWordBubbleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyWordBubbleLabel.swift; sourceTree = "<group>"; };
 		118E34B925ACEE8400025FFE /* WordTextViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordTextViews.swift; sourceTree = "<group>"; };
 		1192354F24BFB66C00E76403 /* TextFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFields.swift; sourceTree = "<group>"; };
 		119D786A2540BBAF009260D4 /* CheckmarkListTVCResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkListTVCResults.swift; sourceTree = "<group>"; };
@@ -315,6 +317,7 @@
 				1120047E25B76F860000FCD7 /* WordTextView.swift */,
 				118E34B925ACEE8400025FFE /* WordTextViews.swift */,
 				1111FDA725B8F67500799B0F /* VocabularyWordBubbleStackView.swift */,
+				1186959825BA1B22002E5305 /* VocabularyWordBubbleLabel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -572,6 +575,7 @@
 				110C3F87252DEFC600FE5667 /* UITextField.swift in Sources */,
 				1128423B248E83ED00A014E9 /* ForgotPasswordVC.swift in Sources */,
 				15CEBC6124D71A0300D48C0E /* ProgressHUD.swift in Sources */,
+				1186959925BA1B22002E5305 /* VocabularyWordBubbleLabel.swift in Sources */,
 				11049CB82541FD3D009F324F /* SearchableTVC.swift in Sources */,
 				1128423D248E840000A014E9 /* RoundedViews.swift in Sources */,
 				11331B82254B8AC500FDB454 /* TopBarItem.swift in Sources */,

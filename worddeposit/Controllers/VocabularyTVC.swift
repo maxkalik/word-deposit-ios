@@ -238,18 +238,6 @@ extension VocabularyTVC {
     }
 }
 
-extension VocabularyTVC: VocabularyTVCellDelegate {
-    func vocabularyTVCellBeganLongPressed(with word: Word) {
-        // print("vocabularyTVCellBeganLongPressed", cellFrame, word)
-        vocabularyWordBubbleView.configure(with: word)
-        vocabularyWordBubbleView.onPress()
-    }
-    
-    func vocabularyTVCellDidFinishLognPress() {
-        // print("vocabularyTVCellDidFinishLognPress")
-        vocabularyWordBubbleView.onFinishPress()
-    }
-}
 
 // MARK: - UITableViewCell Editing
 
@@ -303,5 +291,18 @@ extension VocabularyTVC: VocabularyResultsTVCDelegate {
 extension VocabularyTVC: VocabulariesTVCDelegate {
     func onVocabulariesTVCDismiss() {
         self.buttonNavTitleView.initialState()
+    }
+}
+
+// MARK: - VocabularyTVCellDelegate
+
+extension VocabularyTVC: VocabularyTVCellDelegate {
+    func vocabularyTVCellBeganLongPressed(with word: Word) {
+        vocabularyWordBubbleView.configure(with: word)
+        vocabularyWordBubbleView.onPress()
+    }
+    
+    func vocabularyTVCellDidFinishLognPress() {
+        vocabularyWordBubbleView.onFinishPress()
     }
 }
