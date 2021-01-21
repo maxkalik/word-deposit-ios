@@ -57,6 +57,12 @@
                 <constraint firstItem="DZ3-bt-Q7Z" firstAttribute="top" secondItem="9WQ-FB-tWo" secondAttribute="bottom" constant="20" id="ymt-1W-PPP"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="wordDescriptionLabel" destination="mDh-si-2nk" id="1F5-Kf-qIg"/>
+                <outlet property="wordExampleLabel" destination="DAV-Hc-f8k" id="NW0-wn-7m7"/>
+                <outlet property="wordImageView" destination="9WQ-FB-tWo" id="pYn-xT-D1A"/>
+                <outlet property="wordTranslationLabel" destination="2VB-y7-FE8" id="0CT-Ar-5iK"/>
+            </connections>
             <point key="canvasLocation" x="242.75362318840581" y="310.04464285714283"/>
         </view>
     </objects>
