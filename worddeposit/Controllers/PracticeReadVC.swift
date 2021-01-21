@@ -203,9 +203,8 @@ class PracticeReadVC: UIViewController {
     private func setupTrainedWord() {
         let filteredWordDesk = wordsDesk.filter { !rightAnswerIds.contains($0.id) }
         trainedWord = filteredWordDesk.randomElement()
-        print("=== setup trained word ===")
         guard let word = trainedWord else { return }
-        // setup ui
+
         switch practiceType {
         case Controllers.TrainerWordToTranslate:
             practiceLabel.text = word.example
@@ -225,20 +224,15 @@ class PracticeReadVC: UIViewController {
             self.spinner.stopAnimating()
         }
         collectionView.reloadData()
-        print("=== update screeen === <- collection reload data")
     }
-    
-    
-    
+
     private func updateUI() {
-        
         delegate?.updatePracticeVC(except: rightAnswerIds)
         selectedIndex = nil
         isSelected = false
         collectionView.isUserInteractionEnabled = true
         setupTrainedWord()
         collectionView.reloadData()
-        print("=== update UI === <- collection reload data")
     }
     
     // MARK: - IBActions

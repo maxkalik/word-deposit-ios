@@ -1,8 +1,16 @@
 import UIKit
 import Kingfisher
 
+protocol VocabularyTVCellDelegate: VocabularyTVC {
+    func vocabularyTVCellBeganLongPressed(with word: Word)
+    func vocabularyTVCellDidFinishLognPress()
+}
+
 class VocabularyTVCell: UITableViewCell {
 
+    let generator = UIImpactFeedbackGenerator(style: .heavy)
+    
+    weak var delegate: VocabularyTVCellDelegate?
     // Outlets
     @IBOutlet weak var preview: UIImageView!
     @IBOutlet weak var wordExampleLabel: UILabel! {
@@ -34,6 +42,23 @@ class VocabularyTVCell: UITableViewCell {
         super.awakeFromNib()
         preview.makeRounded()
         wordTranslationLabel.textColor = Colors.darkGrey
+        
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressed))
+        // longPress.min
+        longPress.minimumPressDuration = 0.5
+        longPress.delaysTouchesBegan = true
+        addGestureRecognizer(longPress)
+    }
+    
+    @objc private func longPressed(sender: UILongPressGestureRecognizer) {
+        if sender.state != .ended {
+            if sender.state == .began {
+                delegate?.vocabularyTVCellBeganLongPressed(with: word)
+                generator.impactOccurred()
+            }
+        } else {
+            delegate?.vocabularyTVCellDidFinishLognPress()
+        }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

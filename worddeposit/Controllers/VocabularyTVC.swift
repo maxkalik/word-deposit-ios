@@ -17,6 +17,8 @@ class VocabularyTVC: SearchableTVC {
     
     private var buttonNavTitleView = ButtonNavTitleView(type: .custom)
     private var progressHUD = ProgressHUD(title: "Fetching...")
+    
+    var vocabularyWordBubbleView: VocabularyWordBubbleView!
 
     // MARK: - View Lifecycle
     
@@ -39,11 +41,18 @@ class VocabularyTVC: SearchableTVC {
         nc.addObserver(self, selector: #selector(vocabularyDidUpdate), name: Notification.Name(Keys.currentVocabularyDidUpdateKey), object: nil)
         
         setupTitleView()
+        vocabularyWordBubbleView = UINib(nibName: "VocabularyWordBubbleView", bundle: .main).instantiate(withOwner: nil, options: nil).first as? VocabularyWordBubbleView
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         guard let superview = view.superview else { return }
+
+        if !vocabularyWordBubbleView.isDescendant(of: superview) {
+            superview.addSubview(vocabularyWordBubbleView)
+        }
+        
         if !progressHUD.isDescendant(of: superview) {
             view.superview?.addSubview(progressHUD)
             progressHUD.hide()
@@ -218,6 +227,7 @@ extension VocabularyTVC {
         if let cell = tableView.dequeueReusableCell(withIdentifier: XIBs.VocabularyTVCell, for: indexPath) as? VocabularyTVCell {
             cell.backgroundColor = .clear
             cell.configureCell(word: words[indexPath.row])
+            cell.delegate = self
             return cell
         }
         return UITableViewCell()
@@ -227,6 +237,7 @@ extension VocabularyTVC {
         return 70
     }
 }
+
 
 // MARK: - UITableViewCell Editing
 
@@ -280,5 +291,18 @@ extension VocabularyTVC: VocabularyResultsTVCDelegate {
 extension VocabularyTVC: VocabulariesTVCDelegate {
     func onVocabulariesTVCDismiss() {
         self.buttonNavTitleView.initialState()
+    }
+}
+
+// MARK: - VocabularyTVCellDelegate
+
+extension VocabularyTVC: VocabularyTVCellDelegate {
+    func vocabularyTVCellBeganLongPressed(with word: Word) {
+        vocabularyWordBubbleView.configure(with: word)
+        vocabularyWordBubbleView.onPress()
+    }
+    
+    func vocabularyTVCellDidFinishLognPress() {
+        vocabularyWordBubbleView.onFinishPress()
     }
 }
