@@ -17,6 +17,8 @@ class VocabularyTVC: SearchableTVC {
     
     private var buttonNavTitleView = ButtonNavTitleView(type: .custom)
     private var progressHUD = ProgressHUD(title: "Fetching...")
+    
+    var vocabularyWordBubbleView: VocabularyWordBubbleView!
 
     // MARK: - View Lifecycle
     
@@ -39,11 +41,19 @@ class VocabularyTVC: SearchableTVC {
         nc.addObserver(self, selector: #selector(vocabularyDidUpdate), name: Notification.Name(Keys.currentVocabularyDidUpdateKey), object: nil)
         
         setupTitleView()
+        vocabularyWordBubbleView = UINib(nibName: "VocabularyWordBubbleView", bundle: .main).instantiate(withOwner: nil, options: nil).first as? VocabularyWordBubbleView
+        // view.addSubview(vocabularyWordBubbleView)
+        // vocabularyWordBubbleView.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         guard let superview = view.superview else { return }
+        
+        superview.addSubview(vocabularyWordBubbleView)
+        vocabularyWordBubbleView.center = superview.center
+        vocabularyWordBubbleView.isHidden = true
+        
         if !progressHUD.isDescendant(of: superview) {
             view.superview?.addSubview(progressHUD)
             progressHUD.hide()
@@ -218,6 +228,7 @@ extension VocabularyTVC {
         if let cell = tableView.dequeueReusableCell(withIdentifier: XIBs.VocabularyTVCell, for: indexPath) as? VocabularyTVCell {
             cell.backgroundColor = .clear
             cell.configureCell(word: words[indexPath.row])
+            cell.delegate = self
             return cell
         }
         return UITableViewCell()
@@ -225,6 +236,20 @@ extension VocabularyTVC {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
+    }
+}
+
+extension VocabularyTVC: VocabularyTVCellDelegate {
+    func vocabularyTVCellBeganLongPressed(with cellFrame: CGRect, and word: Word) {
+        print("vocabularyTVCellBeganLongPressed", cellFrame, word)
+        // vocabularyWordBubbleView.frame = CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 42)
+        // vocabularyWordBubbleView.center = view.center
+        vocabularyWordBubbleView.isHidden = false
+    }
+    
+    func vocabularyTVCellDidFinishLognPress() {
+        print("vocabularyTVCellDidFinishLognPress")
+        vocabularyWordBubbleView.isHidden = true
     }
 }
 
