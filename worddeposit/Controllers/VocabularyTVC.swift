@@ -46,9 +46,12 @@ class VocabularyTVC: SearchableTVC {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        guard let superview = view.superview else { return }
         
-        superview.addSubview(vocabularyWordBubbleView)
+        guard let superview = view.superview else { return }
+
+        if !vocabularyWordBubbleView.isDescendant(of: superview) {
+            superview.addSubview(vocabularyWordBubbleView)
+        }
         
         if !progressHUD.isDescendant(of: superview) {
             view.superview?.addSubview(progressHUD)
@@ -236,8 +239,9 @@ extension VocabularyTVC {
 }
 
 extension VocabularyTVC: VocabularyTVCellDelegate {
-    func vocabularyTVCellBeganLongPressed(with cellFrame: CGRect, and word: Word) {
+    func vocabularyTVCellBeganLongPressed(with word: Word) {
         // print("vocabularyTVCellBeganLongPressed", cellFrame, word)
+        vocabularyWordBubbleView.configure(with: word)
         vocabularyWordBubbleView.onPress()
     }
     

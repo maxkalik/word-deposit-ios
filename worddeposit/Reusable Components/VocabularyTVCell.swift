@@ -2,7 +2,7 @@ import UIKit
 import Kingfisher
 
 protocol VocabularyTVCellDelegate: VocabularyTVC {
-    func vocabularyTVCellBeganLongPressed(with cellFrame: CGRect, and word: Word)
+    func vocabularyTVCellBeganLongPressed(with word: Word)
     func vocabularyTVCellDidFinishLognPress()
 }
 
@@ -53,7 +53,7 @@ class VocabularyTVCell: UITableViewCell {
     @objc private func longPressed(sender: UILongPressGestureRecognizer) {
         if sender.state != .ended {
             if sender.state == .began {
-                delegate?.vocabularyTVCellBeganLongPressed(with: frame, and: word)
+                delegate?.vocabularyTVCellBeganLongPressed(with: word)
                 generator.impactOccurred()
             }
         } else {
