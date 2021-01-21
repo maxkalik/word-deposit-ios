@@ -356,6 +356,8 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
             tvc.data = languages
             tvc.title = "Select language"
             
+            titleTextField.resignFirstResponder()
+            
             guard let vocabulary = self.vocabulary else { return }
             if languageIndex != nil {
                 tvc.selected = languageIndex
