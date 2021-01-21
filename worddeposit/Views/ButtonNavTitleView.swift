@@ -8,6 +8,13 @@ class ButtonNavTitleView: UIButton {
     var imageWidth: CGFloat!
     var action: (() -> Void)?
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        superview!.layoutIfNeeded()
+        frame.size.width = intrinsicContentSize.width
+        
+    }
+    
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
         
@@ -55,6 +62,6 @@ class ButtonNavTitleView: UIButton {
         
         imageEdgeInsets = UIEdgeInsets(top: 0, left: buttonWidth - imageWidth + spacing, bottom: 0, right: -(buttonWidth-imageWidth) - spacing)
         titleEdgeInsets = UIEdgeInsets(top: 0, left: -imageWidth - spacing, bottom: 0, right: imageWidth + spacing)
-        contentEdgeInsets = UIEdgeInsets(top: 4, left: spacing + 14, bottom: 4, right: spacing + 14)
+        contentEdgeInsets = UIEdgeInsets(top: 4, left: spacing + 28, bottom: 4, right: 0)
     }
 }
