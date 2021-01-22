@@ -59,11 +59,10 @@ class VocabularyCardCVCell: UICollectionViewCell, WordTextViewDelegate {
         wordTranslationTextView.actionsDelegate = self
         wordDescriptionTextView.actionsDelegate = self
         
-        wordImageButton.imageView?.layer.cornerRadius = Radiuses.large / 2
-
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         nc.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
     }
     
     deinit {
@@ -140,6 +139,7 @@ class VocabularyCardCVCell: UICollectionViewCell, WordTextViewDelegate {
     // MARK: - Other methods
     
     private func setupUI() {
+        wordImageButton.imageView?.layer.cornerRadius = Radiuses.large / 1.5
         scrollView.backgroundColor = Colors.silver
         removePictureButton.isHidden = true
         hideAllButtons()
