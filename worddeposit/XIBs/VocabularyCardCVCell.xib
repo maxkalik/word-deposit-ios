@@ -27,33 +27,22 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lGU-0G-zIr">
                                         <rect key="frame" x="0.0" y="0.0" width="249" height="508"/>
                                         <subviews>
-                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qEf-66-3td">
-                                                <rect key="frame" x="0.0" y="0.0" width="249" height="243"/>
-                                                <color key="backgroundColor" white="0.92711900680000003" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" secondItem="qEf-66-3td" secondAttribute="height" multiplier="245:239" id="JLK-XI-aO6"/>
-                                                </constraints>
-                                                <state key="normal" image="picture"/>
-                                                <connections>
-                                                    <action selector="wordPictureButtonTouched:" destination="gTV-IL-0wX" eventType="touchUpInside" id="2Uo-Ey-b62"/>
-                                                </connections>
-                                            </button>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Example" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="0ld-NP-yjI" customClass="PrimaryTextView" customModule="worddeposit" customModuleProvider="target">
-                                                <rect key="frame" x="92" y="283" width="65" height="33"/>
+                                                <rect key="frame" x="92" y="289" width="65" height="33"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="textColor" systemColor="labelColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Translation" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="HIT-3L-pxH" customClass="TranslationTextView" customModule="worddeposit" customModuleProvider="target">
-                                                <rect key="frame" x="84" y="336" width="81" height="33"/>
+                                                <rect key="frame" x="84" y="342" width="81" height="33"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="textColor" systemColor="labelColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Description" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="xAX-5P-ihz" customClass="DescriptionTextView" customModule="worddeposit" customModuleProvider="target">
-                                                <rect key="frame" x="82.5" y="379" width="84" height="33"/>
+                                                <rect key="frame" x="82.5" y="385" width="84" height="33"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="textColor" systemColor="labelColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -82,11 +71,22 @@
                                                     <constraint firstAttribute="height" constant="50" id="OZq-6g-UTs"/>
                                                 </constraints>
                                             </stackView>
+                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qEf-66-3td">
+                                                <rect key="frame" x="0.0" y="0.0" width="249" height="249"/>
+                                                <color key="backgroundColor" white="0.92711900680000003" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="qEf-66-3td" secondAttribute="height" multiplier="1:1" id="JLK-XI-aO6"/>
+                                                </constraints>
+                                                <state key="normal" image="picture"/>
+                                                <connections>
+                                                    <action selector="wordPictureButtonTouched:" destination="gTV-IL-0wX" eventType="touchUpInside" id="2Uo-Ey-b62"/>
+                                                </connections>
+                                            </button>
                                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="VgD-DV-qMQ">
-                                                <rect key="frame" x="106" y="103" width="37" height="37"/>
+                                                <rect key="frame" x="106" y="106" width="37" height="37"/>
                                             </activityIndicatorView>
                                             <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mC1-dx-JNe">
-                                                <rect key="frame" x="197" y="187" width="32" height="36"/>
+                                                <rect key="frame" x="197" y="193" width="32" height="36"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                                 <color key="tintColor" white="0.0" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" image="icon_trash_circle">
@@ -125,6 +125,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="lGU-0G-zIr" firstAttribute="width" secondItem="fMy-Da-NqV" secondAttribute="width" id="5kK-CO-PLc"/>
                                     <constraint firstItem="lGU-0G-zIr" firstAttribute="leading" secondItem="fMy-Da-NqV" secondAttribute="leading" id="KCS-ar-0Yp"/>

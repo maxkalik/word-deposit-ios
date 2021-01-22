@@ -58,6 +58,8 @@ class VocabularyCardCVCell: UICollectionViewCell, WordTextViewDelegate {
         wordExampleTextView.actionsDelegate = self
         wordTranslationTextView.actionsDelegate = self
         wordDescriptionTextView.actionsDelegate = self
+        
+        wordImageButton.imageView?.layer.cornerRadius = Radiuses.large / 2
 
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -91,51 +93,39 @@ class VocabularyCardCVCell: UICollectionViewCell, WordTextViewDelegate {
     
     
     // MARK: - @objc methods
-    
-    
+   
     @objc func keyboardWillShow(_ notification: NSNotification) {
         if isKeyboardShowing { return }
         isKeyboardShowing = true
-        
         if word.description.isEmpty {
             wordDescriptionTextView.isHidden = false
         }
-        
-        let bottomOffset = CGPoint(x: 0, y: scrollView.contentSize.height - scrollView.bounds.height + scrollView.contentInset.bottom)
+        let bottomOffset = CGPoint(x: 0, y: scrollView.contentSize.height - scrollView.bounds.height + scrollView.contentInset.bottom + 20)
         scrollView.setContentOffset(bottomOffset, animated: true)
-
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardHeight: CGFloat = keyboardFrame.cgRectValue.height
             showAllButtons()
             frame.origin.y -= keyboardHeight
         }
-        
         UIView.animate(withDuration: 0.3) { [self] in
             wordImageButton.alpha = 0.2
-            
             removePictureButton.alpha = 0
             removePictureButton.isEnabled = false
-            
             if word.description.isEmpty {
                 wordDescriptionTextView.alpha = 1
             }
         }
-        
         delegate?.disableEnableScroll(isKeyboardShow: true)
     }
     
     @objc func keyboardWillHide(_ notification: NSNotification) {
-        
         if !isKeyboardShowing { return }
         isKeyboardShowing = false
         frame.origin.y = 0
-        
         if !cancelButton.isEnabled && !saveChangingButton.isEnabled {
             hideAllButtons()
         }
-        
         UIView.animate(withDuration: 0.3) { [self] in
-            
             removePictureButton.alpha = 1
             removePictureButton.isEnabled = true
             
@@ -144,7 +134,6 @@ class VocabularyCardCVCell: UICollectionViewCell, WordTextViewDelegate {
             }
             wordImageButton.alpha = 1
         }
-        
         delegate?.disableEnableScroll(isKeyboardShow: false)
     }
     
@@ -187,6 +176,7 @@ class VocabularyCardCVCell: UICollectionViewCell, WordTextViewDelegate {
             let options: KingfisherOptionsInfo = [KingfisherOptionsInfoItem.transition(.fade(0.2))]
             let imgRecourse = ImageResource(downloadURL: url, cacheKey: word.imgUrl)
             wordImageButton.kf.setImage(with: imgRecourse, for: .normal, options: options)
+            wordImageButton.backgroundColor = .clear
         }
         
         wordDescriptionTextView.isPlaceholderSet = false
