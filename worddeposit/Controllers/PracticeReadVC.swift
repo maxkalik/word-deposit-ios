@@ -10,11 +10,10 @@ class PracticeReadVC: UIViewController {
     
     @IBOutlet weak var contentView: UIView!
     // MARK: - Instances
+    
     @IBOutlet weak var scrollView: UIScrollView! {
         didSet {
             scrollView.delegate = self
-            // scrollView.contentInsetAdjustmentBehavior = .never
-            
         }
     }
     
@@ -39,7 +38,6 @@ class PracticeReadVC: UIViewController {
     private var trainedWords = [Word]()
     private var selectedIndex: Int?
     private var isSelected = false
-    
     private var rightAnswerIds = Set<String>()
     private var sessionRightAnswersSum = 0 {
         didSet {
@@ -98,7 +96,6 @@ class PracticeReadVC: UIViewController {
         setupTrainedWord()
         view.addSubview(answerItemBubbleLabel)
         collectionViewHeightConstraint.constant = collectionView.contentSize.height
- 
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -108,13 +105,8 @@ class PracticeReadVC: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        print("word desk", wordsDesk.count)
         collectionView.layoutIfNeeded()
-        
         collectionViewHeightConstraint.constant = collectionView.contentSize.height + 50
-        print(collectionView.contentSize.height) // sometimes 202
-        print(collectionView.collectionViewLayout.collectionViewContentSize.height)
     }
 
     private func setNavigationBarLeft() {
