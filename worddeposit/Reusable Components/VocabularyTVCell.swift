@@ -44,7 +44,6 @@ class VocabularyTVCell: UITableViewCell {
         wordTranslationLabel.textColor = Colors.darkGrey
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressed))
-        // longPress.min
         longPress.minimumPressDuration = 0.5
         longPress.delaysTouchesBegan = true
         addGestureRecognizer(longPress)
@@ -52,11 +51,17 @@ class VocabularyTVCell: UITableViewCell {
     
     @objc private func longPressed(sender: UILongPressGestureRecognizer) {
         if sender.state != .ended {
+            UIView.animate(withDuration: 0.3) {
+                self.alpha = 0.5
+            }
             if sender.state == .began {
                 delegate?.vocabularyTVCellBeganLongPressed(with: word)
                 generator.impactOccurred()
             }
         } else {
+            UIView.animate(withDuration: 0.3) {
+                self.alpha = 1
+            }
             delegate?.vocabularyTVCellDidFinishLognPress()
         }
     }
