@@ -32,7 +32,6 @@ class ButtonNavTitleView: UIButton {
     }
     
     @objc func touchStart() {
-        // alpha = 0.3
         backgroundColor = Colors.lightGrey
     }
     
