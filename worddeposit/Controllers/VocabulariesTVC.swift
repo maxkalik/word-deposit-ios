@@ -155,12 +155,12 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
             sender.isOn = true
             simpleAlert(title: "You cannot unmarked actived vocabulary.", msg: "Create another one for swithing between them.")
         } else {
-            NotificationCenter.default.post(name: Notification.Name(Keys.vocabulariesSwitchBeganNotificationKey), object: nil)
             let newSelectedVocabularyIndex = sender.tag
             if newSelectedVocabularyIndex != selectedVocabularyIndex {
                 guard let oldIndex = selectedVocabularyIndex else { return }
                 selectedVocabularyIndex = newSelectedVocabularyIndex
                 tableView.reloadRows(at: [IndexPath(item: oldIndex, section: 0), IndexPath(item: newSelectedVocabularyIndex, section: 0)], with: .fade)
+                NotificationCenter.default.post(name: Notification.Name(Keys.vocabulariesSwitchBeganNotificationKey), object: nil)
 
                 UserService.shared.switchSelectedVocabulary(from: vocabularies[oldIndex], to: vocabularies[newSelectedVocabularyIndex]) { error in
                     if let error = error {
@@ -179,7 +179,6 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
                     }
                 }
             } else {
-                sender.isOn = true
                 simpleAlert(title: "Vocabulary alert", msg: "You cannot unmarked actived vocabulary. Mark another one.")
             }
         }
@@ -263,7 +262,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.dequeueReusableCell(withIdentifier: XIBs.VocabulariesTVCell, for: indexPath) as? VocabulariesTVCell {
             cell.checkbox.tag = indexPath.row
-            self.checkboxChanged(sender: cell.checkbox)
+            checkboxChanged(sender: cell.checkbox)
         }
     }
 
