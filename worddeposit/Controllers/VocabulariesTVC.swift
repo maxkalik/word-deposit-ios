@@ -76,10 +76,10 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
             self.tableView.reloadData()
             self.backButton.isEnabled = true
             /// main queue dispatching here because we need to avoid a warning UITableViewAlertForLayoutOutsideViewHierarchy
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [self] in
                 for index in 0..<UserService.shared.vocabularies.count {
-                    self.vocabularies.append(UserService.shared.vocabularies[index])
-                    self.tableView.insertRows(at: [IndexPath(item: index, section: 0)], with: .fade)
+                    vocabularies.append(UserService.shared.vocabularies[index])
+                    tableView.insertRows(at: [IndexPath(item: index, section: 0)], with: .fade)
                 }
             }
         } else {
@@ -110,7 +110,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
     }
     
     func vocabularyDidUpdate(_ vocabulary: Vocabulary, index: Int) {
-        vocabularies[index] = vocabulary // index out of range
+        vocabularies[index] = vocabulary // TODO: - index out of range
         tableView.reloadRows(at: [IndexPath(item: index, section: 0)], with: .fade)
     }
     
@@ -179,6 +179,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
                     }
                 }
             } else {
+                sender.isOn = true
                 simpleAlert(title: "Vocabulary alert", msg: "You cannot unmarked actived vocabulary. Mark another one.")
             }
         }
