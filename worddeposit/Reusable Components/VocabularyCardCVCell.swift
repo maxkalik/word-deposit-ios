@@ -128,7 +128,7 @@ class VocabularyCardCVCell: UICollectionViewCell, WordTextViewDelegate {
             removePictureButton.alpha = 1
             removePictureButton.isEnabled = true
             
-            if (word.description.isEmpty) {
+            if word.description.isEmpty && wordDescriptionTextView.isPlaceholderSet {
                 wordDescriptionTextView.hide()
             }
             wordImageButton.alpha = 1
@@ -178,8 +178,6 @@ class VocabularyCardCVCell: UICollectionViewCell, WordTextViewDelegate {
             wordImageButton.kf.setImage(with: imgRecourse, for: .normal, options: options)
             wordImageButton.backgroundColor = .clear
         }
-        
-        wordDescriptionTextView.isPlaceholderSet = false
         
         wordExampleTextView.text = word.example
         wordTranslationTextView.text = word.translation
@@ -306,8 +304,11 @@ class VocabularyCardCVCell: UICollectionViewCell, WordTextViewDelegate {
         var updatedWord = word!
         updatedWord.example = example
         updatedWord.translation = translation
-        if description.isNotEmpty {
+        
+        if !wordDescriptionTextView.isPlaceholderSet { // TODO: rewrite placeholder problem
             updatedWord.description = description
+        } else {
+            updatedWord.description = ""
         }
         
         UserService.shared.updateWord(updatedWord) { error, _ in

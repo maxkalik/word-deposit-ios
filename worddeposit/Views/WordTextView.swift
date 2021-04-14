@@ -31,6 +31,7 @@ class WordTextView: UITextView, UITextViewDelegate {
                 setupPlaceholder()
             } else {
                 textColor = activeTextColor
+                isPlaceholderSet = false
             }
         }
     }
