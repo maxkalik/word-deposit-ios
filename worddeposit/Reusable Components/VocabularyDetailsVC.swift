@@ -59,7 +59,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         view.backgroundColor = Colors.silver
         
         // Primary setting up UI
@@ -70,7 +70,6 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         if vocabulary != nil {
             buttonsStackView.alpha = 0
         } else {
-            // Vocabularies limit
             if UserService.shared.vocabularies.count > Limits.vocabularies {
                 view.addSubview(messageView)
                 messageView.show()
