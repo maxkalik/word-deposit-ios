@@ -52,7 +52,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
             }
         }
     }
-    
+    private var isLimitVocabularies = UserService.shared.vocabularies.count < Limits.vocabularies
     weak var delegate: VocabularyDetailsVCDelegate?
     
     // MARK: - Lifecycle
@@ -70,11 +70,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         if vocabulary != nil {
             buttonsStackView.alpha = 0
         } else {
-            if UserService.shared.vocabularies.count > Limits.vocabularies {
-                view.addSubview(messageView)
-                messageView.show()
-                setupMessage()
-            }
+            view.addSubview(messageView)
             cancelButton.setTitle("Clear", for: .normal)
         }
     }
@@ -87,16 +83,20 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
         nc.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         nc.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
-        // TextField observers
         titleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         languageTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        
+        if isLimitVocabularies {
+            messageView.hide()
+        } else {
+            setupMessage()
+            messageView.show()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        // Become first responder here because the view has to be drawed before (to calculate frame size and position in keyboard will show)
-        if languageIndex != languages.count - 1 {
+        if languageIndex != languages.count - 1 && isLimitVocabularies {
             titleTextField.becomeFirstResponder()
         }
     }
@@ -176,8 +176,7 @@ class VocabularyDetailsVC: UIViewController, UIScrollViewDelegate {
     private func setupMessage() {
         messageView.setTitles(
             messageTxt: "Vocabularies limit exceeded.\n",
-            buttonTitle: "Continue",
-            secondaryButtonTitle: "Logout"
+            buttonTitle: "Continue"
         )
         messageView.onPrimaryButtonTap { self.navigationController?.popViewController(animated: true) }
     }
