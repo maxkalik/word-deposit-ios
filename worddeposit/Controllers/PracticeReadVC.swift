@@ -8,7 +8,7 @@ protocol PracticeReadVCDelegate: AnyObject {
 
 class PracticeReadVC: UIViewController {
     
-    @IBOutlet weak var contentView: UIView!
+    // @IBOutlet weak var contentView: UIView!
     // MARK: - Instances
     
     @IBOutlet weak var scrollView: UIScrollView! {
@@ -60,53 +60,49 @@ class PracticeReadVC: UIViewController {
     }
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var practiceLabel: UILabel!
-    @IBOutlet weak var collectionView: UICollectionView! {
+    @IBOutlet weak var answersCollectionView: UICollectionView! {
         didSet {
-            collectionView.delegate = self
-            collectionView.dataSource = self
-            collectionView.allowsMultipleSelection = false
+            answersCollectionView.delegate = self
+            answersCollectionView.dataSource = self
+            answersCollectionView.allowsMultipleSelection = false
         }
     }
     
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        setupCollectionView()
+        setupAnswersCollectionView()
+        setupAnswersCollectionViewLayout()
         setupTrainedWord()
-        
-        let layout = UICollectionViewCenterLayout()
-        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        collectionView.collectionViewLayout = layout
-        
-        practiceLabel.font = UIFont(name: Fonts.bold, size: 28)
-        practiceLabel.lineBreakMode = .byWordWrapping
-        practiceLabel.numberOfLines = 0
+        setupPracticeLabel()
         
         setNavigationBarLeft()
         setNavgationBarRight()
     }
     
-    @IBOutlet weak var collectionViewHeightConstraint: NSLayoutConstraint!
+    func setupPracticeLabel() {
+        practiceLabel.font = UIFont(name: Fonts.bold, size: 28)
+        practiceLabel.lineBreakMode = .byWordWrapping
+        practiceLabel.numberOfLines = 0
+    }
+    
+    func setupAnswersCollectionViewLayout() {
+        let layout = UICollectionViewCenterLayout()
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        answersCollectionView.collectionViewLayout = layout
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         spinner.stopAnimating()
         setupTrainedWord()
         view.addSubview(answerItemBubbleLabel)
-        collectionViewHeightConstraint.constant = collectionView.contentSize.height
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBar.tintColor = Colors.dark
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        collectionView.layoutIfNeeded()
-        collectionViewHeightConstraint.constant = collectionView.contentSize.height + 50
     }
 
     private func setNavigationBarLeft() {
@@ -187,9 +183,9 @@ class PracticeReadVC: UIViewController {
         present(successMessage, animated: true, completion: nil)
     }
     
-    private func setupCollectionView() {
+    private func setupAnswersCollectionView() {
         let nib = UINib(nibName: XIBs.PracticeAnswerItem, bundle: nil)
-        collectionView.register(nib, forCellWithReuseIdentifier: XIBs.PracticeAnswerItem)
+        answersCollectionView.register(nib, forCellWithReuseIdentifier: XIBs.PracticeAnswerItem)
     }
     
     private func setupTrainedWord() {
@@ -210,21 +206,21 @@ class PracticeReadVC: UIViewController {
     private func updateScreen() {
         isSelected = true
         spinner.startAnimating()
-        collectionView.isUserInteractionEnabled = false
+        answersCollectionView.isUserInteractionEnabled = false
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.updateUI()
             self.spinner.stopAnimating()
         }
-        collectionView.reloadData()
+        answersCollectionView.reloadData()
     }
 
     private func updateUI() {
         delegate?.updatePracticeVC(except: rightAnswerIds)
         selectedIndex = nil
         isSelected = false
-        collectionView.isUserInteractionEnabled = true
+        answersCollectionView.isUserInteractionEnabled = true
         setupTrainedWord()
-        collectionView.reloadData()
+        answersCollectionView.reloadData()
     }
     
     // MARK: - IBActions
@@ -232,7 +228,7 @@ class PracticeReadVC: UIViewController {
     @objc func skip() {
         guard let index = wordsDesk.firstIndex(matching: trainedWord!) else { return }
         let indexPath = IndexPath(row: index, section: 0)
-        if let cell = collectionView.cellForItem(at: indexPath) as? PracticeAnswerItem {
+        if let cell = answersCollectionView.cellForItem(at: indexPath) as? PracticeAnswerItem {
             DispatchQueue.main.async {
                 cell.hintAnswer()
             }
@@ -304,11 +300,11 @@ extension PracticeReadVC: SuccessMessageVCDelegate {
 extension PracticeReadVC: PracticeAnswerItemDelegate {
     func practiceAnswerItemBeganLongPressed(with cellFrame: CGRect, and word: String) {
 
-        answerItemBubbleLabel.frame = CGRect(x: 0, y: 0, width: collectionView.frame.size.width, height: 42)
+        answerItemBubbleLabel.frame = CGRect(x: 0, y: 0, width: answersCollectionView.frame.size.width, height: 42)
         answerItemBubbleLabel.center = view.center
-        answerItemBubbleLabel.frame.origin.y = collectionView.frame.origin.y - scrollView.contentOffset.y + cellFrame.origin.y - cellFrame.height / 2
+        answerItemBubbleLabel.frame.origin.y = answersCollectionView.frame.origin.y - scrollView.contentOffset.y + cellFrame.origin.y - cellFrame.height / 2
         answerItemBubbleLabel.text = word
-        answerItemBubbleLabel.frame.size.height += word.height(withConstrainedWidth: collectionView.frame.size.width - answerItemBubbleLabel.padding.left - answerItemBubbleLabel.padding.right, font: UIFont(name: Fonts.bold, size: 16)!)
+        answerItemBubbleLabel.frame.size.height += word.height(withConstrainedWidth: answersCollectionView.frame.size.width - answerItemBubbleLabel.padding.left - answerItemBubbleLabel.padding.right, font: UIFont(name: Fonts.bold, size: 16)!)
         
         answerItemBubbleLabel.onPress()
         
