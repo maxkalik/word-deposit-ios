@@ -31,7 +31,7 @@ class MessageView: UIView {
         
         addSubview(view)
         contentView = view
-        contentView.layer.backgroundColor = Colors.silver.cgColor
+        contentView.backgroundColor = Colors.silver
         
         label.font = UIFont(name: Fonts.medium, size: 22)
     }
@@ -46,12 +46,6 @@ class MessageView: UIView {
         primaryButton.setTitle(buttonTitle, for: .normal)
         secondaryButton.setTitle(secondaryButtonTitle, for: .normal)
     }
-    
-    /*
-    @objc func secondaryButtonTapped() {
-        print("on button tap")
-    }
-    */
     
     func setupOnSuperView() {
         if let superview = self.superview {

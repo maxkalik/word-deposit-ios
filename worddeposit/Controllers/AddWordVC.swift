@@ -42,6 +42,9 @@ class AddWordVC: UIViewController {
     
     private var inputViewOriginY: CGFloat!
     private var wordImagePickerBtnOriginY: CGFloat!
+    private var isLimitWords = UserService.shared.words.count < Limits.words
+    
+    // private var wordsCount: Int
     
     // MARK: - Lifecycle
     
@@ -59,11 +62,11 @@ class AddWordVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if UserService.shared.words.count > Limits.words {
-            messageView.show()
-            setupMessage()
-        } else {
+        if isLimitWords {
             messageView.hide()
+        } else {
+            setupMessage()
+            messageView.show()
         }
         
         wordExampleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
@@ -75,7 +78,9 @@ class AddWordVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        wordExampleTextField.becomeFirstResponder()
+        if isLimitWords {
+            wordExampleTextField.becomeFirstResponder()
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -150,12 +155,10 @@ class AddWordVC: UIViewController {
     
     private func setupMessage() {
         messageView.setTitles(
-            messageTxt: "Words limit exceeded.\n",
-            buttonTitle: "Continue",
-            secondaryButtonTitle: "Logout"
+            messageTxt: "Words limit exceeded.\n Remove unnecessary words\nor create new vocabulary.\n",
+            buttonTitle: "Continue"
         )
-        // push to vocabulary view
-        messageView.onPrimaryButtonTap { self.tabBarController?.selectedIndex = 2 }
+        messageView.onPrimaryButtonTap { self.dismiss(animated: true, completion: nil) }
     }
     
     private func setupUI() {
@@ -224,26 +227,26 @@ class AddWordVC: UIViewController {
         }
     }
     
+    func hideKeyboard() {
+        dismissKeyboard()
+        isKeyboardShowing = false
+        wordExampleTextField.resignFirstResponder()
+        wordTranslationTextField.resignFirstResponder()
+        wordDescriptionTextField.resignFirstResponder()
+        view.endEditing(true)
+    }
     
     func updateUI() {
         // TODO: - not showing message while adding
         
-        dismissKeyboard()
-        
-        isKeyboardShowing = false
-        
-        wordExampleTextField.resignFirstResponder()
-        wordTranslationTextField.resignFirstResponder()
-        wordDescriptionTextField.resignFirstResponder()
-        
-        view.endEditing(true)
+        hideKeyboard()
         
         wordDescriptionTextField.isHidden = true
         
-        if UserService.shared.words.count > Limits.words {
+        if !isLimitWords {
             DispatchQueue.main.async {
-                self.messageView.show()
                 self.setupMessage()
+                self.messageView.show()
             }
         }
         
@@ -280,7 +283,12 @@ class AddWordVC: UIViewController {
     }
     
     @IBAction func onAddWordBtnPress(_ sender: UIButton) {
-        prepareForUpload()
+        if UserService.shared.words.count <= Limits.words {
+            prepareForUpload()
+        } else {
+            setupMessage()
+            messageView.show()
+        }
     }
     
     @IBAction func onClearAllBtnPress(_ sender: UIButton) {
