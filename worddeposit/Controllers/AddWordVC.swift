@@ -237,19 +237,9 @@ class AddWordVC: UIViewController {
     }
     
     func updateUI() {
-        // TODO: - not showing message while adding
-        
         hideKeyboard()
-        
         wordDescriptionTextField.isHidden = true
-        
-        if !isLimitWords {
-            DispatchQueue.main.async {
-                self.setupMessage()
-                self.messageView.show()
-            }
-        }
-        
+
         setupImagePlaceholder()
         wordExampleTextField.text = ""
         wordTranslationTextField.text = ""
@@ -283,11 +273,10 @@ class AddWordVC: UIViewController {
     }
     
     @IBAction func onAddWordBtnPress(_ sender: UIButton) {
-        if UserService.shared.words.count <= Limits.words {
+        if UserService.shared.words.count < Limits.words {
             prepareForUpload()
         } else {
-            setupMessage()
-            messageView.show()
+            simpleAlert(title: "Words limit exceeded", msg: "Remove unnecessary words\nor create new vocabulary.\n")
         }
     }
     
