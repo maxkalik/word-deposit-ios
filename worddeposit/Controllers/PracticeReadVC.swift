@@ -317,19 +317,6 @@ extension PracticeReadVC: PracticeAnswerItemDelegate {
 
 extension PracticeReadVC: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offset = scrollView.contentOffset
-        
-        if offset.y < 0.0 {
-            wordImage.layer.transform = CATransform3DIdentity
-        } else {
-            let scaleFactor = 1 + (-1 * offset.y / (wordImage.frame.size.height / 2))
-            var transform = CATransform3DTranslate(CATransform3DIdentity, 0, (offset.y), 0)
-            
-            if scaleFactor >= 0.5 {
-                transform = CATransform3DScale(transform, scaleFactor, scaleFactor, 1)
-                wordImage.layer.transform = transform
-                wordImage.layer.cornerRadius = (Radiuses.large + offset.y / 2)
-            }
-        }
+        PracticeReadHelper.shared.transofrmOnScroll(wordImage: &wordImage, with: scrollView.contentOffset)
     }
 }

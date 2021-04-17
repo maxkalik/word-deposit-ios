@@ -16,7 +16,6 @@
 		11108C04252356BC00A44945 /* DMSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 11108C01252356BC00A44945 /* DMSans-Regular.ttf */; };
 		11119631254CBA68006588D5 /* ButtonNavTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11119630254CBA68006588D5 /* ButtonNavTitleView.swift */; };
 		11119635254F0288006588D5 /* SortingForSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11119634254F0288006588D5 /* SortingForSearch.swift */; };
-		1111FDA025B8B24B00799B0F /* WordImageButtonHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1111FD9F25B8B24B00799B0F /* WordImageButtonHelper.swift */; };
 		1111FDA525B8F63600799B0F /* VocabularyWordBubbleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1111FDA425B8F63600799B0F /* VocabularyWordBubbleView.xib */; };
 		1111FDA825B8F67500799B0F /* VocabularyWordBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1111FDA725B8F67500799B0F /* VocabularyWordBubbleView.swift */; };
 		1117D08F25023675000D864F /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1117D08E25023675000D864F /* Array.swift */; };
@@ -60,6 +59,8 @@
 		1186959925BA1B22002E5305 /* VocabularyWordBubbleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1186959825BA1B22002E5305 /* VocabularyWordBubbleLabel.swift */; };
 		118E34BA25ACEE8400025FFE /* WordTextViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118E34B925ACEE8400025FFE /* WordTextViews.swift */; };
 		1192355024BFB66C00E76403 /* TextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1192354F24BFB66C00E76403 /* TextFields.swift */; };
+		11939EE5262B1CA3008BAAF4 /* ScrollViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11939EE4262B1CA3008BAAF4 /* ScrollViewHelper.swift */; };
+		11939EE9262B2731008BAAF4 /* PracticeReadHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11939EE8262B2731008BAAF4 /* PracticeReadHelper.swift */; };
 		119D786B2540BBAF009260D4 /* CheckmarkListTVCResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D786A2540BBAF009260D4 /* CheckmarkListTVCResults.swift */; };
 		119D78712540BBD8009260D4 /* CheckmarkListTVC+Updating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D78702540BBD8009260D4 /* CheckmarkListTVC+Updating.swift */; };
 		119DBF5724ACCFBF009124B7 /* Configurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119DBF5624ACCFBF009124B7 /* Configurations.swift */; };
@@ -109,7 +110,6 @@
 		11108C01252356BC00A44945 /* DMSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DMSans-Regular.ttf"; sourceTree = "<group>"; };
 		11119630254CBA68006588D5 /* ButtonNavTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonNavTitleView.swift; sourceTree = "<group>"; };
 		11119634254F0288006588D5 /* SortingForSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingForSearch.swift; sourceTree = "<group>"; };
-		1111FD9F25B8B24B00799B0F /* WordImageButtonHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordImageButtonHelper.swift; sourceTree = "<group>"; };
 		1111FDA425B8F63600799B0F /* VocabularyWordBubbleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VocabularyWordBubbleView.xib; sourceTree = "<group>"; };
 		1111FDA725B8F67500799B0F /* VocabularyWordBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyWordBubbleView.swift; sourceTree = "<group>"; };
 		1117D08E25023675000D864F /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
@@ -155,6 +155,8 @@
 		1186959825BA1B22002E5305 /* VocabularyWordBubbleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyWordBubbleLabel.swift; sourceTree = "<group>"; };
 		118E34B925ACEE8400025FFE /* WordTextViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordTextViews.swift; sourceTree = "<group>"; };
 		1192354F24BFB66C00E76403 /* TextFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFields.swift; sourceTree = "<group>"; };
+		11939EE4262B1CA3008BAAF4 /* ScrollViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewHelper.swift; sourceTree = "<group>"; };
+		11939EE8262B2731008BAAF4 /* PracticeReadHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeReadHelper.swift; sourceTree = "<group>"; };
 		119D786A2540BBAF009260D4 /* CheckmarkListTVCResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkListTVCResults.swift; sourceTree = "<group>"; };
 		119D78702540BBD8009260D4 /* CheckmarkListTVC+Updating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CheckmarkListTVC+Updating.swift"; sourceTree = "<group>"; };
 		119DBF5624ACCFBF009124B7 /* Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
@@ -219,7 +221,8 @@
 		1111FD9E25B8B1F400799B0F /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				1111FD9F25B8B24B00799B0F /* WordImageButtonHelper.swift */,
+				11939EE4262B1CA3008BAAF4 /* ScrollViewHelper.swift */,
+				11939EE8262B2731008BAAF4 /* PracticeReadHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -566,6 +569,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				15AFF8B6251692CB00BA6DAF /* PresentVC.swift in Sources */,
+				11939EE9262B2731008BAAF4 /* PracticeReadHelper.swift in Sources */,
 				11B20D6A24C8DF2E00C1CB4E /* PracticeAnswerItem.swift in Sources */,
 				11284239248E83E000A014E9 /* RegistrationVC.swift in Sources */,
 				11284241248E846000A014E9 /* Word.swift in Sources */,
@@ -598,6 +602,7 @@
 				11621A2724C25EFA003087AB /* WKWebVC.swift in Sources */,
 				15D51907251C069F00590073 /* UIImage.swift in Sources */,
 				158B1095251BE29A0003C3A9 /* TextFieldLimit.swift in Sources */,
+				11939EE5262B1CA3008BAAF4 /* ScrollViewHelper.swift in Sources */,
 				11284237248E83D400A014E9 /* LoginVC.swift in Sources */,
 				11284211248E7C5700A014E9 /* AppDelegate.swift in Sources */,
 				112EA43324C83B7200FA55E3 /* PracticeTrainer.swift in Sources */,
@@ -605,7 +610,6 @@
 				119D78712540BBD8009260D4 /* CheckmarkListTVC+Updating.swift in Sources */,
 				1171E70624981CDD00805D35 /* VocabularyCardCVCell.swift in Sources */,
 				11F32A5924AF49DB0097BF39 /* VocabularyTVC+Updating.swift in Sources */,
-				1111FDA025B8B24B00799B0F /* WordImageButtonHelper.swift in Sources */,
 				11ECE4B424EB0FA100B7884B /* VocabulariesTVC.swift in Sources */,
 				15E7741F25292F0100EC57D0 /* ShadowView.swift in Sources */,
 				118E34BA25ACEE8400025FFE /* WordTextViews.swift in Sources */,
