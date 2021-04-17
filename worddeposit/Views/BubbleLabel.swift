@@ -30,10 +30,16 @@ class BubbleLabel: PracticeDeskItemLabel {
     private func prepareForLongPress(with bubbleLabelParams: BubbleLabelParams) {
         text = bubbleLabelParams.text
         frame = CGRect(x: 0, y: 0, width: bubbleLabelParams.collectionViewFrame.size.width, height: 42)
+        let font = UIFont(name: Fonts.bold, size: 16)
+        let colViewY = bubbleLabelParams.collectionViewFrame.origin.y
+        let offcetY = bubbleLabelParams.viewContentOffcetY
+        let cellY = bubbleLabelParams.cellFrame.origin.y
+        let cellHeight = bubbleLabelParams.cellFrame.height / 2
+        let constrainedWidth = frame.size.width - padding.left - padding.right
         if let superview = superview {
             center = superview.center
-            frame.origin.y = bubbleLabelParams.collectionViewFrame.origin.y - bubbleLabelParams.viewContentOffcetY + bubbleLabelParams.cellFrame.origin.y - bubbleLabelParams.cellFrame.height / 2
-            frame.size.height += bubbleLabelParams.text.height(withConstrainedWidth: frame.size.width - padding.left - padding.right, font: UIFont(name: Fonts.bold, size: 16)!)
+            frame.origin.y = colViewY - offcetY + cellY - cellHeight
+            frame.size.height += bubbleLabelParams.text.height(withConstrainedWidth: constrainedWidth, font: font!)
         }
     }
     
