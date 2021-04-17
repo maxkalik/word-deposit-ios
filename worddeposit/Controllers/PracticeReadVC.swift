@@ -299,15 +299,12 @@ extension PracticeReadVC: SuccessMessageVCDelegate {
 
 extension PracticeReadVC: PracticeAnswerItemDelegate {
     func practiceAnswerItemBeganLongPressed(with cellFrame: CGRect, and word: String) {
-
-        answerItemBubbleLabel.frame = CGRect(x: 0, y: 0, width: answersCollectionView.frame.size.width, height: 42)
-        answerItemBubbleLabel.center = view.center
-        answerItemBubbleLabel.frame.origin.y = answersCollectionView.frame.origin.y - scrollView.contentOffset.y + cellFrame.origin.y - cellFrame.height / 2
-        answerItemBubbleLabel.text = word
-        answerItemBubbleLabel.frame.size.height += word.height(withConstrainedWidth: answersCollectionView.frame.size.width - answerItemBubbleLabel.padding.left - answerItemBubbleLabel.padding.right, font: UIFont(name: Fonts.bold, size: 16)!)
-        
-        answerItemBubbleLabel.onPress()
-        
+        let bubbleLabelParams = BubbleLabelParams(
+            collectionViewFrame: answersCollectionView.frame,
+            cellFrame: cellFrame,
+            viewContentOffcetY: scrollView.contentOffset.y,
+            text: word)
+        answerItemBubbleLabel.onPress(with: bubbleLabelParams)
     }
     
     func practiceAnswerItemDidFinishLongPress() {
