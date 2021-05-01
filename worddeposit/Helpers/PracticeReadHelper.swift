@@ -26,4 +26,26 @@ final class PracticeReadHelper {
             }
         }
     }
+    
+    func getResult(_ trainedWord: Word, _ trainedWords: inout [Word], answer: Bool, _ sessionRightAnswersSum: inout Int, _ sessionWrongAnswersSum: inout Int) {
+        if let i = trainedWords.firstIndex(where: { $0.id == trainedWord.id }) {
+            if answer == true {
+                sessionRightAnswersSum += 1
+                trainedWords[i].rightAnswers += 1
+            } else {
+                sessionWrongAnswersSum += 1
+                trainedWords[i].wrongAnswers += 1
+            }
+        } else {
+            var word = trainedWord
+            if answer == true {
+                sessionRightAnswersSum += 1
+                word.rightAnswers += 1
+            } else {
+                sessionWrongAnswersSum += 1
+                word.wrongAnswers += 1
+            }
+            trainedWords.append(word)
+        }
+    }
 }

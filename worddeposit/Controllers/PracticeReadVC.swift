@@ -8,9 +8,6 @@ protocol PracticeReadVCDelegate: AnyObject {
 
 class PracticeReadVC: UIViewController {
     
-    // @IBOutlet weak var contentView: UIView!
-    // MARK: - Instances
-    
     @IBOutlet weak var scrollView: UIScrollView! {
         didSet {
             scrollView.delegate = self
@@ -38,6 +35,7 @@ class PracticeReadVC: UIViewController {
     private var trainedWords = [Word]()
     private var selectedIndex: Int?
     private var isSelected = false
+    
     private var rightAnswerIds = Set<String>()
     private var sessionRightAnswersSum = 0 {
         didSet {
@@ -150,25 +148,7 @@ class PracticeReadVC: UIViewController {
     // MARK: - Methods
     
     private func result(_ trainedWord: Word, answer: Bool) {
-        if let i = trainedWords.firstIndex(where: { $0.id == trainedWord.id }) {
-            if answer == true {
-                sessionRightAnswersSum += 1
-                trainedWords[i].rightAnswers += 1
-            } else {
-                sessionWrongAnswersSum += 1
-                trainedWords[i].wrongAnswers += 1
-            }
-        } else {
-            var word = trainedWord
-            if answer == true {
-                sessionRightAnswersSum += 1
-                word.rightAnswers += 1
-            } else {
-                sessionWrongAnswersSum += 1
-                word.wrongAnswers += 1
-            }
-            trainedWords.append(word)
-        }
+        PracticeReadHelper.shared.getResult(trainedWord, &trainedWords, answer: answer, &sessionRightAnswersSum, &sessionWrongAnswersSum)
     }
     
     func prepareForQuit(isEmptyVocabulary: Bool) {
