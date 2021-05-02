@@ -74,7 +74,11 @@ class PracticeReadVC: UIViewController {
         setupAnswersCollectionViewLayout()
         setupTrainedWord()
         setupPracticeLabel()
-        
+        setupNavigationBar()
+    }
+    
+    func setupNavigationBar() {
+        self.navigationItem.setHidesBackButton(true, animated: false)
         setNavigationBarLeft()
         setNavgationBarRight()
     }
@@ -104,7 +108,6 @@ class PracticeReadVC: UIViewController {
     }
 
     private func setNavigationBarLeft() {
-        self.navigationItem.setHidesBackButton(true, animated: false)
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 42, height: 42))
         let imageView = UIImageView(frame: CGRect(x: 14, y: 10, width: 24, height: 24))
         if let imgBackArrow = UIImage(named: "finish") {
