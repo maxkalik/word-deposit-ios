@@ -37,8 +37,6 @@ class PracticeReadVC: UIViewController {
     }
     private var sessionWrongAnswersSum = 0
     
-    private let successMessage = SuccessMessageVC()
-    
     weak var delegate: PracticeReadVCDelegate?
     
     // MARK: - IBOutlets
@@ -125,7 +123,7 @@ class PracticeReadVC: UIViewController {
         if trainedWords.count == 0 {
             _ = navigationController?.popViewController(animated: true)
         } else {
-            prepareForQuit(isEmptyVocabulary: false)
+            prepareForQuit()
         }
     }
     
@@ -146,14 +144,13 @@ class PracticeReadVC: UIViewController {
         PracticeReadHelper.shared.getResult(trainedWord, &trainedWords, answer: answer, &sessionRightAnswersSum, &sessionWrongAnswersSum)
     }
     
-    func prepareForQuit(isEmptyVocabulary: Bool) {
-        successMessage.isVocabularyEmpty = isEmptyVocabulary
+    func prepareForQuit() {
+        
+        let successMessage = SuccessMessageVC()
         successMessage.delegate = self
-        successMessage.wordsAmount = trainedWords.count
-        successMessage.answersCorrect = sessionRightAnswersSum
-        successMessage.answersWrong = sessionWrongAnswersSum
-        successMessage.modalTransitionStyle = .crossDissolve
-        successMessage.modalPresentationStyle = .popover
+        
+        successMessage.result = Result(wordsAmount: trainedWords.count, answerCorrect: sessionRightAnswersSum, answerWrong: sessionWrongAnswersSum)
+        
         delegate?.onFinishTrainer(with: trainedWords)
         present(successMessage, animated: true, completion: nil)
     }

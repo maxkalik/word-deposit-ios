@@ -61,5 +61,13 @@ class PracticeReadModel {
         PracticeReadHelper.shared.getResult(trainedWord, &trainedWords, answer: answer, &sesionCorrenctAnswersSum, &sessionWrongAnswersSum)
     }
     
-    func getGeneralResult() { }
+    func getGeneralResult() -> Result {
+        return Result(wordsAmount: trainedWords.count, answerCorrect: sesionCorrenctAnswersSum, answerWrong: sessionWrongAnswersSum)
+    }
+}
+
+struct Result {
+    let wordsAmount: Int
+    let answerCorrect: Int
+    let answerWrong: Int
 }

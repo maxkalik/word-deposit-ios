@@ -296,7 +296,7 @@ extension PracticeCVC: PracticeReadVCDelegate {
         }
         
         if leftWordsCount == 0 {
-            practiceReadVC?.prepareForQuit(isEmptyVocabulary: true)
+            practiceReadVC?.prepareForQuit()
         }
         practiceReadVC?.wordsDesk = wordsDesk
     }
