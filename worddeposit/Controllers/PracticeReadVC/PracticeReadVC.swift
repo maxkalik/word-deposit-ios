@@ -17,18 +17,10 @@ class PracticeReadVC: UIViewController {
     let answerItemBubbleLabel = BubbleLabel()
     
     var practiceType: String?
+    
     var trainedWord: Word? {
         didSet {
-            guard let word = trainedWord else { return }
-            if let url = URL(string: word.imgUrl) {
-                wordImage.isHidden = false
-                wordImage.kf.indicatorType = .activity
-                let options: KingfisherOptionsInfo = [KingfisherOptionsInfoItem.transition(.fade(0.2))]
-                let imgRecourse = ImageResource(downloadURL: url, cacheKey: word.imgUrl)
-                wordImage.kf.setImage(with: imgRecourse, options: options)
-            } else {
-                wordImage.isHidden = true
-            }
+            setupImage()
         }
     }
     var wordsDesk = [Word]()
@@ -73,7 +65,10 @@ class PracticeReadVC: UIViewController {
         setupAnswersCollectionView()
         setupAnswersCollectionViewLayout()
         setupTrainedWord()
+        
         setupPracticeLabel()
+        setupPracticeLabelText()
+        
         setupNavigationBar()
     }
     
@@ -95,10 +90,26 @@ class PracticeReadVC: UIViewController {
         answersCollectionView.collectionViewLayout = layout
     }
     
+    
+    // TODO: move to helper or extension
+    private func setupImage() {
+        guard let word = trainedWord else { return }
+        if let url = URL(string: word.imgUrl) {
+            wordImage.isHidden = false
+            wordImage.kf.indicatorType = .activity
+            let options: KingfisherOptionsInfo = [KingfisherOptionsInfoItem.transition(.fade(0.2))]
+            let imgRecourse = ImageResource(downloadURL: url, cacheKey: word.imgUrl)
+            wordImage.kf.setImage(with: imgRecourse, options: options)
+        } else {
+            wordImage.isHidden = true
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         spinner.stopAnimating()
         setupTrainedWord()
+        setupPracticeLabelText()
         view.addSubview(answerItemBubbleLabel)
     }
     
@@ -174,8 +185,10 @@ class PracticeReadVC: UIViewController {
     private func setupTrainedWord() {
         let filteredWordDesk = wordsDesk.filter { !rightAnswerIds.contains($0.id) }
         trainedWord = filteredWordDesk.randomElement()
+    }
+    
+    private func setupPracticeLabelText() {
         guard let word = trainedWord else { return }
-
         switch practiceType {
         case Controllers.TrainerWordToTranslate:
             practiceLabel.text = word.example
@@ -199,10 +212,15 @@ class PracticeReadVC: UIViewController {
 
     private func updateUI() {
         delegate?.updatePracticeVC(except: rightAnswerIds)
+        
         selectedIndex = nil
         isSelected = false
+        
         answersCollectionView.isUserInteractionEnabled = true
+        
         setupTrainedWord()
+        setupPracticeLabelText()
+        
         answersCollectionView.reloadData()
     }
     
@@ -235,6 +253,7 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
         }
     }
     
+    // TODO: move this logic to the cell
     private func setupPracticeCell(_ cell: PracticeAnswerItem, at index: Int) {
         if selectedIndex == index {
             if wordsDesk[selectedIndex!].id == trainedWord!.id {
