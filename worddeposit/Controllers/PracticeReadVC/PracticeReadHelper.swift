@@ -62,4 +62,48 @@ final class PracticeReadHelper {
             image.isHidden = true
         }
     }
+    
+    
+    var leftBarButtonHandler: (() -> Void)?
+    var rightBarButtonHandler: (() -> Void)?
+    
+    func setupNavBarLeft(_ handler: (() -> Void)? = nil) -> UIBarButtonItem {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 42, height: 42))
+        let imageView = UIImageView(frame: CGRect(x: 14, y: 10, width: 24, height: 24))
+        if let imgBackArrow = UIImage(named: "finish") {
+            let plainImage = imgBackArrow.withRenderingMode(.alwaysOriginal)
+            imageView.image = plainImage
+        }
+        view.addSubview(imageView)
+
+        let backTap = UITapGestureRecognizer(target: self, action: #selector(onTapLeftBarItem))
+        view.addGestureRecognizer(backTap)
+
+        self.leftBarButtonHandler = handler
+        return UIBarButtonItem(customView: view)
+    }
+    
+    func setupNavBarRight(_ handler: (() -> Void)? = nil) -> UIBarButtonItem {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 42, height: 42))
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 10, width: 24, height: 24))
+        if let imgQuestion = UIImage(named: "question") {
+            let plainImage = imgQuestion.withRenderingMode(.alwaysOriginal)
+            imageView.image = plainImage
+        }
+        view.addSubview(imageView)
+        
+        let skipTap = UITapGestureRecognizer(target: self, action: #selector(onTapRightBarItem))
+        view.addGestureRecognizer(skipTap)
+        self.rightBarButtonHandler = handler
+        
+        return UIBarButtonItem(customView: view)
+    }
+    
+    @objc private func onTapLeftBarItem() {
+        leftBarButtonHandler?()
+    }
+    
+    @objc private func onTapRightBarItem() {
+        rightBarButtonHandler?()
+    }
 }

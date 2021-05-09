@@ -104,39 +104,24 @@ class PracticeReadVC: UIViewController {
     }
 
     private func setNavigationBarLeft() {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 42, height: 42))
-        let imageView = UIImageView(frame: CGRect(x: 14, y: 10, width: 24, height: 24))
-        if let imgBackArrow = UIImage(named: "finish") {
-            let plainImage = imgBackArrow.withRenderingMode(.alwaysOriginal)
-            imageView.image = plainImage
+        let leftBarButtonItem = PracticeReadHelper.shared.setupNavBarLeft { [weak self] in
+            guard let self = self else { return }
+            self.backToMain()
         }
-        view.addSubview(imageView)
-
-        let backTap = UITapGestureRecognizer(target: self, action: #selector(backToMain))
-        view.addGestureRecognizer(backTap)
-
-        let leftBarButtonItem = UIBarButtonItem(customView: view)
         self.navigationItem.leftBarButtonItem = leftBarButtonItem
     }
     
     private func setNavgationBarRight() {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 42, height: 42))
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 10, width: 24, height: 24))
-        if let imgQuestion = UIImage(named: "question") {
-            let plainImage = imgQuestion.withRenderingMode(.alwaysOriginal)
-            imageView.image = plainImage
+        let rightBarButtonItem = PracticeReadHelper.shared.setupNavBarRight { [weak self] in
+            guard let self = self else { return }
+            self.skip()
         }
-        view.addSubview(imageView)
-        
-        let skipTap = UITapGestureRecognizer(target: self, action: #selector(skip))
-        view.addGestureRecognizer(skipTap)
-        
-        let rightBarButtonItem = UIBarButtonItem(customView: view)
         self.navigationItem.rightBarButtonItem = rightBarButtonItem
     }
     
+    // MARK: - Methods
     
-    @objc private func backToMain() {
+    private func backToMain() {
         if trainedWords.count == 0 {
             _ = navigationController?.popViewController(animated: true)
         } else {
@@ -144,7 +129,18 @@ class PracticeReadVC: UIViewController {
         }
     }
     
-    // MARK: - Methods
+    func skip() {
+        guard let index = wordsDesk.firstIndex(matching: trainedWord!) else { return }
+        let indexPath = IndexPath(row: index, section: 0)
+        if let cell = answersCollectionView.cellForItem(at: indexPath) as? PracticeAnswerItem {
+            DispatchQueue.main.async {
+                cell.hintAnswer()
+            }
+        }
+        result(trainedWord!, answer: false)
+        updateScreen()
+    }
+    
     
     private func result(_ trainedWord: Word, answer: Bool) {
         PracticeReadHelper.shared.getResult(trainedWord, &trainedWords, answer: answer, &sessionRightAnswersSum, &sessionWrongAnswersSum)
@@ -208,21 +204,6 @@ class PracticeReadVC: UIViewController {
         
         answersCollectionView.reloadData()
     }
-    
-    // MARK: - IBActions
-    
-    @objc func skip() {
-        guard let index = wordsDesk.firstIndex(matching: trainedWord!) else { return }
-        let indexPath = IndexPath(row: index, section: 0)
-        if let cell = answersCollectionView.cellForItem(at: indexPath) as? PracticeAnswerItem {
-            DispatchQueue.main.async {
-                cell.hintAnswer()
-            }
-        }
-        result(trainedWord!, answer: false)
-        updateScreen()
-    }
-    
 }
 
 extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
