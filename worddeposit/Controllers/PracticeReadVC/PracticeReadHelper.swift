@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class PracticeReadHelper {
     static var shared = PracticeReadHelper()
@@ -46,6 +47,19 @@ final class PracticeReadHelper {
                 word.wrongAnswers += 1
             }
             trainedWords.append(word)
+        }
+    }
+    
+    func setupImage(_ image: inout RoundedImageView, for trainedWord: Word?) {
+        guard let word = trainedWord else { return }
+        if let url = URL(string: word.imgUrl) {
+            image.isHidden = false
+            image.kf.indicatorType = .activity
+            let options: KingfisherOptionsInfo = [KingfisherOptionsInfoItem.transition(.fade(0.2))]
+            let imgRecourse = ImageResource(downloadURL: url, cacheKey: word.imgUrl)
+            image.kf.setImage(with: imgRecourse, options: options)
+        } else {
+            image.isHidden = true
         }
     }
 }

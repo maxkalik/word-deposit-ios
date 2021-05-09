@@ -20,7 +20,7 @@ class PracticeReadVC: UIViewController {
     
     var trainedWord: Word? {
         didSet {
-            setupImage()
+            PracticeReadHelper.shared.setupImage(&wordImage, for: trainedWord)
         }
     }
     var wordsDesk = [Word]()
@@ -88,21 +88,6 @@ class PracticeReadVC: UIViewController {
         let layout = UICollectionViewCenterLayout()
         layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         answersCollectionView.collectionViewLayout = layout
-    }
-    
-    
-    // TODO: move to helper or extension
-    private func setupImage() {
-        guard let word = trainedWord else { return }
-        if let url = URL(string: word.imgUrl) {
-            wordImage.isHidden = false
-            wordImage.kf.indicatorType = .activity
-            let options: KingfisherOptionsInfo = [KingfisherOptionsInfoItem.transition(.fade(0.2))]
-            let imgRecourse = ImageResource(downloadURL: url, cacheKey: word.imgUrl)
-            wordImage.kf.setImage(with: imgRecourse, options: options)
-        } else {
-            wordImage.isHidden = true
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
