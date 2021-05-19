@@ -8,7 +8,12 @@
 
 import Foundation
 
-class PracticeReadModel {
+protocol PracticeReadViewModelDelegate: AnyObject {
+    func startNextWordLoading()
+    func stopNextWordLoading()
+}
+
+class PracticeReadViewModel {
     
     var trainedWord: Word?
     var wordsDesk = [Word]()
@@ -24,9 +29,19 @@ class PracticeReadModel {
         }
     }
     
+    weak var delegate: PracticeReadViewModelDelegate?
+    
     var sessionWrongAnswersSum = 0
     
     // MARK: - methods
+    
+    func viewDidLoad() {
+        setupTrainedWord()
+    }
+    
+    func viewWillAppear() {
+        setupTrainedWord()
+    }
     
     private func setupTrainedWord() {
         let filteredWordDesk = wordsDesk.filter { !correctAnswerIds.contains($0.id) }
@@ -57,12 +72,38 @@ class PracticeReadModel {
         setupTrainedWord()
     }
     
-    func getResult(_ trainedWord: Word, answer: Bool) {
-        PracticeReadHelper.shared.getResult(trainedWord, &trainedWords, answer: answer, &sesionCorrenctAnswersSum, &sessionWrongAnswersSum)
+    private func getResult(_ trainedWord: Word, answer: Bool) {
+        if let i = trainedWords.firstIndex(where: { $0.id == trainedWord.id }) {
+            if answer == true {
+                sesionCorrenctAnswersSum += 1
+                trainedWords[i].rightAnswers += 1
+            } else {
+                sessionWrongAnswersSum += 1
+                trainedWords[i].wrongAnswers += 1
+            }
+        } else {
+            var word = trainedWord
+            if answer == true {
+                sesionCorrenctAnswersSum += 1
+                word.rightAnswers += 1
+            } else {
+                sessionWrongAnswersSum += 1
+                word.wrongAnswers += 1
+            }
+            trainedWords.append(word)
+        }
     }
     
     func getGeneralResult() -> Result {
         return Result(wordsAmount: trainedWords.count, answerCorrect: sesionCorrenctAnswersSum, answerWrong: sessionWrongAnswersSum)
+    }
+    
+    func startLoading() {
+        self.delegate?.startNextWordLoading()
+    }
+    
+    func finishLoading() {
+        self.delegate?.stopNextWordLoading()
     }
 }
 

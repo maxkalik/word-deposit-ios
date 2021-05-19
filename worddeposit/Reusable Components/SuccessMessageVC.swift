@@ -19,6 +19,7 @@ class SuccessMessageVC: UIViewController {
     var result: Result? {
         didSet {
             isVocabularyEmpty = result?.wordsAmount == 0
+            print("is vocabulary emoty:", isVocabularyEmpty)
             setupModal()
         }
     }

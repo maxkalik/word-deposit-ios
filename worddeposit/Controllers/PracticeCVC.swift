@@ -295,6 +295,7 @@ extension PracticeCVC: PracticeReadVCDelegate {
             wordsDesk = makeWordDesk(size: 5, wordsData: filteredWordsFromVocabulary)
         }
         
+        print(leftWordsCount) // TODO: bug
         if leftWordsCount == 0 {
             practiceReadVC?.prepareForQuit()
         }

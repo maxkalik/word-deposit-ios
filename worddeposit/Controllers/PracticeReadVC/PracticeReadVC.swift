@@ -32,7 +32,9 @@ class PracticeReadVC: UIViewController {
     private var sessionRightAnswersSum = 0 {
         didSet {
             guard let word = trainedWord else { return }
-            if !rightAnswerIds.contains(word.id) { rightAnswerIds.insert(word.id) }
+            if !rightAnswerIds.contains(word.id) {
+                rightAnswerIds.insert(word.id)
+            }
         }
     }
     private var sessionWrongAnswersSum = 0
@@ -56,17 +58,36 @@ class PracticeReadVC: UIViewController {
         }
     }
     
+    var viewModel = PracticeReadViewModel()
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
+        viewModel.viewDidLoad()
+        setupUI()
+        
+        setupPracticeLabelText()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        spinner.stopAnimating()
+        
+        setupPracticeLabelText()
+        view.addSubview(answerItemBubbleLabel)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.navigationBar.tintColor = Colors.dark
+    }
+    
+    func setupUI() {
         setupAnswersCollectionView()
         setupAnswersCollectionViewLayout()
-        setupTrainedWord()
-        
         setupPracticeLabel()
-        setupPracticeLabelText()
-        
         setupNavigationBar()
     }
     
@@ -88,19 +109,6 @@ class PracticeReadVC: UIViewController {
         answersCollectionView.collectionViewLayout = layout
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        spinner.stopAnimating()
-        setupTrainedWord()
-        setupPracticeLabelText()
-        view.addSubview(answerItemBubbleLabel)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.navigationBar.tintColor = Colors.dark
-    }
-
     private func setNavigationBarLeft() {
         let leftBarButtonItem = PracticeReadHelper.shared.setupNavBarLeft { [weak self] in
             guard let self = self else { return }
@@ -112,7 +120,8 @@ class PracticeReadVC: UIViewController {
     private func setNavgationBarRight() {
         let rightBarButtonItem = PracticeReadHelper.shared.setupNavBarRight { [weak self] in
             guard let self = self else { return }
-            self.skip()
+            // self.skip()
+            self.viewModel.skipAnswer()
         }
         self.navigationItem.rightBarButtonItem = rightBarButtonItem
     }
@@ -120,7 +129,7 @@ class PracticeReadVC: UIViewController {
     // MARK: - Methods
     
     private func backToMain() {
-        if trainedWords.count == 0 {
+        if trainedWords.isEmpty {
             _ = navigationController?.popViewController(animated: true)
         } else {
             prepareForQuit()
@@ -140,8 +149,29 @@ class PracticeReadVC: UIViewController {
     }
     
     
+
+//    }
+    // TODO: - fix it and make it in view model
     private func result(_ trainedWord: Word, answer: Bool) {
-        PracticeReadHelper.shared.getResult(trainedWord, &trainedWords, answer: answer, &sessionRightAnswersSum, &sessionWrongAnswersSum)
+        if let i = trainedWords.firstIndex(where: { $0.id == trainedWord.id }) {
+            if answer == true {
+                sessionRightAnswersSum += 1
+                trainedWords[i].rightAnswers += 1
+            } else {
+                sessionWrongAnswersSum += 1
+                trainedWords[i].wrongAnswers += 1
+            }
+        } else {
+            var word = trainedWord
+            if answer == true {
+                sessionRightAnswersSum += 1
+                word.rightAnswers += 1
+            } else {
+                sessionWrongAnswersSum += 1
+                word.wrongAnswers += 1
+            }
+            trainedWords.append(word)
+        }
     }
     
     func prepareForQuit() {
