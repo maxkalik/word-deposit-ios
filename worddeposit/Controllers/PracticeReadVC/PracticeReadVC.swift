@@ -2,7 +2,6 @@ import UIKit
 import Kingfisher
 
 protocol PracticeReadVCDelegate: AnyObject {
-    func updatePracticeVC(except trainedWordIds: Set<String>?)
     func onFinishTrainer(with words: [Word])
 }
 
@@ -15,29 +14,6 @@ class PracticeReadVC: UIViewController {
     }
     
     let answerItemBubbleLabel = BubbleLabel()
-    
-    var practiceType: String?
-    
-    var trainedWord: Word? {
-        didSet {
-            PracticeReadHelper.shared.setupImage(&wordImage, for: trainedWord)
-        }
-    }
-    var wordsDesk = [Word]()
-    private var trainedWords = [Word]()
-    private var selectedIndex: Int?
-    private var isSelected = false
-    
-    private var rightAnswerIds = Set<String>()
-    private var sessionRightAnswersSum = 0 {
-        didSet {
-            guard let word = trainedWord else { return }
-            if !rightAnswerIds.contains(word.id) {
-                rightAnswerIds.insert(word.id)
-            }
-        }
-    }
-    private var sessionWrongAnswersSum = 0
     
     weak var delegate: PracticeReadVCDelegate?
     
@@ -58,25 +34,21 @@ class PracticeReadVC: UIViewController {
         }
     }
     
-    var viewModel = PracticeReadViewModel()
+    var model: PracticeReadViewModel?
     
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
-        viewModel.viewDidLoad()
+
         setupUI()
-        
-        setupPracticeLabelText()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         spinner.stopAnimating()
-        
-        setupPracticeLabelText()
         view.addSubview(answerItemBubbleLabel)
+        setupContent()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -84,11 +56,24 @@ class PracticeReadVC: UIViewController {
         self.navigationController?.navigationBar.tintColor = Colors.dark
     }
     
+    // MARK: - General Methods
+    
     func setupUI() {
+        setupBackground()
         setupAnswersCollectionView()
         setupAnswersCollectionViewLayout()
         setupPracticeLabel()
         setupNavigationBar()
+    }
+    
+    func setupBackground() {
+        guard let model = self.model else { return }
+        switch model.practiceType {
+        case .readWordToTranslate:
+            view.backgroundColor = Colors.purple
+        case .readTranslateToWord:
+            view.backgroundColor = Colors.darkBlue
+        }
     }
     
     func setupNavigationBar() {
@@ -101,6 +86,12 @@ class PracticeReadVC: UIViewController {
         practiceLabel.font = UIFont(name: Fonts.bold, size: 28)
         practiceLabel.lineBreakMode = .byWordWrapping
         practiceLabel.numberOfLines = 0
+    }
+    
+    func setupContent() {
+        guard let model = self.model else { return }
+        model.setupContent()
+        practiceLabel.text = model.trainedWordTitle
     }
     
     func setupAnswersCollectionViewLayout() {
@@ -120,8 +111,7 @@ class PracticeReadVC: UIViewController {
     private func setNavgationBarRight() {
         let rightBarButtonItem = PracticeReadHelper.shared.setupNavBarRight { [weak self] in
             guard let self = self else { return }
-            // self.skip()
-            self.viewModel.skipAnswer()
+            // skip answer
         }
         self.navigationItem.rightBarButtonItem = rightBarButtonItem
     }
@@ -129,7 +119,7 @@ class PracticeReadVC: UIViewController {
     // MARK: - Methods
     
     private func backToMain() {
-        if trainedWords.isEmpty {
+        if let model = self.model, model.trainedWords.isEmpty {
             _ = navigationController?.popViewController(animated: true)
         } else {
             prepareForQuit()
@@ -137,52 +127,17 @@ class PracticeReadVC: UIViewController {
     }
     
     func skip() {
-        guard let index = wordsDesk.firstIndex(matching: trainedWord!) else { return }
-        let indexPath = IndexPath(row: index, section: 0)
+        let indexPath = IndexPath(row: 0, section: 0)
         if let cell = answersCollectionView.cellForItem(at: indexPath) as? PracticeAnswerItem {
             DispatchQueue.main.async {
                 cell.hintAnswer()
             }
         }
-        result(trainedWord!, answer: false)
         updateScreen()
     }
     
-    
-
-//    }
-    // TODO: - fix it and make it in view model
-    private func result(_ trainedWord: Word, answer: Bool) {
-        if let i = trainedWords.firstIndex(where: { $0.id == trainedWord.id }) {
-            if answer == true {
-                sessionRightAnswersSum += 1
-                trainedWords[i].rightAnswers += 1
-            } else {
-                sessionWrongAnswersSum += 1
-                trainedWords[i].wrongAnswers += 1
-            }
-        } else {
-            var word = trainedWord
-            if answer == true {
-                sessionRightAnswersSum += 1
-                word.rightAnswers += 1
-            } else {
-                sessionWrongAnswersSum += 1
-                word.wrongAnswers += 1
-            }
-            trainedWords.append(word)
-        }
-    }
-    
     func prepareForQuit() {
-        
-        let successMessage = SuccessMessageVC()
-        successMessage.delegate = self
-        
-        successMessage.result = Result(wordsAmount: trainedWords.count, answerCorrect: sessionRightAnswersSum, answerWrong: sessionWrongAnswersSum)
-        
-        delegate?.onFinishTrainer(with: trainedWords)
-        present(successMessage, animated: true, completion: nil)
+        // delegate?.onFinishTrainer(with: [])
     }
     
     private func setupAnswersCollectionView() {
@@ -190,28 +145,11 @@ class PracticeReadVC: UIViewController {
         answersCollectionView.register(nib, forCellWithReuseIdentifier: XIBs.PracticeAnswerItem)
     }
     
-    private func setupTrainedWord() {
-        let filteredWordDesk = wordsDesk.filter { !rightAnswerIds.contains($0.id) }
-        trainedWord = filteredWordDesk.randomElement()
-    }
-    
-    private func setupPracticeLabelText() {
-        guard let word = trainedWord else { return }
-        switch practiceType {
-        case Controllers.TrainerWordToTranslate:
-            practiceLabel.text = word.example
-        case Controllers.TrainerTranslateToWord:
-            practiceLabel.text = word.translation
-        default:
-            break
-        }
-    }
-    
     private func updateScreen() {
-        isSelected = true
         spinner.startAnimating()
         answersCollectionView.isUserInteractionEnabled = false
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            guard let self = self else { return }
             self.updateUI()
             self.spinner.stopAnimating()
         }
@@ -219,66 +157,32 @@ class PracticeReadVC: UIViewController {
     }
 
     private func updateUI() {
-        delegate?.updatePracticeVC(except: rightAnswerIds)
-        
-        selectedIndex = nil
-        isSelected = false
-        
+        // delegate?.updatePracticeVC(except: rightAnswerIds)
         answersCollectionView.isUserInteractionEnabled = true
-        
-        setupTrainedWord()
-        setupPracticeLabelText()
-        
         answersCollectionView.reloadData()
     }
 }
 
 extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    private func usePracticeType(for cell: PracticeAnswerItem, at index: Int) {
-        switch practiceType {
-        case Controllers.TrainerWordToTranslate:
-            cell.configureCell(word: wordsDesk[index].translation)
-        case Controllers.TrainerTranslateToWord:
-            cell.configureCell(word: wordsDesk[index].example)
-        default:
-            break
-        }
-    }
-    
-    // TODO: move this logic to the cell
-    private func setupPracticeCell(_ cell: PracticeAnswerItem, at index: Int) {
-        if selectedIndex == index {
-            if wordsDesk[selectedIndex!].id == trainedWord!.id {
-                cell.correctAnswer()
-                result(self.trainedWord!, answer: true)
-            } else {
-                cell.wrondAnswer()
-                result(self.trainedWord!, answer: false)
-            }
-        } else {
-            if isSelected { cell.withoutAnswer() }
-        }
-    }
-    
     // MARK: - UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return wordsDesk.count
+        guard let words = self.model?.wordsDesk else { return 0 }
+        return words.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: XIBs.PracticeAnswerItem, for: indexPath) as? PracticeAnswerItem {
-            usePracticeType(for: cell, at: indexPath.row)
-            setupPracticeCell(cell, at: indexPath.row)
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: XIBs.PracticeAnswerItem, for: indexPath) as? PracticeAnswerItem, let model = self.model, let words = model.wordsDesk {
             cell.delegate = self
+            cell.configureCell(word: words[indexPath.row], practiceType: model.practiceType)
             return cell
         }
         return UICollectionViewCell()
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedIndex = selectedIndex == indexPath.row ? nil : indexPath.row
+        
         updateScreen()
     }
 }

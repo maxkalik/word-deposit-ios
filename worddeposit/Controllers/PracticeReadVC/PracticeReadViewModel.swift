@@ -8,6 +8,12 @@
 
 import Foundation
 
+struct Result {
+    let wordsAmount: Int
+    let answerCorrect: Int
+    let answerWrong: Int
+}
+
 protocol PracticeReadViewModelDelegate: AnyObject {
     func startNextWordLoading()
     func stopNextWordLoading()
@@ -15,11 +21,26 @@ protocol PracticeReadViewModelDelegate: AnyObject {
 
 class PracticeReadViewModel {
     
+    var practiceType: PracticeType
+    
     var trainedWord: Word?
-    var wordsDesk = [Word]()
-    var trainedWords = [Word]()
-    var selectedIndex: Int?
-    var isSelected = false
+    
+    var trainedWordTitle: String? {
+        switch practiceType {
+        case .readWordToTranslate:
+            return trainedWord?.example
+        case .readTranslateToWord:
+            return trainedWord?.translation
+        }
+    }
+    var words: [Word]?
+    var wordsDesk: [Word]? {
+        didSet {
+            setupTrainedWord()
+        }
+    }
+    var trainedWords: [Word] = []
+    private var selectedIndex: Int?
     
     var correctAnswerIds = Set<String>()
     var sesionCorrenctAnswersSum = 0 {
@@ -33,43 +54,39 @@ class PracticeReadViewModel {
     
     var sessionWrongAnswersSum = 0
     
+    // MARK: - init
+    
+    init(practiceType: PracticeType, words: [Word]) {
+        self.practiceType = practiceType
+        self.words = words
+        print("**** model init")
+    }
+    
+    func setupContent() {
+        updateWordsDesk()
+    }
+    
     // MARK: - methods
     
-    func viewDidLoad() {
-        setupTrainedWord()
-    }
-    
-    func viewWillAppear() {
-        setupTrainedWord()
-    }
-    
     private func setupTrainedWord() {
-        let filteredWordDesk = wordsDesk.filter { !correctAnswerIds.contains($0.id) }
-        trainedWord = filteredWordDesk.randomElement()
+        let filteredWordDesk = wordsDesk?.filter { !correctAnswerIds.contains($0.id) }
+        trainedWord = filteredWordDesk?.randomElement()
     }
-    
-    func getWordDesk() { }
-    func getTrainedWord() { }
     
     func skipAnswer() -> Int? {
-        guard let index = wordsDesk.firstIndex(matching: trainedWord!) else { return nil }
+        guard let index = wordsDesk?.firstIndex(matching: trainedWord!) else { return nil }
         getResult(trainedWord!, answer: false)
-        updateScreen()
+        updateWordsDesk()
         return index
     }
-    func finish() { }
-    func selectAnswer(_ index: Int) { }
     
-    func updateScreen(with selectedIndex: Int? = nil) {
+    func updateWordsDesk(with selectedIndex: Int? = nil) {
         self.selectedIndex = self.selectedIndex == selectedIndex ? nil : selectedIndex
-        isSelected = true
+        self.wordsDesk = PracticeReadHelper.shared.prepareWords(with: self.words ?? []) ?? []
     }
     
     func updateUI() {
         selectedIndex = nil
-        isSelected = false
-
-        setupTrainedWord()
     }
     
     private func getResult(_ trainedWord: Word, answer: Bool) {
@@ -105,10 +122,4 @@ class PracticeReadViewModel {
     func finishLoading() {
         self.delegate?.stopNextWordLoading()
     }
-}
-
-struct Result {
-    let wordsAmount: Int
-    let answerCorrect: Int
-    let answerWrong: Int
 }

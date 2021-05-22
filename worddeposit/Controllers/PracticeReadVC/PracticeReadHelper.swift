@@ -99,6 +99,50 @@ final class PracticeReadHelper {
         return UIBarButtonItem(customView: view)
     }
     
+    func makeWordDesk(size: Int, wordsData: [Word], _ result: [Word] = []) -> [Word] {
+        var result = result
+        if wordsData.isEmpty {
+            return result
+        }
+        var tmpCount = size
+        if tmpCount <= 0 {
+            return result.shuffled()
+        }
+        let randomWord: Word = wordsData.randomElement() ?? wordsData[0]
+        if !result.contains(where: { $0.id == randomWord.id }) {
+            result.append(randomWord)
+            tmpCount -= 1
+        }
+        return makeWordDesk(size: tmpCount, wordsData: wordsData, result)
+    }
+    
+    func prepareWords(with words: [Word], trainedWordIds: Set<String>? = nil) -> [Word]? {
+        let leftWordsCount = words.count - Int(trainedWordIds?.count ?? 0)
+        var wordDesk = [Word]()
+        let filteredWordsFromVocabulary = words.filter {
+            guard let ids = trainedWordIds else { return true }
+            return !ids.contains($0.id)
+        }
+        if leftWordsCount <= 4 {
+            let trainedWords = words.filter {
+                guard let ids = trainedWordIds else { return true }
+                return ids.contains($0.id)
+            }
+            
+            wordDesk = makeWordDesk(size: 5 - leftWordsCount, wordsData: trainedWords)
+            let restArr = makeWordDesk(size: leftWordsCount, wordsData: filteredWordsFromVocabulary)
+            wordDesk.append(contentsOf: restArr)
+        } else {
+            wordDesk = makeWordDesk(size: 5, wordsData: filteredWordsFromVocabulary)
+        }
+        
+        if leftWordsCount == 0 {
+            return nil
+        } else {
+            return wordDesk
+        }
+    }
+    
     @objc private func onTapLeftBarItem() {
         leftBarButtonHandler?()
     }

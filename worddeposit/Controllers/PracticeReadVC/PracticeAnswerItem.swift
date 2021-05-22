@@ -11,7 +11,7 @@ class PracticeAnswerItem: UICollectionViewCell {
     @IBOutlet weak var deskItemLabel: UILabel!
     
     let generator = UIImpactFeedbackGenerator(style: .heavy)
-    var word: String! {
+    var title: String! {
         didSet {
             deskItemLabel.font = UIFont(name: Fonts.medium, size: 16)
             deskItemLabel.textColor = Colors.dark
@@ -36,14 +36,14 @@ class PracticeAnswerItem: UICollectionViewCell {
     
     
     @objc private func longPressed(sender: UILongPressGestureRecognizer) {
-        if word.count > 32 {
+        if title.count > 32 {
             if sender.state != .ended {
                 UIView.animate(withDuration: 0.3) { [self] in
                     deskItemLabel.alpha = 0.5
                 }
                 deskItemLabel.alpha = 0.5
                 if sender.state == .began {
-                    delegate?.practiceAnswerItemBeganLongPressed(with: frame, and: word)
+                    delegate?.practiceAnswerItemBeganLongPressed(with: frame, and: title)
                     generator.impactOccurred()
                 }
             } else {
@@ -68,15 +68,24 @@ class PracticeAnswerItem: UICollectionViewCell {
         
     }
     
-    func configureCell(word: String) {
-        self.word = word
+    func configureCell(word: Word, practiceType: PracticeType) {
+        switch practiceType {
+        case .readWordToTranslate:
+            self.title = word.translation
+        case .readTranslateToWord:
+            self.title = word.example
+        }
         
-        if word.count > 32 {
-            let mutableString = NSMutableAttributedString(string: "\(String(word.prefix(26))) •••")
+        setupLimit()
+    }
+    
+    private func setupLimit() {
+        if title.count > 32 {
+            let mutableString = NSMutableAttributedString(string: "\(String(title.prefix(26))) •••")
             mutableString.addAttribute(NSAttributedString.Key.foregroundColor as NSAttributedString.Key, value: Colors.orange, range: NSRange(location:26,length:4))
             deskItemLabel.attributedText = mutableString
         } else {
-            deskItemLabel.text = word
+            deskItemLabel.text = title
         }
     }
     
