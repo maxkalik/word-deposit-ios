@@ -87,6 +87,8 @@
 		15BD0C0224DE0631007E8D27 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BD0C0124DE0631007E8D27 /* MessageView.swift */; };
 		15BD0C0424DE0657007E8D27 /* MessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15BD0C0324DE0657007E8D27 /* MessageView.xib */; };
 		15C2D8EA265AB5F2008F24A3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C2D8E9265AB5F2008F24A3 /* Constants.swift */; };
+		15C2D8EE265AB895008F24A3 /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C2D8ED265AB895008F24A3 /* Answer.swift */; };
+		15C2D8F0265AB8D1008F24A3 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C2D8EF265AB8D1008F24A3 /* Result.swift */; };
 		15CEBC6124D71A0300D48C0E /* ProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CEBC6024D71A0300D48C0E /* ProgressHUD.swift */; };
 		15D51907251C069F00590073 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D51906251C069F00590073 /* UIImage.swift */; };
 		15D5190A251C070100590073 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D51909251C070100590073 /* String.swift */; };
@@ -182,6 +184,8 @@
 		15BD0C0124DE0631007E8D27 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		15BD0C0324DE0657007E8D27 /* MessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageView.xib; sourceTree = "<group>"; };
 		15C2D8E9265AB5F2008F24A3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		15C2D8ED265AB895008F24A3 /* Answer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
+		15C2D8EF265AB8D1008F24A3 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		15CEBC6024D71A0300D48C0E /* ProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressHUD.swift; sourceTree = "<group>"; };
 		15D51906251C069F00590073 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		15D51909251C070100590073 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
@@ -307,7 +311,6 @@
 			children = (
 				1128423C248E840000A014E9 /* RoundedViews.swift */,
 				1192354F24BFB66C00E76403 /* TextFields.swift */,
-				117FA4CB24CEEC350043024D /* PracticeDeskItemButton.swift */,
 				15D51953251E7F2500590073 /* PrimaryButton.swift */,
 				151F2F0B251E97D5002D292B /* LoginTitle.swift */,
 				151F2F28251EB193002D292B /* DefaultButton.swift */,
@@ -425,6 +428,23 @@
 			path = SuccessMessage;
 			sourceTree = "<group>";
 		};
+		15C2D8EB265AB81C008F24A3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				117FA4CB24CEEC350043024D /* PracticeDeskItemButton.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		15C2D8EC265AB835008F24A3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				15C2D8ED265AB895008F24A3 /* Answer.swift */,
+				15C2D8EF265AB8D1008F24A3 /* Result.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		15D5194B251D5C6500590073 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -438,6 +458,8 @@
 		15E3458B264085A30013879E /* PracticeRead */ = {
 			isa = PBXGroup;
 			children = (
+				15C2D8EC265AB835008F24A3 /* Models */,
+				15C2D8EB265AB81C008F24A3 /* Views */,
 				116BC94B249182BD00968DA6 /* PracticeAnswerItem.xib */,
 				11B20D6824C8DF2E00C1CB4E /* PracticeAnswerItem.swift */,
 				11939EE8262B2731008BAAF4 /* PracticeReadHelper.swift */,
@@ -585,6 +607,7 @@
 			files = (
 				15AFF8B6251692CB00BA6DAF /* PresentVC.swift in Sources */,
 				11939EE9262B2731008BAAF4 /* PracticeReadHelper.swift in Sources */,
+				15C2D8F0265AB8D1008F24A3 /* Result.swift in Sources */,
 				11B20D6A24C8DF2E00C1CB4E /* PracticeAnswerItem.swift in Sources */,
 				11284239248E83E000A014E9 /* RegistrationVC.swift in Sources */,
 				11284241248E846000A014E9 /* Word.swift in Sources */,
@@ -620,6 +643,7 @@
 				11284237248E83D400A014E9 /* LoginVC.swift in Sources */,
 				15C2D8EA265AB5F2008F24A3 /* Constants.swift in Sources */,
 				11284211248E7C5700A014E9 /* AppDelegate.swift in Sources */,
+				15C2D8EE265AB895008F24A3 /* Answer.swift in Sources */,
 				112EA43324C83B7200FA55E3 /* PracticeTrainer.swift in Sources */,
 				116BC94E2491836B00968DA6 /* UIViewController.swift in Sources */,
 				119D78712540BBD8009260D4 /* CheckmarkListTVC+Updating.swift in Sources */,

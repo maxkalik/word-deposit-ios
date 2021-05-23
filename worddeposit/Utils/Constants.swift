@@ -101,6 +101,7 @@ struct Keys {
 }
 
 struct Limits {
+    static let practiceWords = 5
     static let name = 60
     static let vocabularies = 5
     static let words = 500

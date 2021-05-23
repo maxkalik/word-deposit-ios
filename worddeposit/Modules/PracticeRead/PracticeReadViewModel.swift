@@ -8,12 +8,6 @@
 
 import Foundation
 
-struct Result {
-    let wordsAmount: Int
-    let answerCorrect: Int
-    let answerWrong: Int
-}
-
 protocol PracticeReadViewModelDelegate: AnyObject {
     func showAlert(title: String, msg: String)
     func showSuccess()
@@ -76,7 +70,11 @@ final class PracticeReadViewModel {
     }
     
     func updateWordsDesk() {
-        guard let wordsDesk = PracticeReadHelper.shared.prepareWords(with: self.words ?? [], trainedWordIds: correctAnswerIds) else {
+        guard let wordsDesk = PracticeReadHelper.shared.prepareWords(
+                with: self.words ?? [],
+                limit: Limits.practiceWords,
+                trainedWordIds: correctAnswerIds
+        ) else {
             delegate?.showSuccess()
             return
         }

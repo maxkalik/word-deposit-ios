@@ -5,14 +5,6 @@ protocol PracticeAnswerItemDelegate: PracticeReadController {
     func practiceAnswerItemDidFinishLongPress()
 }
 
-enum Answer {
-    case correct
-    case wrong
-    case withoutAnswer
-    case noneAnswer
-    case hint
-}
-
 class PracticeAnswerItem: UICollectionViewCell {
    
     weak var delegate: PracticeAnswerItemDelegate?

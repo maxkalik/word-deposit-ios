@@ -13,6 +13,9 @@ final class PracticeReadHelper {
     static var shared = PracticeReadHelper()
     private init() {}
     
+    private var leftBarButtonHandler: (() -> Void)?
+    private var rightBarButtonHandler: (() -> Void)?
+    
     func transofrmOnScroll(wordImage: inout RoundedImageView, with offset: CGPoint) {
         if offset.y < 0.0 {
             wordImage.layer.transform = CATransform3DIdentity
@@ -28,28 +31,6 @@ final class PracticeReadHelper {
         }
     }
     
-    func getResult(_ trainedWord: Word, _ trainedWords: inout [Word], answer: Bool, _ sessionRightAnswersSum: inout Int, _ sessionWrongAnswersSum: inout Int) {
-        if let i = trainedWords.firstIndex(where: { $0.id == trainedWord.id }) {
-            if answer == true {
-                sessionRightAnswersSum += 1
-                trainedWords[i].rightAnswers += 1
-            } else {
-                sessionWrongAnswersSum += 1
-                trainedWords[i].wrongAnswers += 1
-            }
-        } else {
-            var word = trainedWord
-            if answer == true {
-                sessionRightAnswersSum += 1
-                word.rightAnswers += 1
-            } else {
-                sessionWrongAnswersSum += 1
-                word.wrongAnswers += 1
-            }
-            trainedWords.append(word)
-        }
-    }
-    
     func setupImage(_ image: inout RoundedImageView, for trainedWord: Word?) {
         guard let word = trainedWord else { return }
         if let url = URL(string: word.imgUrl) {
@@ -62,10 +43,6 @@ final class PracticeReadHelper {
             image.isHidden = true
         }
     }
-    
-    
-    var leftBarButtonHandler: (() -> Void)?
-    var rightBarButtonHandler: (() -> Void)?
     
     func setupNavBarLeft(_ handler: (() -> Void)? = nil) -> UIBarButtonItem {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 42, height: 42))
@@ -116,24 +93,24 @@ final class PracticeReadHelper {
         return makeWordDesk(size: tmpCount, wordsData: wordsData, result)
     }
     
-    func prepareWords(with words: [Word], trainedWordIds: Set<String>? = nil) -> [Word]? {
+    func prepareWords(with words: [Word], limit: Int, trainedWordIds: Set<String>? = nil) -> [Word]? {
         let leftWordsCount = words.count - Int(trainedWordIds?.count ?? 0)
         var wordDesk = [Word]()
         let filteredWordsFromVocabulary = words.filter {
             guard let ids = trainedWordIds else { return true }
             return !ids.contains($0.id)
         }
-        if leftWordsCount <= 4 {
+        if leftWordsCount <= limit - 1 {
             let trainedWords = words.filter {
                 guard let ids = trainedWordIds else { return true }
                 return ids.contains($0.id)
             }
             
-            wordDesk = makeWordDesk(size: 5 - leftWordsCount, wordsData: trainedWords)
+            wordDesk = makeWordDesk(size: limit - leftWordsCount, wordsData: trainedWords)
             let restArr = makeWordDesk(size: leftWordsCount, wordsData: filteredWordsFromVocabulary)
             wordDesk.append(contentsOf: restArr)
         } else {
-            wordDesk = makeWordDesk(size: 5, wordsData: filteredWordsFromVocabulary)
+            wordDesk = makeWordDesk(size: limit, wordsData: filteredWordsFromVocabulary)
         }
         
         print(leftWordsCount)
