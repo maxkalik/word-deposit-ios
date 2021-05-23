@@ -121,23 +121,21 @@ class PracticeReadViewModel {
     
     private func updateResult(_ trainedWord: Word, isCorrect: Bool) {
         if let i = trainedWords.firstIndex(where: { $0.id == trainedWord.id }) {
-            if isCorrect == true {
-                sesionCorrenctAnswersSum += 1
-                trainedWords[i].rightAnswers += 1
-            } else {
-                sessionWrongAnswersSum += 1
-                trainedWords[i].wrongAnswers += 1
-            }
+            updateResult(for: &trainedWords[i], isCorrect: isCorrect)
         } else {
             var word = trainedWord
-            if isCorrect == true {
-                sesionCorrenctAnswersSum += 1
-                word.rightAnswers += 1
-            } else {
-                sessionWrongAnswersSum += 1
-                word.wrongAnswers += 1
-            }
+            updateResult(for: &word, isCorrect: isCorrect)
             trainedWords.append(word)
+        }
+    }
+    
+    private func updateResult(for word: inout Word, isCorrect: Bool) {
+        if isCorrect == true {
+            sesionCorrenctAnswersSum += 1
+            word.rightAnswers += 1
+        } else {
+            sessionWrongAnswersSum += 1
+            word.wrongAnswers += 1
         }
     }
     
