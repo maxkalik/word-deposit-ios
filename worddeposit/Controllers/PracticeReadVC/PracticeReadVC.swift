@@ -230,4 +230,7 @@ extension PracticeReadVC: PracticeReadViewModelDelegate {
     func showAlert(title: String, msg: String) {
         self.simpleAlert(title: title, msg: msg)
     }
+    func showSuccess() {
+        prepareForQuit()
+    }
 }

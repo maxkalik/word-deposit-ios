@@ -16,6 +16,7 @@ struct Result {
 
 protocol PracticeReadViewModelDelegate: AnyObject {
     func showAlert(title: String, msg: String)
+    func showSuccess()
 }
 
 class PracticeReadViewModel {
@@ -57,7 +58,6 @@ class PracticeReadViewModel {
     init(practiceType: PracticeType, words: [Word]) {
         self.practiceType = practiceType
         self.words = words
-        print("**** model init")
     }
     
     func setupContent() {
@@ -79,7 +79,11 @@ class PracticeReadViewModel {
     }
     
     func updateWordsDesk() {
-        self.wordsDesk = PracticeReadHelper.shared.prepareWords(with: self.words ?? [], trainedWordIds: correctAnswerIds) ?? []
+        guard let wordsDesk = PracticeReadHelper.shared.prepareWords(with: self.words ?? [], trainedWordIds: correctAnswerIds) else {
+            delegate?.showSuccess()
+            return
+        }
+        self.wordsDesk = wordsDesk
         selectedIndex = nil
     }
     
