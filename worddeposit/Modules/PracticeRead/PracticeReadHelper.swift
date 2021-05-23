@@ -100,25 +100,26 @@ final class PracticeReadHelper {
             guard let ids = trainedWordIds else { return true }
             return !ids.contains($0.id)
         }
-        if leftWordsCount <= limit - 1 {
-            let trainedWords = words.filter {
-                guard let ids = trainedWordIds else { return true }
-                return ids.contains($0.id)
-            }
-            
+        if leftWordsCount < limit {
+            let trainedWords = filterWords(words, ids: trainedWordIds)
+            let restWords = makeWordDesk(size: leftWordsCount, wordsData: filteredWordsFromVocabulary)
             wordDesk = makeWordDesk(size: limit - leftWordsCount, wordsData: trainedWords)
-            let restArr = makeWordDesk(size: leftWordsCount, wordsData: filteredWordsFromVocabulary)
-            wordDesk.append(contentsOf: restArr)
+            wordDesk.append(contentsOf: restWords)
         } else {
             wordDesk = makeWordDesk(size: limit, wordsData: filteredWordsFromVocabulary)
         }
-        
-        print(leftWordsCount)
         
         if leftWordsCount == 0 {
             return nil
         } else {
             return wordDesk
+        }
+    }
+    
+    private func filterWords(_ words: [Word], ids: Set<String>?) -> [Word] {
+        return words.filter {
+            guard let ids = ids else { return true }
+            return ids.contains($0.id)
         }
     }
     
