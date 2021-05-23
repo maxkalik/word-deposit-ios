@@ -7,17 +7,17 @@ protocol PracticeReadVCDelegate: AnyObject {
 
 class PracticeReadVC: UIViewController {
     
+    let answerItemBubbleLabel = BubbleLabel()
+    weak var delegate: PracticeReadVCDelegate?
+    var model: PracticeReadViewModel?
+    
+    // MARK: - IBOutlets
+    
     @IBOutlet weak var scrollView: UIScrollView! {
         didSet {
             scrollView.delegate = self
         }
     }
-    
-    let answerItemBubbleLabel = BubbleLabel()
-    
-    weak var delegate: PracticeReadVCDelegate?
-    
-    // MARK: - IBOutlets
     
     @IBOutlet weak var wordImage: RoundedImageView! {
         didSet {
@@ -33,8 +33,6 @@ class PracticeReadVC: UIViewController {
             answersCollectionView.allowsMultipleSelection = false
         }
     }
-    
-    var model: PracticeReadViewModel?
     
     // MARK: - Life Cycle
     
@@ -62,7 +60,7 @@ class PracticeReadVC: UIViewController {
         setupBackground()
         setupAnswersCollectionView()
         setupAnswersCollectionViewLayout()
-        setupPracticeLabel()
+        setupPracticeWordLabel()
         setupNavigationBar()
     }
     
@@ -82,7 +80,7 @@ class PracticeReadVC: UIViewController {
         setNavgationBarRight()
     }
     
-    func setupPracticeLabel() {
+    func setupPracticeWordLabel() {
         practiceLabel.font = UIFont(name: Fonts.bold, size: 28)
         practiceLabel.lineBreakMode = .byWordWrapping
         practiceLabel.numberOfLines = 0
@@ -91,10 +89,12 @@ class PracticeReadVC: UIViewController {
     func setupContent() {
         guard let model = self.model else { return }
         model.setupContent()
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            self.practiceLabel.text = model.trainedWordTitle
-        }
+        updatePracticeWordLabel()
+    }
+    
+    func updatePracticeWordLabel() {
+        PracticeReadHelper.shared.setupImage(&wordImage, for: self.model?.trainedWord)
+        self.practiceLabel.text = self.model?.trainedWordTitle
     }
     
     func setupAnswersCollectionViewLayout() {
@@ -155,7 +155,7 @@ class PracticeReadVC: UIViewController {
             guard let self = self else { return }
             self.updateUI()
             self.model?.updateWordsDesk()
-            self.practiceLabel.text = self.model?.trainedWordTitle
+            self.updatePracticeWordLabel()
             self.spinner.stopAnimating()
         }
         answersCollectionView.reloadData()
