@@ -92,22 +92,30 @@ class PracticeReadViewModel {
     func getAnswer(from index: Int) -> Answer? {
         guard let selectedIndex = self.selectedIndex else { return nil }
         if selectedIndex == index {
-            guard let wordsDesk = self.wordsDesk else { return nil }
-            let word = wordsDesk[index]
-            if word.id == trainedWord?.id {
-                if isHint {
-                    updateResult(word, isCorrect: false)
-                    return .hint
-                } else {
-                    updateResult(word, isCorrect: true)
-                    return .correct
-                }
-            } else {
-                updateResult(word, isCorrect: false)
-                return .wrong
-            }
+            return getSelectedAnswer(from: index)
         } else {
             return .withoutAnswer
+        }
+    }
+    
+    private func getSelectedAnswer(from index: Int) -> Answer? {
+        guard let wordsDesk = self.wordsDesk else { return nil }
+        let word = wordsDesk[index]
+        if word.id == trainedWord?.id {
+            return getCorrectAnswer(for: word)
+        } else {
+            updateResult(word, isCorrect: false)
+            return .wrong
+        }
+    }
+    
+    private func getCorrectAnswer(for word: Word) -> Answer {
+        if isHint {
+            updateResult(word, isCorrect: false)
+            return .hint
+        } else {
+            updateResult(word, isCorrect: true)
+            return .correct
         }
     }
     
