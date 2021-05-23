@@ -15,16 +15,12 @@ struct Result {
 }
 
 protocol PracticeReadViewModelDelegate: AnyObject {
-    func startNextWordLoading()
-    func stopNextWordLoading()
+    func showAlert(title: String, msg: String)
 }
 
 class PracticeReadViewModel {
-    
     var practiceType: PracticeType
-    
     var trainedWord: Word?
-    
     var trainedWordTitle: String? {
         switch practiceType {
         case .readWordToTranslate:
@@ -46,7 +42,9 @@ class PracticeReadViewModel {
     var sesionCorrenctAnswersSum = 0 {
         didSet {
             guard let word = trainedWord else { return }
-            if !correctAnswerIds.contains(word.id) { correctAnswerIds.insert(word.id) }
+            if !correctAnswerIds.contains(word.id) {
+                correctAnswerIds.insert(word.id)
+            }
         }
     }
     
@@ -75,13 +73,13 @@ class PracticeReadViewModel {
     
     func skipAnswer() -> Int? {
         guard let index = wordsDesk?.firstIndex(matching: trainedWord!) else { return nil }
-        getResult(trainedWord!, answer: false)
+        getResult(trainedWord!, isCorrect: false)
         updateWordsDesk()
         return index
     }
     
     func updateWordsDesk() {
-        self.wordsDesk = PracticeReadHelper.shared.prepareWords(with: self.words ?? []) ?? []
+        self.wordsDesk = PracticeReadHelper.shared.prepareWords(with: self.words ?? [], trainedWordIds: correctAnswerIds) ?? []
         selectedIndex = nil
     }
     
@@ -95,8 +93,10 @@ class PracticeReadViewModel {
             guard let wordsDesk = self.wordsDesk else { return nil }
             let word = wordsDesk[index]
             if word.id == trainedWord?.id {
+                getResult(word, isCorrect: true)
                 return .correct
             } else {
+                getResult(word, isCorrect: false)
                 return .wrong
             }
         } else {
@@ -104,9 +104,9 @@ class PracticeReadViewModel {
         }
     }
     
-    private func getResult(_ trainedWord: Word, answer: Bool) {
+    private func getResult(_ trainedWord: Word, isCorrect: Bool) {
         if let i = trainedWords.firstIndex(where: { $0.id == trainedWord.id }) {
-            if answer == true {
+            if isCorrect == true {
                 sesionCorrenctAnswersSum += 1
                 trainedWords[i].rightAnswers += 1
             } else {
@@ -115,7 +115,7 @@ class PracticeReadViewModel {
             }
         } else {
             var word = trainedWord
-            if answer == true {
+            if isCorrect == true {
                 sesionCorrenctAnswersSum += 1
                 word.rightAnswers += 1
             } else {
@@ -130,11 +130,14 @@ class PracticeReadViewModel {
         return Result(wordsAmount: trainedWords.count, answerCorrect: sesionCorrenctAnswersSum, answerWrong: sessionWrongAnswersSum)
     }
     
-    func startLoading() {
-        self.delegate?.startNextWordLoading()
-    }
-    
-    func finishLoading() {
-        self.delegate?.stopNextWordLoading()
+    func finishPractice() {
+        UserService.shared.updateAnswersScore(trainedWords) { [weak self] error in
+            // TODO: loading
+            guard let self = self else { return }
+            if error != nil {
+                self.delegate?.showAlert(title: "Error", msg: "Cannot update answers score")
+                return
+            }
+        }
     }
 }

@@ -136,6 +136,8 @@ final class PracticeReadHelper {
             wordDesk = makeWordDesk(size: 5, wordsData: filteredWordsFromVocabulary)
         }
         
+        print(leftWordsCount)
+        
         if leftWordsCount == 0 {
             return nil
         } else {

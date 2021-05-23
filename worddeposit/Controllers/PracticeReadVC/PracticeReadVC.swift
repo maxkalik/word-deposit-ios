@@ -1,14 +1,9 @@
 import UIKit
 import Kingfisher
 
-protocol PracticeReadVCDelegate: AnyObject {
-    func onFinishTrainer(with words: [Word])
-}
-
 class PracticeReadVC: UIViewController {
     
-    let answerItemBubbleLabel = BubbleLabel()
-    weak var delegate: PracticeReadVCDelegate?
+    private let answerItemBubbleLabel = BubbleLabel()
     var model: PracticeReadViewModel?
     
     // MARK: - IBOutlets
@@ -38,7 +33,7 @@ class PracticeReadVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        model?.delegate = self
         setupUI()
     }
     
@@ -140,7 +135,11 @@ class PracticeReadVC: UIViewController {
     }
     
     func prepareForQuit() {
-        // delegate?.onFinishTrainer(with: [])
+        let result = model?.getGeneralResult()
+        let successMessage = SuccessMessageVC()
+        successMessage.delegate = self
+        successMessage.result = result
+        present(successMessage, animated: true, completion: nil)
     }
     
     private func setupAnswersCollectionView() {
@@ -162,7 +161,6 @@ class PracticeReadVC: UIViewController {
     }
 
     private func updateUI() {
-        // delegate?.updatePracticeVC(except: rightAnswerIds)
         answersCollectionView.isUserInteractionEnabled = true
         answersCollectionView.reloadData()
     }
@@ -202,10 +200,10 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
 
 extension PracticeReadVC: SuccessMessageVCDelegate {
     func onSuccessMessageButtonTap() {
+        model?.finishPractice()
         _ = navigationController?.popViewController(animated: true)
     }
 }
-
 
 extension PracticeReadVC: PracticeAnswerItemDelegate {
     func practiceAnswerItemBeganLongPressed(with cellFrame: CGRect, and word: String) {
@@ -225,5 +223,11 @@ extension PracticeReadVC: PracticeAnswerItemDelegate {
 extension PracticeReadVC: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         PracticeReadHelper.shared.transofrmOnScroll(wordImage: &wordImage, with: scrollView.contentOffset)
+    }
+}
+
+extension PracticeReadVC: PracticeReadViewModelDelegate {
+    func showAlert(title: String, msg: String) {
+        self.simpleAlert(title: title, msg: msg)
     }
 }

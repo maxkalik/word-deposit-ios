@@ -248,25 +248,10 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
             if let sender = (sender as? PracticeTrainer) {
                 tabBarController?.tabBar.isHidden = true
                 navigationController?.setup(isClear: true)
-                
-                practiceReadVC?.delegate = self
                 let practiceTypeViewModel = PracticeReadViewModel(practiceType: sender.type, words: words)
                 practiceReadVC?.model = practiceTypeViewModel
 
             }
-        }
-    }
-}
-
-extension PracticeCVC: PracticeReadVCDelegate {
-    
-    func onFinishTrainer(with words: [Word]) {
-        UserService.shared.updateAnswersScore(words) { error in
-            if error != nil {
-                self.simpleAlert(title: "Error", msg: "Cannot update answers score")
-                return
-            }
-            self.words = UserService.shared.words
         }
     }
 }

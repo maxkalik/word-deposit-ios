@@ -16,19 +16,20 @@ class SuccessMessageVC: UIViewController {
     @IBOutlet weak var answersStackView: UIStackView!
     @IBOutlet weak var separatorView: UIView!
     
+    // MARK: - variables
+    
     var result: Result? {
         didSet {
             isVocabularyEmpty = result?.wordsAmount == 0
-            print("is vocabulary emoty:", isVocabularyEmpty)
             setupModal()
         }
     }
     
     var isVocabularyEmpty = false
-    
     private var titleBtn: String = "Finish"
-    
     weak var delegate: SuccessMessageVCDelegate?
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()

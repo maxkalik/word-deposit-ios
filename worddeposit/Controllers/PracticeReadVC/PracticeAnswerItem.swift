@@ -83,7 +83,6 @@ class PracticeAnswerItem: UICollectionViewCell {
     }
     
     private func setupAnswer() {
-//        print(self.answer ?? "none", self.title ?? "")
         switch self.answer {
         case .correct:
             correctAnswer()
