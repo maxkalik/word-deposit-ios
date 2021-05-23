@@ -109,7 +109,7 @@ class PracticeReadVC: UIViewController {
     private func setNavgationBarRight() {
         let rightBarButtonItem = PracticeReadHelper.shared.setupNavBarRight { [weak self] in
             guard let self = self else { return }
-            // skip answer
+            self.skip()
         }
         self.navigationItem.rightBarButtonItem = rightBarButtonItem
     }
@@ -125,8 +125,8 @@ class PracticeReadVC: UIViewController {
     }
     
     func skip() {
-        let indexPath = IndexPath(row: 0, section: 0)
-        if let cell = answersCollectionView.cellForItem(at: indexPath) as? PracticeAnswerItem {
+        guard let index = model?.getSkipedAnswerIndex() else { return }
+        if let cell = answersCollectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? PracticeAnswerItem {
             DispatchQueue.main.async {
                 cell.hintAnswer()
             }

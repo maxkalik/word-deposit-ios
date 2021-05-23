@@ -71,9 +71,9 @@ class PracticeReadViewModel {
         trainedWord = filteredWordDesk?.randomElement()
     }
     
-    func skipAnswer() -> Int? {
+    func getSkipedAnswerIndex() -> Int? {
         guard let index = wordsDesk?.firstIndex(matching: trainedWord!) else { return nil }
-        getResult(trainedWord!, isCorrect: false)
+        updateResult(trainedWord!, isCorrect: false)
         updateWordsDesk()
         return index
     }
@@ -97,10 +97,10 @@ class PracticeReadViewModel {
             guard let wordsDesk = self.wordsDesk else { return nil }
             let word = wordsDesk[index]
             if word.id == trainedWord?.id {
-                getResult(word, isCorrect: true)
+                updateResult(word, isCorrect: true)
                 return .correct
             } else {
-                getResult(word, isCorrect: false)
+                updateResult(word, isCorrect: false)
                 return .wrong
             }
         } else {
@@ -108,7 +108,7 @@ class PracticeReadViewModel {
         }
     }
     
-    private func getResult(_ trainedWord: Word, isCorrect: Bool) {
+    private func updateResult(_ trainedWord: Word, isCorrect: Bool) {
         if let i = trainedWords.firstIndex(where: { $0.id == trainedWord.id }) {
             if isCorrect == true {
                 sesionCorrenctAnswersSum += 1
