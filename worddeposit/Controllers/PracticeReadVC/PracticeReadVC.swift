@@ -151,6 +151,7 @@ class PracticeReadVC: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
             guard let self = self else { return }
             self.updateUI()
+            self.model?.updateUI()
             self.spinner.stopAnimating()
         }
         answersCollectionView.reloadData()
@@ -175,14 +176,19 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: XIBs.PracticeAnswerItem, for: indexPath) as? PracticeAnswerItem, let model = self.model, let words = model.wordsDesk {
             cell.delegate = self
-            cell.configureCell(word: words[indexPath.row], practiceType: model.practiceType)
+            cell.configureCell(
+                word: words[indexPath.row],
+                practiceType: model.practiceType,
+                answer: model.getAnswer(from: indexPath.row)
+            )
             return cell
         }
         return UICollectionViewCell()
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        print("-----------------------------------------")
+        model?.updateAnswer(with: indexPath.row)
         updateScreen()
     }
 }

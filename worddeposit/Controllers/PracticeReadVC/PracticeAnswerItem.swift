@@ -5,28 +5,32 @@ protocol PracticeAnswerItemDelegate: PracticeReadVC {
     func practiceAnswerItemDidFinishLongPress()
 }
 
+enum Answer {
+    case correct
+    case wrong
+    case withoutAnswer
+    case noneAnswer
+}
+
 class PracticeAnswerItem: UICollectionViewCell {
    
     weak var delegate: PracticeAnswerItemDelegate?
     @IBOutlet weak var deskItemLabel: UILabel!
     
     let generator = UIImpactFeedbackGenerator(style: .heavy)
-    var title: String! {
-        didSet {
-            deskItemLabel.font = UIFont(name: Fonts.medium, size: 16)
-            deskItemLabel.textColor = Colors.dark
-            deskItemLabel.highlightedTextColor = Colors.grey
-        }
-    }
+    private var title: String?
+    private var answer: Answer?
     
     override func prepareForReuse() {
         super.prepareForReuse()
         setupCell()
+        self.answer = .noneAnswer
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         setupCell()
+        self.answer = .noneAnswer
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressed))
         longPress.minimumPressDuration = 0.5
@@ -34,9 +38,17 @@ class PracticeAnswerItem: UICollectionViewCell {
         addGestureRecognizer(longPress)
     }
     
+    func setupCell() {
+        clipsToBounds = true
+        layer.cornerRadius = Radiuses.large
+        deskItemLabel.layer.cornerRadius = Radiuses.large
+        deskItemLabel.layer.masksToBounds = true
+        deskItemLabel.font = UIFont(name: Fonts.medium, size: 16)
+        
+    }
     
     @objc private func longPressed(sender: UILongPressGestureRecognizer) {
-        if title.count > 32 {
+        if let title = self.title, title.count > 32 {
             if sender.state != .ended {
                 UIView.animate(withDuration: 0.3) { [self] in
                     deskItemLabel.alpha = 0.5
@@ -55,32 +67,37 @@ class PracticeAnswerItem: UICollectionViewCell {
         }
     }
     
-    func setupCell() {
-        contentView.alpha = 1
-        clipsToBounds = true
-
-        deskItemLabel.layer.cornerRadius = Radiuses.large
-        deskItemLabel.layer.masksToBounds = true
-        deskItemLabel.backgroundColor = Colors.silver
-        layer.cornerRadius = Radiuses.large
-        backgroundColor = Colors.dark.withAlphaComponent(0.3)
-        deskItemLabel.textColor = Colors.blue
-        
-    }
-    
-    func configureCell(word: Word, practiceType: PracticeType) {
+    func configureCell(word: Word, practiceType: PracticeType, answer: Answer?) {
         switch practiceType {
         case .readWordToTranslate:
             self.title = word.translation
+            break
         case .readTranslateToWord:
             self.title = word.example
+            break
         }
+        self.answer = answer
         
+        setupAnswer()
         setupLimit()
     }
     
+    private func setupAnswer() {
+        print(self.answer ?? "none", self.title ?? "")
+        switch self.answer {
+        case .correct:
+            correctAnswer()
+        case .wrong:
+            wrongAnswer()
+        case .withoutAnswer:
+            withoutAnswer()
+        default:
+            defaultAnswer()
+        }
+    }
+    
     private func setupLimit() {
-        if title.count > 32 {
+        if let title = self.title, title.count > 32 {
             let mutableString = NSMutableAttributedString(string: "\(String(title.prefix(26))) •••")
             mutableString.addAttribute(NSAttributedString.Key.foregroundColor as NSAttributedString.Key, value: Colors.orange, range: NSRange(location:26,length:4))
             deskItemLabel.attributedText = mutableString
@@ -89,23 +106,35 @@ class PracticeAnswerItem: UICollectionViewCell {
         }
     }
     
+    func defaultAnswer() {
+        deskItemLabel.textColor = Colors.blue
+        deskItemLabel.backgroundColor = UIColor.white
+        backgroundColor = Colors.dark.withAlphaComponent(0.3)
+        contentView.alpha = 1
+    }
+    
     func correctAnswer() {
         deskItemLabel.textColor = UIColor.white
         deskItemLabel.backgroundColor = Colors.green
+        backgroundColor = Colors.dark.withAlphaComponent(0.3)
+        contentView.alpha = 1
     }
     
-    func wrondAnswer() {
+    func wrongAnswer() {
         deskItemLabel.textColor = UIColor.white
         deskItemLabel.backgroundColor = UIColor.red
+        backgroundColor = Colors.dark.withAlphaComponent(0.3)
+        contentView.alpha = 1
+    }
+    
+    func withoutAnswer() {
+        deskItemLabel.textColor = UIColor.blue
+        deskItemLabel.backgroundColor = Colors.silver
+        backgroundColor = UIColor.clear
+        contentView.alpha = 0.5
     }
     
     func hintAnswer() {
         deskItemLabel.backgroundColor = Colors.yellow
-    }
-    
-    func withoutAnswer() {
-        deskItemLabel.backgroundColor = Colors.silver
-        backgroundColor = UIColor.clear
-        contentView.alpha = 0.5
     }
 }

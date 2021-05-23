@@ -80,13 +80,31 @@ class PracticeReadViewModel {
         return index
     }
     
-    func updateWordsDesk(with selectedIndex: Int? = nil) {
-        self.selectedIndex = self.selectedIndex == selectedIndex ? nil : selectedIndex
+    func updateWordsDesk() {
         self.wordsDesk = PracticeReadHelper.shared.prepareWords(with: self.words ?? []) ?? []
+    }
+    
+    func updateAnswer(with selectedIndex: Int) {
+        self.selectedIndex = selectedIndex
     }
     
     func updateUI() {
         selectedIndex = nil
+    }
+    
+    func getAnswer(from index: Int) -> Answer? {
+        guard let selectedIndex = self.selectedIndex else { return nil }
+        if selectedIndex == index {
+            guard let wordsDesk = self.wordsDesk else { return nil }
+            let word = wordsDesk[index]
+            if word.id == trainedWord?.id {
+                return .correct
+            } else {
+                return .wrong
+            }
+        } else {
+            return .withoutAnswer
+        }
     }
     
     private func getResult(_ trainedWord: Word, answer: Bool) {
