@@ -91,7 +91,10 @@ class PracticeReadVC: UIViewController {
     func setupContent() {
         guard let model = self.model else { return }
         model.setupContent()
-        practiceLabel.text = model.trainedWordTitle
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.practiceLabel.text = model.trainedWordTitle
+        }
     }
     
     func setupAnswersCollectionViewLayout() {
@@ -151,7 +154,8 @@ class PracticeReadVC: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
             guard let self = self else { return }
             self.updateUI()
-            self.model?.updateUI()
+            self.model?.updateWordsDesk()
+            self.practiceLabel.text = self.model?.trainedWordTitle
             self.spinner.stopAnimating()
         }
         answersCollectionView.reloadData()
@@ -174,7 +178,9 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: XIBs.PracticeAnswerItem, for: indexPath) as? PracticeAnswerItem, let model = self.model, let words = model.wordsDesk {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: XIBs.PracticeAnswerItem, for: indexPath) as? PracticeAnswerItem,
+           let model = self.model,
+           let words = model.wordsDesk {
             cell.delegate = self
             cell.configureCell(
                 word: words[indexPath.row],
@@ -187,7 +193,6 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("-----------------------------------------")
         model?.updateAnswer(with: indexPath.row)
         updateScreen()
     }

@@ -82,14 +82,11 @@ class PracticeReadViewModel {
     
     func updateWordsDesk() {
         self.wordsDesk = PracticeReadHelper.shared.prepareWords(with: self.words ?? []) ?? []
+        selectedIndex = nil
     }
     
     func updateAnswer(with selectedIndex: Int) {
         self.selectedIndex = selectedIndex
-    }
-    
-    func updateUI() {
-        selectedIndex = nil
     }
     
     func getAnswer(from index: Int) -> Answer? {
