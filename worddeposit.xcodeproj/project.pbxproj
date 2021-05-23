@@ -140,7 +140,7 @@
 		1151BB9F25462CF300A6A84F /* Checkbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checkbox.swift; sourceTree = "<group>"; };
 		1158D30C24917B9B0087DC96 /* VocabularyTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyTVCell.swift; sourceTree = "<group>"; };
 		1158D30D24917B9B0087DC96 /* VocabularyTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VocabularyTVCell.xib; sourceTree = "<group>"; };
-		11621A2624C25EFA003087AB /* WKWebVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WKWebVC.swift; path = worddeposit/Controllers/WKWebVC.swift; sourceTree = SOURCE_ROOT; };
+		11621A2624C25EFA003087AB /* WKWebVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WKWebVC.swift; path = worddeposit/Modules/WKWebVC.swift; sourceTree = SOURCE_ROOT; };
 		1162E5F425A23B1100B6173A /* BubbleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleLabel.swift; sourceTree = "<group>"; };
 		116BC94B249182BD00968DA6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		116BC94D2491836B00968DA6 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
@@ -159,9 +159,9 @@
 		119D786A2540BBAF009260D4 /* CheckmarkListTVCResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkListTVCResults.swift; sourceTree = "<group>"; };
 		119D78702540BBD8009260D4 /* CheckmarkListTVC+Updating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CheckmarkListTVC+Updating.swift"; sourceTree = "<group>"; };
 		119DBF5624ACCFBF009124B7 /* Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
-		11B20D6824C8DF2E00C1CB4E /* PracticeAnswerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PracticeAnswerItem.swift; path = worddeposit/Controllers/PracticeReadVC/PracticeAnswerItem.swift; sourceTree = SOURCE_ROOT; };
-		11B20D6924C8DF2E00C1CB4E /* PracticeAnswerItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = PracticeAnswerItem.xib; path = worddeposit/Controllers/PracticeReadVC/PracticeAnswerItem.xib; sourceTree = SOURCE_ROOT; };
-		11B20D6C24C8E00800C1CB4E /* PracticeReadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PracticeReadVC.swift; path = worddeposit/Controllers/PracticeReadVC/PracticeReadVC.swift; sourceTree = SOURCE_ROOT; };
+		11B20D6824C8DF2E00C1CB4E /* PracticeAnswerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PracticeAnswerItem.swift; path = worddeposit/Modules/PracticeReadVC/PracticeAnswerItem.swift; sourceTree = SOURCE_ROOT; };
+		11B20D6924C8DF2E00C1CB4E /* PracticeAnswerItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = PracticeAnswerItem.xib; path = worddeposit/Modules/PracticeReadVC/PracticeAnswerItem.xib; sourceTree = SOURCE_ROOT; };
+		11B20D6C24C8E00800C1CB4E /* PracticeReadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PracticeReadVC.swift; path = worddeposit/Modules/PracticeReadVC/PracticeReadVC.swift; sourceTree = SOURCE_ROOT; };
 		11B335D72542250C00F2D7DA /* CheckmarkListTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkListTVCell.swift; sourceTree = "<group>"; };
 		11ECE4B324EB0FA100B7884B /* VocabulariesTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabulariesTVC.swift; sourceTree = "<group>"; };
 		11F0326B24C8267E00BD6350 /* PracticeCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeCVCell.swift; sourceTree = "<group>"; };
@@ -270,7 +270,7 @@
 				116BC94A249182A500968DA6 /* Utils */,
 				1158D30B2491720C0087DC96 /* XIBs */,
 				11284225248E7CE400A014E9 /* Views */,
-				11284224248E7CCD00A014E9 /* Controllers */,
+				11284224248E7CCD00A014E9 /* Modules */,
 				11284227248E7CF900A014E9 /* Storyboards */,
 				15D5194B251D5C6500590073 /* Resources */,
 				11FAD1342497FBB2007EBDDD /* Support Files */,
@@ -280,7 +280,7 @@
 			path = worddeposit;
 			sourceTree = "<group>";
 		};
-		11284224248E7CCD00A014E9 /* Controllers */ = {
+		11284224248E7CCD00A014E9 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
 				15E3458B264085A30013879E /* PracticeReadVC */,
@@ -298,7 +298,7 @@
 				11621A2624C25EFA003087AB /* WKWebVC.swift */,
 				11ECE4B324EB0FA100B7884B /* VocabulariesTVC.swift */,
 			);
-			path = Controllers;
+			path = Modules;
 			sourceTree = "<group>";
 		};
 		11284225248E7CE400A014E9 /* Views */ = {

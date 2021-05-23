@@ -5,9 +5,7 @@ class PracticeReadVC: UIViewController {
     
     private let answerItemBubbleLabel = BubbleLabel()
     var model: PracticeReadViewModel?
-    
-    // MARK: - IBOutlets
-    
+
     @IBOutlet weak var scrollView: UIScrollView! {
         didSet {
             scrollView.delegate = self
@@ -28,9 +26,7 @@ class PracticeReadVC: UIViewController {
             answersCollectionView.allowsMultipleSelection = false
         }
     }
-    
-    // MARK: - Life Cycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         model?.delegate = self
@@ -48,9 +44,7 @@ class PracticeReadVC: UIViewController {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBar.tintColor = Colors.dark
     }
-    
-    // MARK: - General Methods
-    
+
     func setupUI() {
         setupBackground()
         setupAnswersCollectionView()
@@ -166,9 +160,9 @@ class PracticeReadVC: UIViewController {
     }
 }
 
+// MARK: - UICollectionViewDelegates
+
 extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
-    // MARK: - UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let words = self.model?.wordsDesk else { return 0 }
@@ -205,6 +199,8 @@ extension PracticeReadVC: SuccessMessageVCDelegate {
     }
 }
 
+// MARK: - PracticeAnswerItemDelegate
+
 extension PracticeReadVC: PracticeAnswerItemDelegate {
     func practiceAnswerItemBeganLongPressed(with cellFrame: CGRect, and word: String) {
         let bubbleLabelParams = BubbleLabelParams(
@@ -220,16 +216,21 @@ extension PracticeReadVC: PracticeAnswerItemDelegate {
     }
 }
 
+// MARK: - UIScrollViewDelegate
+
 extension PracticeReadVC: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         PracticeReadHelper.shared.transofrmOnScroll(wordImage: &wordImage, with: scrollView.contentOffset)
     }
 }
 
+// MARK: - PracticeReadViewModelDelegate
+
 extension PracticeReadVC: PracticeReadViewModelDelegate {
     func showAlert(title: String, msg: String) {
         self.simpleAlert(title: title, msg: msg)
     }
+
     func showSuccess() {
         prepareForQuit()
     }

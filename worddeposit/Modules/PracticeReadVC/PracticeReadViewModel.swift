@@ -50,11 +50,8 @@ class PracticeReadViewModel {
     }
     
     weak var delegate: PracticeReadViewModelDelegate?
-    
     var sessionWrongAnswersSum = 0
-    
-    // MARK: - init
-    
+
     init(practiceType: PracticeType, words: [Word]) {
         self.practiceType = practiceType
         self.words = words
@@ -63,9 +60,7 @@ class PracticeReadViewModel {
     func setupContent() {
         updateWordsDesk()
     }
-    
-    // MARK: - methods
-    
+
     private func setupTrainedWord() {
         let filteredWordDesk = wordsDesk?.filter { !correctAnswerIds.contains($0.id) }
         trainedWord = filteredWordDesk?.randomElement()
