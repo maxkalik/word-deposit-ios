@@ -65,7 +65,6 @@ final class PracticeReadViewModel {
         guard let trainedWord = self.trainedWord else { return }
         guard let skipedIndex = wordsDesk?.firstIndex(matching: trainedWord) else { return }
         self.selectedIndex = skipedIndex
-        updateResult(trainedWord, isCorrect: false)
         isHint = true
     }
     

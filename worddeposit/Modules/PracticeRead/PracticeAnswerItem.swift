@@ -22,22 +22,24 @@ class PracticeAnswerItem: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        setupCell()
         self.answer = .noneAnswer
-        
+        setupCell()
+        setupLongPress()
+    }
+    
+    private func setupLongPress() {
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressed))
         longPress.minimumPressDuration = 0.5
         longPress.delaysTouchesBegan = true
         addGestureRecognizer(longPress)
     }
     
-    func setupCell() {
+    private func setupCell() {
         clipsToBounds = true
         layer.cornerRadius = Radiuses.large
         deskItemLabel.layer.cornerRadius = Radiuses.large
         deskItemLabel.layer.masksToBounds = true
         deskItemLabel.font = UIFont(name: Fonts.medium, size: 16)
-        
     }
     
     @objc private func longPressed(sender: UILongPressGestureRecognizer) {
@@ -76,10 +78,8 @@ class PracticeAnswerItem: UICollectionViewCell {
         switch type {
         case .readWordToTranslate:
             self.title = word.translation
-            break
         case .readTranslateToWord:
             self.title = word.example
-            break
         }
     }
     

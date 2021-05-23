@@ -432,6 +432,7 @@
 			isa = PBXGroup;
 			children = (
 				117FA4CB24CEEC350043024D /* PracticeDeskItemButton.swift */,
+				116BC94B249182BD00968DA6 /* PracticeAnswerItem.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -448,6 +449,7 @@
 		15C2D8F1265ABE1E008F24A3 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				15E3458C264085ED0013879E /* PracticeReadViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -468,10 +470,8 @@
 				15C2D8F1265ABE1E008F24A3 /* ViewModels */,
 				15C2D8EC265AB835008F24A3 /* Models */,
 				15C2D8EB265AB81C008F24A3 /* Views */,
-				116BC94B249182BD00968DA6 /* PracticeAnswerItem.xib */,
 				11B20D6824C8DF2E00C1CB4E /* PracticeAnswerItem.swift */,
 				11939EE8262B2731008BAAF4 /* PracticeReadHelper.swift */,
-				15E3458C264085ED0013879E /* PracticeReadViewModel.swift */,
 				11B20D6C24C8E00800C1CB4E /* PracticeReadController.swift */,
 			);
 			path = PracticeRead;
