@@ -55,12 +55,7 @@ class PracticeReadVC: UIViewController {
     
     func setupBackground() {
         guard let model = self.model else { return }
-        switch model.practiceType {
-        case .readWordToTranslate:
-            view.backgroundColor = Colors.purple
-        case .readTranslateToWord:
-            view.backgroundColor = Colors.darkBlue
-        }
+        view.backgroundColor = PracticeReadHelper.shared.getBasicColor(type: model.practiceType)
     }
     
     func setupNavigationBar() {

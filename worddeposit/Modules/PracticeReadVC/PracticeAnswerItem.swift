@@ -67,8 +67,20 @@ class PracticeAnswerItem: UICollectionViewCell {
         }
     }
     
+    private var practiceType: PracticeType?
+    
     func configureCell(word: Word, practiceType: PracticeType, answer: Answer?) {
-        switch practiceType {
+        self.practiceType = practiceType
+        self.answer = answer
+        
+        setupPracticeType(for: word)
+        setupAnswer()
+        setupLimit()
+    }
+    
+    private func setupPracticeType(for word: Word) {
+        guard let type = self.practiceType else { return }
+        switch type {
         case .readWordToTranslate:
             self.title = word.translation
             break
@@ -76,10 +88,6 @@ class PracticeAnswerItem: UICollectionViewCell {
             self.title = word.example
             break
         }
-        self.answer = answer
-        
-        setupAnswer()
-        setupLimit()
     }
     
     private func setupAnswer() {
@@ -127,7 +135,7 @@ class PracticeAnswerItem: UICollectionViewCell {
     }
     
     func withoutAnswer() {
-        deskItemLabel.textColor = UIColor.blue
+        deskItemLabel.textColor = PracticeReadHelper.shared.getBasicColor(type: self.practiceType)
         deskItemLabel.backgroundColor = Colors.silver
         backgroundColor = UIColor.clear
         contentView.alpha = 0.5

@@ -283,6 +283,7 @@
 		11284224248E7CCD00A014E9 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				15C2D8E8265A983B008F24A3 /* SuccessMessage */,
 				15E3458B264085A30013879E /* PracticeReadVC */,
 				11284236248E83D400A014E9 /* LoginVC.swift */,
 				11284238248E83E000A014E9 /* RegistrationVC.swift */,
@@ -415,6 +416,13 @@
 				11331B81254B8AC500FDB454 /* TopBarItem.swift */,
 			);
 			path = "Reusable Components";
+			sourceTree = "<group>";
+		};
+		15C2D8E8265A983B008F24A3 /* SuccessMessage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SuccessMessage;
 			sourceTree = "<group>";
 		};
 		15D5194B251D5C6500590073 /* Resources */ = {

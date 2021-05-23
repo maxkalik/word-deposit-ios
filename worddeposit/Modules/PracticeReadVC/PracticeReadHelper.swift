@@ -152,4 +152,15 @@ final class PracticeReadHelper {
     @objc private func onTapRightBarItem() {
         rightBarButtonHandler?()
     }
+    
+    func getBasicColor(type: PracticeType?) -> UIColor {
+        switch type {
+        case .readWordToTranslate:
+            return Colors.purple
+        case .readTranslateToWord:
+            return Colors.darkBlue
+        default:
+            return Colors.darkBlue
+        }
+    }
 }
