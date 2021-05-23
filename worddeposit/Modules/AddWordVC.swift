@@ -293,7 +293,7 @@ class AddWordVC: UIViewController {
 
 extension AddWordVC: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let transform = WordImageButtonHelper.shared.transformOnScroll(with: scrollView.contentOffset, and: wordImageButton.frame.size.height)
+        let transform = ScrollViewHelper.shared.transformOnScroll(with: scrollView.contentOffset, and: wordImageButton.frame.size.height)
         wordImageButton.layer.transform = transform
     }
 }

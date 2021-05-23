@@ -11,7 +11,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     var words = [Word]()
     private var trainers = [PracticeTrainer]()
     
-    var practiceReadVC: PracticeReadVC?
+    var practiceReadVC: PracticeReadController?
     var progressHUD = ProgressHUD(title: "Fetching...")
     var messageView = MessageView()
     var rightBarItem = TopBarItem()
@@ -243,71 +243,15 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Segues.PracticeRead {
-            self.practiceReadVC = segue.destination as? PracticeReadVC
+            self.practiceReadVC = segue.destination as? PracticeReadController
 
             if let sender = (sender as? PracticeTrainer) {
-                
                 tabBarController?.tabBar.isHidden = true
-
-                // Restore the tabbar when it's popped in the future
                 navigationController?.setup(isClear: true)
-                
-                practiceReadVC?.delegate = self
+                let practiceTypeViewModel = PracticeReadViewModel(practiceType: sender.type, words: words)
+                practiceReadVC?.model = practiceTypeViewModel
 
-                // worddesk
-                updatePracticeVC(except: nil)
-                
-                switch sender.controller {
-                case Controllers.TrainerWordToTranslate:
-                    practiceReadVC?.view.backgroundColor = Colors.purple
-                    practiceReadVC?.practiceType = Controllers.TrainerWordToTranslate
-                case Controllers.TrainerTranslateToWord:
-                    practiceReadVC?.view.backgroundColor = Colors.darkBlue
-                    practiceReadVC?.practiceType = Controllers.TrainerTranslateToWord
-                default:
-                    break
-                }
             }
-        }
-    }
-}
-
-extension PracticeCVC: PracticeReadVCDelegate {
-    
-    func updatePracticeVC(except trainedWordIds: Set<String>?) {
-        let leftWordsCount = words.count - Int(trainedWordIds?.count ?? 0)
-        var wordsDesk = [Word]()
-        let filteredWordsFromVocabulary = words.filter {
-            guard let ids = trainedWordIds else { return true }
-            return !ids.contains($0.id)
-        }
-        
-        if leftWordsCount <= 4 {
-            let trainedWords = words.filter {
-                guard let ids = trainedWordIds else { return true }
-                return ids.contains($0.id)
-            }
-            
-            wordsDesk = makeWordDesk(size: 5 - leftWordsCount, wordsData: trainedWords)
-            let restArr = makeWordDesk(size: leftWordsCount, wordsData: filteredWordsFromVocabulary)
-            wordsDesk.append(contentsOf: restArr)
-        } else {
-            wordsDesk = makeWordDesk(size: 5, wordsData: filteredWordsFromVocabulary)
-        }
-        
-        if leftWordsCount == 0 {
-            practiceReadVC?.prepareForQuit(isEmptyVocabulary: true)
-        }
-        practiceReadVC?.wordsDesk = wordsDesk
-    }
-    
-    func onFinishTrainer(with words: [Word]) {
-        UserService.shared.updateAnswersScore(words) { error in
-            if error != nil {
-                self.simpleAlert(title: "Error", msg: "Cannot update answers score")
-                return
-            }
-            self.words = UserService.shared.words
         }
     }
 }

@@ -16,14 +16,20 @@ class SuccessMessageVC: UIViewController {
     @IBOutlet weak var answersStackView: UIStackView!
     @IBOutlet weak var separatorView: UIView!
     
-    var wordsAmount: Int!
-    var answersCorrect: Int!
-    var answersWrong: Int!
+    // MARK: - variables
+    
+    var result: Result? {
+        didSet {
+            isVocabularyEmpty = result?.wordsAmount == 0
+            setupModal()
+        }
+    }
+    
     var isVocabularyEmpty = false
-    
     private var titleBtn: String = "Finish"
-    
     weak var delegate: SuccessMessageVCDelegate?
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,8 +41,8 @@ class SuccessMessageVC: UIViewController {
         
         separatorView.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
         
-        let titleText = printTitle(with: answersCorrect, and: answersWrong)
-        let descriptionText = isVocabularyEmpty ? "You trained all (\(String(wordsAmount))) words" : "You trained \(String(wordsAmount)) words"
+        let titleText = printTitle(with: result?.answerCorrect ?? 0, and: result?.answerWrong ?? 0)
+        let descriptionText = isVocabularyEmpty ? "You trained all (\(String(result?.wordsAmount ?? 0))) words" : "You trained \(String(result?.wordsAmount ?? 0)) words"
         
         contentView.layer.backgroundColor = Colors.yellow.cgColor
         
@@ -57,10 +63,15 @@ class SuccessMessageVC: UIViewController {
         titleLabel.text = titleText
         
         descriptionLabel.text = descriptionText
-        correctWordsLabel.text = "Correct: \(String(answersCorrect))"
-        wrongWordsLabel.text = "Wrong: \(String(answersWrong))"
+        correctWordsLabel.text = "Correct: \(String(result?.answerCorrect ?? 0))"
+        wrongWordsLabel.text = "Wrong: \(String(result?.answerWrong ?? 0))"
         
         button.setTitle(titleBtn, for: .normal)
+    }
+    
+    func setupModal() {
+        modalTransitionStyle = .crossDissolve
+        modalPresentationStyle = .popover
     }
     
     private func printTitle(with rightAnswers: Int, and wrongAnswers: Int) -> String {
@@ -68,10 +79,12 @@ class SuccessMessageVC: UIViewController {
         let answersSum = rightAnswers + wrongAnswers
         let precentageOfCorrectAnswers = (rightAnswers * 100) / answersSum
         
-        if wordsAmount < 5 {
+        guard let result = self.result else { return "" }
+        
+        if result.wordsAmount < 5 {
             imageView.image = UIImage(named: "walking")
             return "You could practice more words"
-        } else if wordsAmount >= 5 && wordsAmount < 10 {
+        } else if result.wordsAmount >= 5 && result.wordsAmount < 10 {
             imageView.image = UIImage(named: "standing")
             if isVocabularyEmpty { return "Better add more words" }
             return "Already finished?"

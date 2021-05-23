@@ -1,3 +1,11 @@
+//
+//  Constants.swift
+//  worddeposit
+//
+//  Created by Maksim Kalik on 5/23/21.
+//  Copyright © 2021 Maksim Kalik. All rights reserved.
+//
+
 import Foundation
 import UIKit
 
@@ -12,8 +20,6 @@ struct Storyboards {
 }
 
 struct Controllers {
-    static let TrainerWordToTranslate = "TrainerWordToTranslate"
-    static let TrainerTranslateToWord = "TrainerTranslateToWord"
     static let Vocabularies = "Vocabularies"
 }
 
@@ -95,6 +101,7 @@ struct Keys {
 }
 
 struct Limits {
+    static let practiceWords = 5
     static let name = 60
     static let vocabularies = 5
     static let words = 500

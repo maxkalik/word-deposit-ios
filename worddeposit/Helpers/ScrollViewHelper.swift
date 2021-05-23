@@ -1,15 +1,15 @@
 //
-//  WordImageButtonHelper.swift
+//  ScrollViewHelper.swift
 //  worddeposit
 //
-//  Created by Maksim Kalik on 1/20/21.
+//  Created by Maksim Kalik on 4/17/21.
 //  Copyright © 2021 Maksim Kalik. All rights reserved.
 //
 
 import UIKit
 
-final class WordImageButtonHelper {
-    static var shared = WordImageButtonHelper()
+final class ScrollViewHelper {
+    static var shared = ScrollViewHelper()
     private init() {}
     
     func transformOnScroll(with offset: CGPoint, and objectHeight: CGFloat) -> CATransform3D {
