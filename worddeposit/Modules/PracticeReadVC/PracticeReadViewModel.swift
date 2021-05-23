@@ -48,6 +48,7 @@ class PracticeReadViewModel {
             }
         }
     }
+    private var isHint: Bool = false
     
     weak var delegate: PracticeReadViewModelDelegate?
     var sessionWrongAnswersSum = 0
@@ -66,11 +67,12 @@ class PracticeReadViewModel {
         trainedWord = filteredWordDesk?.randomElement()
     }
     
-    func getSkipedAnswerIndex() -> Int? {
-        guard let index = wordsDesk?.firstIndex(matching: trainedWord!) else { return nil }
-        updateResult(trainedWord!, isCorrect: false)
-        updateWordsDesk()
-        return index
+    func skipAnswer() {
+        guard let trainedWord = self.trainedWord else { return }
+        guard let skipedIndex = wordsDesk?.firstIndex(matching: trainedWord) else { return }
+        self.selectedIndex = skipedIndex
+        updateResult(trainedWord, isCorrect: false)
+        isHint = true
     }
     
     func updateWordsDesk() {
@@ -80,6 +82,7 @@ class PracticeReadViewModel {
         }
         self.wordsDesk = wordsDesk
         selectedIndex = nil
+        isHint = false
     }
     
     func updateAnswer(with selectedIndex: Int) {
@@ -92,8 +95,13 @@ class PracticeReadViewModel {
             guard let wordsDesk = self.wordsDesk else { return nil }
             let word = wordsDesk[index]
             if word.id == trainedWord?.id {
-                updateResult(word, isCorrect: true)
-                return .correct
+                if isHint {
+                    updateResult(word, isCorrect: false)
+                    return .hint
+                } else {
+                    updateResult(word, isCorrect: true)
+                    return .correct
+                }
             } else {
                 updateResult(word, isCorrect: false)
                 return .wrong

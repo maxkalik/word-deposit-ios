@@ -3,15 +3,11 @@ import Kingfisher
 
 class PracticeReadVC: UIViewController {
     
-    private let answerItemBubbleLabel = BubbleLabel()
-    var model: PracticeReadViewModel?
-
     @IBOutlet weak var scrollView: UIScrollView! {
         didSet {
             scrollView.delegate = self
         }
     }
-    
     @IBOutlet weak var wordImage: RoundedImageView! {
         didSet {
             wordImage.contentMode = .scaleAspectFill
@@ -27,6 +23,9 @@ class PracticeReadVC: UIViewController {
         }
     }
 
+    private var answerItemBubbleLabel = BubbleLabel()
+    var model: PracticeReadViewModel?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         model?.delegate = self
@@ -36,7 +35,6 @@ class PracticeReadVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         spinner.stopAnimating()
-        view.addSubview(answerItemBubbleLabel)
         setupContent()
     }
     
@@ -45,43 +43,49 @@ class PracticeReadVC: UIViewController {
         self.navigationController?.navigationBar.tintColor = Colors.dark
     }
 
-    func setupUI() {
+    private func setupUI() {
         setupBackground()
         setupAnswersCollectionView()
         setupAnswersCollectionViewLayout()
         setupPracticeWordLabel()
         setupNavigationBar()
+        setupAnswerBubble()
+        
     }
     
-    func setupBackground() {
+    private func setupAnswerBubble() {
+        view.addSubview(answerItemBubbleLabel)
+    }
+    
+    private func setupBackground() {
         guard let model = self.model else { return }
         view.backgroundColor = PracticeReadHelper.shared.getBasicColor(type: model.practiceType)
     }
     
-    func setupNavigationBar() {
+    private func setupNavigationBar() {
         self.navigationItem.setHidesBackButton(true, animated: false)
         setNavigationBarLeft()
         setNavgationBarRight()
     }
     
-    func setupPracticeWordLabel() {
+    private func setupPracticeWordLabel() {
         practiceLabel.font = UIFont(name: Fonts.bold, size: 28)
         practiceLabel.lineBreakMode = .byWordWrapping
         practiceLabel.numberOfLines = 0
     }
     
-    func setupContent() {
+    private func setupContent() {
         guard let model = self.model else { return }
         model.setupContent()
         updatePracticeWordLabel()
     }
     
-    func updatePracticeWordLabel() {
+    private func updatePracticeWordLabel() {
         PracticeReadHelper.shared.setupImage(&wordImage, for: self.model?.trainedWord)
         self.practiceLabel.text = self.model?.trainedWordTitle
     }
     
-    func setupAnswersCollectionViewLayout() {
+    private func setupAnswersCollectionViewLayout() {
         let layout = UICollectionViewCenterLayout()
         layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         answersCollectionView.collectionViewLayout = layout
@@ -113,17 +117,12 @@ class PracticeReadVC: UIViewController {
         }
     }
     
-    func skip() {
-        guard let index = model?.getSkipedAnswerIndex() else { return }
-        if let cell = answersCollectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? PracticeAnswerItem {
-            DispatchQueue.main.async {
-                cell.hintAnswer()
-            }
-        }
+    private func skip() {
+        model?.skipAnswer()
         updateScreen()
     }
     
-    func prepareForQuit() {
+    private func prepareForQuit() {
         let result = model?.getGeneralResult()
         let successMessage = SuccessMessageVC()
         successMessage.delegate = self

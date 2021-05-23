@@ -10,6 +10,7 @@ enum Answer {
     case wrong
     case withoutAnswer
     case noneAnswer
+    case hint
 }
 
 class PracticeAnswerItem: UICollectionViewCell {
@@ -98,6 +99,8 @@ class PracticeAnswerItem: UICollectionViewCell {
             wrongAnswer()
         case .withoutAnswer:
             withoutAnswer()
+        case .hint:
+            hintAnswer()
         default:
             defaultAnswer()
         }
@@ -106,7 +109,11 @@ class PracticeAnswerItem: UICollectionViewCell {
     private func setupLimit() {
         if let title = self.title, title.count > 32 {
             let mutableString = NSMutableAttributedString(string: "\(String(title.prefix(26))) •••")
-            mutableString.addAttribute(NSAttributedString.Key.foregroundColor as NSAttributedString.Key, value: Colors.orange, range: NSRange(location:26,length:4))
+            mutableString.addAttribute(
+                NSAttributedString.Key.foregroundColor as NSAttributedString.Key,
+                value: Colors.orange,
+                range: NSRange(location: 26, length: 4)
+            )
             deskItemLabel.attributedText = mutableString
         } else {
             deskItemLabel.text = title
