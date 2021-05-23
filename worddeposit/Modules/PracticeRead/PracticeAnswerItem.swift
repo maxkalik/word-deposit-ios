@@ -1,6 +1,6 @@
 import UIKit
 
-protocol PracticeAnswerItemDelegate: PracticeReadVC {
+protocol PracticeAnswerItemDelegate: PracticeReadController {
     func practiceAnswerItemBeganLongPressed(with cellFrame: CGRect, and word: String)
     func practiceAnswerItemDidFinishLongPress()
 }

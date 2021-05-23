@@ -11,7 +11,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     var words = [Word]()
     private var trainers = [PracticeTrainer]()
     
-    var practiceReadVC: PracticeReadVC?
+    var practiceReadVC: PracticeReadController?
     var progressHUD = ProgressHUD(title: "Fetching...")
     var messageView = MessageView()
     var rightBarItem = TopBarItem()
@@ -243,7 +243,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Segues.PracticeRead {
-            self.practiceReadVC = segue.destination as? PracticeReadVC
+            self.practiceReadVC = segue.destination as? PracticeReadController
 
             if let sender = (sender as? PracticeTrainer) {
                 tabBarController?.tabBar.isHidden = true

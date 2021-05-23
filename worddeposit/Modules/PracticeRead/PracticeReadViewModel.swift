@@ -19,7 +19,7 @@ protocol PracticeReadViewModelDelegate: AnyObject {
     func showSuccess()
 }
 
-class PracticeReadViewModel {
+final class PracticeReadViewModel {
     var practiceType: PracticeType
     var trainedWord: Word?
     var trainedWordTitle: String? {

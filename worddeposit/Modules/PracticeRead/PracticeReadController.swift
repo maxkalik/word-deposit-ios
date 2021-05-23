@@ -1,7 +1,7 @@
 import UIKit
 import Kingfisher
 
-class PracticeReadVC: UIViewController {
+class PracticeReadController: UIViewController {
     
     @IBOutlet weak var scrollView: UIScrollView! {
         didSet {
@@ -156,7 +156,7 @@ class PracticeReadVC: UIViewController {
 
 // MARK: - UICollectionViewDelegates
 
-extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension PracticeReadController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let words = self.model?.wordsDesk else { return 0 }
@@ -186,7 +186,7 @@ extension PracticeReadVC: UICollectionViewDelegate, UICollectionViewDataSource, 
 
 // MARK: - SuccessMessageVCDelegate
 
-extension PracticeReadVC: SuccessMessageVCDelegate {
+extension PracticeReadController: SuccessMessageVCDelegate {
     func onSuccessMessageButtonTap() {
         model?.finishPractice()
         _ = navigationController?.popViewController(animated: true)
@@ -195,7 +195,7 @@ extension PracticeReadVC: SuccessMessageVCDelegate {
 
 // MARK: - PracticeAnswerItemDelegate
 
-extension PracticeReadVC: PracticeAnswerItemDelegate {
+extension PracticeReadController: PracticeAnswerItemDelegate {
     func practiceAnswerItemBeganLongPressed(with cellFrame: CGRect, and word: String) {
         let bubbleLabelParams = BubbleLabelParams(
             collectionViewFrame: answersCollectionView.frame,
@@ -212,7 +212,7 @@ extension PracticeReadVC: PracticeAnswerItemDelegate {
 
 // MARK: - UIScrollViewDelegate
 
-extension PracticeReadVC: UIScrollViewDelegate {
+extension PracticeReadController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         PracticeReadHelper.shared.transofrmOnScroll(wordImage: &wordImage, with: scrollView.contentOffset)
     }
@@ -220,7 +220,7 @@ extension PracticeReadVC: UIScrollViewDelegate {
 
 // MARK: - PracticeReadViewModelDelegate
 
-extension PracticeReadVC: PracticeReadViewModelDelegate {
+extension PracticeReadController: PracticeReadViewModelDelegate {
     func showAlert(title: String, msg: String) {
         self.simpleAlert(title: title, msg: msg)
     }
