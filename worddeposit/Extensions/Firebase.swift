@@ -6,6 +6,7 @@
 //  Copyright © 2020 Maksim Kalik. All rights reserved.
 //
 
+import UIKit
 import Firebase
 
 class ErrorAlert {
