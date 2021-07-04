@@ -123,10 +123,11 @@ class PracticeReadController: UIViewController {
     }
     
     private func prepareForQuit() {
-        let result = model?.getGeneralResult()
+        guard let result = model?.getGeneralResult() else { return }
+        let successMessageVM = SuccessMessageViewModel(result: result)
         let successMessage = SuccessMessageVC()
+        successMessage.viewModel = successMessageVM
         successMessage.delegate = self
-        successMessage.result = result
         present(successMessage, animated: true, completion: nil)
     }
     

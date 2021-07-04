@@ -57,6 +57,7 @@ struct Colors {
     static let shadow = #colorLiteral(red: 0.002289562985, green: 0.009225011557, blue: 0.1488199301, alpha: 1)
     static let yellow = #colorLiteral(red: 1, green: 0.7058823529, blue: 0.007843137255, alpha: 1)
     static let orange = #colorLiteral(red: 1, green: 0.4645918398, blue: 0, alpha: 1)
+    static let red = #colorLiteral(red: 0.7483542195, green: 0.1328815494, blue: 0, alpha: 1)
     static let darkOrange = #colorLiteral(red: 0.521568656, green: 0.1098039225, blue: 0.05098039284, alpha: 1)
     static let silver = #colorLiteral(red: 0.93099447, green: 0.9588879667, blue: 0.9599677666, alpha: 1)
     static let lightGrey = #colorLiteral(red: 0.8789731349, green: 0.8789731349, blue: 0.8789731349, alpha: 1)
@@ -92,6 +93,15 @@ struct Icons {
 struct Images {
     static let trainerWordToTranslate = "trainer-word-to-translate.png"
     static let trainerTranslateToWord = "trainer-translate-to-word.png"
+}
+
+enum SuccessMessageImage: String {
+    case rocker = "rocker"
+    case skater = "skater"
+    case social = "social"
+    case sitting = "sitting"
+    case walking = "walking"
+    case standing = "standing"
 }
 
 struct Keys {
