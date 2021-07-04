@@ -33,13 +33,14 @@ class SuccessMessageVC: UIViewController {
     }
     
     private func configure() {
-        isModalInPresentation = true
+        guard let model = self.viewModel else { return }
+        isModalInPresentation = model.isModalDismissableOnSwap
     }
     
     private func setupBackground() {
         answersStackView.layer.cornerRadius = Radiuses.large
         answersStackView.clipsToBounds = true
-        separatorView.backgroundColor = Colors.silver
+        separatorView.backgroundColor = Colors.grey
         contentView.layer.backgroundColor = Colors.yellow.cgColor
     }
     

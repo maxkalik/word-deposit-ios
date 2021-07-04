@@ -50,7 +50,6 @@ class PracticeReadController: UIViewController {
         setupPracticeWordLabel()
         setupNavigationBar()
         setupAnswerBubble()
-        
     }
     
     private func setupAnswerBubble() {

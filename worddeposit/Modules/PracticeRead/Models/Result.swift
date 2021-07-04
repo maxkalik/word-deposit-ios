@@ -24,6 +24,18 @@ struct Result {
     let wordsAmount: Int
     let answerCorrect: Int
     let answerWrong: Int
+    let isWordDeskEmpty: Bool
+    
+    init(wordsAmount: Int,
+         answerCorrect: Int,
+         answerWrong: Int,
+         isWordDeskEmpty: Bool = false
+    ) {
+        self.wordsAmount = wordsAmount
+        self.answerCorrect = answerCorrect
+        self.answerWrong = answerWrong
+        self.isWordDeskEmpty = isWordDeskEmpty
+    }
     
     var state: ResultState {
         switch wordsAmount {

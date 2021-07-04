@@ -15,6 +15,10 @@ class SuccessMessageViewModel {
         self.result = result
     }
     
+    var isModalDismissableOnSwap: Bool {
+        return self.result.isWordDeskEmpty
+    }
+    
     var imageName: String? {
         return getContent().0.rawValue
     }
@@ -24,10 +28,15 @@ class SuccessMessageViewModel {
     }
     
     var description: String {
-        if result.wordsAmount == 0 {
-            return "You trained all \(result.wordsAmount) words"
-        } else {
-            return "You trained \(result.wordsAmount) words"
+        switch result.wordsAmount {
+        case 1:
+            return "You trained only 1 word"
+        case 2..<10:
+            return "You trained only \(result.wordsAmount) words"
+        default:
+            return result.isWordDeskEmpty
+                ? "You trained all words!"
+                : "You trained \(result.wordsAmount) words"
         }
     }
     
