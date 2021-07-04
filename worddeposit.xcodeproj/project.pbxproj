@@ -77,6 +77,8 @@
 		151F2F0C251E97D5002D292B /* LoginTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151F2F0B251E97D5002D292B /* LoginTitle.swift */; };
 		151F2F29251EB193002D292B /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151F2F28251EB193002D292B /* DefaultButton.swift */; };
 		15266E6A251140D200BB621C /* Firebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15266E69251140D200BB621C /* Firebase.swift */; };
+		152DEC632688E5F6005319D8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 152DEC622688E5F6005319D8 /* GoogleService-Info.plist */; };
+		152DEC6C2688EC65005319D8 /* SuccessMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152DEC6B2688EC65005319D8 /* SuccessMessageViewModel.swift */; };
 		155F39E82523D69400EC63B9 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 155F39E72523D69400EC63B9 /* UINavigationController.swift */; };
 		156C80B724D8D27E0077905D /* VocabularyDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156C80B624D8D27E0077905D /* VocabularyDetailsVC.swift */; };
 		158B1095251BE29A0003C3A9 /* TextFieldLimit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158B1094251BE29A0003C3A9 /* TextFieldLimit.swift */; };
@@ -94,7 +96,6 @@
 		15D5190A251C070100590073 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D51909251C070100590073 /* String.swift */; };
 		15D5190E251C076900590073 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D5190D251C076900590073 /* Validator.swift */; };
 		15D51954251E7F2500590073 /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D51953251E7F2500590073 /* PrimaryButton.swift */; };
-		15E3458A263F481D0013879E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 15E34589263F481D0013879E /* GoogleService-Info.plist */; };
 		15E3458D264085ED0013879E /* PracticeReadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E3458C264085ED0013879E /* PracticeReadViewModel.swift */; };
 		15E7741C2529205400EC57D0 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E7741B2529205400EC57D0 /* UILabel.swift */; };
 		15E7741F25292F0100EC57D0 /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E7741E25292F0100EC57D0 /* ShadowView.swift */; };
@@ -161,7 +162,7 @@
 		119D786A2540BBAF009260D4 /* CheckmarkListTVCResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkListTVCResults.swift; sourceTree = "<group>"; };
 		119D78702540BBD8009260D4 /* CheckmarkListTVC+Updating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CheckmarkListTVC+Updating.swift"; sourceTree = "<group>"; };
 		119DBF5624ACCFBF009124B7 /* Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
-		11B20D6824C8DF2E00C1CB4E /* PracticeAnswerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PracticeAnswerItem.swift; path = worddeposit/Modules/PracticeRead/PracticeAnswerItem.swift; sourceTree = SOURCE_ROOT; };
+		11B20D6824C8DF2E00C1CB4E /* PracticeAnswerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PracticeAnswerItem.swift; path = worddeposit/Modules/PracticeRead/Views/PracticeAnswerItem.swift; sourceTree = SOURCE_ROOT; };
 		11B20D6C24C8E00800C1CB4E /* PracticeReadController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PracticeReadController.swift; path = worddeposit/Modules/PracticeRead/PracticeReadController.swift; sourceTree = SOURCE_ROOT; };
 		11B335D72542250C00F2D7DA /* CheckmarkListTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkListTVCell.swift; sourceTree = "<group>"; };
 		11ECE4B324EB0FA100B7884B /* VocabulariesTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabulariesTVC.swift; sourceTree = "<group>"; };
@@ -175,6 +176,8 @@
 		151F2F0B251E97D5002D292B /* LoginTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTitle.swift; sourceTree = "<group>"; };
 		151F2F28251EB193002D292B /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
 		15266E69251140D200BB621C /* Firebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firebase.swift; sourceTree = "<group>"; };
+		152DEC622688E5F6005319D8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		152DEC6B2688EC65005319D8 /* SuccessMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessMessageViewModel.swift; sourceTree = "<group>"; };
 		155F39E72523D69400EC63B9 /* UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
 		156C80B624D8D27E0077905D /* VocabularyDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyDetailsVC.swift; sourceTree = "<group>"; };
 		158B1094251BE29A0003C3A9 /* TextFieldLimit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldLimit.swift; sourceTree = "<group>"; };
@@ -191,7 +194,6 @@
 		15D51909251C070100590073 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		15D5190D251C076900590073 /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
 		15D51953251E7F2500590073 /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
-		15E34589263F481D0013879E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		15E3458C264085ED0013879E /* PracticeReadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeReadViewModel.swift; sourceTree = "<group>"; };
 		15E7741B2529205400EC57D0 /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		15E7741E25292F0100EC57D0 /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
@@ -279,7 +281,7 @@
 				15D5194B251D5C6500590073 /* Resources */,
 				11FAD1342497FBB2007EBDDD /* Support Files */,
 				1128421E248E7C5800A014E9 /* Info.plist */,
-				15E34589263F481D0013879E /* GoogleService-Info.plist */,
+				152DEC622688E5F6005319D8 /* GoogleService-Info.plist */,
 			);
 			path = worddeposit;
 			sourceTree = "<group>";
@@ -287,7 +289,6 @@
 		11284224248E7CCD00A014E9 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				15C2D8E8265A983B008F24A3 /* SuccessMessage */,
 				15E3458B264085A30013879E /* PracticeRead */,
 				11284236248E83D400A014E9 /* LoginVC.swift */,
 				11284238248E83E000A014E9 /* RegistrationVC.swift */,
@@ -359,7 +360,6 @@
 				1181BBF22498060F00DB682E /* VocabularyCardsVC.xib */,
 				1171E70524981CDD00805D35 /* VocabularyCardCVCell.xib */,
 				15A7E04824D8B322006804FD /* VocabulariesTVCell.xib */,
-				112F9C7424F6F201007E92D8 /* SuccessMessageVC.xib */,
 				1111FDA425B8F63600799B0F /* VocabularyWordBubbleView.xib */,
 			);
 			path = XIBs;
@@ -409,7 +409,6 @@
 				1171E70424981CDD00805D35 /* VocabularyCardCVCell.swift */,
 				15A7E04724D8B322006804FD /* VocabulariesTVCell.swift */,
 				156C80B624D8D27E0077905D /* VocabularyDetailsVC.swift */,
-				112F9C7324F6F201007E92D8 /* SuccessMessageVC.swift */,
 				1147B608252B1F420078A296 /* CheckmarkListTVC.swift */,
 				11B335D72542250C00F2D7DA /* CheckmarkListTVCell.swift */,
 				119D78702540BBD8009260D4 /* CheckmarkListTVC+Updating.swift */,
@@ -421,16 +420,12 @@
 			path = "Reusable Components";
 			sourceTree = "<group>";
 		};
-		15C2D8E8265A983B008F24A3 /* SuccessMessage */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = SuccessMessage;
-			sourceTree = "<group>";
-		};
 		15C2D8EB265AB81C008F24A3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				112F9C7324F6F201007E92D8 /* SuccessMessageVC.swift */,
+				112F9C7424F6F201007E92D8 /* SuccessMessageVC.xib */,
+				11B20D6824C8DF2E00C1CB4E /* PracticeAnswerItem.swift */,
 				117FA4CB24CEEC350043024D /* PracticeDeskItemButton.swift */,
 				116BC94B249182BD00968DA6 /* PracticeAnswerItem.xib */,
 			);
@@ -450,6 +445,7 @@
 			isa = PBXGroup;
 			children = (
 				15E3458C264085ED0013879E /* PracticeReadViewModel.swift */,
+				152DEC6B2688EC65005319D8 /* SuccessMessageViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -467,10 +463,9 @@
 		15E3458B264085A30013879E /* PracticeRead */ = {
 			isa = PBXGroup;
 			children = (
-				15C2D8F1265ABE1E008F24A3 /* ViewModels */,
 				15C2D8EC265AB835008F24A3 /* Models */,
+				15C2D8F1265ABE1E008F24A3 /* ViewModels */,
 				15C2D8EB265AB81C008F24A3 /* Views */,
-				11B20D6824C8DF2E00C1CB4E /* PracticeAnswerItem.swift */,
 				11939EE8262B2731008BAAF4 /* PracticeReadHelper.swift */,
 				11B20D6C24C8E00800C1CB4E /* PracticeReadController.swift */,
 			);
@@ -554,9 +549,9 @@
 				11F0326E24C8267E00BD6350 /* PracticeCVCell.xib in Resources */,
 				15A7E04A24D8B322006804FD /* VocabulariesTVCell.xib in Resources */,
 				1128421A248E7C5800A014E9 /* Assets.xcassets in Resources */,
+				152DEC632688E5F6005319D8 /* GoogleService-Info.plist in Resources */,
 				11108C04252356BC00A44945 /* DMSans-Regular.ttf in Resources */,
 				1171E70724981CDD00805D35 /* VocabularyCardCVCell.xib in Resources */,
-				15E3458A263F481D0013879E /* GoogleService-Info.plist in Resources */,
 				11284218248E7C5700A014E9 /* Main.storyboard in Resources */,
 				1181BBF42498060F00DB682E /* VocabularyCardsVC.xib in Resources */,
 				11284229248E7D5100A014E9 /* Home.storyboard in Resources */,
@@ -638,6 +633,7 @@
 				112EA43524C84A2900FA55E3 /* PracticeTrainers.swift in Sources */,
 				150FA46124D8B6E40083D653 /* Vocabulary.swift in Sources */,
 				118162EF24BFB08E0088C0E1 /* UserInfoTVC.swift in Sources */,
+				152DEC6C2688EC65005319D8 /* SuccessMessageViewModel.swift in Sources */,
 				1128423F248E845900A014E9 /* User.swift in Sources */,
 				151F2F29251EB193002D292B /* DefaultButton.swift in Sources */,
 				15D5190E251C076900590073 /* Validator.swift in Sources */,

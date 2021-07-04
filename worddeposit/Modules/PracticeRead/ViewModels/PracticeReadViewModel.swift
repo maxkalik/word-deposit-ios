@@ -43,6 +43,7 @@ final class PracticeReadViewModel {
         }
     }
     private var isHint: Bool = false
+    private var isWordDeskEmpty = false
     
     weak var delegate: PracticeReadViewModelDelegate?
     var sessionWrongAnswersSum = 0
@@ -74,6 +75,7 @@ final class PracticeReadViewModel {
                 limit: Limits.practiceWords,
                 trainedWordIds: correctAnswerIds
         ) else {
+            isWordDeskEmpty = true
             delegate?.showSuccess()
             return
         }
@@ -137,7 +139,12 @@ final class PracticeReadViewModel {
     }
     
     func getGeneralResult() -> Result {
-        return Result(wordsAmount: trainedWords.count, answerCorrect: sesionCorrenctAnswersSum, answerWrong: sessionWrongAnswersSum)
+        return Result(
+            wordsAmount: trainedWords.count,
+            answerCorrect: sesionCorrenctAnswersSum,
+            answerWrong: sessionWrongAnswersSum,
+            isWordDeskEmpty: isWordDeskEmpty
+        )
     }
     
     func finishPractice() {
