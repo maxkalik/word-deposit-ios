@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -82,10 +82,11 @@
 		155F39E82523D69400EC63B9 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 155F39E72523D69400EC63B9 /* UINavigationController.swift */; };
 		156C80B724D8D27E0077905D /* VocabularyDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156C80B624D8D27E0077905D /* VocabularyDetailsVC.swift */; };
 		158B1095251BE29A0003C3A9 /* TextFieldLimit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158B1094251BE29A0003C3A9 /* TextFieldLimit.swift */; };
-		158D655B95A91BBFB440BB73 /* Pods_worddeposit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E74A45028EABF36BDC29B0D7 /* Pods_worddeposit.framework */; };
 		15A7E04924D8B322006804FD /* VocabulariesTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A7E04724D8B322006804FD /* VocabulariesTVCell.swift */; };
 		15A7E04A24D8B322006804FD /* VocabulariesTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15A7E04824D8B322006804FD /* VocabulariesTVCell.xib */; };
 		15AFF8B6251692CB00BA6DAF /* PresentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AFF8B5251692CB00BA6DAF /* PresentVC.swift */; };
+		15B56820269201DA0083319E /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 15B5681F269201DA0083319E /* Kingfisher */; };
+		15B56823269203E40083319E /* YPImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 15B56822269203E40083319E /* YPImagePicker */; };
 		15BD0C0224DE0631007E8D27 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BD0C0124DE0631007E8D27 /* MessageView.swift */; };
 		15BD0C0424DE0657007E8D27 /* MessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15BD0C0324DE0657007E8D27 /* MessageView.xib */; };
 		15C2D8EA265AB5F2008F24A3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C2D8E9265AB5F2008F24A3 /* Constants.swift */; };
@@ -101,6 +102,9 @@
 		15E7741F25292F0100EC57D0 /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E7741E25292F0100EC57D0 /* ShadowView.swift */; };
 		15E77426252A2C7C00EC57D0 /* ButtonSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E77425252A2C7C00EC57D0 /* ButtonSelector.swift */; };
 		15E77429252A3BF400EC57D0 /* SecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E77428252A3BF400EC57D0 /* SecondaryButton.swift */; };
+		15F06E86269214E00010340D /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 15F06E85269214E00010340D /* FirebaseAuth */; };
+		15F06E88269214E00010340D /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 15F06E87269214E00010340D /* FirebaseFirestore */; };
+		15F06E8A269214E00010340D /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 15F06E89269214E00010340D /* FirebaseStorage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -199,9 +203,6 @@
 		15E7741E25292F0100EC57D0 /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
 		15E77425252A2C7C00EC57D0 /* ButtonSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonSelector.swift; sourceTree = "<group>"; };
 		15E77428252A3BF400EC57D0 /* SecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButton.swift; sourceTree = "<group>"; };
-		64D79D641400D9D1E19CC310 /* Pods-worddeposit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-worddeposit.debug.xcconfig"; path = "Target Support Files/Pods-worddeposit/Pods-worddeposit.debug.xcconfig"; sourceTree = "<group>"; };
-		E2568201BEE4DB94972CDA34 /* Pods-worddeposit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-worddeposit.release.xcconfig"; path = "Target Support Files/Pods-worddeposit/Pods-worddeposit.release.xcconfig"; sourceTree = "<group>"; };
-		E74A45028EABF36BDC29B0D7 /* Pods_worddeposit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_worddeposit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,7 +210,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				158D655B95A91BBFB440BB73 /* Pods_worddeposit.framework in Frameworks */,
+				15B56820269201DA0083319E /* Kingfisher in Frameworks */,
+				15F06E88269214E00010340D /* FirebaseFirestore in Frameworks */,
+				15F06E86269214E00010340D /* FirebaseAuth in Frameworks */,
+				15F06E8A269214E00010340D /* FirebaseStorage in Frameworks */,
+				15B56823269203E40083319E /* YPImagePicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,8 +257,6 @@
 			children = (
 				1128420F248E7C5700A014E9 /* worddeposit */,
 				1128420E248E7C5700A014E9 /* Products */,
-				13969C7DBB50ED88A4E2A9CB /* Pods */,
-				94DA42225305F6CE72EE0B51 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -389,15 +392,6 @@
 			path = "Support Files";
 			sourceTree = "<group>";
 		};
-		13969C7DBB50ED88A4E2A9CB /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				64D79D641400D9D1E19CC310 /* Pods-worddeposit.debug.xcconfig */,
-				E2568201BEE4DB94972CDA34 /* Pods-worddeposit.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		156C80BA24DDFEB10077905D /* Reusable Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -472,14 +466,6 @@
 			path = PracticeRead;
 			sourceTree = "<group>";
 		};
-		94DA42225305F6CE72EE0B51 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				E74A45028EABF36BDC29B0D7 /* Pods_worddeposit.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -487,17 +473,22 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 11284221248E7C5800A014E9 /* Build configuration list for PBXNativeTarget "worddeposit" */;
 			buildPhases = (
-				BC7967448B04ACAD2F276EC5 /* [CP] Check Pods Manifest.lock */,
 				11284209248E7C5700A014E9 /* Sources */,
 				1128420A248E7C5700A014E9 /* Frameworks */,
 				1128420B248E7C5700A014E9 /* Resources */,
-				082AF394C0C89311E27FFA55 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = worddeposit;
+			packageProductDependencies = (
+				15B5681F269201DA0083319E /* Kingfisher */,
+				15B56822269203E40083319E /* YPImagePicker */,
+				15F06E85269214E00010340D /* FirebaseAuth */,
+				15F06E87269214E00010340D /* FirebaseFirestore */,
+				15F06E89269214E00010340D /* FirebaseStorage */,
+			);
 			productName = worddeposit;
 			productReference = 1128420D248E7C5700A014E9 /* worddeposit.app */;
 			productType = "com.apple.product-type.application";
@@ -526,6 +517,11 @@
 				Base,
 			);
 			mainGroup = 11284204248E7C5700A014E9;
+			packageReferences = (
+				15B5681E269201D90083319E /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				15B56821269203E40083319E /* XCRemoteSwiftPackageReference "YPImagePicker" */,
+				15F06E84269214E00010340D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 1128420E248E7C5700A014E9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -560,48 +556,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		082AF394C0C89311E27FFA55 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-worddeposit/Pods-worddeposit-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-worddeposit/Pods-worddeposit-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-worddeposit/Pods-worddeposit-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BC7967448B04ACAD2F276EC5 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-worddeposit-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		11284209248E7C5700A014E9 /* Sources */ = {
@@ -830,7 +784,6 @@
 		};
 		11284222248E7C5800A014E9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 64D79D641400D9D1E19CC310 /* Pods-worddeposit.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "";
@@ -853,7 +806,6 @@
 		};
 		11284223248E7C5800A014E9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E2568201BEE4DB94972CDA34 /* Pods-worddeposit.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "";
@@ -896,6 +848,61 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		15B5681E269201D90083319E /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.3.0;
+			};
+		};
+		15B56821269203E40083319E /* XCRemoteSwiftPackageReference "YPImagePicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Yummypets/YPImagePicker.git";
+			requirement = {
+				branch = spm;
+				kind = branch;
+			};
+		};
+		15F06E84269214E00010340D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		15B5681F269201DA0083319E /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 15B5681E269201D90083319E /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		15B56822269203E40083319E /* YPImagePicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 15B56821269203E40083319E /* XCRemoteSwiftPackageReference "YPImagePicker" */;
+			productName = YPImagePicker;
+		};
+		15F06E85269214E00010340D /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 15F06E84269214E00010340D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		15F06E87269214E00010340D /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 15F06E84269214E00010340D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		15F06E89269214E00010340D /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 15F06E84269214E00010340D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 11284205248E7C5700A014E9 /* Project object */;
 }
