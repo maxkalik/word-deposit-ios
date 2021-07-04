@@ -85,8 +85,8 @@
 		15A7E04924D8B322006804FD /* VocabulariesTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A7E04724D8B322006804FD /* VocabulariesTVCell.swift */; };
 		15A7E04A24D8B322006804FD /* VocabulariesTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15A7E04824D8B322006804FD /* VocabulariesTVCell.xib */; };
 		15AFF8B6251692CB00BA6DAF /* PresentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AFF8B5251692CB00BA6DAF /* PresentVC.swift */; };
-		15B56820269201DA0083319E /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 15B5681F269201DA0083319E /* Kingfisher */; };
-		15B56823269203E40083319E /* YPImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 15B56822269203E40083319E /* YPImagePicker */; };
+		15B56820269201DA0083319E /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 15B5681F269201DA0083319E /* SwiftPackageProductDependency */; };
+		15B56823269203E40083319E /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 15B56822269203E40083319E /* SwiftPackageProductDependency */; };
 		15BD0C0224DE0631007E8D27 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BD0C0124DE0631007E8D27 /* MessageView.swift */; };
 		15BD0C0424DE0657007E8D27 /* MessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15BD0C0324DE0657007E8D27 /* MessageView.xib */; };
 		15C2D8EA265AB5F2008F24A3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C2D8E9265AB5F2008F24A3 /* Constants.swift */; };
@@ -102,9 +102,9 @@
 		15E7741F25292F0100EC57D0 /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E7741E25292F0100EC57D0 /* ShadowView.swift */; };
 		15E77426252A2C7C00EC57D0 /* ButtonSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E77425252A2C7C00EC57D0 /* ButtonSelector.swift */; };
 		15E77429252A3BF400EC57D0 /* SecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E77428252A3BF400EC57D0 /* SecondaryButton.swift */; };
-		15F06E86269214E00010340D /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 15F06E85269214E00010340D /* FirebaseAuth */; };
-		15F06E88269214E00010340D /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 15F06E87269214E00010340D /* FirebaseFirestore */; };
-		15F06E8A269214E00010340D /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 15F06E89269214E00010340D /* FirebaseStorage */; };
+		15F06E86269214E00010340D /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 15F06E85269214E00010340D /* SwiftPackageProductDependency */; };
+		15F06E88269214E00010340D /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 15F06E87269214E00010340D /* SwiftPackageProductDependency */; };
+		15F06E8A269214E00010340D /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 15F06E89269214E00010340D /* SwiftPackageProductDependency */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -210,11 +210,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				15B56820269201DA0083319E /* Kingfisher in Frameworks */,
-				15F06E88269214E00010340D /* FirebaseFirestore in Frameworks */,
-				15F06E86269214E00010340D /* FirebaseAuth in Frameworks */,
-				15F06E8A269214E00010340D /* FirebaseStorage in Frameworks */,
-				15B56823269203E40083319E /* YPImagePicker in Frameworks */,
+				15B56820269201DA0083319E /* BuildFile in Frameworks */,
+				15F06E88269214E00010340D /* BuildFile in Frameworks */,
+				15F06E86269214E00010340D /* BuildFile in Frameworks */,
+				15F06E8A269214E00010340D /* BuildFile in Frameworks */,
+				15B56823269203E40083319E /* BuildFile in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -483,11 +483,11 @@
 			);
 			name = worddeposit;
 			packageProductDependencies = (
-				15B5681F269201DA0083319E /* Kingfisher */,
-				15B56822269203E40083319E /* YPImagePicker */,
-				15F06E85269214E00010340D /* FirebaseAuth */,
-				15F06E87269214E00010340D /* FirebaseFirestore */,
-				15F06E89269214E00010340D /* FirebaseStorage */,
+				15B5681F269201DA0083319E /* SwiftPackageProductDependency */,
+				15B56822269203E40083319E /* SwiftPackageProductDependency */,
+				15F06E85269214E00010340D /* SwiftPackageProductDependency */,
+				15F06E87269214E00010340D /* SwiftPackageProductDependency */,
+				15F06E89269214E00010340D /* SwiftPackageProductDependency */,
 			);
 			productName = worddeposit;
 			productReference = 1128420D248E7C5700A014E9 /* worddeposit.app */;
@@ -518,9 +518,9 @@
 			);
 			mainGroup = 11284204248E7C5700A014E9;
 			packageReferences = (
-				15B5681E269201D90083319E /* XCRemoteSwiftPackageReference "Kingfisher" */,
-				15B56821269203E40083319E /* XCRemoteSwiftPackageReference "YPImagePicker" */,
-				15F06E84269214E00010340D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				15B5681E269201D90083319E /* RemoteSwiftPackageReference */,
+				15B56821269203E40083319E /* RemoteSwiftPackageReference */,
+				15F06E84269214E00010340D /* RemoteSwiftPackageReference */,
 			);
 			productRefGroup = 1128420E248E7C5700A014E9 /* Products */;
 			projectDirPath = "";
@@ -850,7 +850,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		15B5681E269201D90083319E /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+		15B5681E269201D90083319E /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
@@ -858,7 +858,7 @@
 				minimumVersion = 6.3.0;
 			};
 		};
-		15B56821269203E40083319E /* XCRemoteSwiftPackageReference "YPImagePicker" */ = {
+		15B56821269203E40083319E /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Yummypets/YPImagePicker.git";
 			requirement = {
@@ -866,7 +866,7 @@
 				kind = branch;
 			};
 		};
-		15F06E84269214E00010340D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+		15F06E84269214E00010340D /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
@@ -877,29 +877,29 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		15B5681F269201DA0083319E /* Kingfisher */ = {
+		15B5681F269201DA0083319E /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 15B5681E269201D90083319E /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			package = 15B5681E269201D90083319E /* RemoteSwiftPackageReference */;
 			productName = Kingfisher;
 		};
-		15B56822269203E40083319E /* YPImagePicker */ = {
+		15B56822269203E40083319E /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 15B56821269203E40083319E /* XCRemoteSwiftPackageReference "YPImagePicker" */;
+			package = 15B56821269203E40083319E /* RemoteSwiftPackageReference */;
 			productName = YPImagePicker;
 		};
-		15F06E85269214E00010340D /* FirebaseAuth */ = {
+		15F06E85269214E00010340D /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 15F06E84269214E00010340D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 15F06E84269214E00010340D /* RemoteSwiftPackageReference */;
 			productName = FirebaseAuth;
 		};
-		15F06E87269214E00010340D /* FirebaseFirestore */ = {
+		15F06E87269214E00010340D /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 15F06E84269214E00010340D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 15F06E84269214E00010340D /* RemoteSwiftPackageReference */;
 			productName = FirebaseFirestore;
 		};
-		15F06E89269214E00010340D /* FirebaseStorage */ = {
+		15F06E89269214E00010340D /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 15F06E84269214E00010340D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 15F06E84269214E00010340D /* RemoteSwiftPackageReference */;
 			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
