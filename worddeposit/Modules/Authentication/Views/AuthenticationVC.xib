@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="DMSans-Medium.ttf">
+            <string>DMSans-Medium</string>
+        </array>
+        <array key="DMSans-Regular.ttf">
+            <string>DMSans-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AuthenticationVC" customModule="worddeposit" customModuleProvider="target">
+            <connections>
+                <outlet property="emailTextField" destination="BWE-wJ-zAI" id="7bN-wJ-W6q"/>
+                <outlet property="illustration" destination="naD-iS-Hq1" id="ZRm-hR-vUM"/>
+                <outlet property="passwordTextField" destination="BWE-wJ-zAI" id="XEq-iU-twa"/>
+                <outlet property="submitButton" destination="EB2-gz-ASA" id="3Vz-sf-Y2m"/>
+                <outlet property="titleLabel" destination="Egs-Xy-crf" id="YkW-cB-jbx"/>
+                <outletCollection property="secondaryButtons" destination="WGu-G1-cgD" collectionClass="NSMutableArray" id="pux-or-Iq2"/>
+                <outletCollection property="secondaryButtons" destination="qyf-30-M2V" collectionClass="NSMutableArray" id="6Nz-MZ-tWd"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="McI-ez-75j">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Ctz-8V-z6K">
+                    <rect key="frame" x="60" y="167.5" width="294" height="561"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login" translatesAutoresizingMaskIntoConstraints="NO" id="naD-iS-Hq1">
+                            <rect key="frame" x="0.0" y="0.0" width="294" height="200"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="200" id="Kgx-dZ-8wJ"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Egs-Xy-crf" customClass="LoginTitle" customModule="worddeposit" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="220" width="294" height="29"/>
+                            <fontDescription key="fontDescription" name="DMSans-Medium" family="DM Sans" pointSize="22"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ef8-df-Lz5" customClass="LoginTextField" customModule="worddeposit" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="269" width="294" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="pyJ-JS-r4M"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="DMSans-Regular" family="DM Sans" pointSize="17"/>
+                            <textInputTraits key="textInputTraits" textContentType="email"/>
+                        </textField>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BWE-wJ-zAI" customClass="LoginTextField" customModule="worddeposit" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="339" width="294" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="qfp-tT-if3"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="DMSans-Regular" family="DM Sans" pointSize="17"/>
+                            <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EB2-gz-ASA" customClass="PrimaryButton" customModule="worddeposit" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="409" width="294" height="50"/>
+                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="szY-Gc-qYn"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="DMSans-Medium" family="DM Sans" pointSize="16"/>
+                            <state key="normal" title="Button">
+                                <color key="titleColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                            </state>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WGu-G1-cgD" customClass="DefaultButton" customModule="worddeposit" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="479" width="294" height="31"/>
+                            <fontDescription key="fontDescription" name="DMSans-Medium" family="DM Sans" pointSize="14"/>
+                            <state key="normal" title="Link 1"/>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qyf-30-M2V" customClass="DefaultButton" customModule="worddeposit" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="530" width="294" height="31"/>
+                            <fontDescription key="fontDescription" name="DMSans-Medium" family="DM Sans" pointSize="14"/>
+                            <state key="normal" title="Link 2"/>
+                        </button>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="8UN-hV-AMJ"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="8UN-hV-AMJ" firstAttribute="trailing" secondItem="Ctz-8V-z6K" secondAttribute="trailing" constant="60" id="1Iu-sX-7hB"/>
+                <constraint firstItem="Ctz-8V-z6K" firstAttribute="centerY" secondItem="McI-ez-75j" secondAttribute="centerY" id="1vp-eO-ROu"/>
+                <constraint firstItem="Ctz-8V-z6K" firstAttribute="leading" secondItem="8UN-hV-AMJ" secondAttribute="leading" constant="60" id="5mj-TB-lqE"/>
+            </constraints>
+            <point key="canvasLocation" x="619" y="-506"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="login" width="271" height="296"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
