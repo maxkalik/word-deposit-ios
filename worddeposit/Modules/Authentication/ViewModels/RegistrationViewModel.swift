@@ -8,6 +8,39 @@
 
 import Foundation
 
-class RegistrationViewModel {
+class RegistrationViewModel: AuthenticationDependency {
     
+    weak var delegate: AuthenticationViewModelDelegate?
+    
+    var illustrationImageName: String {
+        return "some image"
+    }
+    
+    var title: String {
+        return "Registration"
+    }
+    
+    var submitButtonTitle: String {
+        return "Sign Up"
+    }
+    
+    var secondaryButtonTitle: String {
+        return "Do you have an account already?"
+    }
+}
+
+extension RegistrationViewModel {
+    func onSubmit(email: String, password: String) {
+        delegate?.authenticationBegan()
+
+        UserService.shared.signUp(withEmail: email, password: password) { [weak self] error in
+            guard let self = self else { return }
+
+            if let error = error {
+                self.delegate?.authFinishWithError(error)
+            } else {
+                self.delegate?.authFinishWithSuccess()
+            }
+        }
+    }
 }

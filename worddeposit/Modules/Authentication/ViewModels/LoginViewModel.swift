@@ -8,54 +8,40 @@
 
 import Foundation
 
-protocol LoginViewModelDelegate: AnyObject {
-    func beginSignInProcess()
-    func finishSignInSuccess()
-    func finishSignInWithError(msg: String)
-}
-
-class LoginViewModel {
+class LoginViewModel: AuthenticationDependency {
     
-    weak var delegate: LoginViewModelDelegate?
+    weak var delegate: AuthenticationViewModelDelegate?
     
     var illustrationImageName: String {
         return "some image"
     }
     
-    var titleLabelText: String {
+    var title: String {
         return "Login"
     }
     
-    var emailTexfieldPlacehoder: String {
-        return "Email"
-    }
-    
-    var passwordTextfieldPlaceholder: String {
-        return "Password"
-    }
-    
-    var loginButtonTitle: String {
+    var submitButtonTitle: String {
         return "Log In"
     }
     
-    var createAccountButtonTitle: String {
+    var secondaryButtonTitle: String {
         return "Create Account"
     }
     
-    var forgotPasswordButtonTitle: String {
+    var tertiaryButtonTitle: String {
         return "Forgot Password"
     }
 }
 
 extension LoginViewModel {
-    func onSignIn(email: String, password: String) {
-        delegate?.beginSignInProcess()
+    func onSubmit(email: String, password: String) {
+        delegate?.authenticationBegan()
         
         UserService.shared.signIn(withEmail: email, password: password) { [weak self] error in
             guard let self = self else { return }
             
             if let error = error {
-                self.delegate?.finishSignInWithError(msg: error.localizedDescription)
+                self.delegate?.authFinishWithError(error.localizedDescription)
             } else {
                 self.fetchCurrentUser()
             }
@@ -67,7 +53,7 @@ extension LoginViewModel {
             guard let self = self else { return }
 
             if let error = error {
-                self.delegate?.finishSignInWithError(msg: error.localizedDescription)
+                self.delegate?.authFinishWithError(error)
             } else {
                 self.finishSignInProcess(with: user)
             }
@@ -76,9 +62,9 @@ extension LoginViewModel {
     
     private func finishSignInProcess(with user: User?) {
         guard user != nil else {
-            self.delegate?.finishSignInWithError(msg: "User was deleted or not exist. Please register new one")
+            self.delegate?.authFinishWithError("User was deleted or not exist. Please register new one")
             return
         }
-        self.delegate?.finishSignInSuccess()
+        self.delegate?.authFinishWithSuccess()
     }
 }
