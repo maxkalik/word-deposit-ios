@@ -19,13 +19,14 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AuthenticationVC" customModule="worddeposit" customModuleProvider="target">
             <connections>
-                <outlet property="emailTextField" destination="BWE-wJ-zAI" id="7bN-wJ-W6q"/>
-                <outlet property="illustration" destination="naD-iS-Hq1" id="ZRm-hR-vUM"/>
-                <outlet property="passwordTextField" destination="BWE-wJ-zAI" id="XEq-iU-twa"/>
-                <outlet property="submitButton" destination="EB2-gz-ASA" id="3Vz-sf-Y2m"/>
-                <outlet property="titleLabel" destination="Egs-Xy-crf" id="YkW-cB-jbx"/>
-                <outletCollection property="secondaryButtons" destination="WGu-G1-cgD" collectionClass="NSMutableArray" id="pux-or-Iq2"/>
-                <outletCollection property="secondaryButtons" destination="qyf-30-M2V" collectionClass="NSMutableArray" id="6Nz-MZ-tWd"/>
+                <outlet property="emailTextField" destination="Ef8-df-Lz5" id="l8g-oh-FsG"/>
+                <outlet property="illustration" destination="naD-iS-Hq1" id="ns1-bK-kMQ"/>
+                <outlet property="passwordTextField" destination="BWE-wJ-zAI" id="57E-VG-rML"/>
+                <outlet property="submitButton" destination="EB2-gz-ASA" id="t9c-IX-u1S"/>
+                <outlet property="titleLabel" destination="Egs-Xy-crf" id="sou-eA-V6Y"/>
+                <outlet property="view" destination="McI-ez-75j" id="dwP-Ei-X1F"/>
+                <outletCollection property="secondaryButtons" destination="WGu-G1-cgD" collectionClass="NSMutableArray" id="Zze-Ta-hgC"/>
+                <outletCollection property="secondaryButtons" destination="qyf-30-M2V" collectionClass="NSMutableArray" id="2lI-Ry-DAX"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

@@ -17,8 +17,11 @@ class AuthenticationVC: UIViewController {
     @IBOutlet weak var submitButton: PrimaryButton!
     @IBOutlet var secondaryButtons: [DefaultButton]!
 
+    weak var coordinator: MainCoordinator?
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("******* view did load authentication VC")
 
     }
 }
