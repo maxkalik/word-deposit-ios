@@ -23,7 +23,7 @@ protocol AuthenticationDependency {
     var submitButtonTitle: String { get }
     var secondaryButtonTitle: String { get }
     var tertiaryButtonTitle: String? { get }
-    
+
     func onSubmit(email: String, password: String)
 }
 

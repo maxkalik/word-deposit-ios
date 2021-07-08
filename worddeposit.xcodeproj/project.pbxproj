@@ -81,6 +81,8 @@
 		155F39E82523D69400EC63B9 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 155F39E72523D69400EC63B9 /* UINavigationController.swift */; };
 		156C80B724D8D27E0077905D /* VocabularyDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156C80B624D8D27E0077905D /* VocabularyDetailsVC.swift */; };
 		158B1095251BE29A0003C3A9 /* TextFieldLimit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158B1094251BE29A0003C3A9 /* TextFieldLimit.swift */; };
+		159C4FF62697807A00780321 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159C4FF52697807A00780321 /* Coordinator.swift */; };
+		159C4FF82697809500780321 /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159C4FF72697809500780321 /* Storyboarded.swift */; };
 		15A7E04924D8B322006804FD /* VocabulariesTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A7E04724D8B322006804FD /* VocabulariesTVCell.swift */; };
 		15A7E04A24D8B322006804FD /* VocabulariesTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15A7E04824D8B322006804FD /* VocabulariesTVCell.xib */; };
 		15AFF8B6251692CB00BA6DAF /* PresentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AFF8B5251692CB00BA6DAF /* PresentVC.swift */; };
@@ -189,6 +191,8 @@
 		155F39E72523D69400EC63B9 /* UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
 		156C80B624D8D27E0077905D /* VocabularyDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyDetailsVC.swift; sourceTree = "<group>"; };
 		158B1094251BE29A0003C3A9 /* TextFieldLimit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldLimit.swift; sourceTree = "<group>"; };
+		159C4FF52697807A00780321 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		159C4FF72697809500780321 /* Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboarded.swift; sourceTree = "<group>"; };
 		15A7E04724D8B322006804FD /* VocabulariesTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabulariesTVCell.swift; sourceTree = "<group>"; };
 		15A7E04824D8B322006804FD /* VocabulariesTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VocabulariesTVCell.xib; sourceTree = "<group>"; };
 		15AFF8B5251692CB00BA6DAF /* PresentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentVC.swift; sourceTree = "<group>"; };
@@ -281,6 +285,7 @@
 		1128420F248E7C5700A014E9 /* worddeposit */ = {
 			isa = PBXGroup;
 			children = (
+				159C4FF42697804000780321 /* Coordinator */,
 				1111FD9E25B8B1F400799B0F /* Helpers */,
 				11284226248E7CF000A014E9 /* Models */,
 				1117D08D2502365B000D864F /* Extensions */,
@@ -425,6 +430,22 @@
 			path = "Reusable Components";
 			sourceTree = "<group>";
 		};
+		159C4FEF26977D2700780321 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		159C4FF42697804000780321 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				159C4FF52697807A00780321 /* Coordinator.swift */,
+				159C4FF72697809500780321 /* Storyboarded.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
 		15C2D8EB265AB81C008F24A3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -458,6 +479,7 @@
 		15D4EF8126964B1600FF5FBE /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
+				159C4FEF26977D2700780321 /* Coordinator */,
 				15D4EF8426964B3B00FF5FBE /* Views */,
 				15D4EF8326964B3200FF5FBE /* ViewModels */,
 				15D4EF8226964B2B00FF5FBE /* Models */,
@@ -632,6 +654,7 @@
 				1162E5F525A23B1100B6173A /* BubbleLabel.swift in Sources */,
 				11B20D6D24C8E00800C1CB4E /* PracticeReadController.swift in Sources */,
 				11F0327024C8272700BD6350 /* PracticeCVC.swift in Sources */,
+				159C4FF62697807A00780321 /* Coordinator.swift in Sources */,
 				155F39E82523D69400EC63B9 /* UINavigationController.swift in Sources */,
 				112EA43524C84A2900FA55E3 /* PracticeTrainers.swift in Sources */,
 				150FA46124D8B6E40083D653 /* Vocabulary.swift in Sources */,
@@ -660,6 +683,7 @@
 				11ECE4B424EB0FA100B7884B /* VocabulariesTVC.swift in Sources */,
 				15E7741F25292F0100EC57D0 /* ShadowView.swift in Sources */,
 				118E34BA25ACEE8400025FFE /* WordTextViews.swift in Sources */,
+				159C4FF82697809500780321 /* Storyboarded.swift in Sources */,
 				1128422F248E839D00A014E9 /* AddWordVC.swift in Sources */,
 				15E77426252A2C7C00EC57D0 /* ButtonSelector.swift in Sources */,
 				1181BBF32498060F00DB682E /* VocabularyCardsVC.swift in Sources */,
