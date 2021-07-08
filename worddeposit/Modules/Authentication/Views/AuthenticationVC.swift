@@ -8,20 +8,49 @@
 
 import UIKit
 
-class AuthenticationVC: UIViewController {
+final class AuthenticationVC: UIViewController {
     
     @IBOutlet weak var illustration: UIImageView!
     @IBOutlet weak var titleLabel: LoginTitle!
     @IBOutlet weak var emailTextField: LoginTextField!
     @IBOutlet weak var passwordTextField: LoginTextField!
     @IBOutlet weak var submitButton: PrimaryButton!
-    @IBOutlet var secondaryButtons: [DefaultButton]!
-
+    @IBOutlet weak var buttonLinkFirst: DefaultButton!
+    @IBOutlet weak var buttonLinkSecond: DefaultButton!
+    
     weak var coordinator: MainCoordinator?
+    var viewModel: AuthenticationViewModel?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("******* view did load authentication VC")
+        setupUI()
+    }
+    
+    private func setupUI() {
+        setupContent()
+        setupTextFields()
+        setupButtons()
+    }
+    
+    private func setupContent() {
+        guard let viewModel = self.viewModel else { return }
+        illustration.image = UIImage(named: viewModel.illustrationImageName)
+        titleLabel.text = viewModel.title
+    }
+    
+    private func setupTextFields() {
+        emailTextField.placeholder = viewModel?.emailPlacehoder
+        passwordTextField.placeholder = viewModel?.passwordPlaceholder
+    }
+    
+    private func setupButtons() {
+        submitButton.setTitle(viewModel?.submitButtonTitle, for: .normal)
+        buttonLinkFirst.setTitle(viewModel?.buttonLinkFirstTitle, for: .normal)
 
+        if viewModel?.buttonLinkSecondTitle != nil {
+            buttonLinkSecond.setTitle(viewModel?.buttonLinkSecondTitle, for: .normal)
+        } else {
+            buttonLinkSecond.removeFromSuperview()
+        }
     }
 }

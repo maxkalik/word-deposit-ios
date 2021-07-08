@@ -19,14 +19,14 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AuthenticationVC" customModule="worddeposit" customModuleProvider="target">
             <connections>
+                <outlet property="buttonLinkFirst" destination="WGu-G1-cgD" id="yOa-Ja-X0r"/>
+                <outlet property="buttonLinkSecond" destination="qyf-30-M2V" id="nCF-1T-Wka"/>
                 <outlet property="emailTextField" destination="Ef8-df-Lz5" id="l8g-oh-FsG"/>
                 <outlet property="illustration" destination="naD-iS-Hq1" id="ns1-bK-kMQ"/>
                 <outlet property="passwordTextField" destination="BWE-wJ-zAI" id="57E-VG-rML"/>
                 <outlet property="submitButton" destination="EB2-gz-ASA" id="t9c-IX-u1S"/>
                 <outlet property="titleLabel" destination="Egs-Xy-crf" id="sou-eA-V6Y"/>
                 <outlet property="view" destination="McI-ez-75j" id="dwP-Ei-X1F"/>
-                <outletCollection property="secondaryButtons" destination="WGu-G1-cgD" collectionClass="NSMutableArray" id="Zze-Ta-hgC"/>
-                <outletCollection property="secondaryButtons" destination="qyf-30-M2V" collectionClass="NSMutableArray" id="2lI-Ry-DAX"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

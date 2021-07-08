@@ -13,7 +13,7 @@ class LoginViewModel: AuthenticationDependency {
     weak var delegate: AuthenticationViewModelDelegate?
     
     var illustrationImageName: String {
-        return "some image"
+        return "login"
     }
     
     var title: String {
@@ -24,11 +24,11 @@ class LoginViewModel: AuthenticationDependency {
         return "Log In"
     }
     
-    var secondaryButtonTitle: String {
+    var buttonLinkFirstTitle: String {
         return "Create Account"
     }
     
-    var tertiaryButtonTitle: String {
+    var buttonLinkSecondTitle: String? {
         return "Forgot Password"
     }
 }

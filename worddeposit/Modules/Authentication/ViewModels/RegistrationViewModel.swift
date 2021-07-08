@@ -24,9 +24,11 @@ class RegistrationViewModel: AuthenticationDependency {
         return "Sign Up"
     }
     
-    var secondaryButtonTitle: String {
+    var buttonLinkFirstTitle: String {
         return "Do you have an account already?"
     }
+    
+    var buttonLinkSecondTitle: String?
 }
 
 extension RegistrationViewModel {

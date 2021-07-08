@@ -21,8 +21,8 @@ protocol AuthenticationDependency {
     var illustrationImageName: String { get }
     var title: String { get }
     var submitButtonTitle: String { get }
-    var secondaryButtonTitle: String { get }
-    var tertiaryButtonTitle: String? { get }
+    var buttonLinkFirstTitle: String { get }
+    var buttonLinkSecondTitle: String? { get }
 
     func onSubmit(email: String, password: String)
 }
@@ -56,6 +56,14 @@ class AuthenticationViewModel {
     
     var submitButtonTitle: String {
         return dependency?.submitButtonTitle ?? ""
+    }
+    
+    var buttonLinkFirstTitle: String {
+        return dependency?.buttonLinkFirstTitle ?? ""
+    }
+    
+    var buttonLinkSecondTitle: String? {
+        return dependency?.buttonLinkSecondTitle
     }
     
     private func validateFields(email: String, password: String) {

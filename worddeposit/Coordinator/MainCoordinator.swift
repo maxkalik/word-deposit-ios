@@ -22,11 +22,12 @@ class MainCoordinator: Coordinator {
         window.makeKeyAndVisible()
         
         let viewController = AuthenticationVC()
+        let viewModel = AuthenticationViewModel()
+        
+        viewModel.dependency = LoginViewModel()
+        
         viewController.coordinator = self
+        viewController.viewModel = viewModel
         navigationController.pushViewController(viewController, animated: true)
-//        let viewController = HomeViewController()
-//        viewController.coordinator = self
-//        navigationController.pushViewController(viewController, animated: true)
-//        print("start")
     }
 }
