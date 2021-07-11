@@ -11,6 +11,7 @@ import UIKit
 final class AppCoordinator: Coordinator {
     
     private let window: UIWindow
+    private var rootViewController = UINavigationController()
     private(set) var childCoordinators: [Coordinator] = []
 
     init(window: UIWindow) {
@@ -18,10 +19,10 @@ final class AppCoordinator: Coordinator {
     }
     
     func start() {
-        let rootViewController = UINavigationController()
         let authCoordinator = AuthCoordinator(navigationController: rootViewController)
-//        authCoordinator.parentCoordinator = self
-//        childCoordinators.append(authCoordinator)
+        authCoordinator.parentCoordinator = self
+        childCoordinators.append(authCoordinator)
+
         authCoordinator.start()
         
         window.rootViewController = rootViewController

@@ -31,10 +31,11 @@ class RegistrationViewModel: AuthDependency {
 }
 
 extension RegistrationViewModel {
-    func onSubmit(email: String, password: String) {
+    
+    func onSubmit(with authCredentials: AuthCredentials) {
         delegate?.authenticationBegan()
 
-        UserService.shared.signUp(withEmail: email, password: password) { [weak self] error in
+        UserService.shared.signUp(withEmail: authCredentials.email, password: authCredentials.password) { [weak self] error in
             guard let self = self else { return }
 
             if let error = error {
@@ -46,10 +47,6 @@ extension RegistrationViewModel {
     }
     
     func onButtonLinkFirstPress() {
-        
-    }
-    
-    func onButtonLinkSecondPress() {
-        
+        coordinator?.finish()
     }
 }

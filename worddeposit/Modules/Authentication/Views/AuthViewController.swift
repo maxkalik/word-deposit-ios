@@ -25,6 +25,11 @@ final class AuthViewController: UIViewController {
         setupUI()
     }
     
+//    override func viewDidDisappear(_ animated: Bool) {
+//        super.viewDidDisappear(animated)
+//        viewModel?.viewDidDisapear()
+//    }
+    
     private func setupUI() {
         setupContent()
         setupTextFields()

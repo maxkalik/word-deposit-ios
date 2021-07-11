@@ -25,7 +25,7 @@ protocol AuthDependency {
     var buttonLinkFirstTitle: String { get }
     var buttonLinkSecondTitle: String? { get }
 
-    func onSubmit(email: String, password: String)
+    func onSubmit(with authCredentials: AuthCredentials)
     func onButtonLinkFirstPress()
     func onButtonLinkSecondPress()
 }
@@ -34,10 +34,13 @@ extension AuthDependency {
     var buttonLinkSecondTitle: String? {
         get { return nil }
     }
+    
+    func onButtonLinkSecondPress() {}
 }
 
 class AuthViewModel {
     
+    private var authCredentials: AuthCredentials?
     weak var delegate: AuthViewModelDelegate?
     var dependency: AuthDependency?
     
@@ -69,16 +72,24 @@ class AuthViewModel {
         return dependency?.buttonLinkSecondTitle
     }
     
-    private func validateFields(email: String, password: String) {
+    func textFieldDidChange(email: String, password: String) {
+        if validateFields(email: email, password: password) {
+            self.authCredentials = AuthCredentials(email: email, password: password)
+        }
+    }
+    
+    private func validateFields(email: String, password: String) -> Bool {
         let validator = Validator()
         let isValidEmail = validator.validate(text: email, with: [.email, .notEmpty])
         let isValidPassword = validator.validate(text: password, with: [.password, .notEmpty])
         delegate?.validEmail(isValid: isValidEmail)
         delegate?.validPassword(isValid: isValidPassword)
+        return isValidEmail && isValidPassword
     }
     
-    func onSubmit(email: String, password: String) {
-        dependency?.onSubmit(email: email, password: password)
+    func onSubmit() {
+        guard let authCredentials = self.authCredentials else { return }
+        dependency?.onSubmit(with: authCredentials)
     }
     
     func onButtonLinkFirstPress() {

@@ -74,6 +74,7 @@
 		11F32A5924AF49DB0097BF39 /* VocabularyTVC+Updating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F32A5824AF49DB0097BF39 /* VocabularyTVC+Updating.swift */; };
 		150FA46124D8B6E40083D653 /* Vocabulary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150FA46024D8B6E40083D653 /* Vocabulary.swift */; };
 		15122F5825213FF900DB0E8F /* TabBarConroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15122F5725213FF900DB0E8F /* TabBarConroller.swift */; };
+		151AC7E2269AE89100E95089 /* AuthCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151AC7E1269AE89100E95089 /* AuthCredentials.swift */; };
 		151F2F0C251E97D5002D292B /* LoginTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151F2F0B251E97D5002D292B /* LoginTitle.swift */; };
 		151F2F29251EB193002D292B /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151F2F28251EB193002D292B /* DefaultButton.swift */; };
 		15266E6A251140D200BB621C /* Firebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15266E69251140D200BB621C /* Firebase.swift */; };
@@ -186,6 +187,7 @@
 		11F32A5824AF49DB0097BF39 /* VocabularyTVC+Updating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VocabularyTVC+Updating.swift"; sourceTree = "<group>"; };
 		150FA46024D8B6E40083D653 /* Vocabulary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vocabulary.swift; sourceTree = "<group>"; };
 		15122F5725213FF900DB0E8F /* TabBarConroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarConroller.swift; sourceTree = "<group>"; };
+		151AC7E1269AE89100E95089 /* AuthCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCredentials.swift; sourceTree = "<group>"; };
 		151F2F0B251E97D5002D292B /* LoginTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTitle.swift; sourceTree = "<group>"; };
 		151F2F28251EB193002D292B /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
 		15266E69251140D200BB621C /* Firebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firebase.swift; sourceTree = "<group>"; };
@@ -496,6 +498,7 @@
 		15D4EF8226964B2B00FF5FBE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				151AC7E1269AE89100E95089 /* AuthCredentials.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -716,6 +719,7 @@
 				1117D08F25023675000D864F /* Array.swift in Sources */,
 				110F5E3724FD673D00C463A4 /* UserService.swift in Sources */,
 				11284213248E7C5700A014E9 /* SceneDelegate.swift in Sources */,
+				151AC7E2269AE89100E95089 /* AuthCredentials.swift in Sources */,
 				11119631254CBA68006588D5 /* ButtonNavTitleView.swift in Sources */,
 				11119635254F0288006588D5 /* SortingForSearch.swift in Sources */,
 				15D4EF8A26964C7B00FF5FBE /* AuthViewModel.swift in Sources */,

@@ -10,9 +10,9 @@ import UIKit
 
 class AuthCoordinator: Coordinator {
     
-    private(set) var childCoordinators: [Coordinator] = []
+//    private(set) var childCoordinators: [Coordinator] = []
     private var navigationController: UINavigationController
-//    weak var parentCoordinator: AppCoordinator?
+    weak var parentCoordinator: AppCoordinator?
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -32,10 +32,16 @@ class AuthCoordinator: Coordinator {
     func toRegistration() {
         let authViewController = AuthViewController()
         let authViewModel = AuthViewModel()
-        authViewModel.dependency = RegistrationViewModel()
+        let registrationViewModel = RegistrationViewModel()
+        registrationViewModel.coordinator = self
+        authViewModel.dependency = registrationViewModel
         authViewController.viewModel = authViewModel
 
         navigationController.pushViewController(authViewController, animated: true)
+    }
+    
+    func finish() {
+        navigationController.popViewController(animated: true)
     }
     
 }
