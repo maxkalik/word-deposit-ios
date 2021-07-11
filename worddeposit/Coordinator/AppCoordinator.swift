@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import FirebaseAuth
+import Firebase
 
 final class AppCoordinator: NSObject, Coordinator {
     

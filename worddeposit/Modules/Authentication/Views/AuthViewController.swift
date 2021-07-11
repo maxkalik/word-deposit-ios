@@ -50,7 +50,7 @@ final class AuthViewController: UIViewController {
     @objc func textFieldDidChange(_ textField: UITextField) {
         guard let email = emailTextField.text,
               let password = passwordTextField.text else { return }
-        viewModel?.textFieldDidChange(email: email, password: password)
+        viewModel?.authFieldsDidChange(email: email, password: password)
     }
     
     @objc func keyboardWillShow() {
@@ -62,20 +62,32 @@ final class AuthViewController: UIViewController {
     }
     
     private func setupUI() {
-        setupContent()
+        setupIllustration()
+        setupTitle()
         setupTextFields()
         setupButtons()
     }
     
-    private func setupContent() {
-        guard let viewModel = self.viewModel else { return }
-        illustration.image = UIImage(named: viewModel.illustrationImageName)
-        titleLabel.text = viewModel.title
+    private func setupTitle() {
+        titleLabel.text = viewModel?.title
+    }
+    
+    private func setupIllustration() {
+        guard let illustrationImageName = self.viewModel?.illustrationImageName else {
+            illustration.isHidden = true
+            return
+        }
+
+        illustration.image = UIImage(named: illustrationImageName)
     }
     
     private func setupTextFields() {
         emailTextField.placeholder = viewModel?.emailPlacehoder
-        passwordTextField.placeholder = viewModel?.passwordPlaceholder
+        if let passwordPlaceholder = viewModel?.passwordPlaceholder {
+            passwordTextField.placeholder = passwordPlaceholder
+        } else {
+            passwordTextField.isHidden = true
+        }
     }
     
     private func setupButtons() {
@@ -108,6 +120,7 @@ extension AuthViewController: AuthViewModelDelegate {
     }
     
     func validPassword(isValid: Bool) {
+        // if it is not password forgot screen
         submitButton.isEnabled = isValid
     }
     

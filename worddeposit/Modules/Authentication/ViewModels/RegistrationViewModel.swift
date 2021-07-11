@@ -8,9 +8,10 @@
 
 import Foundation
 
-class RegistrationViewModel: AuthDependency {
+class RegistrationViewModel: Authentication {
     
-    var coordinator: AuthCoordinator
+    private(set) var coordinator: AuthCoordinator
+    private(set) var type: AuthType = .registration
     weak var delegate: AuthViewModelDelegate?
 
     init(coordinator: AuthCoordinator) {
@@ -21,12 +22,16 @@ class RegistrationViewModel: AuthDependency {
         print("deinit \(self)")
     }
     
-    var illustrationImageName: String {
+    var illustrationImageName: String? {
         return "signup"
     }
     
     var title: String {
         return "Registration"
+    }
+    
+    var passwordPlaceholder: String? {
+        return "Password"
     }
     
     var submitButtonTitle: String {
@@ -42,8 +47,13 @@ extension RegistrationViewModel {
     
     func onSubmit(with authCredentials: AuthCredentials) {
         delegate?.authProcessBegan()
+        
+        guard let password = authCredentials.password else {
+            delegate?.authDidFinishWithError("Password is wrong")
+            return
+        }
 
-        UserService.shared.signUp(withEmail: authCredentials.email, password: authCredentials.password) { [weak self] error in
+        UserService.shared.signUp(withEmail: authCredentials.email, password: password) { [weak self] error in
             guard let self = self else { return }
 
             if let error = error {

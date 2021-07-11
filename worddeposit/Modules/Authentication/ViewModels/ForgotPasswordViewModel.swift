@@ -1,0 +1,46 @@
+//
+//  ForgotPasswordViewModel.swift
+//  worddeposit
+//
+//  Created by Maksim Kalik on 7/11/21.
+//  Copyright © 2021 Maksim Kalik. All rights reserved.
+//
+
+import Foundation
+
+class ForgotPasswordViewModel: Authentication {
+
+    private(set) var type: AuthType = .forgotPassword
+    private(set) var coordinator: AuthCoordinator
+    weak var delegate: AuthViewModelDelegate?
+
+    init(coordinator: AuthCoordinator) {
+        self.coordinator = coordinator
+    }
+    
+    deinit {
+        print("deinit \(self)")
+    }
+
+    var title: String {
+        return "Forgot Password"
+    }
+    
+    var submitButtonTitle: String {
+        return "Reset Password"
+    }
+    
+    var buttonLinkFirstTitle: String {
+        return "Cancel"
+    }
+}
+
+extension ForgotPasswordViewModel {
+    func onSubmit(with authCredentials: AuthCredentials) {
+        print(authCredentials.email)
+    }
+    
+    func onButtonLinkFirstPress() {
+        coordinator.backToLogin()
+    }
+}

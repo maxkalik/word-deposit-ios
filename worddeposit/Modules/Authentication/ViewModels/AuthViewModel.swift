@@ -8,6 +8,10 @@
 
 import Foundation
 
+enum AuthType {
+    case login, registration, forgotPassword
+}
+
 protocol AuthViewModelDelegate: AnyObject {
     func validEmail(isValid: Bool)
     func validPassword(isValid: Bool)
@@ -17,10 +21,12 @@ protocol AuthViewModelDelegate: AnyObject {
     func authDidFinishWithSuccess()
 }
 
-protocol AuthDependency {
+protocol Authentication {
+    var type: AuthType { get }
     var coordinator: AuthCoordinator { get }
-    var illustrationImageName: String { get }
+    var illustrationImageName: String? { get }
     var title: String { get }
+    var passwordPlaceholder: String? { get }
     var submitButtonTitle: String { get }
     var buttonLinkFirstTitle: String { get }
     var buttonLinkSecondTitle: String? { get }
@@ -30,26 +36,36 @@ protocol AuthDependency {
     func onButtonLinkSecondPress()
 }
 
-extension AuthDependency {
+extension Authentication {
+    var illustrationImageName: String? {
+        get { return nil }
+    }
+    
+    var passwordPlaceholder: String? {
+        get { return nil }
+    }
+    
     var buttonLinkSecondTitle: String? {
         get { return nil }
     }
     
     func onButtonLinkSecondPress() {}
+    func onSubmit(with authCredentials: AuthCredentials) {}
 }
 
 class AuthViewModel {
     
     private var authCredentials: AuthCredentials?
+    private let validator = Validator()
     weak var delegate: AuthViewModelDelegate?
-    var dependency: AuthDependency?
+    var dependency: Authentication?
     
     deinit {
         print("deinit \(self)")
     }
     
-    var illustrationImageName: String {
-        return dependency?.illustrationImageName ?? ""
+    var illustrationImageName: String? {
+        return dependency?.illustrationImageName
     }
     
     var title: String {
@@ -60,8 +76,8 @@ class AuthViewModel {
         return "Email"
     }
     
-    var passwordPlaceholder: String {
-        return "Password"
+    var passwordPlaceholder: String? {
+        return dependency?.passwordPlaceholder
     }
     
     var submitButtonTitle: String {
@@ -76,19 +92,29 @@ class AuthViewModel {
         return dependency?.buttonLinkSecondTitle
     }
     
-    func textFieldDidChange(email: String, password: String) {
+    func authFieldsDidChange(email: String, password: String) {
         if validateFields(email: email, password: password) {
             self.authCredentials = AuthCredentials(email: email, password: password)
         }
     }
     
     private func validateFields(email: String, password: String) -> Bool {
-        let validator = Validator()
-        let isValidEmail = validator.validate(text: email, with: [.email, .notEmpty])
-        let isValidPassword = validator.validate(text: password, with: [.password, .notEmpty])
-        delegate?.validEmail(isValid: isValidEmail)
-        delegate?.validPassword(isValid: isValidPassword)
+        let isValidEmail = validate(email: email)
+        let isValidPassword = validate(password: password)
         return isValidEmail && isValidPassword
+    }
+    
+    private func validate(email: String) -> Bool {
+        let isValidEmail = validator.validate(text: email, with: [.email, .notEmpty])
+        delegate?.validEmail(isValid: isValidEmail)
+        return isValidEmail
+    }
+    
+    private func validate(password: String) -> Bool {
+        if dependency?.type == .forgotPassword { return true }
+        let isValidPassword = validator.validate(text: password, with: [.password, .notEmpty])
+        delegate?.validPassword(isValid: isValidPassword)
+        return isValidPassword
     }
     
     func onSubmit() {

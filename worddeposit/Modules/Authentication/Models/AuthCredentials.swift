@@ -10,5 +10,5 @@ import Foundation
 
 struct AuthCredentials {
     var email: String
-    var password: String
+    var password: String?
 }

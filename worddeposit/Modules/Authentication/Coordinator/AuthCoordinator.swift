@@ -45,6 +45,15 @@ class AuthCoordinator: Coordinator {
         navigationController.pushViewController(authViewController, animated: true)
     }
     
+    func toForgotPassword() {
+        let authViewController = AuthViewController()
+        let authViewModel = AuthViewModel()
+        authViewModel.dependency = ForgotPasswordViewModel(coordinator: self)
+        authViewController.viewModel = authViewModel
+        
+        navigationController.pushViewController(authViewController, animated: true)
+    }
+    
     func backToLogin() {
         navigationController.popViewController(animated: true)
     }

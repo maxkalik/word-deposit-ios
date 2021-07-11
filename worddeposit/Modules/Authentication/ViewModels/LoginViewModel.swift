@@ -8,9 +8,10 @@
 
 import Foundation
 
-class LoginViewModel: AuthDependency {
-
+class LoginViewModel: Authentication {
+    
     weak var delegate: AuthViewModelDelegate?
+    private(set) var type: AuthType = .login
     private(set) var coordinator: AuthCoordinator
     
     init(coordinator: AuthCoordinator) {
@@ -21,12 +22,16 @@ class LoginViewModel: AuthDependency {
         print("deinit \(self)")
     }
     
-    var illustrationImageName: String {
+    var illustrationImageName: String? {
         return "login"
     }
     
     var title: String {
         return "Login"
+    }
+    
+    var passwordPlaceholder: String? {
+        return "Password"
     }
     
     var submitButtonTitle: String {
@@ -47,7 +52,12 @@ extension LoginViewModel {
     func onSubmit(with authCredentials: AuthCredentials) {
         delegate?.authProcessBegan()
         
-        UserService.shared.signIn(withEmail: authCredentials.email, password: authCredentials.password) { [weak self] error in
+        guard let password = authCredentials.password else {
+            delegate?.authDidFinishWithError("Password is wrong")
+            return
+        }
+        
+        UserService.shared.signIn(withEmail: authCredentials.email, password: password) { [weak self] error in
             guard let self = self else { return }
             
             if let error = error {
@@ -83,6 +93,7 @@ extension LoginViewModel {
     }
     
     func onButtonLinkSecondPress() {
-        coordinator.authDidFinish()
+        // coordinator.authDidFinish()
+        coordinator.toForgotPassword()
     }
 }
