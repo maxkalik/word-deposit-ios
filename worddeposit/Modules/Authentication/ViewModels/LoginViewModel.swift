@@ -9,9 +9,13 @@
 import Foundation
 
 class LoginViewModel: AuthDependency {
-    
-    var coordinator: AuthCoordinator?
+
     weak var delegate: AuthViewModelDelegate?
+    private(set) var coordinator: AuthCoordinator
+    
+    init(coordinator: AuthCoordinator) {
+        self.coordinator = coordinator
+    }
     
     deinit {
         print("deinit \(self)")
@@ -75,10 +79,10 @@ extension LoginViewModel {
     }
     
     func onButtonLinkFirstPress() {
-        coordinator?.toRegistration()
+        coordinator.toRegistration()
     }
     
     func onButtonLinkSecondPress() {
-        coordinator?.authDidFinish()
+        coordinator.authDidFinish()
     }
 }

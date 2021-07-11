@@ -13,10 +13,10 @@ protocol MainCoordinatorDelegate: AnyObject {
 }
 
 class MainCoordinator: Coordinator {
-    weak var parentCoordinator: AppCoordinator?
-    var childCoordinators = [Coordinator]()
-    var navigationController: UINavigationController
     
+    private(set) var childCoordinators = [Coordinator]()
+    private(set) var navigationController: UINavigationController
+    weak var parentCoordinator: AppCoordinator?
     weak var delegate: MainCoordinatorDelegate?
     
     init(navigationController: UINavigationController ) {

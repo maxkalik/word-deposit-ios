@@ -10,8 +10,12 @@ import Foundation
 
 class RegistrationViewModel: AuthDependency {
     
-    var coordinator: AuthCoordinator?
+    var coordinator: AuthCoordinator
     weak var delegate: AuthViewModelDelegate?
+
+    init(coordinator: AuthCoordinator) {
+        self.coordinator = coordinator
+    }
     
     deinit {
         print("deinit \(self)")
@@ -46,12 +50,12 @@ extension RegistrationViewModel {
                 self.delegate?.authDidFinishWithError(error)
             } else {
                 self.delegate?.authDidFinishWithSuccess()
-                self.coordinator?.authDidFinish()
+                self.coordinator.authDidFinish()
             }
         }
     }
     
     func onButtonLinkFirstPress() {
-        coordinator?.backToLogin()
+        coordinator.backToLogin()
     }
 }

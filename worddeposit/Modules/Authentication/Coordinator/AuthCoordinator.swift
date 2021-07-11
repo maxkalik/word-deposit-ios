@@ -30,9 +30,7 @@ class AuthCoordinator: Coordinator {
     func start() {
         let authViewController = AuthViewController()
         let authViewModel = AuthViewModel()
-        let loginViewModel = LoginViewModel()
-        loginViewModel.coordinator = self
-        authViewModel.dependency = loginViewModel
+        authViewModel.dependency = LoginViewModel(coordinator: self)
         authViewController.viewModel = authViewModel
 
         navigationController.pushViewController(authViewController, animated: true)
@@ -41,9 +39,7 @@ class AuthCoordinator: Coordinator {
     func toRegistration() {
         let authViewController = AuthViewController()
         let authViewModel = AuthViewModel()
-        let registrationViewModel = RegistrationViewModel()
-        registrationViewModel.coordinator = self
-        authViewModel.dependency = registrationViewModel
+        authViewModel.dependency = RegistrationViewModel(coordinator: self)
         authViewController.viewModel = authViewModel
 
         navigationController.pushViewController(authViewController, animated: true)

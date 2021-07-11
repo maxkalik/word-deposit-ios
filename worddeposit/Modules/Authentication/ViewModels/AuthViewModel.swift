@@ -18,7 +18,7 @@ protocol AuthViewModelDelegate: AnyObject {
 }
 
 protocol AuthDependency {
-    var coordinator: AuthCoordinator? { get }
+    var coordinator: AuthCoordinator { get }
     var illustrationImageName: String { get }
     var title: String { get }
     var submitButtonTitle: String { get }
