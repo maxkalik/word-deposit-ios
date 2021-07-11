@@ -97,6 +97,6 @@ class AuthViewModel {
     }
     
     func onButtonLinkSecondPress() {
-        
+        dependency?.onButtonLinkSecondPress()
     }
 }

@@ -94,7 +94,7 @@ final class AuthViewController: UIViewController {
     }
 
     @IBAction func buttonLinkSecondPressed(_ sender: UIButton) {
-        
+        viewModel?.onButtonLinkSecondPress()
     }
 }
 

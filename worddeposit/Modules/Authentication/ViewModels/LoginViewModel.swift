@@ -75,6 +75,6 @@ extension LoginViewModel {
     }
     
     func onButtonLinkSecondPress() {
-        
+        coordinator?.didFinishAuth()
     }
 }
