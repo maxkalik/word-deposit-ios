@@ -37,20 +37,11 @@ protocol Authentication {
 }
 
 extension Authentication {
-    var illustrationImageName: String? {
-        get { return nil }
-    }
-    
-    var passwordPlaceholder: String? {
-        get { return nil }
-    }
-    
-    var buttonLinkSecondTitle: String? {
-        get { return nil }
-    }
+    var illustrationImageName: String? { return nil }
+    var passwordPlaceholder: String? { return nil }
+    var buttonLinkSecondTitle: String? { return nil }
     
     func onButtonLinkSecondPress() {}
-    func onSubmit(with authCredentials: AuthCredentials) {}
 }
 
 class AuthViewModel {

@@ -37,7 +37,15 @@ class ForgotPasswordViewModel: Authentication {
 
 extension ForgotPasswordViewModel {
     func onSubmit(with authCredentials: AuthCredentials) {
-        print(authCredentials.email)
+        delegate?.authProcessBegan()
+        UserService.shared.resetPassword(withEmail: authCredentials.email) { error in
+            if let error = error {
+                self.delegate?.authDidFinishWithError(error)
+                return
+            }
+            self.delegate?.authDidFinishWithSuccess()
+            self.coordinator.backToLogin()
+        }
     }
     
     func onButtonLinkFirstPress() {

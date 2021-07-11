@@ -93,7 +93,6 @@ extension LoginViewModel {
     }
     
     func onButtonLinkSecondPress() {
-        // coordinator.authDidFinish()
         coordinator.toForgotPassword()
     }
 }
