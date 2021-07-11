@@ -22,13 +22,40 @@ final class AuthViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel?.delegate = self
         setupUI()
     }
     
-//    override func viewDidDisappear(_ animated: Bool) {
-//        super.viewDidDisappear(animated)
-//        viewModel?.viewDidDisapear()
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        emailTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        passwordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        emailTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        passwordTextField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        guard let email = emailTextField.text,
+              let password = passwordTextField.text else { return }
+        viewModel?.textFieldDidChange(email: email, password: password)
+    }
+    
+    @objc func keyboardWillShow() {
+        
+    }
+    
+    @objc func keyboardWillHide() {
+        
+    }
     
     private func setupUI() {
         setupContent()
@@ -59,7 +86,7 @@ final class AuthViewController: UIViewController {
     }
     
     @IBAction func submitPressed(_ sender: UIButton) {
-//        viewModel?.onSubmit(email: <#T##String#>, password: <#T##String#>)
+        viewModel?.onSubmit()
     }
 
     @IBAction func buttonLinkFirstPressed(_ sender: UIButton) {
@@ -67,6 +94,32 @@ final class AuthViewController: UIViewController {
     }
 
     @IBAction func buttonLinkSecondPressed(_ sender: UIButton) {
+        
+    }
+}
+
+extension AuthViewController: AuthViewModelDelegate {
+    func validEmail(isValid: Bool) {
+        submitButton.isEnabled = isValid
+    }
+    
+    func validPassword(isValid: Bool) {
+        submitButton.isEnabled = isValid
+    }
+    
+    func authProcessBegan() {
+        
+    }
+    
+    func authFinishWithError(_ msg: String) {
+        
+    }
+    
+    func authFinishWithError(_ err: Error) {
+        
+    }
+    
+    func authFinishWithSuccess() {
         
     }
 }

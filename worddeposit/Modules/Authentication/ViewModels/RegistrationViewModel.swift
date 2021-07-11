@@ -33,7 +33,7 @@ class RegistrationViewModel: AuthDependency {
 extension RegistrationViewModel {
     
     func onSubmit(with authCredentials: AuthCredentials) {
-        delegate?.authenticationBegan()
+        delegate?.authProcessBegan()
 
         UserService.shared.signUp(withEmail: authCredentials.email, password: authCredentials.password) { [weak self] error in
             guard let self = self else { return }
@@ -42,6 +42,7 @@ extension RegistrationViewModel {
                 self.delegate?.authFinishWithError(error)
             } else {
                 self.delegate?.authFinishWithSuccess()
+                // coordinator to Home storyboard
             }
         }
     }

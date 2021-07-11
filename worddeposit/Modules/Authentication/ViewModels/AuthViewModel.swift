@@ -11,7 +11,7 @@ import Foundation
 protocol AuthViewModelDelegate: AnyObject {
     func validEmail(isValid: Bool)
     func validPassword(isValid: Bool)
-    func authenticationBegan()
+    func authProcessBegan()
     func authFinishWithError(_ msg: String)
     func authFinishWithError(_ err: Error)
     func authFinishWithSuccess()

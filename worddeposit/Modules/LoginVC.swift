@@ -167,7 +167,6 @@ class LoginVC: UIViewController {
                     self.showHomeVC()
                 }
             }
-            
         }
     }
 }

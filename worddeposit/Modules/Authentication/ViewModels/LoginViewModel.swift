@@ -37,7 +37,7 @@ class LoginViewModel: AuthDependency {
 extension LoginViewModel {
     
     func onSubmit(with authCredentials: AuthCredentials) {
-        delegate?.authenticationBegan()
+        delegate?.authProcessBegan()
         
         UserService.shared.signIn(withEmail: authCredentials.email, password: authCredentials.password) { [weak self] error in
             guard let self = self else { return }
