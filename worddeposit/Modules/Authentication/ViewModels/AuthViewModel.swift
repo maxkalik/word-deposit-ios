@@ -12,9 +12,9 @@ protocol AuthViewModelDelegate: AnyObject {
     func validEmail(isValid: Bool)
     func validPassword(isValid: Bool)
     func authProcessBegan()
-    func authFinishWithError(_ msg: String)
-    func authFinishWithError(_ err: Error)
-    func authFinishWithSuccess()
+    func authDidFinishWithError(_ msg: String)
+    func authDidFinishWithError(_ err: Error)
+    func authDidFinishWithSuccess()
 }
 
 protocol AuthDependency {

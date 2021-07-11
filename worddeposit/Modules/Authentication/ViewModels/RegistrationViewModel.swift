@@ -43,15 +43,15 @@ extension RegistrationViewModel {
             guard let self = self else { return }
 
             if let error = error {
-                self.delegate?.authFinishWithError(error)
+                self.delegate?.authDidFinishWithError(error)
             } else {
-                self.delegate?.authFinishWithSuccess()
-                // coordinator to Home storyboard
+                self.delegate?.authDidFinishWithSuccess()
+                self.coordinator?.authDidFinish()
             }
         }
     }
     
     func onButtonLinkFirstPress() {
-        coordinator?.finish()
+        coordinator?.backToLogin()
     }
 }

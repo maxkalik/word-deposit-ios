@@ -14,10 +14,9 @@ protocol AuthCoordinatorDelegate: AnyObject {
 
 class AuthCoordinator: Coordinator {
     
-    private var childCoordinators = [Coordinator]()
-    private var navigationController: UINavigationController
+    private(set) var childCoordinators = [Coordinator]()
+    private(set) var navigationController: UINavigationController
     weak var parentCoordinator: AppCoordinator?
-    
     weak var delegate: AuthCoordinatorDelegate?
     
     init(navigationController: UINavigationController) {
@@ -31,7 +30,6 @@ class AuthCoordinator: Coordinator {
     func start() {
         let authViewController = AuthViewController()
         let authViewModel = AuthViewModel()
-
         let loginViewModel = LoginViewModel()
         loginViewModel.coordinator = self
         authViewModel.dependency = loginViewModel
@@ -43,7 +41,6 @@ class AuthCoordinator: Coordinator {
     func toRegistration() {
         let authViewController = AuthViewController()
         let authViewModel = AuthViewModel()
-
         let registrationViewModel = RegistrationViewModel()
         registrationViewModel.coordinator = self
         authViewModel.dependency = registrationViewModel
@@ -52,11 +49,11 @@ class AuthCoordinator: Coordinator {
         navigationController.pushViewController(authViewController, animated: true)
     }
     
-    func finish() {
+    func backToLogin() {
         navigationController.popViewController(animated: true)
     }
     
-    func didFinishAuth() {
+    func authDidFinish() {
         parentCoordinator?.childDidFinish(self)
         delegate?.coordinatorDidFinishAuth(coordinator: self)
     }

@@ -47,7 +47,7 @@ extension LoginViewModel {
             guard let self = self else { return }
             
             if let error = error {
-                self.delegate?.authFinishWithError(error.localizedDescription)
+                self.delegate?.authDidFinishWithError(error.localizedDescription)
             } else {
                 self.fetchCurrentUser()
             }
@@ -59,7 +59,7 @@ extension LoginViewModel {
             guard let self = self else { return }
 
             if let error = error {
-                self.delegate?.authFinishWithError(error)
+                self.delegate?.authDidFinishWithError(error)
             } else {
                 self.finishSignInProcess(with: user)
             }
@@ -68,10 +68,10 @@ extension LoginViewModel {
     
     private func finishSignInProcess(with user: User?) {
         guard user != nil else {
-            self.delegate?.authFinishWithError("User was deleted or not exist. Please register new one")
+            self.delegate?.authDidFinishWithError("User was deleted or not exist. Please register new one")
             return
         }
-        self.delegate?.authFinishWithSuccess()
+        self.delegate?.authDidFinishWithSuccess()
     }
     
     func onButtonLinkFirstPress() {
@@ -79,6 +79,6 @@ extension LoginViewModel {
     }
     
     func onButtonLinkSecondPress() {
-        coordinator?.didFinishAuth()
+        coordinator?.authDidFinish()
     }
 }

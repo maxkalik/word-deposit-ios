@@ -11,7 +11,7 @@ import FirebaseAuth
 
 final class AppCoordinator: NSObject, Coordinator {
     
-    private var navigationController: UINavigationController
+    private(set) var navigationController: UINavigationController
     private(set) var childCoordinators: [Coordinator] = []
 
     init(navigationController: UINavigationController) {

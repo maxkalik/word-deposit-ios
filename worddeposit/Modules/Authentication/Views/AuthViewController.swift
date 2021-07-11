@@ -115,15 +115,15 @@ extension AuthViewController: AuthViewModelDelegate {
         
     }
     
-    func authFinishWithError(_ msg: String) {
+    func authDidFinishWithError(_ msg: String) {
         
     }
     
-    func authFinishWithError(_ err: Error) {
+    func authDidFinishWithError(_ err: Error) {
         
     }
     
-    func authFinishWithSuccess() {
+    func authDidFinishWithSuccess() {
         
     }
 }
