@@ -1,6 +1,6 @@
 import UIKit
 
-class DefaultButton: UIButton {
+class BaseButton: UIButton {
     override func awakeFromNib() {
         super.awakeFromNib()
         titleLabel?.font = UIFont(name: Fonts.medium, size: 16)

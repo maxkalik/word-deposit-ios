@@ -77,13 +77,14 @@
 		151AC7E2269AE89100E95089 /* AuthCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151AC7E1269AE89100E95089 /* AuthCredentials.swift */; };
 		151AC7E5269B17AD00E95089 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151AC7E4269B17AD00E95089 /* MainCoordinator.swift */; };
 		151AC7E7269B371300E95089 /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151AC7E6269B371300E95089 /* ForgotPasswordViewModel.swift */; };
-		151F2F0C251E97D5002D292B /* LoginTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151F2F0B251E97D5002D292B /* LoginTitle.swift */; };
-		151F2F29251EB193002D292B /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151F2F28251EB193002D292B /* DefaultButton.swift */; };
+		151AC7E9269B799D00E95089 /* AuthTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151AC7E8269B799D00E95089 /* AuthTextField.swift */; };
+		151F2F29251EB193002D292B /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151F2F28251EB193002D292B /* BaseButton.swift */; };
 		15266E6A251140D200BB621C /* Firebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15266E69251140D200BB621C /* Firebase.swift */; };
 		152DEC6C2688EC65005319D8 /* SuccessMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152DEC6B2688EC65005319D8 /* SuccessMessageViewModel.swift */; };
 		155F39E82523D69400EC63B9 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 155F39E72523D69400EC63B9 /* UINavigationController.swift */; };
 		156C80B724D8D27E0077905D /* VocabularyDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156C80B624D8D27E0077905D /* VocabularyDetailsVC.swift */; };
 		158B1095251BE29A0003C3A9 /* TextFieldLimit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158B1094251BE29A0003C3A9 /* TextFieldLimit.swift */; };
+		158E70A0269B7D7C003349FD /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158E709F269B7D7C003349FD /* BaseViewController.swift */; };
 		159C4FF62697807A00780321 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159C4FF52697807A00780321 /* Coordinator.swift */; };
 		159C4FF82697809500780321 /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159C4FF72697809500780321 /* Storyboarded.swift */; };
 		159C4FFA2697877B00780321 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159C4FF92697877B00780321 /* AppCoordinator.swift */; };
@@ -192,13 +193,14 @@
 		151AC7E1269AE89100E95089 /* AuthCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCredentials.swift; sourceTree = "<group>"; };
 		151AC7E4269B17AD00E95089 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		151AC7E6269B371300E95089 /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModel.swift; sourceTree = "<group>"; };
-		151F2F0B251E97D5002D292B /* LoginTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTitle.swift; sourceTree = "<group>"; };
-		151F2F28251EB193002D292B /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
+		151AC7E8269B799D00E95089 /* AuthTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTextField.swift; sourceTree = "<group>"; };
+		151F2F28251EB193002D292B /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
 		15266E69251140D200BB621C /* Firebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firebase.swift; sourceTree = "<group>"; };
 		152DEC6B2688EC65005319D8 /* SuccessMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessMessageViewModel.swift; sourceTree = "<group>"; };
 		155F39E72523D69400EC63B9 /* UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
 		156C80B624D8D27E0077905D /* VocabularyDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyDetailsVC.swift; sourceTree = "<group>"; };
 		158B1094251BE29A0003C3A9 /* TextFieldLimit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldLimit.swift; sourceTree = "<group>"; };
+		158E709F269B7D7C003349FD /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		159C4FF52697807A00780321 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		159C4FF72697809500780321 /* Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboarded.swift; sourceTree = "<group>"; };
 		159C4FF92697877B00780321 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
@@ -340,11 +342,11 @@
 		11284225248E7CE400A014E9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				15CEBC6024D71A0300D48C0E /* ProgressHUD.swift */,
 				1128423C248E840000A014E9 /* RoundedViews.swift */,
 				1192354F24BFB66C00E76403 /* TextFields.swift */,
 				15D51953251E7F2500590073 /* PrimaryButton.swift */,
-				151F2F0B251E97D5002D292B /* LoginTitle.swift */,
-				151F2F28251EB193002D292B /* DefaultButton.swift */,
+				151F2F28251EB193002D292B /* BaseButton.swift */,
 				15122F5725213FF900DB0E8F /* TabBarConroller.swift */,
 				15E7741E25292F0100EC57D0 /* ShadowView.swift */,
 				15E77425252A2C7C00EC57D0 /* ButtonSelector.swift */,
@@ -355,6 +357,7 @@
 				118E34B925ACEE8400025FFE /* WordTextViews.swift */,
 				1111FDA725B8F67500799B0F /* VocabularyWordBubbleView.swift */,
 				1186959825BA1B22002E5305 /* VocabularyWordBubbleLabel.swift */,
+				158E709F269B7D7C003349FD /* BaseViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -430,7 +433,6 @@
 		156C80BA24DDFEB10077905D /* Reusable Components */ = {
 			isa = PBXGroup;
 			children = (
-				15CEBC6024D71A0300D48C0E /* ProgressHUD.swift */,
 				15BD0C0124DE0631007E8D27 /* MessageView.swift */,
 				1151BB9F25462CF300A6A84F /* Checkbox.swift */,
 				11F0326B24C8267E00BD6350 /* PracticeCVCell.swift */,
@@ -532,6 +534,7 @@
 			children = (
 				15D4EF8526964C6500FF5FBE /* AuthViewController.swift */,
 				15D4EF8626964C6500FF5FBE /* AuthViewController.xib */,
+				151AC7E8269B799D00E95089 /* AuthTextField.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -673,6 +676,7 @@
 				15D4EF8726964C6500FF5FBE /* AuthViewController.swift in Sources */,
 				159C4FFC269A01D800780321 /* AuthCoordinator.swift in Sources */,
 				1128423D248E840000A014E9 /* RoundedViews.swift in Sources */,
+				158E70A0269B7D7C003349FD /* BaseViewController.swift in Sources */,
 				11331B82254B8AC500FDB454 /* TopBarItem.swift in Sources */,
 				119D786B2540BBAF009260D4 /* CheckmarkListTVCResults.swift in Sources */,
 				116BC94C249182BD00968DA6 /* PracticeAnswerItem.xib in Sources */,
@@ -686,12 +690,13 @@
 				118162EF24BFB08E0088C0E1 /* UserInfoTVC.swift in Sources */,
 				152DEC6C2688EC65005319D8 /* SuccessMessageViewModel.swift in Sources */,
 				1128423F248E845900A014E9 /* User.swift in Sources */,
-				151F2F29251EB193002D292B /* DefaultButton.swift in Sources */,
+				151F2F29251EB193002D292B /* BaseButton.swift in Sources */,
 				15D5190E251C076900590073 /* Validator.swift in Sources */,
 				11284235248E83C800A014E9 /* ProfileTVC.swift in Sources */,
 				11F32A5324AF46D00097BF39 /* VocabularyResultsTVC.swift in Sources */,
 				11049CBB2541FDD7009F324F /* SearchableTVC+Restore.swift in Sources */,
 				11621A2724C25EFA003087AB /* WKWebVC.swift in Sources */,
+				151AC7E9269B799D00E95089 /* AuthTextField.swift in Sources */,
 				15D51907251C069F00590073 /* UIImage.swift in Sources */,
 				158B1095251BE29A0003C3A9 /* TextFieldLimit.swift in Sources */,
 				11939EE5262B1CA3008BAAF4 /* ScrollViewHelper.swift in Sources */,
@@ -718,7 +723,6 @@
 				117FA4CA24CEE78A0043024D /* CollectionViewCenterLayout.swift in Sources */,
 				15266E6A251140D200BB621C /* Firebase.swift in Sources */,
 				15BD0C0224DE0631007E8D27 /* MessageView.swift in Sources */,
-				151F2F0C251E97D5002D292B /* LoginTitle.swift in Sources */,
 				15A7E04924D8B322006804FD /* VocabulariesTVCell.swift in Sources */,
 				1151BBA025462CF300A6A84F /* Checkbox.swift in Sources */,
 				15D51954251E7F2500590073 /* PrimaryButton.swift in Sources */,

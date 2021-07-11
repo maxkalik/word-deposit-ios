@@ -6,17 +6,35 @@
 //  Copyright © 2021 Maksim Kalik. All rights reserved.
 //
 
+/*
+
+BASE BIEW CONTROLLER
+1. Spinner
+2. Error alert
+3. Notification?
+4. Dismiss Keyboard
+
+Views
+
+move to views of Authintication OR Shared group
+
+TITLE
+BUTTONS: Primary, Defaults
+TEXTFILEDS: LOGIN -> Auth or smth like this
+
+*/
+
 import UIKit
 
-final class AuthViewController: UIViewController {
+final class AuthViewController: BaseViewController {
     
     @IBOutlet weak var illustration: UIImageView!
-    @IBOutlet weak var titleLabel: LoginTitle!
-    @IBOutlet weak var emailTextField: LoginTextField!
-    @IBOutlet weak var passwordTextField: LoginTextField!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var emailTextField: AuthTextField!
+    @IBOutlet weak var passwordTextField: AuthTextField!
     @IBOutlet weak var submitButton: PrimaryButton!
-    @IBOutlet weak var buttonLinkFirst: DefaultButton!
-    @IBOutlet weak var buttonLinkSecond: DefaultButton!
+    @IBOutlet weak var buttonLinkFirst: BaseButton!
+    @IBOutlet weak var buttonLinkSecond: BaseButton!
 
     var viewModel: AuthViewModel?
 
@@ -70,6 +88,8 @@ final class AuthViewController: UIViewController {
     
     private func setupTitle() {
         titleLabel.text = viewModel?.title
+        titleLabel.textColor = Colors.dark
+        titleLabel.font = UIFont(name: Fonts.medium, size: 22)
     }
     
     private func setupIllustration() {
@@ -120,7 +140,6 @@ extension AuthViewController: AuthViewModelDelegate {
     }
     
     func validPassword(isValid: Bool) {
-        // if it is not password forgot screen
         submitButton.isEnabled = isValid
     }
     

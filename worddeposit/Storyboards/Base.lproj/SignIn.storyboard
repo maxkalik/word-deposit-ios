@@ -26,7 +26,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="01T-X9-a2a">
-                                <rect key="frame" x="60" y="167.5" width="294" height="561"/>
+                                <rect key="frame" x="60" y="171" width="294" height="554"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login" translatesAutoresizingMaskIntoConstraints="NO" id="nN0-Oh-rj3">
                                         <rect key="frame" x="0.0" y="0.0" width="294" height="200"/>
@@ -35,21 +35,21 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e07-Zq-yaq" customClass="LoginTitle" customModule="worddeposit" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="220" width="294" height="29"/>
+                                        <rect key="frame" x="0.0" y="220" width="294" height="26"/>
                                         <fontDescription key="fontDescription" name="DMSans-Medium" family="DM Sans" pointSize="22"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FPu-eK-7w6" customClass="LoginTextField" customModule="worddeposit" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="269" width="294" height="50"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FPu-eK-7w6" customClass="AuthTextField" customModule="worddeposit" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="266" width="294" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="9b3-sw-HMp"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="DMSans-Regular" family="DM Sans" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" textContentType="email"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z9B-Rr-O8r" customClass="LoginTextField" customModule="worddeposit" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="339" width="294" height="50"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z9B-Rr-O8r" customClass="AuthTextField" customModule="worddeposit" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="336" width="294" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="etL-QT-Bha"/>
                                         </constraints>
@@ -57,7 +57,7 @@
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k1B-my-CoV" customClass="PrimaryButton" customModule="worddeposit" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="409" width="294" height="50"/>
+                                        <rect key="frame" x="0.0" y="406" width="294" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="Ur2-Yl-bgU"/>
                                         </constraints>
@@ -69,16 +69,16 @@
                                             <action selector="onSignInBtnPress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="f1y-QB-y7l"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a4c-sX-kdq" customClass="DefaultButton" customModule="worddeposit" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="479" width="294" height="31"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a4c-sX-kdq" customClass="BaseButton" customModule="worddeposit" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="476" width="294" height="29"/>
                                         <fontDescription key="fontDescription" name="DMSans-Medium" family="DM Sans" pointSize="14"/>
                                         <state key="normal" title="Create new Account"/>
                                         <connections>
                                             <segue destination="gOh-uS-taK" kind="show" id="W4m-8p-BUf"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rdf-CM-1lM" customClass="DefaultButton" customModule="worddeposit" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="530" width="294" height="31"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rdf-CM-1lM" customClass="BaseButton" customModule="worddeposit" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="525" width="294" height="29"/>
                                         <fontDescription key="fontDescription" name="DMSans-Medium" family="DM Sans" pointSize="14"/>
                                         <state key="normal" title="Forgot Password"/>
                                         <connections>
@@ -122,7 +122,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="k1A-ET-bVF">
-                                <rect key="frame" x="60" y="192.5" width="294" height="511"/>
+                                <rect key="frame" x="60" y="195" width="294" height="506"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="signup" translatesAutoresizingMaskIntoConstraints="NO" id="9jo-yK-c5l">
                                         <rect key="frame" x="0.0" y="0.0" width="294" height="200"/>
@@ -131,21 +131,21 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Registration" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BFm-ed-JJO" customClass="LoginTitle" customModule="worddeposit" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="220" width="294" height="30"/>
+                                        <rect key="frame" x="0.0" y="220" width="294" height="27"/>
                                         <fontDescription key="fontDescription" name="DMSans-Medium" family="DM Sans" pointSize="23"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kb4-ry-iGt" customClass="LoginTextField" customModule="worddeposit" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="270" width="294" height="50"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kb4-ry-iGt" customClass="AuthTextField" customModule="worddeposit" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="267" width="294" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="Aot-0q-FIO"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" textContentType="email"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z8D-Xl-CGP" customClass="LoginTextField" customModule="worddeposit" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="340" width="294" height="50"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z8D-Xl-CGP" customClass="AuthTextField" customModule="worddeposit" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="337" width="294" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="hcD-N6-JWm"/>
                                         </constraints>
@@ -153,7 +153,7 @@
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Bx-VB-muo" customClass="PrimaryButton" customModule="worddeposit" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="410" width="294" height="50"/>
+                                        <rect key="frame" x="0.0" y="407" width="294" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="Zj9-cl-h5V"/>
                                         </constraints>
@@ -164,8 +164,8 @@
                                             <action selector="onSignUpBtnPress:" destination="gOh-uS-taK" eventType="touchUpInside" id="qF3-uH-g1m"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tqS-aX-VeA" customClass="DefaultButton" customModule="worddeposit" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="480" width="294" height="31"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tqS-aX-VeA" customClass="BaseButton" customModule="worddeposit" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="477" width="294" height="29"/>
                                         <fontDescription key="fontDescription" name="DMSans-Medium" family="DM Sans" pointSize="14"/>
                                         <state key="normal" title="Do you have an account already?"/>
                                         <connections>
@@ -226,7 +226,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="23h-Uc-ftl">
-                                <rect key="frame" x="60" y="337.5" width="294" height="221"/>
+                                <rect key="frame" x="60" y="338.5" width="294" height="219"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Forgot password?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YZL-ml-heO" customClass="LoginTitle" customModule="worddeposit" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="294" height="30"/>
@@ -234,7 +234,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="5B0-YN-bqy" customClass="LoginTextField" customModule="worddeposit" customModuleProvider="target">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="5B0-YN-bqy" customClass="AuthTextField" customModule="worddeposit" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="294" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="iy7-ll-53E"/>
@@ -255,8 +255,8 @@
                                             <action selector="onResetPasswordBtnPress:" destination="lGh-rJ-leP" eventType="touchUpInside" id="7Cd-jn-s4u"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lqG-MK-qsD" customClass="DefaultButton" customModule="worddeposit" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="190" width="294" height="31"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lqG-MK-qsD" customClass="BaseButton" customModule="worddeposit" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="190" width="294" height="29"/>
                                         <fontDescription key="fontDescription" name="DMSans-Medium" family="DM Sans" pointSize="14"/>
                                         <state key="normal" title="Cancel"/>
                                         <connections>
