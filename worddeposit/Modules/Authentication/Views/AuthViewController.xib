@@ -17,7 +17,7 @@
         </array>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AuthenticationVC" customModule="worddeposit" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AuthViewController" customModule="worddeposit" customModuleProvider="target">
             <connections>
                 <outlet property="buttonLinkFirst" destination="WGu-G1-cgD" id="yOa-Ja-X0r"/>
                 <outlet property="buttonLinkSecond" destination="qyf-30-M2V" id="nCF-1T-Wka"/>
@@ -75,16 +75,25 @@
                             <state key="normal" title="Button">
                                 <color key="titleColor" red="0.95294117649999999" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                             </state>
+                            <connections>
+                                <action selector="submitPressed:" destination="-1" eventType="touchUpInside" id="kms-jA-csn"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WGu-G1-cgD" customClass="DefaultButton" customModule="worddeposit" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="479" width="294" height="31"/>
                             <fontDescription key="fontDescription" name="DMSans-Medium" family="DM Sans" pointSize="14"/>
                             <state key="normal" title="Link 1"/>
+                            <connections>
+                                <action selector="buttonLinkFirstPressed:" destination="-1" eventType="touchUpInside" id="gUg-U9-GWJ"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qyf-30-M2V" customClass="DefaultButton" customModule="worddeposit" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="530" width="294" height="31"/>
                             <fontDescription key="fontDescription" name="DMSans-Medium" family="DM Sans" pointSize="14"/>
                             <state key="normal" title="Link 2"/>
+                            <connections>
+                                <action selector="buttonLinkSecondPressed:" destination="-1" eventType="touchUpInside" id="ldL-cM-6V1"/>
+                            </connections>
                         </button>
                     </subviews>
                 </stackView>

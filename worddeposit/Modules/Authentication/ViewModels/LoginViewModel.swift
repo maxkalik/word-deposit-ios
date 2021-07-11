@@ -8,9 +8,10 @@
 
 import Foundation
 
-class LoginViewModel: AuthenticationDependency {
+class LoginViewModel: AuthDependency {
     
-    weak var delegate: AuthenticationViewModelDelegate?
+    var coordinator: AuthCoordinator?
+    weak var delegate: AuthViewModelDelegate?
     
     var illustrationImageName: String {
         return "login"
@@ -66,5 +67,13 @@ extension LoginViewModel {
             return
         }
         self.delegate?.authFinishWithSuccess()
+    }
+    
+    func onButtonLinkFirstPress() {
+        coordinator?.toRegistration()
+    }
+    
+    func onButtonLinkSecondPress() {
+        
     }
 }

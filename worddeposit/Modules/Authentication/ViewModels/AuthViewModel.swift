@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol AuthenticationViewModelDelegate: AnyObject {
+protocol AuthViewModelDelegate: AnyObject {
     func validEmail(isValid: Bool)
     func validPassword(isValid: Bool)
     func authenticationBegan()
@@ -17,7 +17,8 @@ protocol AuthenticationViewModelDelegate: AnyObject {
     func authFinishWithSuccess()
 }
 
-protocol AuthenticationDependency {
+protocol AuthDependency {
+    var coordinator: AuthCoordinator? { get }
     var illustrationImageName: String { get }
     var title: String { get }
     var submitButtonTitle: String { get }
@@ -25,18 +26,20 @@ protocol AuthenticationDependency {
     var buttonLinkSecondTitle: String? { get }
 
     func onSubmit(email: String, password: String)
+    func onButtonLinkFirstPress()
+    func onButtonLinkSecondPress()
 }
 
-extension AuthenticationDependency {
-    var tertiaryButtonTitle: String? {
+extension AuthDependency {
+    var buttonLinkSecondTitle: String? {
         get { return nil }
     }
 }
 
-class AuthenticationViewModel {
+class AuthViewModel {
     
-    weak var delegate: AuthenticationViewModelDelegate?
-    var dependency: AuthenticationDependency?
+    weak var delegate: AuthViewModelDelegate?
+    var dependency: AuthDependency?
     
     var illustrationImageName: String {
         return dependency?.illustrationImageName ?? ""
@@ -76,5 +79,13 @@ class AuthenticationViewModel {
     
     func onSubmit(email: String, password: String) {
         dependency?.onSubmit(email: email, password: password)
+    }
+    
+    func onButtonLinkFirstPress() {
+        dependency?.onButtonLinkFirstPress()
+    }
+    
+    func onButtonLinkSecondPress() {
+        
     }
 }

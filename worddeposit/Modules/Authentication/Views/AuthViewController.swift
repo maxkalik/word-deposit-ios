@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class AuthenticationVC: UIViewController {
+final class AuthViewController: UIViewController {
     
     @IBOutlet weak var illustration: UIImageView!
     @IBOutlet weak var titleLabel: LoginTitle!
@@ -17,9 +17,8 @@ final class AuthenticationVC: UIViewController {
     @IBOutlet weak var submitButton: PrimaryButton!
     @IBOutlet weak var buttonLinkFirst: DefaultButton!
     @IBOutlet weak var buttonLinkSecond: DefaultButton!
-    
-    weak var coordinator: MainCoordinator?
-    var viewModel: AuthenticationViewModel?
+
+    var viewModel: AuthViewModel?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,5 +51,17 @@ final class AuthenticationVC: UIViewController {
         } else {
             buttonLinkSecond.removeFromSuperview()
         }
+    }
+    
+    @IBAction func submitPressed(_ sender: UIButton) {
+//        viewModel?.onSubmit(email: <#T##String#>, password: <#T##String#>)
+    }
+
+    @IBAction func buttonLinkFirstPressed(_ sender: UIButton) {
+        viewModel?.onButtonLinkFirstPress()
+    }
+
+    @IBAction func buttonLinkSecondPressed(_ sender: UIButton) {
+        
     }
 }
