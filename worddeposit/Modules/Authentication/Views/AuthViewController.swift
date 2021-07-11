@@ -26,6 +26,10 @@ final class AuthViewController: UIViewController {
         setupUI()
     }
     
+    deinit {
+        print("deinit auth view controller")
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         

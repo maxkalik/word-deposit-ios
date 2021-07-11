@@ -9,7 +9,7 @@
 import UIKit
 import FirebaseAuth
 
-final class AppCoordinator: Coordinator {
+final class AppCoordinator: NSObject, Coordinator {
     
     private var navigationController: UINavigationController
     private(set) var childCoordinators: [Coordinator] = []
@@ -34,7 +34,7 @@ final class AppCoordinator: Coordinator {
     private func startWithMain() {
         let mainCoordinator = MainCoordinator(navigationController: navigationController)
         mainCoordinator.parentCoordinator = self
-//        mainCoordinator.delegate = self
+        mainCoordinator.delegate = self
         mainCoordinator.start()
         childCoordinators.append(mainCoordinator)
     }
@@ -45,14 +45,6 @@ final class AppCoordinator: Coordinator {
         authCoordinator.delegate = self
         authCoordinator.start()
         childCoordinators.append(authCoordinator)
-    }
-    
-    func finish() {
-//        print(window.rootViewController?.removeFromParent())
-//        let vc = UIViewController()
-//        vc.view.backgroundColor = .red
-//        rootViewController.pushViewController(vc, animated: true)
-//        childCoordinators.removeAll()
     }
     
     func childDidFinish(_ child: Coordinator?) {
@@ -66,31 +58,37 @@ final class AppCoordinator: Coordinator {
 }
 
 //// MARK: - UINavigationControllerDelegate
-//extension AppCoordinator: UINavigationControllerDelegate {
-//    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
-//
-//        guard let fromViewController = navigationController.transitionCoordinator?.viewController(forKey: .from) else {
-//            return
-//        }
-//
-//        if navigationController.viewControllers.contains(fromViewController) {
-//            return
-//        }
-//
-//        if let authViewController = fromViewController as? AuthViewController {
-//            print("auth view controller did finish")
-////            childDidFinish(loginViewController.viewModel?.coordinator)
-//        }
-//
-//        if let mainViewController = fromViewController as? UITabBarController {
-//            print("main view controller did finish")
-//        }
-//    }
-//}
+extension AppCoordinator: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+
+        guard let fromViewController = navigationController.transitionCoordinator?.viewController(forKey: .from) else {
+            return
+        }
+
+        if navigationController.viewControllers.contains(fromViewController) {
+            return
+        }
+
+        if let authViewController = fromViewController as? AuthViewController {
+            print("auth view controller did finish")
+//            childDidFinish(loginViewController.viewModel?.coordinator)
+        }
+
+        if let mainViewController = fromViewController as? UITabBarController {
+            print("main view controller did finish")
+        }
+    }
+}
 
 
 extension AppCoordinator: AuthCoordinatorDelegate {
     func coordinatorDidFinishAuth(coordinator: AuthCoordinator) {
         startWithMain()
+    }
+}
+
+extension AppCoordinator: MainCoordinatorDelegate {
+    func coordinatorDidLogout(coordinator: MainCoordinator) {
+        startWithAuth()
     }
 }

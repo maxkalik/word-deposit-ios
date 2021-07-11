@@ -24,6 +24,10 @@ class AuthCoordinator: Coordinator {
         self.navigationController = navigationController
     }
     
+    deinit {
+        print("deinit - auth coordinator")
+    }
+    
     func start() {
         let authViewController = AuthViewController()
         let authViewModel = AuthViewModel()

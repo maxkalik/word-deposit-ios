@@ -13,6 +13,10 @@ class RegistrationViewModel: AuthDependency {
     var coordinator: AuthCoordinator?
     weak var delegate: AuthViewModelDelegate?
     
+    deinit {
+        print("deinit \(self)")
+    }
+    
     var illustrationImageName: String {
         return "signup"
     }

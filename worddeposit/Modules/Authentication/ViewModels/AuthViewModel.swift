@@ -44,6 +44,10 @@ class AuthViewModel {
     weak var delegate: AuthViewModelDelegate?
     var dependency: AuthDependency?
     
+    deinit {
+        print("deinit \(self)")
+    }
+    
     var illustrationImageName: String {
         return dependency?.illustrationImageName ?? ""
     }

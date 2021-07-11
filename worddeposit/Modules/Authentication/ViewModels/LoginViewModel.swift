@@ -13,6 +13,10 @@ class LoginViewModel: AuthDependency {
     var coordinator: AuthCoordinator?
     weak var delegate: AuthViewModelDelegate?
     
+    deinit {
+        print("deinit \(self)")
+    }
+    
     var illustrationImageName: String {
         return "login"
     }
