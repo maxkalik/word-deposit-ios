@@ -27,9 +27,6 @@ final class AuthViewController: BaseViewController {
     @IBOutlet weak var submitButton: PrimaryButton!
     @IBOutlet weak var buttonLinkFirst: BaseButton!
     @IBOutlet weak var buttonLinkSecond: BaseButton?
-
-    @IBOutlet weak var stackView: UIStackView!
-    @IBOutlet weak var stackViewCenterY: NSLayoutConstraint!
     
     var viewModel: AuthViewModel?
 
@@ -165,7 +162,8 @@ extension AuthViewController: BaseViewControllerDelegate {
         
         UIView.animate(withDuration: 0.3) { [weak self] in
             guard let self = self else { return }
-            self.stackViewCenterY.constant -= (self.keyboardHeight - self.stackView.frame.size.height / 2) + self.illustration.frame.size.height
+
+            self.view.frame.size.height -= self.keyboardHeight
             self.illustration.alpha = 0
             self.view.layoutIfNeeded()
         }
@@ -177,8 +175,8 @@ extension AuthViewController: BaseViewControllerDelegate {
         
         UIView.animate(withDuration: 0.3) { [weak self] in
             guard let self = self else { return }
-            
-            self.stackViewCenterY.constant += (self.keyboardHeight - self.stackView.frame.size.height / 2) + self.illustration.frame.size.height
+
+            self.view.frame.size.height += self.keyboardHeight
             self.illustration.alpha = 1
             self.view.layoutIfNeeded()
         }
