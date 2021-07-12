@@ -36,6 +36,7 @@ class PracticeCVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                 if let error = error {
                     self.simpleAlert(title: "Error", msg: error.localizedDescription)
                     PresentVC.loginVC(from: self.view)
+                        
                     return
                 } else {
                     guard let _ = user else {

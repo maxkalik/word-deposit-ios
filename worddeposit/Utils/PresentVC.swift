@@ -9,25 +9,12 @@
 import UIKit
 
 class PresentVC {
+    // TODO: - Remove this shit!
+    static var coordinator: MainCoordinator?
     
     // MARK: - Login VC
-    static func loginVC(from view: UIView) {
-        let storyboard = UIStoryboard(name: Storyboards.Main, bundle: nil)
-        let loginVC = storyboard.instantiateViewController(identifier: Storyboards.Login)
-         
-         guard let window = view.window else {
-             view.window?.rootViewController = loginVC
-             view.window?.makeKeyAndVisible()
-             return
-         }
-         
-         window.rootViewController = loginVC
-         window.makeKeyAndVisible()
-
-         let options: UIView.AnimationOptions = .transitionCrossDissolve
-         let duration: TimeInterval = 0.3
-         
-         UIView.transition(with: window, duration: duration, options: options, animations: nil, completion: nil)
+    static func loginVC(from view: UIView? = nil) {
+        coordinator?.didLogout()
     }
     
     // MARK: - Add Word VC

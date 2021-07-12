@@ -8,9 +8,16 @@
 
 import UIKit
 
-class TabBarConroller: UITabBarController, UITabBarControllerDelegate {
+class BaseTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     let layerGradient = CAGradientLayer()
+    
+    // TODO: - coordinator - Remove this shit!
+    var coordinator: MainCoordinator? {
+        didSet {
+            PresentVC.coordinator = coordinator
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,14 +53,12 @@ class TabBarConroller: UITabBarController, UITabBarControllerDelegate {
     }
     
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-
-        // If your view controller is emedded in a UINavigationController you will need to check if it's a UINavigationController and check that the root view controller is your desired controller (or subclass the navigation controller)
+        
         if viewController is AddWordVC {
             PresentVC.addWordVC(from: self)
             return false
         }
 
-        // Tells the tab bar to select other view controller as normal
         return true
     }
     

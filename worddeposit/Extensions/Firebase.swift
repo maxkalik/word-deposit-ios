@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FirebaseFirestore
 
 class ErrorAlert {
     static func show(errorCode: AuthErrorCode, viewController: UIViewController) {
@@ -23,6 +24,17 @@ extension Auth {
         if let code = AuthErrorCode(rawValue: error._code) {
             ErrorAlert.show(errorCode: code, viewController: viewController)
         }
+    }
+}
+
+extension Error {
+    var message: String {
+        if let code = AuthErrorCode(rawValue: _code) {
+            print("----- error --> \(code.message)")
+            return code.message
+        }
+        print("----- error --> \(localizedDescription)")
+        return localizedDescription
     }
 }
 

@@ -26,7 +26,7 @@ class AddWordVC: UIViewController {
     
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var wordSaveButton: PrimaryButton!
-    @IBOutlet weak var clearAllButton: DefaultButton!
+    @IBOutlet weak var clearAllButton: BaseButton!
     @IBOutlet weak var wordExampleTextField: PrimaryTextField!
     @IBOutlet weak var wordTranslationTextField: PrimaryTextField!
     @IBOutlet weak var wordDescriptionTextField: SecondaryTextField!
