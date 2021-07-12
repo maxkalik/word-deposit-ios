@@ -27,6 +27,17 @@ extension Auth {
     }
 }
 
+extension Error {
+    var message: String {
+        if let code = AuthErrorCode(rawValue: _code) {
+            print("----- error --> \(code.message)")
+            return code.message
+        }
+        print("----- error --> \(localizedDescription)")
+        return localizedDescription
+    }
+}
+
 extension AuthErrorCode {
     var message: String {
         switch self {

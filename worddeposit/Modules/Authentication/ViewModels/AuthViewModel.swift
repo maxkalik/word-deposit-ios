@@ -12,17 +12,20 @@ enum AuthType {
     case login, registration, forgotPassword
 }
 
-protocol AuthViewModelDelegate: AnyObject {
-    func validEmail(isValid: Bool)
-    func validPassword(isValid: Bool)
+protocol AuthDelegate: AnyObject {
     func authProcessBegan()
     func authDidFinishWithError(_ msg: String)
-    func authDidFinishWithError(_ err: Error)
     func authDidFinishWithSuccess()
+}
+
+protocol AuthValidationDelegate: AnyObject {
+    func validEmail(isValid: Bool)
+    func validPassword(isValid: Bool)
 }
 
 protocol Authentication {
     var type: AuthType { get }
+    var delegate: AuthDelegate? { get set }
     var coordinator: AuthCoordinator { get }
     var illustrationImageName: String? { get }
     var title: String { get }
@@ -45,16 +48,17 @@ extension Authentication {
 }
 
 class AuthViewModel {
-    
+
     private var authCredentials: AuthCredentials?
     private let validator = Validator()
-    weak var delegate: AuthViewModelDelegate?
+    weak var delegate: AuthValidationDelegate?
     var dependency: Authentication?
+    var authDelegate: AuthDelegate?
     
     deinit {
         print("deinit \(self)")
     }
-    
+
     var illustrationImageName: String? {
         return dependency?.illustrationImageName
     }

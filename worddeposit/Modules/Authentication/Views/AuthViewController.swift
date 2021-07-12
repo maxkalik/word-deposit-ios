@@ -41,6 +41,7 @@ final class AuthViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel?.delegate = self
+        viewModel?.dependency?.delegate = self
         setupUI()
     }
     
@@ -134,7 +135,7 @@ final class AuthViewController: BaseViewController {
     }
 }
 
-extension AuthViewController: AuthViewModelDelegate {
+extension AuthViewController: AuthDelegate, AuthValidationDelegate {
     func validEmail(isValid: Bool) {
         submitButton.isEnabled = isValid
     }
@@ -144,18 +145,15 @@ extension AuthViewController: AuthViewModelDelegate {
     }
     
     func authProcessBegan() {
-        
+        activityIndicator.show()
     }
     
     func authDidFinishWithError(_ msg: String) {
-        
-    }
-    
-    func authDidFinishWithError(_ err: Error) {
-        
+        activityIndicator.hide()
+        showAlert(title: "Error", msg: msg)
     }
     
     func authDidFinishWithSuccess() {
-        
+        activityIndicator.hide()
     }
 }

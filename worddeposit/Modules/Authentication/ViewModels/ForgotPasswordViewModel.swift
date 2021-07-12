@@ -9,10 +9,10 @@
 import Foundation
 
 class ForgotPasswordViewModel: Authentication {
-
+    
+    weak var delegate: AuthDelegate?
     private(set) var type: AuthType = .forgotPassword
     private(set) var coordinator: AuthCoordinator
-    weak var delegate: AuthViewModelDelegate?
 
     init(coordinator: AuthCoordinator) {
         self.coordinator = coordinator
@@ -40,7 +40,7 @@ extension ForgotPasswordViewModel {
         delegate?.authProcessBegan()
         UserService.shared.resetPassword(withEmail: authCredentials.email) { error in
             if let error = error {
-                self.delegate?.authDidFinishWithError(error)
+                self.delegate?.authDidFinishWithError(error.message)
                 return
             }
             self.delegate?.authDidFinishWithSuccess()

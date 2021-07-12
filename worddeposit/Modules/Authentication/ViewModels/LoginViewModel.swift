@@ -8,9 +8,11 @@
 
 import Foundation
 
+protocol LoginViewModelDelegate: AuthDelegate {}
+
 class LoginViewModel: Authentication {
     
-    weak var delegate: AuthViewModelDelegate?
+    weak var delegate: AuthDelegate?
     private(set) var type: AuthType = .login
     private(set) var coordinator: AuthCoordinator
     
@@ -51,7 +53,7 @@ extension LoginViewModel {
     
     func onSubmit(with authCredentials: AuthCredentials) {
         delegate?.authProcessBegan()
-        
+
         guard let password = authCredentials.password else {
             delegate?.authDidFinishWithError("Password is wrong")
             return
@@ -61,7 +63,7 @@ extension LoginViewModel {
             guard let self = self else { return }
             
             if let error = error {
-                self.delegate?.authDidFinishWithError(error.localizedDescription)
+                self.delegate?.authDidFinishWithError(error.message)
             } else {
                 self.fetchCurrentUser()
             }
@@ -73,7 +75,7 @@ extension LoginViewModel {
             guard let self = self else { return }
 
             if let error = error {
-                self.delegate?.authDidFinishWithError(error)
+                self.delegate?.authDidFinishWithError(error.message)
             } else {
                 self.finishSignInProcess(with: user)
             }

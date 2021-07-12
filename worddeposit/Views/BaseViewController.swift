@@ -29,5 +29,12 @@ class BaseViewController: UIViewController {
         view.addSubview(activityIndicator)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.center = view.center
+        activityIndicator.hide()
+    }
+    
+    func showAlert(title: String, msg: String, handler: ((UIAlertAction) -> Void)? = nil) {
+        let alert = UIAlertController(title: title, message: msg, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: handler))
+        present(alert, animated: true, completion: nil)
     }
 }

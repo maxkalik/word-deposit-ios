@@ -10,9 +10,9 @@ import Foundation
 
 class RegistrationViewModel: Authentication {
     
+    weak var delegate: AuthDelegate?
     private(set) var coordinator: AuthCoordinator
     private(set) var type: AuthType = .registration
-    weak var delegate: AuthViewModelDelegate?
 
     init(coordinator: AuthCoordinator) {
         self.coordinator = coordinator
@@ -57,7 +57,7 @@ extension RegistrationViewModel {
             guard let self = self else { return }
 
             if let error = error {
-                self.delegate?.authDidFinishWithError(error)
+                self.delegate?.authDidFinishWithError(error.message)
             } else {
                 self.delegate?.authDidFinishWithSuccess()
                 self.coordinator.authDidFinish()
