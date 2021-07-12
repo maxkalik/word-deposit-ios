@@ -8,9 +8,18 @@
 
 import UIKit
 
+protocol BaseViewControllerDelegate: AnyObject {
+    func keyboardDidShow()
+    func keyboardDidHide()
+}
+
 class BaseViewController: UIViewController {
 
     var activityIndicator = ProgressHUD()
+    private(set) var keyboardHeight: CGFloat = 0
+    private(set) var isKeyboardShowing = false
+    
+    weak var baseViewControllerDelegate: BaseViewControllerDelegate?
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -23,6 +32,37 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupActivityIndicator()
+        hideKeyboardWhenTappedAround()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func keyboardWillShow(_ notification: NSNotification) {
+        if isKeyboardShowing { return }
+        isKeyboardShowing = true
+        
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            keyboardHeight = keyboardFrame.cgRectValue.height
+            baseViewControllerDelegate?.keyboardDidShow()
+        }
+    }
+    
+    @objc func keyboardWillHide() {
+        if !isKeyboardShowing { return }
+        isKeyboardShowing = false
+        baseViewControllerDelegate?.keyboardDidHide()
     }
     
     private func setupActivityIndicator() {

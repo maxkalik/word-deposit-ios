@@ -24,6 +24,8 @@
                 <outlet property="emailTextField" destination="Ef8-df-Lz5" id="l8g-oh-FsG"/>
                 <outlet property="illustration" destination="naD-iS-Hq1" id="ns1-bK-kMQ"/>
                 <outlet property="passwordTextField" destination="BWE-wJ-zAI" id="57E-VG-rML"/>
+                <outlet property="stackView" destination="Ctz-8V-z6K" id="Fpf-jc-Dkv"/>
+                <outlet property="stackViewCenterY" destination="1vp-eO-ROu" id="W6c-QG-2TV"/>
                 <outlet property="submitButton" destination="EB2-gz-ASA" id="t9c-IX-u1S"/>
                 <outlet property="titleLabel" destination="Egs-Xy-crf" id="sou-eA-V6Y"/>
                 <outlet property="view" destination="McI-ez-75j" id="dwP-Ei-X1F"/>

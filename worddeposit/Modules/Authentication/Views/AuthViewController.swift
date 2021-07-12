@@ -28,6 +28,9 @@ final class AuthViewController: BaseViewController {
     @IBOutlet weak var buttonLinkFirst: BaseButton!
     @IBOutlet weak var buttonLinkSecond: BaseButton!
 
+    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var stackViewCenterY: NSLayoutConstraint!
+    
     var viewModel: AuthViewModel?
 
     override func viewDidLoad() {
@@ -35,6 +38,8 @@ final class AuthViewController: BaseViewController {
         viewModel?.delegate = self
         viewModel?.dependency?.delegate = self
         setupUI()
+        
+        baseViewControllerDelegate = self
     }
     
     deinit {
@@ -43,11 +48,6 @@ final class AuthViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
         emailTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         passwordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
@@ -62,14 +62,6 @@ final class AuthViewController: BaseViewController {
         guard let email = emailTextField.text,
               let password = passwordTextField.text else { return }
         viewModel?.authFieldsDidChange(email: email, password: password)
-    }
-    
-    @objc func keyboardWillShow() {
-        
-    }
-    
-    @objc func keyboardWillHide() {
-        
     }
     
     private func setupUI() {
@@ -147,5 +139,15 @@ extension AuthViewController: AuthDelegate, AuthValidationDelegate {
     
     func authDidFinishWithSuccess() {
         activityIndicator.hide()
+    }
+}
+
+extension AuthViewController: BaseViewControllerDelegate {
+    func keyboardDidShow() {
+        print("keyboard did show")
+    }
+    
+    func keyboardDidHide() {
+        print("keyboard did hide")
     }
 }
