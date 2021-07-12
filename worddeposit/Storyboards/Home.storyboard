@@ -303,10 +303,10 @@
             </objects>
             <point key="canvasLocation" x="-1165.217391304348" y="-1443.0803571428571"/>
         </scene>
-        <!--Tab Bar Conroller-->
+        <!--Base Tab Bar Controller-->
         <scene sceneID="HfZ-1V-o4J">
             <objects>
-                <tabBarController storyboardIdentifier="Home" automaticallyAdjustsScrollViewInsets="NO" id="to1-eN-B6t" customClass="TabBarConroller" customModule="worddeposit" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="Home" automaticallyAdjustsScrollViewInsets="NO" id="to1-eN-B6t" customClass="BaseTabBarController" customModule="worddeposit" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="JeK-BG-e3g">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>

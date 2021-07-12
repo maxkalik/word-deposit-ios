@@ -14,14 +14,6 @@ BASE BIEW CONTROLLER
 3. Notification?
 4. Dismiss Keyboard
 
-Views
-
-move to views of Authintication OR Shared group
-
-TITLE
-BUTTONS: Primary, Defaults
-TEXTFILEDS: LOGIN -> Auth or smth like this
-
 */
 
 import UIKit

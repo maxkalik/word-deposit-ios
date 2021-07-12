@@ -73,7 +73,7 @@
 		11F32A5324AF46D00097BF39 /* VocabularyResultsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F32A5224AF46D00097BF39 /* VocabularyResultsTVC.swift */; };
 		11F32A5924AF49DB0097BF39 /* VocabularyTVC+Updating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F32A5824AF49DB0097BF39 /* VocabularyTVC+Updating.swift */; };
 		150FA46124D8B6E40083D653 /* Vocabulary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150FA46024D8B6E40083D653 /* Vocabulary.swift */; };
-		15122F5825213FF900DB0E8F /* TabBarConroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15122F5725213FF900DB0E8F /* TabBarConroller.swift */; };
+		15122F5825213FF900DB0E8F /* BaseTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15122F5725213FF900DB0E8F /* BaseTabBarController.swift */; };
 		151AC7E2269AE89100E95089 /* AuthCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151AC7E1269AE89100E95089 /* AuthCredentials.swift */; };
 		151AC7E5269B17AD00E95089 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151AC7E4269B17AD00E95089 /* MainCoordinator.swift */; };
 		151AC7E7269B371300E95089 /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151AC7E6269B371300E95089 /* ForgotPasswordViewModel.swift */; };
@@ -189,7 +189,7 @@
 		11F32A5224AF46D00097BF39 /* VocabularyResultsTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyResultsTVC.swift; sourceTree = "<group>"; };
 		11F32A5824AF49DB0097BF39 /* VocabularyTVC+Updating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VocabularyTVC+Updating.swift"; sourceTree = "<group>"; };
 		150FA46024D8B6E40083D653 /* Vocabulary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vocabulary.swift; sourceTree = "<group>"; };
-		15122F5725213FF900DB0E8F /* TabBarConroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarConroller.swift; sourceTree = "<group>"; };
+		15122F5725213FF900DB0E8F /* BaseTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTabBarController.swift; sourceTree = "<group>"; };
 		151AC7E1269AE89100E95089 /* AuthCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCredentials.swift; sourceTree = "<group>"; };
 		151AC7E4269B17AD00E95089 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		151AC7E6269B371300E95089 /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModel.swift; sourceTree = "<group>"; };
@@ -347,7 +347,7 @@
 				1192354F24BFB66C00E76403 /* TextFields.swift */,
 				15D51953251E7F2500590073 /* PrimaryButton.swift */,
 				151F2F28251EB193002D292B /* BaseButton.swift */,
-				15122F5725213FF900DB0E8F /* TabBarConroller.swift */,
+				15122F5725213FF900DB0E8F /* BaseTabBarController.swift */,
 				15E7741E25292F0100EC57D0 /* ShadowView.swift */,
 				15E77425252A2C7C00EC57D0 /* ButtonSelector.swift */,
 				15E77428252A3BF400EC57D0 /* SecondaryButton.swift */,
@@ -732,7 +732,7 @@
 				151AC7E5269B17AD00E95089 /* MainCoordinator.swift in Sources */,
 				15E77429252A3BF400EC57D0 /* SecondaryButton.swift in Sources */,
 				151AC7E7269B371300E95089 /* ForgotPasswordViewModel.swift in Sources */,
-				15122F5825213FF900DB0E8F /* TabBarConroller.swift in Sources */,
+				15122F5825213FF900DB0E8F /* BaseTabBarController.swift in Sources */,
 				11284233248E83BB00A014E9 /* VocabularyTVC.swift in Sources */,
 				15D4EF8C2696510400FF5FBE /* LoginViewModel.swift in Sources */,
 				1120047F25B76F870000FCD7 /* WordTextView.swift in Sources */,

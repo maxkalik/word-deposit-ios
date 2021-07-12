@@ -48,12 +48,10 @@ extension Authentication {
 }
 
 class AuthViewModel {
-
     private var authCredentials: AuthCredentials?
     private let validator = Validator()
     weak var delegate: AuthValidationDelegate?
     var dependency: Authentication?
-    var authDelegate: AuthDelegate?
     
     deinit {
         print("deinit \(self)")

@@ -28,10 +28,11 @@ class MainCoordinator: Coordinator {
     }
     
     func start() {
-        let mainViewController = UIViewController()
-        mainViewController.view.backgroundColor = .red
-//        mainViewcotroller.viewModel = MainViewModel(coordinator: self)
-        navigationController.setViewControllers([mainViewController], animated: false)
+        let storyboard = UIStoryboard(name: Storyboards.Home, bundle: nil)
+        guard let tabBarController = storyboard.instantiateViewController(identifier: Storyboards.Home) as? BaseTabBarController else { return }
+        tabBarController.coordinator = self
+        navigationController.navigationBar.isHidden = true
+        navigationController.setViewControllers([tabBarController], animated: false)
     }
 }
 
@@ -40,5 +41,8 @@ extension MainCoordinator {
     func didLogout() {
         parentCoordinator?.childDidFinish(self)
         delegate?.coordinatorDidLogout(coordinator: self)
+        
+        // TODO: - maybe temporary solution
+        navigationController.dismiss(animated: true, completion: nil)
     }
 }

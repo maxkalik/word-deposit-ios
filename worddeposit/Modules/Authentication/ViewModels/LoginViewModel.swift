@@ -8,8 +8,6 @@
 
 import Foundation
 
-protocol LoginViewModelDelegate: AuthDelegate {}
-
 class LoginViewModel: Authentication {
     
     weak var delegate: AuthDelegate?
@@ -88,6 +86,7 @@ extension LoginViewModel {
             return
         }
         self.delegate?.authDidFinishWithSuccess()
+        self.coordinator.authDidFinish()
     }
     
     func onButtonLinkFirstPress() {
