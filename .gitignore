@@ -1,3 +1,7 @@
+xcuserdata/**
+!xcuserdata/**/
+!xcuserdata/**/xcschemes/**
+
 .DS_Store
 GoogleService-Info.plist
 UserInterfaceState.xcuserstate
