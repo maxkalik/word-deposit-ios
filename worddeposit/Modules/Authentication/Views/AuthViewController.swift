@@ -26,7 +26,7 @@ final class AuthViewController: BaseViewController {
     @IBOutlet weak var passwordTextField: AuthTextField!
     @IBOutlet weak var submitButton: PrimaryButton!
     @IBOutlet weak var buttonLinkFirst: BaseButton!
-    @IBOutlet weak var buttonLinkSecond: BaseButton!
+    @IBOutlet weak var buttonLinkSecond: BaseButton?
 
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var stackViewCenterY: NSLayoutConstraint!
@@ -69,6 +69,12 @@ final class AuthViewController: BaseViewController {
         setupTitle()
         setupTextFields()
         setupButtons()
+        setupBackground()
+    }
+    
+    private func setupBackground() {
+        view.backgroundColor = Colors.yellow
+        navigationController?.setup(isClear: true)
     }
     
     private func setupTitle() {
@@ -100,10 +106,20 @@ final class AuthViewController: BaseViewController {
         buttonLinkFirst.setTitle(viewModel?.buttonLinkFirstTitle, for: .normal)
 
         if viewModel?.buttonLinkSecondTitle != nil {
-            buttonLinkSecond.setTitle(viewModel?.buttonLinkSecondTitle, for: .normal)
+            buttonLinkSecond?.setTitle(viewModel?.buttonLinkSecondTitle, for: .normal)
         } else {
-            buttonLinkSecond.removeFromSuperview()
+            buttonLinkSecond?.removeFromSuperview()
         }
+    }
+    
+    private func hideButtonLinkButtons() {
+        buttonLinkFirst.alpha = 0
+        buttonLinkSecond?.alpha = 0
+    }
+    
+    private func showButtonLinkButtons() {
+        buttonLinkFirst.alpha = 1
+        buttonLinkSecond?.alpha = 1
     }
     
     @IBAction func submitPressed(_ sender: UIButton) {
@@ -144,10 +160,27 @@ extension AuthViewController: AuthDelegate, AuthValidationDelegate {
 
 extension AuthViewController: BaseViewControllerDelegate {
     func keyboardDidShow() {
-        print("keyboard did show")
+        titleLabel.alpha = 0
+        hideButtonLinkButtons()
+        
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            guard let self = self else { return }
+            self.stackViewCenterY.constant -= (self.keyboardHeight - self.stackView.frame.size.height / 2) + self.illustration.frame.size.height
+            self.illustration.alpha = 0
+            self.view.layoutIfNeeded()
+        }
     }
     
     func keyboardDidHide() {
-        print("keyboard did hide")
+        titleLabel.alpha = 1
+        showButtonLinkButtons()
+        
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            guard let self = self else { return }
+            
+            self.stackViewCenterY.constant += (self.keyboardHeight - self.stackView.frame.size.height / 2) + self.illustration.frame.size.height
+            self.illustration.alpha = 1
+            self.view.layoutIfNeeded()
+        }
     }
 }
