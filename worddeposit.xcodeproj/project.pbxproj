@@ -22,16 +22,12 @@
 		1120047F25B76F870000FCD7 /* WordTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1120047E25B76F860000FCD7 /* WordTextView.swift */; };
 		11284211248E7C5700A014E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284210248E7C5700A014E9 /* AppDelegate.swift */; };
 		11284213248E7C5700A014E9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284212248E7C5700A014E9 /* SceneDelegate.swift */; };
-		11284218248E7C5700A014E9 /* SignIn.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11284216248E7C5700A014E9 /* SignIn.storyboard */; };
 		1128421A248E7C5800A014E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11284219248E7C5800A014E9 /* Assets.xcassets */; };
 		1128421D248E7C5800A014E9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1128421B248E7C5800A014E9 /* LaunchScreen.storyboard */; };
 		11284229248E7D5100A014E9 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11284228248E7D5100A014E9 /* Home.storyboard */; };
 		1128422F248E839D00A014E9 /* AddWordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1128422E248E839D00A014E9 /* AddWordVC.swift */; };
 		11284233248E83BB00A014E9 /* VocabularyTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284232248E83BB00A014E9 /* VocabularyTVC.swift */; };
 		11284235248E83C800A014E9 /* ProfileTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284234248E83C800A014E9 /* ProfileTVC.swift */; };
-		11284237248E83D400A014E9 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284236248E83D400A014E9 /* LoginVC.swift */; };
-		11284239248E83E000A014E9 /* RegistrationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284238248E83E000A014E9 /* RegistrationVC.swift */; };
-		1128423B248E83ED00A014E9 /* ForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1128423A248E83ED00A014E9 /* ForgotPasswordVC.swift */; };
 		1128423D248E840000A014E9 /* RoundedViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1128423C248E840000A014E9 /* RoundedViews.swift */; };
 		1128423F248E845900A014E9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1128423E248E845900A014E9 /* User.swift */; };
 		11284241248E846000A014E9 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11284240248E846000A014E9 /* Word.swift */; };
@@ -137,7 +133,6 @@
 		1128420D248E7C5700A014E9 /* worddeposit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = worddeposit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11284210248E7C5700A014E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		11284212248E7C5700A014E9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		11284217248E7C5700A014E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/SignIn.storyboard; sourceTree = "<group>"; };
 		11284219248E7C5800A014E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1128421C248E7C5800A014E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1128421E248E7C5800A014E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -145,9 +140,6 @@
 		1128422E248E839D00A014E9 /* AddWordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWordVC.swift; sourceTree = "<group>"; };
 		11284232248E83BB00A014E9 /* VocabularyTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyTVC.swift; sourceTree = "<group>"; };
 		11284234248E83C800A014E9 /* ProfileTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTVC.swift; sourceTree = "<group>"; };
-		11284236248E83D400A014E9 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
-		11284238248E83E000A014E9 /* RegistrationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationVC.swift; sourceTree = "<group>"; };
-		1128423A248E83ED00A014E9 /* ForgotPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVC.swift; sourceTree = "<group>"; };
 		1128423C248E840000A014E9 /* RoundedViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedViews.swift; sourceTree = "<group>"; };
 		1128423E248E845900A014E9 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		11284240248E846000A014E9 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
@@ -322,9 +314,6 @@
 			children = (
 				15D4EF8126964B1600FF5FBE /* Authentication */,
 				15E3458B264085A30013879E /* PracticeRead */,
-				11284236248E83D400A014E9 /* LoginVC.swift */,
-				11284238248E83E000A014E9 /* RegistrationVC.swift */,
-				1128423A248E83ED00A014E9 /* ForgotPasswordVC.swift */,
 				11F0326F24C8272700BD6350 /* PracticeCVC.swift */,
 				1128422E248E839D00A014E9 /* AddWordVC.swift */,
 				11284232248E83BB00A014E9 /* VocabularyTVC.swift */,
@@ -378,7 +367,6 @@
 			isa = PBXGroup;
 			children = (
 				1128421B248E7C5800A014E9 /* LaunchScreen.storyboard */,
-				11284216248E7C5700A014E9 /* SignIn.storyboard */,
 				11284228248E7D5100A014E9 /* Home.storyboard */,
 			);
 			path = Storyboards;
@@ -644,7 +632,6 @@
 				15D4EF8026921D9F00FF5FBE /* GoogleService-Info.plist in Resources */,
 				11108C04252356BC00A44945 /* DMSans-Regular.ttf in Resources */,
 				1171E70724981CDD00805D35 /* VocabularyCardCVCell.xib in Resources */,
-				11284218248E7C5700A014E9 /* SignIn.storyboard in Resources */,
 				1181BBF42498060F00DB682E /* VocabularyCardsVC.xib in Resources */,
 				11284229248E7D5100A014E9 /* Home.storyboard in Resources */,
 				1158D30F24917B9B0087DC96 /* VocabularyTVCell.xib in Resources */,
@@ -663,13 +650,11 @@
 				11939EE9262B2731008BAAF4 /* PracticeReadHelper.swift in Sources */,
 				15C2D8F0265AB8D1008F24A3 /* Result.swift in Sources */,
 				11B20D6A24C8DF2E00C1CB4E /* PracticeAnswerItem.swift in Sources */,
-				11284239248E83E000A014E9 /* RegistrationVC.swift in Sources */,
 				11284241248E846000A014E9 /* Word.swift in Sources */,
 				15E7741C2529205400EC57D0 /* UILabel.swift in Sources */,
 				1147B609252B1F420078A296 /* CheckmarkListTVC.swift in Sources */,
 				1192355024BFB66C00E76403 /* TextFields.swift in Sources */,
 				110C3F87252DEFC600FE5667 /* UITextField.swift in Sources */,
-				1128423B248E83ED00A014E9 /* ForgotPasswordVC.swift in Sources */,
 				15CEBC6124D71A0300D48C0E /* ProgressHUD.swift in Sources */,
 				1186959925BA1B22002E5305 /* VocabularyWordBubbleLabel.swift in Sources */,
 				11049CB82541FD3D009F324F /* SearchableTVC.swift in Sources */,
@@ -701,7 +686,6 @@
 				158B1095251BE29A0003C3A9 /* TextFieldLimit.swift in Sources */,
 				11939EE5262B1CA3008BAAF4 /* ScrollViewHelper.swift in Sources */,
 				15D4EF8E2696511100FF5FBE /* RegistrationViewModel.swift in Sources */,
-				11284237248E83D400A014E9 /* LoginVC.swift in Sources */,
 				15C2D8EA265AB5F2008F24A3 /* Constants.swift in Sources */,
 				11284211248E7C5700A014E9 /* AppDelegate.swift in Sources */,
 				15C2D8EE265AB895008F24A3 /* Answer.swift in Sources */,
@@ -753,14 +737,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		11284216248E7C5700A014E9 /* SignIn.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				11284217248E7C5700A014E9 /* Base */,
-			);
-			name = SignIn.storyboard;
-			sourceTree = "<group>";
-		};
 		1128421B248E7C5800A014E9 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
