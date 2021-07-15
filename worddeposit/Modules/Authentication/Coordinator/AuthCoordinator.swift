@@ -15,11 +15,11 @@ protocol AuthCoordinatorDelegate: AnyObject {
 class AuthCoordinator: Coordinator {
     
     private(set) var childCoordinators = [Coordinator]()
-    private(set) var navigationController: UINavigationController
+    private(set) var navigationController: BaseNavigationController
     weak var parentCoordinator: AppCoordinator?
     weak var delegate: AuthCoordinatorDelegate?
     
-    init(navigationController: UINavigationController) {
+    init(navigationController: BaseNavigationController) {
         self.navigationController = navigationController
     }
     

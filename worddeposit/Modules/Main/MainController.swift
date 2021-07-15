@@ -36,20 +36,20 @@ class MainController: UITabBarController {
         tabBar.unselectedItemTintColor = Colors.dark
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        let tabOne = TabOneViewController()
-        let tabOneBarItem = UITabBarItem(title: "Tab 1", image: UIImage(named: "icon_practice"), tag: 0)
-        tabOne.tabBarItem = tabOneBarItem
-        
-        let tabTwo = TabTwoViewController()
-        let tabTwoBarItem = UITabBarItem(title: "Tab 2", image: UIImage(named: "icon_plus"), tag: 1)
-        tabTwo.tabBarItem = tabTwoBarItem
-        
-        self.viewControllers = [tabOne, tabTwo]
-        
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        
+//        let tabOne = TabOneViewController()
+//        let tabOneBarItem = UITabBarItem(title: "Tab 1", image: UIImage(named: "icon_practice"), tag: 0)
+//        tabOne.tabBarItem = tabOneBarItem
+//        
+//        let tabTwo = TabTwoViewController()
+//        let tabTwoBarItem = UITabBarItem(title: "Tab 2", image: UIImage(named: "icon_plus"), tag: 1)
+//        tabTwo.tabBarItem = tabTwoBarItem
+//        
+//        self.viewControllers = [tabOne, tabTwo]
+//        
+//    }
 }
 
 extension MainController: UITabBarControllerDelegate {

@@ -15,11 +15,11 @@ protocol MainCoordinatorDelegate: AnyObject {
 class MainCoordinator: Coordinator {
     
     private(set) var childCoordinators = [Coordinator]()
-    private(set) var navigationController: UINavigationController
+    private(set) var navigationController: BaseNavigationController
     weak var parentCoordinator: AppCoordinator?
     weak var delegate: MainCoordinatorDelegate?
     
-    init(navigationController: UINavigationController ) {
+    init(navigationController: BaseNavigationController ) {
         self.navigationController = navigationController
     }
 
@@ -31,7 +31,18 @@ class MainCoordinator: Coordinator {
 //        let storyboard = UIStoryboard(name: Storyboards.Home, bundle: nil)
 //        guard let tabBarController = storyboard.instantiateViewController(identifier: Storyboards.Home) as? MainTabBarController else { return }
         let tabBarController = MainController()
-//        tabBarController.coordinator = self
+        
+        let tabOne = TabOneViewController()
+        let tabOneBarItem = UITabBarItem(title: "Tab 1", image: UIImage(named: "icon_practice"), tag: 0)
+        tabOne.tabBarItem = tabOneBarItem
+        
+        let tabTwo = TabTwoViewController()
+        let tabTwoBarItem = UITabBarItem(title: "Tab 2", image: UIImage(named: "icon_plus"), tag: 1)
+        tabTwo.tabBarItem = tabTwoBarItem
+        
+        tabBarController.viewControllers = [tabOne, tabTwo]
+        
+        
         navigationController.navigationBar.isHidden = true
         navigationController.setViewControllers([tabBarController], animated: false)
     }

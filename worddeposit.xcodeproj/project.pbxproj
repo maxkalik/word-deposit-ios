@@ -83,6 +83,7 @@
 		153E5CE4269E392000734BB9 /* PracticesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153E5CE3269E392000734BB9 /* PracticesCoordinator.swift */; };
 		153E5CE6269E3E8200734BB9 /* PracticesMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153E5CE5269E3E8200734BB9 /* PracticesMessageViewModel.swift */; };
 		153E5CE8269F827900734BB9 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153E5CE7269F827900734BB9 /* MainController.swift */; };
+		153E5CEC26A0DA4400734BB9 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153E5CEB26A0DA4400734BB9 /* BaseNavigationController.swift */; };
 		155F39E82523D69400EC63B9 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 155F39E72523D69400EC63B9 /* UINavigationController.swift */; };
 		156C80B724D8D27E0077905D /* VocabularyDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156C80B624D8D27E0077905D /* VocabularyDetailsVC.swift */; };
 		158B1095251BE29A0003C3A9 /* TextFieldLimit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158B1094251BE29A0003C3A9 /* TextFieldLimit.swift */; };
@@ -201,6 +202,7 @@
 		153E5CE3269E392000734BB9 /* PracticesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticesCoordinator.swift; sourceTree = "<group>"; };
 		153E5CE5269E3E8200734BB9 /* PracticesMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticesMessageViewModel.swift; sourceTree = "<group>"; };
 		153E5CE7269F827900734BB9 /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
+		153E5CEB26A0DA4400734BB9 /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
 		155F39E72523D69400EC63B9 /* UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
 		156C80B624D8D27E0077905D /* VocabularyDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyDetailsVC.swift; sourceTree = "<group>"; };
 		158B1094251BE29A0003C3A9 /* TextFieldLimit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldLimit.swift; sourceTree = "<group>"; };
@@ -344,11 +346,11 @@
 		11284225248E7CE400A014E9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				153E5CE926A0DA2300734BB9 /* Base */,
 				15CEBC6024D71A0300D48C0E /* ProgressHUD.swift */,
 				1128423C248E840000A014E9 /* RoundedViews.swift */,
 				1192354F24BFB66C00E76403 /* TextFields.swift */,
 				15D51953251E7F2500590073 /* PrimaryButton.swift */,
-				151F2F28251EB193002D292B /* BaseButton.swift */,
 				15122F5725213FF900DB0E8F /* MainTabBarController.swift */,
 				15E7741E25292F0100EC57D0 /* ShadowView.swift */,
 				15E77425252A2C7C00EC57D0 /* ButtonSelector.swift */,
@@ -359,7 +361,6 @@
 				118E34B925ACEE8400025FFE /* WordTextViews.swift */,
 				1111FDA725B8F67500799B0F /* VocabularyWordBubbleView.swift */,
 				1186959825BA1B22002E5305 /* VocabularyWordBubbleLabel.swift */,
-				158E709F269B7D7C003349FD /* BaseViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -473,6 +474,16 @@
 				153E5CDF269E355B00734BB9 /* Practice.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		153E5CE926A0DA2300734BB9 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				153E5CEB26A0DA4400734BB9 /* BaseNavigationController.swift */,
+				158E709F269B7D7C003349FD /* BaseViewController.swift */,
+				151F2F28251EB193002D292B /* BaseButton.swift */,
+			);
+			path = Base;
 			sourceTree = "<group>";
 		};
 		156C80BA24DDFEB10077905D /* Reusable Components */ = {
@@ -721,6 +732,7 @@
 				153E5CE6269E3E8200734BB9 /* PracticesMessageViewModel.swift in Sources */,
 				159C4FFC269A01D800780321 /* AuthCoordinator.swift in Sources */,
 				1128423D248E840000A014E9 /* RoundedViews.swift in Sources */,
+				153E5CEC26A0DA4400734BB9 /* BaseNavigationController.swift in Sources */,
 				158E70A0269B7D7C003349FD /* BaseViewController.swift in Sources */,
 				11331B82254B8AC500FDB454 /* TopBarItem.swift in Sources */,
 				119D786B2540BBAF009260D4 /* CheckmarkListTVCResults.swift in Sources */,

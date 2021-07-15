@@ -20,8 +20,8 @@ protocol PracticesViewModelDelegate: AnyObject {
 
 class PracticesViewModel {
     
-    private var words: [Word]?
-    private var trainers = [PracticeTrainer]()
+    var words: [Word]?
+    var trainers = [PracticeTrainer]()
     private var isVocabularySwitched = false
     var coordinator: PracticesCoordinator
     weak var delegate: PracticesViewModelDelegate?
@@ -75,6 +75,22 @@ class PracticesViewModel {
     private func showError(_ msg: String) {
         delegate?.finishLoading()
         delegate?.showError(msg)
+    }
+    
+    private func fetchCurrentUser() {
+        UserService.shared.fetchCurrentUser { [weak self] error, user in
+            guard let self = self else { return }
+            if let error = error {
+                self.showError(error.localizedDescription)
+//                self.coordinator.logOut()
+            } else {
+                guard let _ = user else {
+                    self.showError("User not found")
+//                    self.coordinator.logOut()
+                    return
+                }
+            }
+        }
     }
     
     private func getWords() {

@@ -31,7 +31,7 @@ class BaseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupActivityIndicator()
+//        setupActivityIndicator()
         hideKeyboardWhenTappedAround()
     }
     

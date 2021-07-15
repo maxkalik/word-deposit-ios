@@ -15,11 +15,11 @@ protocol PracticesCoordinatorDelegate: AnyObject {
 class PracticesCoordinator: Coordinator {
     
     private(set) var childCoordinators = [Coordinator]()
-    private(set) var navigationController: UINavigationController
+    private(set) var navigationController: BaseNavigationController
     weak var parentCoordinator: AuthCoordinator?
     weak var delegate: PracticesCoordinatorDelegate?
     
-    init(navigationController: UINavigationController) {
+    init(navigationController: BaseNavigationController) {
         self.navigationController = navigationController
     }
     
