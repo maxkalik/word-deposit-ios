@@ -28,9 +28,10 @@ class MainCoordinator: Coordinator {
     }
     
     func start() {
-        let storyboard = UIStoryboard(name: Storyboards.Home, bundle: nil)
-        guard let tabBarController = storyboard.instantiateViewController(identifier: Storyboards.Home) as? BaseTabBarController else { return }
-        tabBarController.coordinator = self
+//        let storyboard = UIStoryboard(name: Storyboards.Home, bundle: nil)
+//        guard let tabBarController = storyboard.instantiateViewController(identifier: Storyboards.Home) as? MainTabBarController else { return }
+        let tabBarController = MainController()
+//        tabBarController.coordinator = self
         navigationController.navigationBar.isHidden = true
         navigationController.setViewControllers([tabBarController], animated: false)
     }

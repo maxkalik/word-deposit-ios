@@ -69,7 +69,7 @@
 		11F32A5324AF46D00097BF39 /* VocabularyResultsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F32A5224AF46D00097BF39 /* VocabularyResultsTVC.swift */; };
 		11F32A5924AF49DB0097BF39 /* VocabularyTVC+Updating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F32A5824AF49DB0097BF39 /* VocabularyTVC+Updating.swift */; };
 		150FA46124D8B6E40083D653 /* Vocabulary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150FA46024D8B6E40083D653 /* Vocabulary.swift */; };
-		15122F5825213FF900DB0E8F /* BaseTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15122F5725213FF900DB0E8F /* BaseTabBarController.swift */; };
+		15122F5825213FF900DB0E8F /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15122F5725213FF900DB0E8F /* MainTabBarController.swift */; };
 		151AC7E2269AE89100E95089 /* AuthCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151AC7E1269AE89100E95089 /* AuthCredentials.swift */; };
 		151AC7E5269B17AD00E95089 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151AC7E4269B17AD00E95089 /* MainCoordinator.swift */; };
 		151AC7E7269B371300E95089 /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151AC7E6269B371300E95089 /* ForgotPasswordViewModel.swift */; };
@@ -79,6 +79,10 @@
 		152DEC6C2688EC65005319D8 /* SuccessMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152DEC6B2688EC65005319D8 /* SuccessMessageViewModel.swift */; };
 		153E5CDC269E2B8C00734BB9 /* PracticesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153E5CDB269E2B8C00734BB9 /* PracticesViewController.swift */; };
 		153E5CDE269E2BB900734BB9 /* PracticesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153E5CDD269E2BB900734BB9 /* PracticesViewModel.swift */; };
+		153E5CE0269E355B00734BB9 /* Practice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153E5CDF269E355B00734BB9 /* Practice.swift */; };
+		153E5CE4269E392000734BB9 /* PracticesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153E5CE3269E392000734BB9 /* PracticesCoordinator.swift */; };
+		153E5CE6269E3E8200734BB9 /* PracticesMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153E5CE5269E3E8200734BB9 /* PracticesMessageViewModel.swift */; };
+		153E5CE8269F827900734BB9 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153E5CE7269F827900734BB9 /* MainController.swift */; };
 		155F39E82523D69400EC63B9 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 155F39E72523D69400EC63B9 /* UINavigationController.swift */; };
 		156C80B724D8D27E0077905D /* VocabularyDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156C80B624D8D27E0077905D /* VocabularyDetailsVC.swift */; };
 		158B1095251BE29A0003C3A9 /* TextFieldLimit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158B1094251BE29A0003C3A9 /* TextFieldLimit.swift */; };
@@ -183,7 +187,7 @@
 		11F32A5224AF46D00097BF39 /* VocabularyResultsTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyResultsTVC.swift; sourceTree = "<group>"; };
 		11F32A5824AF49DB0097BF39 /* VocabularyTVC+Updating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VocabularyTVC+Updating.swift"; sourceTree = "<group>"; };
 		150FA46024D8B6E40083D653 /* Vocabulary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vocabulary.swift; sourceTree = "<group>"; };
-		15122F5725213FF900DB0E8F /* BaseTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTabBarController.swift; sourceTree = "<group>"; };
+		15122F5725213FF900DB0E8F /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		151AC7E1269AE89100E95089 /* AuthCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCredentials.swift; sourceTree = "<group>"; };
 		151AC7E4269B17AD00E95089 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		151AC7E6269B371300E95089 /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModel.swift; sourceTree = "<group>"; };
@@ -193,6 +197,10 @@
 		152DEC6B2688EC65005319D8 /* SuccessMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessMessageViewModel.swift; sourceTree = "<group>"; };
 		153E5CDB269E2B8C00734BB9 /* PracticesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticesViewController.swift; sourceTree = "<group>"; };
 		153E5CDD269E2BB900734BB9 /* PracticesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticesViewModel.swift; sourceTree = "<group>"; };
+		153E5CDF269E355B00734BB9 /* Practice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Practice.swift; sourceTree = "<group>"; };
+		153E5CE3269E392000734BB9 /* PracticesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticesCoordinator.swift; sourceTree = "<group>"; };
+		153E5CE5269E3E8200734BB9 /* PracticesMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticesMessageViewModel.swift; sourceTree = "<group>"; };
+		153E5CE7269F827900734BB9 /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
 		155F39E72523D69400EC63B9 /* UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
 		156C80B624D8D27E0077905D /* VocabularyDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyDetailsVC.swift; sourceTree = "<group>"; };
 		158B1094251BE29A0003C3A9 /* TextFieldLimit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldLimit.swift; sourceTree = "<group>"; };
@@ -293,7 +301,6 @@
 		1128420F248E7C5700A014E9 /* worddeposit */ = {
 			isa = PBXGroup;
 			children = (
-				151AC7E3269B179D00E95089 /* Main */,
 				159C4FF42697804000780321 /* Coordinator */,
 				1111FD9E25B8B1F400799B0F /* Helpers */,
 				11284226248E7CF000A014E9 /* Models */,
@@ -316,6 +323,7 @@
 		11284224248E7CCD00A014E9 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				151AC7E3269B179D00E95089 /* Main */,
 				153E5CD6269E296A00734BB9 /* Practices */,
 				15D4EF8126964B1600FF5FBE /* Authentication */,
 				15E3458B264085A30013879E /* PracticeRead */,
@@ -341,7 +349,7 @@
 				1192354F24BFB66C00E76403 /* TextFields.swift */,
 				15D51953251E7F2500590073 /* PrimaryButton.swift */,
 				151F2F28251EB193002D292B /* BaseButton.swift */,
-				15122F5725213FF900DB0E8F /* BaseTabBarController.swift */,
+				15122F5725213FF900DB0E8F /* MainTabBarController.swift */,
 				15E7741E25292F0100EC57D0 /* ShadowView.swift */,
 				15E77425252A2C7C00EC57D0 /* ButtonSelector.swift */,
 				15E77428252A3BF400EC57D0 /* SecondaryButton.swift */,
@@ -408,7 +416,6 @@
 		11FAD1342497FBB2007EBDDD /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				11284219248E7C5800A014E9 /* Assets.xcassets */,
 				11284210248E7C5700A014E9 /* AppDelegate.swift */,
 				11284212248E7C5700A014E9 /* SceneDelegate.swift */,
 			);
@@ -419,6 +426,7 @@
 			isa = PBXGroup;
 			children = (
 				151AC7E4269B17AD00E95089 /* MainCoordinator.swift */,
+				153E5CE7269F827900734BB9 /* MainController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -439,6 +447,7 @@
 			isa = PBXGroup;
 			children = (
 				153E5CDD269E2BB900734BB9 /* PracticesViewModel.swift */,
+				153E5CE5269E3E8200734BB9 /* PracticesMessageViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -446,6 +455,7 @@
 		153E5CD8269E29B900734BB9 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
+				153E5CE3269E392000734BB9 /* PracticesCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -460,6 +470,7 @@
 		153E5CDA269E29D100734BB9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				153E5CDF269E355B00734BB9 /* Practice.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -576,6 +587,7 @@
 		15D5194B251D5C6500590073 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				11284219248E7C5800A014E9 /* Assets.xcassets */,
 				11108C00252356BC00A44945 /* DMSans-Bold.ttf */,
 				11108BFF252356BC00A44945 /* DMSans-Medium.ttf */,
 				11108C01252356BC00A44945 /* DMSans-Regular.ttf */,
@@ -706,6 +718,7 @@
 				11049CB82541FD3D009F324F /* SearchableTVC.swift in Sources */,
 				153E5CDE269E2BB900734BB9 /* PracticesViewModel.swift in Sources */,
 				15D4EF8726964C6500FF5FBE /* AuthViewController.swift in Sources */,
+				153E5CE6269E3E8200734BB9 /* PracticesMessageViewModel.swift in Sources */,
 				159C4FFC269A01D800780321 /* AuthCoordinator.swift in Sources */,
 				1128423D248E840000A014E9 /* RoundedViews.swift in Sources */,
 				158E70A0269B7D7C003349FD /* BaseViewController.swift in Sources */,
@@ -721,6 +734,7 @@
 				150FA46124D8B6E40083D653 /* Vocabulary.swift in Sources */,
 				118162EF24BFB08E0088C0E1 /* UserInfoTVC.swift in Sources */,
 				152DEC6C2688EC65005319D8 /* SuccessMessageViewModel.swift in Sources */,
+				153E5CE0269E355B00734BB9 /* Practice.swift in Sources */,
 				1128423F248E845900A014E9 /* User.swift in Sources */,
 				151F2F29251EB193002D292B /* BaseButton.swift in Sources */,
 				15D5190E251C076900590073 /* Validator.swift in Sources */,
@@ -757,14 +771,16 @@
 				15BD0C0224DE0631007E8D27 /* MessageView.swift in Sources */,
 				15A7E04924D8B322006804FD /* VocabulariesTVCell.swift in Sources */,
 				1151BBA025462CF300A6A84F /* Checkbox.swift in Sources */,
+				153E5CE8269F827900734BB9 /* MainController.swift in Sources */,
 				15D51954251E7F2500590073 /* PrimaryButton.swift in Sources */,
 				15E3458D264085ED0013879E /* PracticeReadViewModel.swift in Sources */,
+				153E5CE4269E392000734BB9 /* PracticesCoordinator.swift in Sources */,
 				1158D30E24917B9B0087DC96 /* VocabularyTVCell.swift in Sources */,
 				156C80B724D8D27E0077905D /* VocabularyDetailsVC.swift in Sources */,
 				151AC7E5269B17AD00E95089 /* MainCoordinator.swift in Sources */,
 				15E77429252A3BF400EC57D0 /* SecondaryButton.swift in Sources */,
 				151AC7E7269B371300E95089 /* ForgotPasswordViewModel.swift in Sources */,
-				15122F5825213FF900DB0E8F /* BaseTabBarController.swift in Sources */,
+				15122F5825213FF900DB0E8F /* MainTabBarController.swift in Sources */,
 				11284233248E83BB00A014E9 /* VocabularyTVC.swift in Sources */,
 				15D4EF8C2696510400FF5FBE /* LoginViewModel.swift in Sources */,
 				1120047F25B76F870000FCD7 /* WordTextView.swift in Sources */,

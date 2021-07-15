@@ -1,10 +1,10 @@
 import Foundation
 import UIKit
 
-enum PracticeType {
-    case readWordToTranslate
-    case readTranslateToWord
-}
+//enum PracticeType {
+//    case readWordToTranslate
+//    case readTranslateToWord
+//}
 
 struct PracticeTrainer {
     var title: String

@@ -6,4 +6,12 @@
 //  Copyright © 2021 Maksim Kalik. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class PracticesViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIPopoverPresentationControllerDelegate {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+    }
+}

@@ -119,6 +119,7 @@ struct Limits {
     static let wordExample = 60
     static let wordTranslation = 60
     static let wordDescription = 80
+    static let minWordsAmount = 10
 }
 
 struct Radiuses {
