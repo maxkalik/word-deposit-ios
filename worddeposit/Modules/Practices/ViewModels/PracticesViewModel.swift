@@ -21,14 +21,11 @@ protocol PracticesViewModelDelegate: AnyObject {
 class PracticesViewModel {
     
     var words: [Word]?
-    var trainers = [PracticeTrainer]()
     private var isVocabularySwitched = false
-    var coordinator: PracticesCoordinator
+    var coordinator: MainCoordinator
     weak var delegate: PracticesViewModelDelegate?
-    
-    
-    
-    init(coordinator: PracticesCoordinator) {
+
+    init(coordinator: MainCoordinator) {
         self.coordinator = coordinator
     }
     

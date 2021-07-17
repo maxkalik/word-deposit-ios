@@ -15,11 +15,11 @@ protocol MainCoordinatorDelegate: AnyObject {
 class MainCoordinator: Coordinator {
     
     private(set) var childCoordinators = [Coordinator]()
-    private(set) var navigationController: BaseNavigationController
+    private(set) var navigationController: UINavigationController
     weak var parentCoordinator: AppCoordinator?
     weak var delegate: MainCoordinatorDelegate?
     
-    init(navigationController: BaseNavigationController ) {
+    init(navigationController: UINavigationController ) {
         self.navigationController = navigationController
     }
 
@@ -28,23 +28,41 @@ class MainCoordinator: Coordinator {
     }
     
     func start() {
-//        let storyboard = UIStoryboard(name: Storyboards.Home, bundle: nil)
-//        guard let tabBarController = storyboard.instantiateViewController(identifier: Storyboards.Home) as? MainTabBarController else { return }
         let tabBarController = MainController()
         
-        let tabOne = TabOneViewController()
-        let tabOneBarItem = UITabBarItem(title: "Tab 1", image: UIImage(named: "icon_practice"), tag: 0)
-        tabOne.tabBarItem = tabOneBarItem
+        let practicesViewController = PracticesViewController()
+        let practicesViewModel = PracticesViewModel(coordinator: self)
+        practicesViewController.viewModel = practicesViewModel
+        let practicesTabBarItem = UITabBarItem(title: "Practices", image: UIImage(named: "icon_practice"), tag: 0)
+        practicesViewController.tabBarItem = practicesTabBarItem
+
         
         let tabTwo = TabTwoViewController()
         let tabTwoBarItem = UITabBarItem(title: "Tab 2", image: UIImage(named: "icon_plus"), tag: 1)
         tabTwo.tabBarItem = tabTwoBarItem
         
-        tabBarController.viewControllers = [tabOne, tabTwo]
+        tabBarController.viewControllers = [practicesViewController, tabTwo]
         
-        
-        navigationController.navigationBar.isHidden = true
+//        navigationController.navigationBar.isHidden = true
+//        navigationController.title = "Practice"
         navigationController.setViewControllers([tabBarController], animated: false)
+//        navigationController.pushViewController(practicesViewController, animated: true)
+    }
+    
+    func toVocabularies() {
+        
+    }
+    
+    func toAddWords() {
+        
+    }
+    
+    func toVocabulary() {
+        
+    }
+    
+    func toProfile() {
+        
     }
 }
 

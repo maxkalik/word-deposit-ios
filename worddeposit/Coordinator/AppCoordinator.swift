@@ -11,10 +11,10 @@ import Firebase
 
 final class AppCoordinator: NSObject, Coordinator {
     
-    private(set) var navigationController: BaseNavigationController
+    private(set) var navigationController: UINavigationController
     private(set) var childCoordinators: [Coordinator] = []
 
-    init(navigationController: BaseNavigationController) {
+    init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
     
@@ -27,7 +27,6 @@ final class AppCoordinator: NSObject, Coordinator {
             startWithMain()
         } else {
             startWithAuth()
-
         }
     }
     
