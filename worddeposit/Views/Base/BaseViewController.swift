@@ -32,9 +32,7 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupActivityIndicator()
-        hideKeyboardWhenTappedAround()
-        view.backgroundColor = Colors.silver
-        view.clipsToBounds = true
+        view.backgroundColor = .clear
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -69,9 +67,7 @@ class BaseViewController: UIViewController {
     
     private func setupActivityIndicator() {
         view.addSubview(activityIndicator)
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.center = view.center
-        activityIndicator.bringSubviewToFront(self.view)
         activityIndicator.hide()
     }
     

@@ -37,6 +37,7 @@ final class AuthViewController: BaseViewController {
         setupUI()
         
         baseViewControllerDelegate = self
+        print(view.subviews)
     }
     
     deinit {
@@ -67,6 +68,7 @@ final class AuthViewController: BaseViewController {
         setupTextFields()
         setupButtons()
         setupBackground()
+        hideKeyboardWhenTappedAround()
     }
     
     private func setupBackground() {

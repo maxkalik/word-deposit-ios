@@ -84,6 +84,7 @@
 		153E5CE6269E3E8200734BB9 /* PracticesMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153E5CE5269E3E8200734BB9 /* PracticesMessageViewModel.swift */; };
 		153E5CE8269F827900734BB9 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153E5CE7269F827900734BB9 /* MainController.swift */; };
 		153E5CEC26A0DA4400734BB9 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153E5CEB26A0DA4400734BB9 /* BaseNavigationController.swift */; };
+		153E5CEF26A381E800734BB9 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153E5CEE26A381E800734BB9 /* MainViewModel.swift */; };
 		155F39E82523D69400EC63B9 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 155F39E72523D69400EC63B9 /* UINavigationController.swift */; };
 		156C80B724D8D27E0077905D /* VocabularyDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156C80B624D8D27E0077905D /* VocabularyDetailsVC.swift */; };
 		158B1095251BE29A0003C3A9 /* TextFieldLimit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158B1094251BE29A0003C3A9 /* TextFieldLimit.swift */; };
@@ -203,6 +204,7 @@
 		153E5CE5269E3E8200734BB9 /* PracticesMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticesMessageViewModel.swift; sourceTree = "<group>"; };
 		153E5CE7269F827900734BB9 /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
 		153E5CEB26A0DA4400734BB9 /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
+		153E5CEE26A381E800734BB9 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		155F39E72523D69400EC63B9 /* UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
 		156C80B624D8D27E0077905D /* VocabularyDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyDetailsVC.swift; sourceTree = "<group>"; };
 		158B1094251BE29A0003C3A9 /* TextFieldLimit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldLimit.swift; sourceTree = "<group>"; };
@@ -426,6 +428,7 @@
 		151AC7E3269B179D00E95089 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				153E5CED26A381C400734BB9 /* ViewModels */,
 				151AC7E4269B17AD00E95089 /* MainCoordinator.swift */,
 				153E5CE7269F827900734BB9 /* MainController.swift */,
 			);
@@ -484,6 +487,14 @@
 				151F2F28251EB193002D292B /* BaseButton.swift */,
 			);
 			path = Base;
+			sourceTree = "<group>";
+		};
+		153E5CED26A381C400734BB9 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				153E5CEE26A381E800734BB9 /* MainViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		156C80BA24DDFEB10077905D /* Reusable Components */ = {
@@ -761,6 +772,7 @@
 				15D4EF8E2696511100FF5FBE /* RegistrationViewModel.swift in Sources */,
 				15C2D8EA265AB5F2008F24A3 /* Constants.swift in Sources */,
 				11284211248E7C5700A014E9 /* AppDelegate.swift in Sources */,
+				153E5CEF26A381E800734BB9 /* MainViewModel.swift in Sources */,
 				15C2D8EE265AB895008F24A3 /* Answer.swift in Sources */,
 				112EA43324C83B7200FA55E3 /* PracticeTrainer.swift in Sources */,
 				153E5CDC269E2B8C00734BB9 /* PracticesViewController.swift in Sources */,

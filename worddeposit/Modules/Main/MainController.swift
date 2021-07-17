@@ -17,15 +17,33 @@ class TabTwoViewController: UIViewController {
 }
 
 class MainController: UITabBarController {
+    
+    var viewModel: MainViewModel?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.delegate = self
         
-        tabBar.backgroundColor = UIColor.clear
         tabBar.layer.borderWidth = 0
         tabBar.clipsToBounds = true
         tabBar.tintColor = Colors.orange
         tabBar.unselectedItemTintColor = Colors.dark
+
+        view.backgroundColor = Colors.silver
+        
+        setupBarItem()
+    }
+    
+    
+    func setupBarItem() {
+        let rightBarItem = TopBarItem()
+        
+        rightBarItem.setIcon(name: Icons.Profile)
+        rightBarItem.circled()
+        rightBarItem.onPress {
+            self.viewModel?.logout()
+        }
+        let rightBarButtonItem = UIBarButtonItem(customView: rightBarItem)
+        navigationItem.rightBarButtonItem = rightBarButtonItem
     }
 }
 

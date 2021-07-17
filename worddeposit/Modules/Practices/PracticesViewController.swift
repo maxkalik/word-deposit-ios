@@ -8,24 +8,27 @@
 
 import UIKit
 
-class PracticesViewController: UIViewController {
+class PracticesViewController: BaseViewController {
     
     var viewModel: PracticesViewModel?
     private var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
-    private var rightBarItem = TopBarItem()
+//    private var rightBarItem = TopBarItem()
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-
+        
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        
 //        setupNavigationBar()
         viewModel?.viewDidLoad()
 //        self.title = "Practices"
         registerCell()
         setupCollectionView()
         setupCollectionViewFlowLayout()
-        
-//        activityIndicator.hide()
+
+        super.viewDidLoad()
+//        activityIndicator.show()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,22 +41,6 @@ class PracticesViewController: UIViewController {
         viewModel?.viewDidAppear()
 
     }
-    
-//    private func showTabBar() {
-//        guard let tabBarController = tabBarController else { return }
-//        if tabBarController.tabBar.isHidden {
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
-//                guard let self = self else { return }
-//                tabBarController.tabBar.alpha = 0
-//                tabBarController.tabBar.isHidden = false
-//                self.navigationController?.setup(isClear: true)
-//                UIView.animate(withDuration: 0.3) {
-//                    tabBarController.tabBar.alpha = 1
-//                    self.view.layoutIfNeeded()
-//                }
-//            }
-//        }
-//    }
     
 //    private func setupNavigationBar() {
 //        rightBarItem.setIcon(name: Icons.Profile)
@@ -73,8 +60,7 @@ class PracticesViewController: UIViewController {
 
 extension PracticesViewController {
     private func setupCollectionView() {
-        collectionView.delegate = self
-        collectionView.dataSource = self
+        
         collectionView.frame = view.frame
         collectionView.backgroundColor = .clear
         collectionView.isPrefetchingEnabled = false
@@ -86,7 +72,6 @@ extension PracticesViewController {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 20
         layout.scrollDirection = .vertical
-        
         layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 40, height: 200)
         collectionView.setCollectionViewLayout(layout, animated: true)
@@ -96,6 +81,11 @@ extension PracticesViewController {
 extension PracticesViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel?.practices.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath.row)
+//        print(viewModel?.practices[indexPath.row])
     }
 }
 
@@ -114,16 +104,4 @@ extension PracticesViewController: UICollectionViewDataSource {
 
         return PracticeCVCell()
     }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.row)
-//        print(viewModel?.practices[indexPath.row])
-    }
-}
-
-extension PracticesViewController: UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let screenSize = UIScreen.main.bounds
-//        return CGSize(width: screenSize.width - 40, height: 170)
-//    }
 }

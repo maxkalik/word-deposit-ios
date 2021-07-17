@@ -28,7 +28,8 @@ class MainCoordinator: Coordinator {
     }
     
     func start() {
-        let tabBarController = MainController()
+        let mainController = MainController()
+        mainController.viewModel = MainViewModel(coordinator: self)
         
         let practicesViewController = PracticesViewController()
         let practicesViewModel = PracticesViewModel(coordinator: self)
@@ -41,12 +42,16 @@ class MainCoordinator: Coordinator {
         let tabTwoBarItem = UITabBarItem(title: "Tab 2", image: UIImage(named: "icon_plus"), tag: 1)
         tabTwo.tabBarItem = tabTwoBarItem
         
-        tabBarController.viewControllers = [practicesViewController, tabTwo]
+        mainController.viewControllers = [practicesViewController, tabTwo]
         
 //        navigationController.navigationBar.isHidden = true
 //        navigationController.title = "Practice"
-        navigationController.setViewControllers([tabBarController], animated: false)
-//        navigationController.pushViewController(practicesViewController, animated: true)
+        
+        
+        
+        
+        
+        navigationController.setViewControllers([mainController], animated: false)
     }
     
     func toVocabularies() {
