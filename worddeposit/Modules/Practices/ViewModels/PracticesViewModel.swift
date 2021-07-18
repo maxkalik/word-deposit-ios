@@ -22,10 +22,10 @@ class PracticesViewModel {
     
     var words: [Word]?
     private var isVocabularySwitched = false
-    var coordinator: MainCoordinator
+    private var coordinator: PracticesCoordinator
     weak var delegate: PracticesViewModelDelegate?
 
-    init(coordinator: MainCoordinator) {
+    init(coordinator: PracticesCoordinator) {
         self.coordinator = coordinator
     }
     
@@ -134,6 +134,10 @@ class PracticesViewModel {
         }
         self.delegate?.finishSetupWords()
         self.delegate?.finishLoading()
+    }
+    
+    func toVocabularies() {
+        coordinator.toVocabularies()
     }
 }
 

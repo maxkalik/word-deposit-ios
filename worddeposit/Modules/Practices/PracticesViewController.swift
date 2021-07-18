@@ -84,8 +84,9 @@ extension PracticesViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.row)
+//        print(indexPath.row)
 //        print(viewModel?.practices[indexPath.row])
+        viewModel?.toVocabularies()
     }
 }
 

@@ -9,14 +9,14 @@
 import UIKit
 
 protocol PracticesCoordinatorDelegate: AnyObject {
-    func didLogout(coordinator: PracticesCoordinator)
+    func coordinatorDidSegueToVocabularies(coordinator: PracticesCoordinator)
 }
 
 class PracticesCoordinator: Coordinator {
     
     private(set) var childCoordinators = [Coordinator]()
     private(set) var navigationController: UINavigationController
-    weak var parentCoordinator: AuthCoordinator?
+    weak var parentCoordinator: MainCoordinator?
     weak var delegate: PracticesCoordinatorDelegate?
     
     init(navigationController: UINavigationController) {
@@ -32,14 +32,6 @@ class PracticesCoordinator: Coordinator {
     }
     
     func toVocabularies() {
-        
-    }
-    
-    func toAddWord() {
-        
-    }
-    
-    func logOut() {
-        
+        delegate?.coordinatorDidSegueToVocabularies(coordinator: self)
     }
 }

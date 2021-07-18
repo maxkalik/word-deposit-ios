@@ -1,10 +1,5 @@
-//
-//  MainCoordinator.swift
-//  worddeposit
-//
 //  Created by Maksim Kalik on 7/11/21.
 //  Copyright © 2021 Maksim Kalik. All rights reserved.
-//
 
 import UIKit
 
@@ -32,7 +27,9 @@ class MainCoordinator: Coordinator {
         mainController.viewModel = MainViewModel(coordinator: self)
         
         let practicesViewController = PracticesViewController()
-        let practicesViewModel = PracticesViewModel(coordinator: self)
+        let practicesCoordinator = PracticesCoordinator(navigationController: navigationController)
+        practicesCoordinator.delegate = self
+        let practicesViewModel = PracticesViewModel(coordinator: practicesCoordinator)
         practicesViewController.viewModel = practicesViewModel
         let practicesTabBarItem = UITabBarItem(title: "Practices", image: UIImage(named: "icon_practice"), tag: 0)
         practicesViewController.tabBarItem = practicesTabBarItem
@@ -47,15 +44,11 @@ class MainCoordinator: Coordinator {
 //        navigationController.navigationBar.isHidden = true
 //        navigationController.title = "Practice"
         
-        
-        
-        
-        
         navigationController.setViewControllers([mainController], animated: false)
     }
     
     func toVocabularies() {
-        
+        print("to vocabularies from main coordinator")
     }
     
     func toAddWords() {
@@ -69,10 +62,8 @@ class MainCoordinator: Coordinator {
     func toProfile() {
         
     }
-}
-
-// MARK: - didLogout called by MainViewModel
-extension MainCoordinator {
+    
+    // TODO: - take a look at this method
     func didLogout() {
         parentCoordinator?.childDidFinish(self)
         delegate?.coordinatorDidLogout(coordinator: self)
@@ -81,3 +72,11 @@ extension MainCoordinator {
         navigationController.dismiss(animated: true, completion: nil)
     }
 }
+
+// MARK: - didLogout called by MainViewModel
+extension MainCoordinator: PracticesCoordinatorDelegate {
+    func coordinatorDidSegueToVocabularies(coordinator: PracticesCoordinator) {
+        toVocabularies()
+    }
+}
+
