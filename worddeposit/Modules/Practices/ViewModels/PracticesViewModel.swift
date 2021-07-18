@@ -47,7 +47,12 @@ class PracticesViewModel {
     }
     
     func viewDidLoad() {
+        getCurrentUser()
         NotificationCenter.default.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(rawValue: Keys.vocabulariesSwitchNotificationKey), object: nil)
+    }
+    
+    func viewWillAppear() {
+        delegate?.startLoading()
     }
     
     func viewDidAppear() {
@@ -65,7 +70,7 @@ class PracticesViewModel {
         if UserService.shared.user != nil {
             getWords()
         } else {
-            // do something
+            fetchCurrentUser()
         }
     }
     
@@ -77,6 +82,7 @@ class PracticesViewModel {
     private func fetchCurrentUser() {
         UserService.shared.fetchCurrentUser { [weak self] error, user in
             guard let self = self else { return }
+
             if let error = error {
                 self.showError(error.localizedDescription)
 //                self.coordinator.logOut()
@@ -86,11 +92,13 @@ class PracticesViewModel {
 //                    self.coordinator.logOut()
                     return
                 }
+                self.getWords()
             }
         }
     }
     
     private func getWords() {
+        print("get words")
         UserService.shared.fetchVocabularies { [weak self] error, vocabularies in
             guard let self = self else { return }
             if let error = error {
@@ -101,6 +109,7 @@ class PracticesViewModel {
                 self.showError("Unable to get info about vocabularies")
                 return
             }
+            
             if vocabularies.isEmpty {
                 self.delegate?.finishLoading()
                 self.coordinator.toVocabularies()
@@ -123,6 +132,7 @@ class PracticesViewModel {
     
     // TODO: - refactor this shit
     private func setupWordsCollection(_ words: [Word]) {
+        print("setup words collection")
         self.words?.removeAll()
         self.words = words
         
@@ -138,6 +148,10 @@ class PracticesViewModel {
     
     func toVocabularies() {
         coordinator.toVocabularies()
+    }
+    
+    func toAddWord() {
+        coordinator.toAddWord()
     }
 }
 

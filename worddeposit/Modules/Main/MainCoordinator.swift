@@ -60,8 +60,8 @@ class MainCoordinator: Coordinator {
         print("to vocabularies from main coordinator")
     }
     
-    func toAddWords() {
-        
+    func toAddWord() {
+        mainController.selectedIndex = 1
     }
     
     func toVocabulary() {
@@ -85,7 +85,7 @@ class MainCoordinator: Coordinator {
 // MARK: - didLogout called by MainViewModel
 extension MainCoordinator: PracticesCoordinatorDelegate {
     func coordinatorDidTapToAddWord(coordinator: PracticesCoordinator) {
-        print("did tap to add word from main")
+        toAddWord()
     }
     
     func coordinatorDidTapToVocabularies(coordinator: PracticesCoordinator) {

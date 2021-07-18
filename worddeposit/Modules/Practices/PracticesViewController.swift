@@ -13,11 +13,10 @@ class PracticesViewController: BaseViewController {
     var viewModel: PracticesViewModel?
     private var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
-//    private var rightBarItem = TopBarItem()
-    
     override init() {
         super.init()
         tabBarItem = UITabBarItem(title: "Practices", image: UIImage(named: "icon_practice"), tag: 0)
+        title = "Practices"
     }
     
     required init?(coder: NSCoder) {
@@ -28,42 +27,28 @@ class PracticesViewController: BaseViewController {
         
         collectionView.delegate = self
         collectionView.dataSource = self
+        viewModel?.delegate = self
         
 //        setupNavigationBar()
-        viewModel?.viewDidLoad()
 //        self.title = "Practices"
         registerCell()
         setupCollectionView()
         setupCollectionViewFlowLayout()
 
         super.viewDidLoad()
-//        activityIndicator.show()
-        
-
-        
+        viewModel?.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        viewModel?.viewWillAppear()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         viewModel?.viewDidAppear()
-
     }
-    
-//    private func setupNavigationBar() {
-//        rightBarItem.setIcon(name: Icons.Profile)
-//        rightBarItem.circled()
-//        rightBarItem.onPress {
-//            self.performSegue(withIdentifier: Segues.Profile, sender: self)
-//        }
-//        let rightBarButtonItem = UIBarButtonItem(customView: rightBarItem)
-//        self.navigationItem.rightBarButtonItem = rightBarButtonItem
-//    }
-    
+ 
     private func registerCell() {
         let nib = UINib(nibName: XIBs.PracticeCVCell, bundle: nil)
         collectionView.register(nib, forCellWithReuseIdentifier: XIBs.PracticeCVCell)
@@ -72,7 +57,6 @@ class PracticesViewController: BaseViewController {
 
 extension PracticesViewController {
     private func setupCollectionView() {
-        
         collectionView.frame = view.frame
         collectionView.backgroundColor = .clear
         collectionView.isPrefetchingEnabled = false
@@ -90,6 +74,8 @@ extension PracticesViewController {
     }
 }
 
+// MARK: - UICollectionViewDelegate
+
 extension PracticesViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel?.practices.count ?? 0
@@ -98,9 +84,12 @@ extension PracticesViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 //        print(indexPath.row)
 //        print(viewModel?.practices[indexPath.row])
-        viewModel?.toVocabularies()
+//        viewModel?.toVocabularies()
+        viewModel?.toAddWord()
     }
 }
+
+// MARK: - UICollectionViewDataSource
 
 extension PracticesViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -116,5 +105,39 @@ extension PracticesViewController: UICollectionViewDataSource {
         }
 
         return PracticeCVCell()
+    }
+}
+
+// MARK: - PracticesViewModelDelegate
+
+extension PracticesViewController: PracticesViewModelDelegate {
+    func allowInteractingWithUI(isInteract: Bool) {
+        
+    }
+    
+    func showError(_ msg: String) {
+        showAlert(title: "Error", msg: msg)
+    }
+    
+    func startLoading() {
+        print("start loading")
+        activityIndicator.show()
+    }
+    
+    func finishLoading() {
+        print("stop loading")
+        activityIndicator.hide()
+    }
+    
+    func showDialogMessage() {
+        
+    }
+    
+    func hideDialogMessage() {
+        
+    }
+    
+    func finishSetupWords() {
+        
     }
 }

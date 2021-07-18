@@ -22,7 +22,7 @@ class MainController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.delegate = self
         tabBar.layer.borderWidth = 0
         tabBar.clipsToBounds = true
         tabBar.tintColor = Colors.orange
@@ -33,22 +33,22 @@ class MainController: UITabBarController {
         setupBarItem()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        title = selectedViewController?.title
+    }
     
     func setupBarItem() {
         let rightBarItem = TopBarItem()
         
         rightBarItem.setIcon(name: Icons.Profile)
         rightBarItem.circled()
-        rightBarItem.onPress {
-            self.viewModel?.logout()
+        rightBarItem.onPress { [weak self] in
+            guard let self = self else { return }
+            self.viewModel?.toProfile()
+            // self.viewModel?.logout()
         }
         let rightBarButtonItem = UIBarButtonItem(customView: rightBarItem)
         navigationItem.rightBarButtonItem = rightBarButtonItem
-    }
-}
-
-extension MainController: UITabBarControllerDelegate {
-    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-//        print("Selected \(viewController.title!)")
     }
 }

@@ -19,4 +19,8 @@ class MainViewModel {
     func logout() {
         coordinator.didLogout()
     }
+    
+    func toProfile() {
+        coordinator.toProfile()
+    }
 }
