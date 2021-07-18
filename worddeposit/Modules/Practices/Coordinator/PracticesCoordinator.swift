@@ -9,7 +9,9 @@
 import UIKit
 
 protocol PracticesCoordinatorDelegate: AnyObject {
-    func coordinatorDidSegueToVocabularies(coordinator: PracticesCoordinator)
+    func coordinatorDidTapToVocabularies(coordinator: PracticesCoordinator)
+    func coordinatorDidTapToAddWord(coordinator: PracticesCoordinator)
+    
 }
 
 class PracticesCoordinator: Coordinator {
@@ -32,6 +34,10 @@ class PracticesCoordinator: Coordinator {
     }
     
     func toVocabularies() {
-        delegate?.coordinatorDidSegueToVocabularies(coordinator: self)
+        delegate?.coordinatorDidTapToVocabularies(coordinator: self)
+    }
+    
+    func toAddWord() {
+        delegate?.coordinatorDidTapToAddWord(coordinator: self)
     }
 }

@@ -12,7 +12,7 @@ class TabTwoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .red
-        self.title = "Tab 2"
+        self.title = "Add Word"
     }
 }
 

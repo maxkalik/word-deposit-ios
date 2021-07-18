@@ -14,8 +14,16 @@ class MainCoordinator: Coordinator {
     weak var parentCoordinator: AppCoordinator?
     weak var delegate: MainCoordinatorDelegate?
     
+    private var mainController: MainController
+    private var tabs: [UIViewController]? = [] {
+        didSet {
+            self.mainController.setViewControllers(tabs, animated: true)
+        }
+    }
+    
     init(navigationController: UINavigationController ) {
         self.navigationController = navigationController
+        self.mainController = MainController()
     }
 
     deinit {
@@ -23,30 +31,31 @@ class MainCoordinator: Coordinator {
     }
     
     func start() {
-        let mainController = MainController()
+        practices()
+        addWord()
         mainController.viewModel = MainViewModel(coordinator: self)
-        
+        navigationController.setViewControllers([mainController], animated: false)
+    }
+    
+    private func practices() {
         let practicesViewController = PracticesViewController()
         let practicesCoordinator = PracticesCoordinator(navigationController: navigationController)
         practicesCoordinator.delegate = self
         let practicesViewModel = PracticesViewModel(coordinator: practicesCoordinator)
         practicesViewController.viewModel = practicesViewModel
-        let practicesTabBarItem = UITabBarItem(title: "Practices", image: UIImage(named: "icon_practice"), tag: 0)
-        practicesViewController.tabBarItem = practicesTabBarItem
-
-        
-        let tabTwo = TabTwoViewController()
-        let tabTwoBarItem = UITabBarItem(title: "Tab 2", image: UIImage(named: "icon_plus"), tag: 1)
-        tabTwo.tabBarItem = tabTwoBarItem
-        
-        mainController.viewControllers = [practicesViewController, tabTwo]
-        
-//        navigationController.navigationBar.isHidden = true
-//        navigationController.title = "Practice"
-        
-        navigationController.setViewControllers([mainController], animated: false)
+        tabs?.append(practicesViewController)
     }
     
+    private func addWord() {
+        let addWord = TabTwoViewController()
+        addWord.tabBarItem = UITabBarItem(title: "Add Word", image: UIImage(named: "icon_plus"), selectedImage: UIImage(named: "icon_plus"))
+        tabs?.append(addWord)
+    }
+    
+    private func vocabulary() {
+        
+    }
+
     func toVocabularies() {
         print("to vocabularies from main coordinator")
     }
@@ -75,7 +84,11 @@ class MainCoordinator: Coordinator {
 
 // MARK: - didLogout called by MainViewModel
 extension MainCoordinator: PracticesCoordinatorDelegate {
-    func coordinatorDidSegueToVocabularies(coordinator: PracticesCoordinator) {
+    func coordinatorDidTapToAddWord(coordinator: PracticesCoordinator) {
+        print("did tap to add word from main")
+    }
+    
+    func coordinatorDidTapToVocabularies(coordinator: PracticesCoordinator) {
         toVocabularies()
     }
 }

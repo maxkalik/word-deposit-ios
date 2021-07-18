@@ -15,6 +15,15 @@ class PracticesViewController: BaseViewController {
     
 //    private var rightBarItem = TopBarItem()
     
+    override init() {
+        super.init()
+        tabBarItem = UITabBarItem(title: "Practices", image: UIImage(named: "icon_practice"), tag: 0)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         
         collectionView.delegate = self
@@ -29,6 +38,9 @@ class PracticesViewController: BaseViewController {
 
         super.viewDidLoad()
 //        activityIndicator.show()
+        
+
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
