@@ -62,3 +62,17 @@ class MainController: UITabBarController {
         navigationItem.rightBarButtonItem = rightBarButtonItem
     }
 }
+
+extension MainController: MainViewModelDelegate {
+    func startLoading() {
+        print("==== start loading MainViewModelDelegate")
+    }
+    
+    func finishLoading() {
+        print("==== finish loading MainViewModelDelegate")
+    }
+    
+    func showError(_ msg: String) {
+        print("==== ERROR: \(msg)")
+    }
+}
