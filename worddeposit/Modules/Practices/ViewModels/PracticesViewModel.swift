@@ -13,7 +13,7 @@ protocol PracticesViewModelDelegate: AnyObject {
     func showError(_ msg: String)
     func startLoading()
     func finishLoading()
-    func showDialogMessage()
+    func showDialogMessage(with title: String, buttonTitle: String)
     func hideDialogMessage()
     func finishSetupWords()
 }
@@ -27,6 +27,10 @@ class PracticesViewModel {
 
     init(coordinator: PracticesCoordinator) {
         self.coordinator = coordinator
+    }
+    
+    deinit {
+        print("deinit \(self)")
     }
     
     var practices: [Practice] {
@@ -44,6 +48,14 @@ class PracticesViewModel {
                 type: .readTranslateToWord
             )
         ]
+    }
+    
+    var title: String {
+        return "Practices"
+    }
+    
+    var tabBarIcon: TabBarIcon {
+        return .practices
     }
     
     func viewDidLoad() {
@@ -67,6 +79,7 @@ class PracticesViewModel {
     }
 
     private func getCurrentUser() {
+        print("==== get current user: \(UserService.shared.user?.id ?? "undefined")")
         if UserService.shared.user != nil {
             getWords()
         } else {
@@ -80,6 +93,7 @@ class PracticesViewModel {
     }
     
     private func fetchCurrentUser() {
+        print("==== fetch current user")
         UserService.shared.fetchCurrentUser { [weak self] error, user in
             guard let self = self else { return }
 
@@ -98,7 +112,7 @@ class PracticesViewModel {
     }
     
     private func getWords() {
-        print("get words")
+        print("==== get words")
         UserService.shared.fetchVocabularies { [weak self] error, vocabularies in
             guard let self = self else { return }
             if let error = error {
@@ -125,6 +139,7 @@ class PracticesViewModel {
                         return
                     }
                     self.setupWordsCollection(words)
+                    self.delegate?.finishLoading()
                 }
             }
         }
@@ -132,18 +147,23 @@ class PracticesViewModel {
     
     // TODO: - refactor this shit
     private func setupWordsCollection(_ words: [Word]) {
-        print("setup words collection")
+        print("==== setup words collection")
         self.words?.removeAll()
         self.words = words
         
         if words.count < Limits.minWordsAmount {
             // coordinator + assignV view model there with words count
-            delegate?.showDialogMessage()
+            
+            // TODO: MassageView viewModel
+            let messageTitleTxt = "You have insufficient words amount for practice."
+            let messageBtnTitle = "Add at least \(Limits.minWordsAmount - words.count) words"
+            
+            delegate?.showDialogMessage(with: messageTitleTxt, buttonTitle: messageBtnTitle)
         } else {
             delegate?.hideDialogMessage()
         }
+        isVocabularySwitched = false
         self.delegate?.finishSetupWords()
-        self.delegate?.finishLoading()
     }
     
     func toVocabularies() {

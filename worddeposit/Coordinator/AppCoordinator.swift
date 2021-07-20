@@ -47,6 +47,7 @@ final class AppCoordinator: NSObject, Coordinator {
     }
     
     func childDidFinish(_ child: Coordinator?) {
+        print("==== App Coordinator - child did finish")
         for (index, coordinator) in childCoordinators.enumerated() {
             if coordinator === child {
                 childCoordinators.remove(at: index)
@@ -88,6 +89,7 @@ extension AppCoordinator: AuthCoordinatorDelegate {
 
 extension AppCoordinator: MainCoordinatorDelegate {
     func coordinatorDidLogout(coordinator: MainCoordinator) {
+        print("==== App Coordinator : Main Coordinator Delegate - coordinator did logout")
         startWithAuth()
     }
 }

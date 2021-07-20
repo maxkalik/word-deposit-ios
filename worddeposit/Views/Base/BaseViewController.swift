@@ -6,10 +6,18 @@ import UIKit
 protocol BaseViewControllerDelegate: AnyObject {
     func keyboardDidShow()
     func keyboardDidHide()
+    func messageViewButtonPressed()
+}
+
+extension BaseViewControllerDelegate {
+    func keyboardDidShow() {}
+    func keyboardDidHide() {}
+    func messageViewButtonPressed() {}
 }
 
 class BaseViewController: UIViewController {
 
+    private var messageView = MessageView()
     var activityIndicator = ProgressHUD()
     private(set) var keyboardHeight: CGFloat = 0
     private(set) var isKeyboardShowing = false
@@ -27,6 +35,7 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupActivityIndicator()
+        setupMessageView()
         view.backgroundColor = .clear
     }
     
@@ -63,6 +72,25 @@ class BaseViewController: UIViewController {
         view.addSubview(activityIndicator)
         activityIndicator.center = view.center
         activityIndicator.hide()
+    }
+    
+    private func setupMessageView() {
+        view.addSubview(messageView)
+        messageView.center = view.center
+        messageView.hide()
+    }
+    
+    func showMessageView(title text: String, buttonTitle: String) {
+        messageView.setTitles(messageTxt: text, buttonTitle: buttonTitle)
+        messageView.onPrimaryButtonTap { [weak self] in
+            guard let self = self else { return }
+            self.baseViewControllerDelegate?.messageViewButtonPressed()
+        }
+        messageView.show()
+    }
+    
+    func hideMessage() {
+        messageView.hide()
     }
     
     func showAlert(title: String, msg: String, handler: ((UIAlertAction) -> Void)? = nil) {

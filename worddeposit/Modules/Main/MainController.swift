@@ -22,15 +22,14 @@ class MainController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.delegate = self
-        tabBar.layer.borderWidth = 0
-        tabBar.clipsToBounds = true
-        tabBar.tintColor = Colors.orange
-        tabBar.unselectedItemTintColor = Colors.dark
-
-        view.backgroundColor = Colors.silver
         
-        setupBarItem()
+        setupCommon()
+        setupTabBar()
+        setupTopBarItem()
+    }
+    
+    deinit {
+        print("deinit \(self)")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,15 +37,26 @@ class MainController: UITabBarController {
         title = selectedViewController?.title
     }
     
-    func setupBarItem() {
+    private func setupCommon() {
+        view.backgroundColor = Colors.silver
+    }
+    
+    private func setupTabBar() {
+        tabBar.layer.borderWidth = 0
+        tabBar.clipsToBounds = true
+        tabBar.tintColor = Colors.orange
+        tabBar.unselectedItemTintColor = Colors.dark
+    }
+    
+    private func setupTopBarItem() {
         let rightBarItem = TopBarItem()
         
         rightBarItem.setIcon(name: Icons.Profile)
         rightBarItem.circled()
         rightBarItem.onPress { [weak self] in
             guard let self = self else { return }
-            self.viewModel?.toProfile()
-            // self.viewModel?.logout()
+//            self.viewModel?.toProfile()
+             self.viewModel?.logout()
         }
         let rightBarButtonItem = UIBarButtonItem(customView: rightBarItem)
         navigationItem.rightBarButtonItem = rightBarButtonItem

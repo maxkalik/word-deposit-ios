@@ -37,7 +37,6 @@ final class AuthViewController: BaseViewController {
         setupUI()
         
         baseViewControllerDelegate = self
-        print(view.subviews)
     }
     
     deinit {

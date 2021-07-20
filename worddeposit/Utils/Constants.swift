@@ -104,6 +104,12 @@ enum SuccessMessageImage: String {
     case standing = "standing"
 }
 
+enum TabBarIcon: String {
+    case practices = "icon_practice"
+    case addWord = "icon_plus"
+    case vocabulary = "icon_vocabulary"
+}
+
 struct Keys {
     static let vocabulariesSwitchNotificationKey = "com.maxkalik.worddeposit.vocabulariesSwitchNotificationKey"
     static let vocabulariesSwitchBeganNotificationKey = "com.maxkalik.worddeposit.vocabulariesSwitchBeganNotificationKey"

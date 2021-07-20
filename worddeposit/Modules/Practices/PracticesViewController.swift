@@ -8,35 +8,29 @@
 
 import UIKit
 
-class PracticesViewController: BaseViewController {
+final class PracticesViewController: BaseViewController {
     
     var viewModel: PracticesViewModel?
     private var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-    
-    override init() {
-        super.init()
-        tabBarItem = UITabBarItem(title: "Practices", image: UIImage(named: "icon_practice"), tag: 0)
-        title = "Practices"
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func viewDidLoad() {
         
         collectionView.delegate = self
         collectionView.dataSource = self
         viewModel?.delegate = self
+        viewModel?.viewDidLoad()
         
-//        setupNavigationBar()
-//        self.title = "Practices"
         registerCell()
         setupCollectionView()
         setupCollectionViewFlowLayout()
+        setupTabBarItem()
+        title = viewModel?.title
 
         super.viewDidLoad()
-        viewModel?.viewDidLoad()
+    }
+    
+    deinit {
+        print("deinit \(self)")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,6 +50,18 @@ class PracticesViewController: BaseViewController {
 }
 
 extension PracticesViewController {
+    private func setupTabBarItem() {
+        guard let viewModel = self.viewModel else { return }
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.tabBarItem = UITabBarItem(
+                title: viewModel.title,
+                image: UIImage(named: viewModel.tabBarIcon.rawValue),
+                tag: 0
+            )
+        }
+    }
+    
     private func setupCollectionView() {
         collectionView.frame = view.frame
         collectionView.backgroundColor = .clear
@@ -111,30 +117,29 @@ extension PracticesViewController: UICollectionViewDataSource {
 // MARK: - PracticesViewModelDelegate
 
 extension PracticesViewController: PracticesViewModelDelegate {
+
     func allowInteractingWithUI(isInteract: Bool) {
         
     }
     
     func showError(_ msg: String) {
-        showAlert(title: "Error", msg: msg)
+        showAlert(title: "==== ERROR", msg: msg)
     }
     
     func startLoading() {
-        print("start loading")
         activityIndicator.show()
     }
     
     func finishLoading() {
-        print("stop loading")
         activityIndicator.hide()
     }
     
-    func showDialogMessage() {
-        
+    func showDialogMessage(with title: String, buttonTitle: String) {
+        showMessageView(title: title, buttonTitle: buttonTitle)
     }
     
     func hideDialogMessage() {
-        
+        hideMessage()
     }
     
     func finishSetupWords() {
