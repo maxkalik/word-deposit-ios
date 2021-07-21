@@ -28,7 +28,7 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
         }
     }
     
-
+    weak var coordinator: MainCoordinator?
     weak var delegate: VocabulariesTVCDelegate?
     
     private var messageView = MessageView()
@@ -138,7 +138,8 @@ class VocabulariesTVC: UITableViewController, VocabularyDetailsVCDelegate {
                     return
                 }
                 self.progressHUD.hide()
-                PresentVC.loginVC(from: self.view)
+                self.coordinator?.didLogout()
+                self.dismiss(animated: true, completion: nil)
             }
         }
     }

@@ -60,7 +60,14 @@ class MainCoordinator: Coordinator {
     }
 
     func toVocabularies() {
+        // TODO: Refactor it
         print("++++ MAIN / to vocabularies")
+        let storyboard = UIStoryboard(name: Storyboards.Home, bundle: .main)
+        guard let vocabulariesController = storyboard.instantiateViewController(withIdentifier: Controllers.Vocabularies) as? UINavigationController else { return }
+        guard let vc = vocabulariesController.viewControllers.first as? VocabulariesTVC else { return }
+        vc.coordinator = self
+        vocabulariesController.modalPresentationStyle = .popover
+        navigationController.present(vocabulariesController, animated: true)
     }
     
     func toAddWord() {
