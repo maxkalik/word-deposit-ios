@@ -36,7 +36,8 @@ class MainCoordinator: Coordinator {
         practices()
         addWord()
         
-        navigationController.setViewControllers([mainController!], animated: false)
+        guard let tabBarController = mainController else { return }
+        navigationController.setViewControllers([tabBarController], animated: false)
     }
     
     private func practices() {

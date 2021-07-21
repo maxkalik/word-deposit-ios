@@ -33,11 +33,6 @@ final class PracticesViewController: BaseViewController {
         print("deinit \(self)")
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        viewModel?.viewWillAppear()
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         viewModel?.viewDidAppear()

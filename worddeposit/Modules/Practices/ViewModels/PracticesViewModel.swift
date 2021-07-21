@@ -63,10 +63,6 @@ class PracticesViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(vocabularyDidSwitch), name: Notification.Name(rawValue: Keys.vocabulariesSwitchNotificationKey), object: nil)
     }
     
-    func viewWillAppear() {
-        delegate?.startLoading()
-    }
-    
     func viewDidAppear() {
         if UserService.shared.vocabulary != nil && !isVocabularySwitched {
             setupWordsCollection(UserService.shared.words)
@@ -80,6 +76,7 @@ class PracticesViewModel {
 
     private func getCurrentUser() {
         print("==== get current user: \(UserService.shared.user?.id ?? "undefined")")
+        delegate?.startLoading()
         if UserService.shared.user != nil {
             getWords()
         } else {

@@ -33,7 +33,6 @@ class AuthCoordinator: Coordinator {
         authViewModel.dependency = LoginViewModel(coordinator: self)
         authViewController.viewModel = authViewModel
 
-        // navigationController.pushViewController(authViewController, animated: true)
         navigationController.setViewControllers([authViewController], animated: false)
     }
     
