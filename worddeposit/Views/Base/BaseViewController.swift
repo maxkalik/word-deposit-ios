@@ -1,20 +1,23 @@
-//
-//  BaseViewController.swift
-//  worddeposit
-//
 //  Created by Maksim Kalik on 7/11/21.
 //  Copyright © 2021 Maksim Kalik. All rights reserved.
-//
 
 import UIKit
 
 protocol BaseViewControllerDelegate: AnyObject {
     func keyboardDidShow()
     func keyboardDidHide()
+    func messageViewButtonPressed()
+}
+
+extension BaseViewControllerDelegate {
+    func keyboardDidShow() {}
+    func keyboardDidHide() {}
+    func messageViewButtonPressed() {}
 }
 
 class BaseViewController: UIViewController {
 
+    private var messageView = MessageView()
     var activityIndicator = ProgressHUD()
     private(set) var keyboardHeight: CGFloat = 0
     private(set) var isKeyboardShowing = false
@@ -32,7 +35,8 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupActivityIndicator()
-        hideKeyboardWhenTappedAround()
+        setupMessageView()
+        view.backgroundColor = .clear
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,7 +49,6 @@ class BaseViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-
         NotificationCenter.default.removeObserver(self)
     }
     
@@ -67,9 +70,27 @@ class BaseViewController: UIViewController {
     
     private func setupActivityIndicator() {
         view.addSubview(activityIndicator)
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.center = view.center
         activityIndicator.hide()
+    }
+    
+    private func setupMessageView() {
+        view.addSubview(messageView)
+        messageView.center = view.center
+        messageView.hide()
+    }
+    
+    func showMessageView(title text: String, buttonTitle: String) {
+        messageView.setTitles(messageTxt: text, buttonTitle: buttonTitle)
+        messageView.onPrimaryButtonTap { [weak self] in
+            guard let self = self else { return }
+            self.baseViewControllerDelegate?.messageViewButtonPressed()
+        }
+        messageView.show()
+    }
+    
+    func hideMessage() {
+        messageView.hide()
     }
     
     func showAlert(title: String, msg: String, handler: ((UIAlertAction) -> Void)? = nil) {

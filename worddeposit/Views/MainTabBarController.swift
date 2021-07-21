@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BaseTabBarController: UITabBarController, UITabBarControllerDelegate {
+class MainTabBarController: UITabBarController {
     
     let layerGradient = CAGradientLayer()
     
@@ -52,6 +52,16 @@ class BaseTabBarController: UITabBarController, UITabBarControllerDelegate {
         
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let height = 90 + view.safeAreaInsets.bottom
+        tabBar.frame.size.height = height
+        tabBar.frame.origin.y = view.frame.height - height
+        tabBar.invalidateIntrinsicContentSize()
+    }
+}
+
+extension MainTabBarController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         
         if viewController is AddWordVC {
@@ -62,11 +72,7 @@ class BaseTabBarController: UITabBarController, UITabBarControllerDelegate {
         return true
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        let height = 90 + view.safeAreaInsets.bottom
-        tabBar.frame.size.height = height
-        tabBar.frame.origin.y = view.frame.height - height
-        tabBar.invalidateIntrinsicContentSize()
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        print(item.description)
     }
 }

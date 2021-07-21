@@ -104,6 +104,12 @@ enum SuccessMessageImage: String {
     case standing = "standing"
 }
 
+enum TabBarIcon: String {
+    case practices = "icon_practice"
+    case addWord = "icon_plus"
+    case vocabulary = "icon_vocabulary"
+}
+
 struct Keys {
     static let vocabulariesSwitchNotificationKey = "com.maxkalik.worddeposit.vocabulariesSwitchNotificationKey"
     static let vocabulariesSwitchBeganNotificationKey = "com.maxkalik.worddeposit.vocabulariesSwitchBeganNotificationKey"
@@ -119,6 +125,7 @@ struct Limits {
     static let wordExample = 60
     static let wordTranslation = 60
     static let wordDescription = 80
+    static let minWordsAmount = 10
 }
 
 struct Radiuses {

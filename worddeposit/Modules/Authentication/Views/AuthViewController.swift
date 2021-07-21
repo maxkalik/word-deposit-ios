@@ -67,6 +67,7 @@ final class AuthViewController: BaseViewController {
         setupTextFields()
         setupButtons()
         setupBackground()
+        hideKeyboardWhenTappedAround()
     }
     
     private func setupBackground() {
